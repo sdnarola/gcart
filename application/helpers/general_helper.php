@@ -22,7 +22,7 @@ function is_vendor_logged_in()
 {
 	if (get_instance()->session->has_userdata('vendor_logged_in'))
 	{
-		return get_user_info(get_instance()->session->userdata('vendor_id'), 'is_active');
+		return get_vendor_info(get_instance()->session->userdata('vendor_id'), 'is_active');
 	}
 
 	return false;

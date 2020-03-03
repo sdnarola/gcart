@@ -5,32 +5,44 @@
 #=============================================
 #General
 #-------
-$lang['welcome']         = 'Welcome';
-$lang['add']             = 'Add';
-$lang['add_new']         = 'Add New';
-$lang['view']            = 'View';
-$lang['create']          = 'Create';
-$lang['edit']            = 'Edit';
-$lang['delete']          = 'Delete';
-$lang['delete_selected'] = 'Delete Selected';
-$lang['search']          = 'Search';
-$lang['id']              = 'ID';
-$lang['name']            = 'Name';
-$lang['status']          = 'Status';
-$lang['active']          = 'Active';
-$lang['inactive']        = 'Inactive';
-$lang['description']     = 'Description';
-$lang['created_at']      = 'Created at';
-$lang['actions']         = 'Actions';
-$lang['confirm']         = 'Confirm';
-$lang['save']            = 'Save';
-$lang['back']            = 'Back';
-$lang['close']           = 'Close';
-$lang['no_cancel_it']    = 'No, Cancel It';
-$lang['yes_i_am_sure']   = 'Yes, I am sure';
-$lang['click_to_sort']   = 'Click to sort';
+$lang['welcome']           = 'Welcome';
+$lang['add']               = 'Add';
+$lang['add_new']           = 'Add New';
+$lang['view']              = 'View';
+$lang['create']            = 'Create';
+$lang['edit']              = 'Edit';
+$lang['details']           = 'Details';
+$lang['detail']            = 'Detail';
+$lang['delete']            = 'Delete';
+$lang['delete_selected']   = 'Delete Selected';
+$lang['search']            = 'Search';
+$lang['id']                = 'ID';
+$lang['name']              = 'Name';
+$lang['image']             = 'Image';
+$lang['tags']              = 'Tags';
+$lang['thumb_image']       = 'Thumbnail Image';
+$lang['status']            = 'Status';
+$lang['price']             = 'Price';
+$lang['old_price']         = 'Old Price';
+$lang['active']            = 'Active';
+$lang['inactive']          = 'Inactive';
+$lang['description']       = 'Description';
+$lang['short_description'] = 'Short Description';
+$lang['long_description']  = 'Long Description';
+$lang['sku']               = 'Stock Keeping Unit ';
+$lang['quantity']          = 'Quantity';
+$lang['related_products']  = 'Related Products';
+$lang['created_at']        = 'Created at';
+$lang['actions']           = 'Actions';
+$lang['confirm']           = 'Confirm';
+$lang['save']              = 'Save';
+$lang['back']              = 'Back';
+$lang['close']             = 'Close';
+$lang['no_cancel_it']      = 'No, Cancel It';
+$lang['yes_i_am_sure']     = 'Yes, I am sure';
+$lang['click_to_sort']     = 'Click to sort';
 
-#Login/Logout/Forgot Password/Change Password/Profile
+#Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------
 $lang['email']            = 'Email';
 $lang['password']         = 'Password';
@@ -46,6 +58,7 @@ $lang['profile']          = 'Profile';
 $lang['edit_profile']     = 'Edit Profile';
 $lang['login']            = 'Log In';
 $lang['logout']           = 'Log Out';
+$lang['signup']           = 'Sign Up';
 
 #Dashboard
 #---------
@@ -63,6 +76,12 @@ $lang['users']      = 'Users';
 $lang['add_user']   = 'Add User';
 $lang['edit_user']  = 'Edit User';
 
+#Vendors
+#-----
+$lang['name']    = 'Name';
+$lang['vendor']  = 'Vendor';
+$lang['vendors'] = 'Vendors';
+
 #Projects
 #--------
 $lang['project']      = 'Project';
@@ -74,10 +93,35 @@ $lang['edit_project'] = 'Edit Project';
 #Categories
 #----------
 $lang['category']      = 'Category';
+$lang['sub_category']  = 'Sub Category';
 $lang['categories']    = 'Categories';
 $lang['category_name'] = 'Category Name';
 $lang['add_category']  = 'Add Category';
 $lang['edit_category'] = 'Edit Category';
+
+#Products
+#----------
+$lang['product']        = 'Product';
+$lang['products']       = 'Products';
+$lang['product_name']   = 'Product Name';
+$lang['add_product']    = 'Add Product';
+$lang['edit_product']   = 'Edit Product';
+$lang['product_detail'] = 'Product`s Detail';
+
+#Brands
+#----------
+$lang['brand']      = 'Brand';
+$lang['brands']     = 'Brands';
+$lang['brand_name'] = 'Brand Name';
+$lang['add_brand']  = 'Add Brand';
+$lang['edit_brand'] = 'Edit Brand';
+
+#Orders
+#----------
+$lang['order']        = 'Order';
+$lang['orders']       = 'Orders';
+$lang['edit_order']   = 'Edit Order';
+$lang['order_detail'] = 'Order Detail';
 
 #Roles
 #-----
@@ -139,14 +183,13 @@ $lang['multiple_recovery_alert']    = 'You will not be able to recover these rec
 $lang['select_before_delete_alert'] = 'Please select some records to delete.';
 $lang['access_denied']              = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
 
-#Login/Logout/Forgot Password/Change Password/Profile
+#Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------
 $lang['login_to_your_account']                                  = 'Login to your account';
 $lang['enter_your_credentials_below']                           = 'Please enter your credentials below';
 $lang['incorrect_email']                                        = 'Incorrect email.';
 $lang['incorrect_password']                                     = 'Incorrect password.';
-$lang['email_exists']                                     = 'This Email has already been taken.';
-
+$lang['email_exists']                                           = 'This Email has already been taken.';
 $lang['incorrect_email_or_password']                            = 'Email and/or password is incorrect.';
 $lang['your_account_is_not_active']                             = 'Your account is not active. Please contact to your Administrator.';
 $lang['forgot_password_instructions']                           = 'Please enter your email address below. <br/>We will send you instructions in email to reset your password.';

@@ -29,7 +29,7 @@ class Admin_Controller extends My_Controller
 
 			if (is_vendor_logged_in())
 			{
-				redirect(site_url('authentication'));
+				redirect(vendor_url('authentication'));
 			}
 
 			redirect(admin_url('authentication'));

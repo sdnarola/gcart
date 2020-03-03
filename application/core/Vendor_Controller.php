@@ -22,14 +22,14 @@ class Vendor_Controller extends My_Controller
 				redirect_after_login_to_current_url();
 			}
 
-			if (is_admin_logged_in())
+			if (is_user_logged_in())
 			{
 				redirect(site_url('authentication'));
 			}
 
-			if (is_user_logged_in())
+			if (is_admin_logged_in())
 			{
-				redirect(site_url('authentication'));
+				redirect(admin_url('authentication'));
 			}
 
 			redirect(vendor_url('authentication'));

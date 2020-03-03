@@ -18,7 +18,12 @@ class Dashboard extends Admin_Controller
 	{
 		$this->set_page_title(_l('dashboard'));
 
-		$data['content'] = $this->load->view('admin/dashboard/index', '', TRUE);
+		$data['total_products'] = $this->db->count_all('products');
+		$data['total_orders']   = $this->db->count_all('orders');
+		$data['total_users']    = $this->db->count_all('users');
+		$data['total_vendors']  = $this->db->count_all('vendors');
+
+		$data['content'] = $this->load->view('admin/dashboard/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 
 	}

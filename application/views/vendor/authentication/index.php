@@ -96,7 +96,7 @@
 						<?php echo $content; ?>
 						<!-- Footer -->
 						<div class="footer text-muted text-center">
-							&copy;<?php echo date('Y') ?>. Vendor Panel by <a target="_blank">NISL</a>
+							&copy;<?php echo date('Y') ?>. Vendor Panel by <a target="_blank">Gcart</a>
 						</div>
 						<!-- /footer -->
 					</div>

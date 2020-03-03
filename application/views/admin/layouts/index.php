@@ -16,6 +16,7 @@
 <link href="<?php echo base_url('assets/admin/css/bootstrap.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/core.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/components.css'); ?>" rel="stylesheet" type="text/css">
+<link href="<?php echo base_url('assets/admin/css/colors.css'); ?>" rel="stylesheet" type="text/css">
 <!-- /global stylesheets -->
 
 <style type="text/css">
@@ -84,8 +85,11 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js'); ?>"></script>
 
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
-
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/bootstrap_multiselect.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_multiselect.js'); ?>"></script>
+
 
 <script type="text/javascript">
 
@@ -169,13 +173,11 @@ $.extend($.fn.dataTable.defaults, {
 	            }
             },
             buttons: [
-            'copyHtml5',
-            'csvHtml5',
             'pdfHtml5'
             ]
         },
-        "pageLength": 25,
-        "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ]
+        "pageLength": 10,
+        "lengthMenu": [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
     });
 
 
@@ -230,6 +232,14 @@ switches.forEach(function(html) {
 });
 
 </script>
+
+<!-- <script type="text/javascript" src="<?php
+                                         // echo base_url('assets/admin/js/plugins/forms/tags/tokenfield.min.js');
+                                         ?>"></script>
+<script type="text/javascript" src="<?php
+                                    // echo base_url('assets/admin/js/pages/form_tags_input.js');
+                                    ?>"></script>
+ -->
 </head>
 
 <body>
@@ -332,11 +342,11 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/users'); ?>"><i class="icon-user-check"></i> <span>Users</span></a>
+									<a href="<?php echo base_url('admin/users'); ?>"><i class="icon-users"></i> <span>Users</span></a>
 								</li>
 								<!-- vendors -->
 								<li>
-									<a href="#"><i class="icon-users"></i><span>Vendors</span></a>
+									<a href="#"><i class="icon-user-tie"></i><span>Vendors</span></a>
 									<ul>
 										<li
 										<?php
@@ -373,7 +383,7 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('products'))
+											if (is_active_controller('productss'))
 											{
 												echo 'class="active"';}
 
@@ -386,7 +396,7 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('products'))
+											if (is_active_controller('productss'))
 											{
 												echo 'class="active"';}
 
@@ -527,7 +537,7 @@ switches.forEach(function(html) {
 				<div class="footer text-muted text-center pl-20">
 					&copy;
 					<?php echo date('Y') ?>. <a href="#">Admin Panel</a> by <a target="_blank">
-					<?php echo "get_settings('company_name')"; ?></a>
+					<?php echo get_settings('company_name'); ?></a>
 				</div>
 				<!-- /Footer -->
 			</div>

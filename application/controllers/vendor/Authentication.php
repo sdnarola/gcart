@@ -9,7 +9,8 @@ class Authentication extends My_Controller
 	}
 
 	/**
-	 * Acts as an entry point
+	 * Entry Point
+	 * Call Login function
 	 */
 	public function index()
 	{
@@ -71,6 +72,26 @@ class Authentication extends My_Controller
 		}
 
 		$data['content'] = $this->load->view('vendor/authentication/login_vendor', '', true);
+		$this->load->view('vendor/authentication/index', $data);
+	}
+
+	/**
+	 * Loads vendor signup form & performs signup
+	 */
+	public function signup()
+	{
+		if ($this->input->post())
+		{
+			$data = $this->input->post();
+
+			$data['password'] = md5($data['password']);
+			unset($data['confirm_password']);
+
+			$data['signup_key'] = app_generate_hash();
+		}
+
+		$this->set_page_title('Sign Up');
+		$data['content'] = $this->load->view('vendor/authentication/signup', '', true);
 		$this->load->view('vendor/authentication/index', $data);
 	}
 

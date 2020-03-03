@@ -90,4 +90,8 @@ defined('EXIT__AUTO_MAX') OR define('EXIT__AUTO_MAX', 125); // highest automatic
  * Admin URI
  */
 define('ADMIN_URI', 'admin');
+
+/**
+ * Vendor URI
+ */
 define('VENDOR_URI', 'vendor');

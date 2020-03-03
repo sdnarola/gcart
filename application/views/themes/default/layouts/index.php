@@ -44,7 +44,7 @@
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-lock"></i>Login</a></li>
+            <li><a href="<?php echo base_url('authentication'); ?>"><i class="icon fa fa-lock"></i>Login</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-user"></i>Sell</a></li>
           </ul>
         </div>
@@ -367,7 +367,7 @@
     <!-- ============================================== CONTAINER  : END============================================== -->
 
 <!-- ============================================================= FOOTER ============================================================= -->
-<footer id="footer" class="footer color-bg">
+<footer id="footer" class="footer color-bg" style="margin-top: 20px;">
   <div class="footer-bottom">
     <div class="container">
       <div class="row">
