@@ -16,7 +16,11 @@
 <link href="<?php echo base_url('assets/admin/css/bootstrap.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/core.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/components.css'); ?>" rel="stylesheet" type="text/css">
+<<<<<<< HEAD
 <link href="<?php echo base_url('assets/admin/css/colors.css'); ?>" rel="stylesheet" type="text/css">
+=======
+
+>>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 <!-- /global stylesheets -->
 
 <style type="text/css">
@@ -87,11 +91,16 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
 
+<<<<<<< HEAD
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/bootstrap_multiselect.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_multiselect.js'); ?>"></script>
 
+=======
+>>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 
 <script type="text/javascript">
+
+
 
 // Default Settings for jQuery Validator
 $.validator.setDefaults({
@@ -201,31 +210,23 @@ switches.forEach(function(html) {
 
 <?php
 
-	$alert_class = '';
+$alert_class = '';
 
-	if ($this->session->flashdata('success'))
-	{
-		$alert_class = 'success';
-	}
-	elseif ($this->session->flashdata('warning'))
-	{
-		$alert_class = 'warning';
-	}
-	elseif ($this->session->flashdata('danger'))
-	{
-		$alert_class = 'danger';
-	}
-	elseif ($this->session->flashdata('info'))
-	{
-		$alert_class = 'info';
-	}
+if ($this->session->flashdata('success')) {
+	$alert_class = 'success';
+} elseif ($this->session->flashdata('warning')) {
+	$alert_class = 'warning';
+} elseif ($this->session->flashdata('danger')) {
+	$alert_class = 'danger';
+} elseif ($this->session->flashdata('info')) {
+	$alert_class = 'info';
+}
 
-	if ($this->session->flashdata($alert_class))
-	{
+if ($this->session->flashdata($alert_class)) {
 	?>
 		jGrowlAlert("<?php echo $this->session->flashdata($alert_class) ?>",'<?php echo $alert_class; ?>');
 <?php
-	}
+}
 
 ?>
 
@@ -284,7 +285,7 @@ switches.forEach(function(html) {
 							<div class="media">
 								<div class="media-body">
 									<span class="media-heading text-semibold">
-										<?php echo _l('welcome').'&nbsp;'.get_loggedin_info('username').'&nbsp;'; ?>
+										<?php echo _l('welcome') . '&nbsp;' . get_loggedin_info('username') . '&nbsp;'; ?>
 										<a style="color: white;" href="<?php echo admin_url('authentication/logout'); ?>" align="padding-right"><i class="icon-switch2" data-popup="tooltip" data-placement="top"  title="<?php _el('logout')?>"></i></a>
 									</span>
 								</div>
@@ -300,11 +301,10 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('dashboard'))
-										{
-											echo 'class="active"';}
+if (is_active_controller('dashboard')) {
+	echo 'class="active"';}
 
-									?>
+?>
 									>
 									<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home4"></i> <span>Dashboard</span></a>
 								</li>
@@ -312,11 +312,10 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('products'))
-										{
-											echo 'class="active"';}
+if (is_active_controller('products')) {
+	echo 'class="active"';}
 
-									?>
+?>
 									>
 									<a href="<?php echo base_url('admin/products'); ?>"><i class="icon-cart5"></i> <span>Products</span></a>
 								</li>
@@ -324,11 +323,10 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('orders'))
-										{
-											echo 'class="active"';}
+if (is_active_controller('orders')) {
+	echo 'class="active"';}
 
-									?>
+?>
 									>
 									<a href="<?php echo base_url('admin/orders'); ?>"><i class="icon-list-ordered"></i> <span>Orders</span></a>
 								</li>
@@ -336,11 +334,10 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('users'))
-										{
-											echo 'class="active"';}
+if (is_active_controller('users')) {
+	echo 'class="active"';}
 
-									?>
+?>
 									>
 									<a href="<?php echo base_url('admin/users'); ?>"><i class="icon-users"></i> <span>Users</span></a>
 								</li>
@@ -351,11 +348,10 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('vendors'))
-											{
-												echo 'class="active"';}
+if (is_active_controller('vendors')) {
+	echo 'class="active"';}
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/vendors'); ?>">
 												<span>Subscriptions</span>
@@ -364,11 +360,10 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('vendors'))
-											{
-												echo 'class="active"';}
+if (is_active_controller('vendors')) {
+	echo 'class="active"';}
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/vendors'); ?>">
 												<span>List</span>
@@ -383,11 +378,16 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
+<<<<<<< HEAD
 											if (is_active_controller('productss'))
 											{
 												echo 'class="active"';}
+=======
+if (is_active_controller('products')) {
+	echo 'class="active"';}
+>>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/products/reviews'); ?>">
 												<span>Reviews</span>
@@ -396,11 +396,16 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
+<<<<<<< HEAD
 											if (is_active_controller('productss'))
 											{
 												echo 'class="active"';}
+=======
+if (is_active_controller('products')) {
+	echo 'class="active"';}
+>>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/products/comments'); ?>">
 												<span>Comments</span>
@@ -415,11 +420,10 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('categories'))
-											{
-												echo 'class="active"';}
+if (is_active_controller('categories')) {
+	echo 'class="active"';}
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/categories'); ?>">
 												<span>Main Category</span>
@@ -428,11 +432,10 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('categories'))
-											{
-												echo 'class="active"';}
+if (is_active_controller('categories')) {
+	echo 'class="active"';}
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/categories'); ?>">
 												<span>Sub Category</span>
@@ -444,11 +447,10 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('coupons'))
-										{
-											echo 'class="active"';}
+if (is_active_controller('coupons')) {
+	echo 'class="active"';}
 
-									?>
+?>
 									>
 									<a href="<?php echo base_url('admin/coupons'); ?>"><i class="icon-ticket"></i> <span>Manage Coupons</span></a>
 								</li>
@@ -456,11 +458,10 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('brands'))
-										{
-											echo 'class="active"';}
+if (is_active_controller('brands')) {
+	echo 'class="active"';}
 
-									?>
+?>
 									>
 									<a href="<?php echo base_url('admin/brands'); ?>"><i class="icon-people"></i> <span>Partners</span></a>
 								</li>
@@ -468,11 +469,10 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('faqs'))
-										{
-											echo 'class="active"';}
+if (is_active_controller('faqs')) {
+	echo 'class="active"';}
 
-									?>
+?>
 									>
 									<a href="<?php echo base_url('admin/faqs'); ?>"><i class="icon-question3"></i> <span>FAQs</span></a>
 								</li>
@@ -483,11 +483,10 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('settings'))
-											{
-												echo 'class="active"';}
+if (is_active_controller('settings')) {
+	echo 'class="active"';}
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/menu'); ?>">
 												<span>Menu Setup</span>
@@ -496,11 +495,10 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('settings'))
-											{
-												echo 'class="active"';}
+if (is_active_controller('settings')) {
+	echo 'class="active"';}
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/home_settings'); ?>">
 												<span>Home Page Setup</span>
@@ -509,11 +507,10 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('settings'))
-											{
-												echo 'class="active"';}
+if (is_active_controller('settings')) {
+	echo 'class="active"';}
 
-										?>
+?>
 										 >
 											<a href="<?php echo base_url('admin/settings'); ?>">
 												<span>Website Setup</span>
@@ -535,7 +532,6 @@ switches.forEach(function(html) {
 				<?php echo $content; ?>
 				<!-- Footer -->
 				<div class="footer text-muted text-center pl-20">
-					&copy;
 					<?php echo date('Y') ?>. <a href="#">Admin Panel</a> by <a target="_blank">
 					<?php echo get_settings('company_name'); ?></a>
 				</div>
