@@ -34,27 +34,31 @@ class Products extends Admin_Controller
 			$data                     = $this->input->post();
 			$data['related_products'] = serialize($this->input->post('related_products'));
 
-			//upload start
-			$config['upload_path']   = 'assets/uploads/';
-			$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG';
-			$config['file_name']     = time().'-'.$_FILES['thumb_image']['name'];
-			$config['max_size']      = 10000;
-
-			$this->load->library('upload', $config);
-
-			if (!$this->upload->do_upload('thumb_image'))
+			if ($_FILES['thumb_image']['name'] != null)
 			{
-				$error = array('error' => $this->upload->display_errors());
-				set_alert('danger', ucwords($error['error']));
-				redirect('admin/products');
-			}
-			else
-			{
-				$UploadData          = $this->upload->data();
-				$data['thumb_image'] = $config['upload_path'].$UploadData['file_name'];
+				//upload start
+				$config['upload_path']   = 'assets/uploads/';
+				$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG';
+				$config['max_size']      = 10000;
+				$config['file_name']     = time().'-'.$_FILES['thumb_image']['name'];
+
+				$this->load->library('upload', $config);
+
+				if (!$this->upload->do_upload('thumb_image'))
+				{
+					$error = array('error' => $this->upload->display_errors());
+					set_alert('danger', ucwords($error['error']));
+					redirect('admin/products');
+				}
+				else
+				{
+					$UploadData          = $this->upload->data();
+					$data['thumb_image'] = $config['upload_path'].$UploadData['file_name'];
+				}
+
+				//upload ends
 			}
 
-			//upload ends
 			$insert = $this->products->insert($data);
 
 			if ($insert)
@@ -90,27 +94,30 @@ class Products extends Admin_Controller
 				$data                     = $this->input->post();
 				$data['related_products'] = serialize($this->input->post('related_products'));
 
-				//upload start
-				$config['upload_path']   = 'assets/uploads/';
-				$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG';
-				$config['max_size']      = 10000;
-				$config['file_name']     = time().'-'.$_FILES['thumb_image']['name'];
-
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('thumb_image'))
+				if ($_FILES['thumb_image']['name'] != null)
 				{
-					$error = array('error' => $this->upload->display_errors());
-					set_alert('danger', ucwords($error['error']));
-					redirect('admin/products');
-				}
-				else
-				{
-					$UploadData          = $this->upload->data();
-					$data['thumb_image'] = $config['upload_path'].$UploadData['file_name'];
-				}
+					//upload start
+					$config['upload_path']   = 'assets/uploads/';
+					$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG';
+					$config['max_size']      = 10000;
+					$config['file_name']     = time().'-'.$_FILES['thumb_image']['name'];
 
-				//upload ends
+					$this->load->library('upload', $config);
+
+					if (!$this->upload->do_upload('thumb_image'))
+					{
+						$error = array('error' => $this->upload->display_errors());
+						set_alert('danger', ucwords($error['error']));
+						redirect('admin/products');
+					}
+					else
+					{
+						$UploadData          = $this->upload->data();
+						$data['thumb_image'] = $config['upload_path'].$UploadData['file_name'];
+					}
+
+					//upload ends
+				}
 
 				$update = $this->products->update($id, $data);
 
