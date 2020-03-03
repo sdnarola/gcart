@@ -14,7 +14,8 @@ class Admin_Controller extends My_Controller
 
 		$this->load->model('setting_model', 'settings');
 
-/* If user is not logged in, redirect to the admin login page */
+		/** If user is not logged in, redirect to the admin login page */
+
 		if (!is_admin_logged_in())
 		{
 			if (strpos(current_full_url(), get_admin_uri().'/authentication') === false)

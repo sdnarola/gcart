@@ -167,9 +167,18 @@
 		<div class="col-md-12">
 			<div class="panel panel-white">
 				<div class="panel-heading">
-					<h6 class="panel-title">Recent Product(s)</h6>
+					<h6 class="panel-title">Popular Product(s)</h6>
 					<div class="heading-elements">
 						<ul class="icons-list">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu7"></i></a>
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li><a href="#"><i class="icon-file-stats"></i> View statement</a></li>
+									<li><a href="#"><i class="icon-file-text2"></i> Edit campaign</a></li>
+									<li><a href="#"><i class="icon-file-locked"></i> Disable campaign</a></li>
+									<li><a href="#"><i class="icon-gear"></i> Settings</a></li>
+								</ul>
+							</li>
 					        <li><a data-action="collapse" class=""></a></li>
 					        <li><a data-action="reload"></a></li>
 					    </ul>

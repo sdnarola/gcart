@@ -28,15 +28,6 @@ class Products extends Vendor_Controller
 		if ($this->input->post())
 		{
 			print_r($this->input->post());
-
-// if ($insert)
-
-// {
-
-// 	set_alert('success', _l('_added_successfully', _l('product')));
-
-// 	redirect('vendor/products');
-			// }
 		}
 		else
 		{

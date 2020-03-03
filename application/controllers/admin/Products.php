@@ -1,18 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-<<<<<<< HEAD
 class Products extends Admin_Controller
 {
-=======
-class Profile extends Admin_Controller {
->>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 	/**
 	 * Constructor for the class
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
-<<<<<<< HEAD
 		$this->load->model('brand_model', 'brands');
 		$this->load->model('category_model', 'categories');
 		$this->load->model('product_model', 'products');
@@ -24,16 +20,11 @@ class Profile extends Admin_Controller {
 		$data['products'] = $this->products->get_all();
 		$data['content']  = $this->load->view('admin/products/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
-=======
-		$this->load->model('user_model', 'users');
-		$this->load->model('activity_log_model', 'activity_log');
->>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 	}
 
 	/**
 	 * Add new Product
 	 */
-<<<<<<< HEAD
 	public function add()
 	{
 		$this->set_page_title(_l('products').' | '._l('add'));
@@ -83,20 +74,10 @@ class Profile extends Admin_Controller {
 			$data['products']   = $this->products->get_all();
 
 			$data['content'] = $this->load->view('admin/products/add', $data, TRUE);
-=======
-	public function edit() {
-		$this->set_page_title(_l('edit_profile'));
-		$id = get_loggedin_user_id();
-
-		if ($id) {
-			$data['user'] = $this->users->get($id);
-			$data['content'] = $this->load->view('admin/profile/edit', $data, TRUE);
->>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 			$this->load->view('admin/layouts/index', $data);
 		}
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Updates the product record
 	 *
@@ -122,15 +103,6 @@ class Profile extends Admin_Controller {
 					$config['file_name']     = time().'-'.$_FILES['thumb_image']['name'];
 
 					$this->load->library('upload', $config);
-=======
-		if ($this->input->post()) {
-			$data = array(
-				'firstname' => $this->input->post('firstname'),
-				'lastname' => $this->input->post('lastname'),
-				'email' => $this->input->post('email'),
-				'mobile_no' => $this->input->post('mobile_no'),
-			);
->>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 
 					if (!$this->upload->do_upload('thumb_image'))
 					{
@@ -144,7 +116,6 @@ class Profile extends Admin_Controller {
 						$data['thumb_image'] = $config['upload_path'].$UploadData['file_name'];
 					}
 
-<<<<<<< HEAD
 					//upload ends
 				}
 
@@ -195,12 +166,6 @@ class Profile extends Admin_Controller {
 			else
 			{
 				echo 'false';
-=======
-			if ($update) {
-				set_alert('success', _l('_updated_successfully', _l('profile')));
-				log_activity("User Updated Profile [ID:$id]");
-				redirect('admin/profile/edit');
->>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 			}
 		}
 	}
@@ -208,7 +173,6 @@ class Profile extends Admin_Controller {
 	/**
 	 * Delete the single product record
 	 */
-<<<<<<< HEAD
 	public function delete()
 	{
 		$product_id = $this->input->post('product_id');
@@ -243,18 +207,6 @@ class Profile extends Admin_Controller {
 			echo 'false';
 		}
 	}
-=======
-	public function edit_password() {
-		$id = get_loggedin_user_id();
-		$data['user'] = $this->users->get($id);
-
-		if ($this->input->post()) {
-			$data = array
-				(
-				'password' => md5($this->input->post('new_password')),
-				'last_password_change' => date('Y-m-d H:i:s'),
-			);
->>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 
 	/**
 	 * show the single product details
@@ -265,16 +217,10 @@ class Profile extends Admin_Controller {
 		{
 			$data['product'] = $this->products->get($id);
 
-<<<<<<< HEAD
 			if ($data['product'])
 			{
 				$data['content'] = $this->load->view('admin/products/details', $data, TRUE);
 				$this->load->view('admin/layouts/index', $data);
-=======
-			if ($update) {
-				set_alert('success', _l('_updated_successfully', _l('password')));
-				redirect('admin/profile/edit');
->>>>>>> 9921bc0ec2cd62a53f43fcf227e8f03b4bc9d7f8
 			}
 			else
 			{
