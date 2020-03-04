@@ -16,6 +16,7 @@
 <link href="<?php echo base_url('assets/admin/css/bootstrap.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/core.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/components.css'); ?>" rel="stylesheet" type="text/css">
+<link href="<?php echo base_url('assets/admin/css/colors.css'); ?>" rel="stylesheet" type="text/css">
 <!-- /global stylesheets -->
 
 <style type="text/css">
@@ -84,8 +85,11 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js'); ?>"></script>
 
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
-
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/bootstrap_multiselect.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_multiselect.js'); ?>"></script>
+
 
 <script type="text/javascript">
 // Default Settings for jQuery Validator
@@ -169,14 +173,10 @@ $.extend($.fn.dataTable.defaults, {
 	                className: 'btn btn-default'
 	            }
             },
-            buttons: [
-            'copyHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-            ]
+            buttons: ['pdfHtml5']
         },
-        "pageLength": 25,
-        "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ]
+        "pageLength": 10,
+        "lengthMenu": [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
     });
 
 
@@ -232,6 +232,8 @@ switches.forEach(function(html) {
 
 </script>
 
+
+
 </head>
 
 <body>
@@ -251,7 +253,7 @@ switches.forEach(function(html) {
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown dropdown-user">
 					<a class="dropdown-toggle" data-toggle="dropdown">
-						<span><?php echo get_loggedin_info('username'); ?></span>
+						<span><?php echo get_loggedin_info('vendorname'); ?></span>
 						<i class="caret"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
@@ -276,7 +278,7 @@ switches.forEach(function(html) {
 							<div class="media">
 								<div class="media-body">
 									<span class="media-heading text-semibold">
-										<?php echo _l('welcome').'&nbsp;'.get_loggedin_info('username').'&nbsp;'; ?>
+										<?php echo _l('welcome').'&nbsp;'.get_loggedin_info('vendorname').'&nbsp;'; ?>
 										<a style="color: white;" href="<?php echo vendor_url('authentication/logout'); ?>" align="padding-right"><i class="icon-switch2" data-popup="tooltip" data-placement="top"  title="<?php _el('logout')?>"></i></a>
 									</span>
 								</div>
@@ -343,7 +345,7 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('products'))
+											if (is_active_controller('productss'))
 											{
 												echo 'class="active"';}
 
@@ -356,7 +358,7 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('products'))
+											if (is_active_controller('productss'))
 											{
 												echo 'class="active"';}
 
@@ -383,9 +385,8 @@ switches.forEach(function(html) {
 					&copy;
 					<?php echo date('Y') ?><a href="">Vendor Panel</a> by <a target="_blank">
 						<?php
-							echo 'GCart';
-						// echo get_settings('company_name');
-						 ?></a>
+						echo get_settings('company_name');
+						?></a>
 				</div>
 				<!-- /Footer -->
 			</div>

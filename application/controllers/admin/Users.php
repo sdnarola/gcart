@@ -1,11 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Users extends Admin_Controller {
+class Users extends Admin_Controller
+{
 	/**
 	 * Constructor for the class
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 
 		$this->load->model('user_model', 'users');
@@ -15,10 +17,11 @@ class Users extends Admin_Controller {
 	/**
 	 * Loads the list of users.
 	 */
-	public function index() {
+	public function index()
+	{
 		$this->set_page_title(_l('users'));
 
-		$data['users'] = $this->users->get_users();
+		$data['users']   = $this->users->get_users();
 		$data['content'] = $this->load->view('admin/users/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
@@ -28,38 +31,45 @@ class Users extends Admin_Controller {
 	 *
 	 * @param int  $id  The user id
 	 */
-	public function edit($id = '') {
-		$this->set_page_title(_l('users') . ' | ' . _l('edit'));
+	public function edit($id = '')
+	{
+		$this->set_page_title(_l('users').' | '._l('edit'));
 
-		if ($this->input->post()) {
-
+		if ($this->input->post())
+		{
 			print_r($this->input->post());
 			echo $id;
 
 			$data = array
 				(
 				'firstname' => $this->input->post('firstname'),
-				'lastname' => $this->input->post('lastname'),
-				'email' => $this->input->post('email'),
-				'mobile' => $this->input->post('mobile'),
-				'is_active' => ($this->input->post('is_active')) ? 1 : 0,
+				'lastname'  => $this->input->post('lastname'),
+				'email'     => $this->input->post('email'),
+				'mobile'    => $this->input->post('mobile'),
+				'is_active' => ($this->input->post('is_active')) ? 1 : 0
 			);
 
 			$result1 = $this->users->edit($data, $id);
 
-			if ($result1) {
+			if ($result1)
+			{
 				set_alert('success', _l('_updated_successfully', _l('user')));
 
 				redirect('admin/users');
 			}
-		} else {
+		}
+		else
+		{
 			$data['users'] = $this->users->show($id);
 
-			if ($data['users'][0]['profile_image']) {
-				$path = $record['profile_image'];
+			if ($data['users'][0]['profile_image'])
+			{
+				$path         = $record['profile_image'];
 				$data['path'] = $path;
-			} else {
-				$data['path'] = "C:/wamp64/www/ci/Uploads/users/default_img.png";
+			}
+			else
+			{
+				$data['path'] = 'C:/wamp64/www/ci/Uploads/users/default_img.png';
 			}
 
 			$data['content'] = $this->load->view('admin/users/edit', $data, TRUE);
@@ -70,14 +80,17 @@ class Users extends Admin_Controller {
 	/**
 	 * Deletes the single user record
 	 */
-	public function delete() {
+	public function delete()
+	{
 		$user_id = $this->input->post('user_id');
 		$deleted = $this->users->delete($user_id);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			echo 'true';
-		} else {
+		}
+		else
+		{
 			echo 'false';
 		}
 	}
@@ -87,19 +100,22 @@ class Users extends Admin_Controller {
 	 *
 	 * @param      <int>  $id     The user id
 	 */
-	public function details($id) {
-		$data['users'] = $this->users->show($id);
+	public function details($id)
+	{
+		$data['users']   = $this->users->show($id);
 		$data['records'] = $this->order_details($id);
 
 		//get image path from database
 		$record = $this->users->get($id);
 
-		if ($record['profile_image']) 
+		if ($record['profile_image'])
 		{
-			$path = $record['profile_image'];
+			$path         = $record['profile_image'];
 			$data['path'] = $path;
-		} else {
-			$data['path'] = "C:/wamp64/www/ci/Uploads/default_img.png";
+		}
+		else
+		{
+			$data['path'] = 'C:/wamp64/www/ci/Uploads/default_img.png';
 		}
 
 		$data['content'] = $this->load->view('admin/users/details', $data, TRUE);
@@ -109,35 +125,38 @@ class Users extends Admin_Controller {
 /**
  * Deletes multiple user records
  */
-	public function delete_selected() {
-		$where = $this->input->post('ids');
+	public function delete_selected()
+	{
+		$where   = $this->input->post('ids');
 		$deleted = $this->users->delete_many($where);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			$ids = implode(',', $where);
 			echo 'true';
-		} else 
+		}
+		else
 		{
 			echo 'false';
 		}
-
 	}
 
 /**
  * Toggles the user status to Active or Inactive
  */
-	public function update_status() {
+	public function update_status()
+	{
 		$user_id = $this->input->post('user_id');
-		$data = array('is_active' => $this->input->post('is_active'));
-		$update = $this->users->update($user_id, $data);
+		$data    = array('is_active' => $this->input->post('is_active'));
+		$update  = $this->users->update($user_id, $data);
 
-		if ($update) 
+		if ($update)
 		{
-			if ($this->input->post('is_active') == 1) 
+			if ($this->input->post('is_active') == 1)
 			{
 				echo 'true';
-			} else 
+			}
+			else
 			{
 				echo 'false';
 			}
@@ -151,9 +170,10 @@ class Users extends Admin_Controller {
  *
  * @return     <array>  ( orders of particular user )
  */
-	public function order_details($id) {
+	public function order_details($id)
+	{
 		$order_records = $this->orders->user_order_details($id);
+
 		return $order_records;
 	}
-
 }

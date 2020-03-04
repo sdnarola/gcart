@@ -35,6 +35,11 @@
 		<div class="form-group">
 			<button type="submit" class="btn bg-blue btn-block"><?php _el('login')?><i class="icon-arrow-right14 position-right"></i></button>
 		</div>
+		<div class="row">
+			<div class="col-sm-12 text-right">Don't have an account?
+				<a href="<?php echo vendor_url('authentication/signup'); ?>"><?php _el('signup')?></a>
+			</div>
+		</div>
 
 	</div>
 </form>

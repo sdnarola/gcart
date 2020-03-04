@@ -9,11 +9,18 @@ class Authentication extends My_Controller
 		$this->load->model('User_model', 'users');
 	}
 
+	/**
+	 * Entry Point
+	 * Call Login function
+	 */
 	public function index()
 	{
 		$this->login();
 	}
 
+	/**
+	 * Loads user login form & performs login
+	 */
 	public function login()
 	{
 		if (is_user_logged_in())
@@ -72,6 +79,9 @@ class Authentication extends My_Controller
 		$this->template->load('index', 'content', 'authentication/login_signup');
 	}
 
+	/**
+	 * Loads user signup form & performs signup
+	 */
 	public function signup()
 	{
 		if ($this->input->post())

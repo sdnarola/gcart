@@ -59,13 +59,20 @@ function get_vendor_info($id, $info = '')
 
 	$vendor = $CI->vendors->get($id);
 
-	if ($info != '')
+	if ($vendor)
 	{
-		return $vendor[$info];
+		if ($info != '')
+		{
+			return $vendor[$info];
+		}
+		else
+		{
+			return $vendor;
+		}
 	}
 	else
 	{
-		return $vendor;
+		return '-----';
 	}
 }
 

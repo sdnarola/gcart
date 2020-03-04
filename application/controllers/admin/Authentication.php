@@ -9,7 +9,8 @@ class Authentication extends My_Controller
 	}
 
 	/**
-	 * Acts as an entry point
+	 * Entry Point
+	 * Call Login function
 	 */
 	public function index()
 	{
