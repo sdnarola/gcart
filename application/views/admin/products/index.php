@@ -104,21 +104,6 @@ $(function() {
     $('div.dataTables_length select').addClass('datatable-select');
  });
 
-$("#productform").validate({
-    rules: {
-        name:
-        {
-            required: true,
-        },
-    },
-    messages: {
-        name: {
-            required:"<?php _el('please_enter_', _l('product_name'))?>",
-        },
-    }
-});
-
-
 var BASE_URL = "<?php echo base_url(); ?>";
 
 /**

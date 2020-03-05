@@ -43,7 +43,6 @@
                 <!-- Panel body -->
                 <div class="panel-body">
                     <form action="<?php echo base_url('admin/products/add'); ?>" id="product_form" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" class="form-control" id="vendor_id" name="vendor_id" value="">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
@@ -72,7 +71,7 @@
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('category');?>:</label>
-                                <select class="form-control" name="category_id" id="category_id" onchange="get_category();">
+                                <select class="form-control" name="category_id" id="category_id" onchange="get_sub_categories();">
                                     <option value="0" selected readonly disabled>----- Select Category -----</option>
 <?php
 
@@ -127,17 +126,25 @@
                                 <input type="file" name="thumb_image" id="thumb_image" class="form-control">
                             </div>
                         </div>
+
                         <!-- for multiple images upload -->
-                        <!-- <div class="row images field_wrapper">
+                        <div class="row images field_wrapper" style="display: none;">
                             <div class="form-group col-md-12 ">
-                                <a href="javascript:void(0);" class="remove_button_1" title="remove Image"><i class="icon-minus-circle2"></i></a>
+                                <a href="javascript:void(0);" class="remove_button_1" title="remove Image"><i class="icon-minus-circle2"></i></a>&nbsp;
                                 <label><?php _el('image');?>(s):</label>
                                 <div class="row add_image">
                                     <div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div>
-                                    <div class="col-md-1 text-right"><a href="javascript:void(0);" class="add_button" title="Add Image"><i class="icon-plus-circle2 mt-10"></i></a></div>
+                                    <div class="col-md-1 text-right"><a href="javascript:void(0);" class="add_button" title="Add Image"><i class="icon-file-plus2 mt-10"></i></a></div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <a href="javascript:void(0);" class="btn btn-sm btn-primary set"><i class="icon-file-plus position-left"></i>Set Images</a>
+                            </div>
+                        </div>
+                        <!-- End multiple file upload -->
 
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -264,38 +271,45 @@ $("#product_form").validate({
 });
 
 
-$(document).ready(function(){
-    var maxField = 5; //Input fields increment limitation
-    var addButton = $('.add_button'); //Add button selector
-    var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<div><div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div><div class="col-md-1 text-right"><a href="javascript:void(0);" title="Remove Image" class="remove_button"><i class="icon-minus-circle2 mt-10"></i></a></div></div>'; //New input field html
-    var x = 1; //Initial field counter is 1
+/**
+ * enable multiple file uploading
+ */
+var maxField = 4; //Input fields increment limitation
+var addButton = $('.add_button'); //Add button selector
+var wrapper = $('.field_wrapper'); //Input field wrapper
+var fieldHTML = '<div><div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div><div class="col-md-1 text-right"><a href="javascript:void(0);" title="Remove Image" class="remove_button"><i class="icon-file-minus2 mt-10"></i></a></div></div>'; //New input field html
+var x = 1; //Initial field counter is 1
 
-    //Once add button is clicked
-    $(addButton).click(function(){
-        //Check maximum number of input fields
-        if(x < maxField){
-            x++; //Increment field counter
-            $('.add_image').append(fieldHTML); //Add field html
-        }
-    });
-
-    //Once remove button is clicked
-    $('.add_image').on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent().parent('div').remove(); //Remove field html
-        x--; //Decrement field counter
-    });
-
-     //To remove whole images division
-    $(wrapper).on('click', '.remove_button_1', function(e){
-        e.preventDefault();
-        $('.images').remove(); //Remove div named images
-    });
+//Once add button is clicked
+$(addButton).click(function(){
+    //Check maximum number of input fields
+    if(x < maxField){
+        x++; //Increment field counter
+        $('.add_image').append(fieldHTML); //Add field html
+    }
 });
 
+//Once remove button is clicked
+$('.add_image').on('click', '.remove_button', function(e){
+    e.preventDefault();
+    $(this).parent().parent('div').remove(); //Remove field html
+    x--; //Decrement field counter
+});
+
+$('.set').on('click', function(){
+    $('.images').css({'display':'block'});
+});
+
+ //To remove whole images division
+$(wrapper).on('click', '.remove_button_1', function(e){
+    e.preventDefault();
+    $('.images').css({'display':'none'}); //hide div named images
+});
+
+//end multiple file uploading
+
 //to get sub categories of parent category
-function get_category()
+function get_sub_categories()
 {
     var id = $( "#category_id option:selected" ).val();
     var category = $( "#category_id option:selected" ).text();

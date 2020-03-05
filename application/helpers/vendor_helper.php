@@ -3,7 +3,7 @@
 /**
  * Gets the vendor url.
  *
- * @param  string  $url  The url
+ * @param  string  $url  The url.
  *
  * @return string  The vendor url.
  */

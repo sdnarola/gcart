@@ -24,8 +24,8 @@
       <!-- Panel heading -->
       <div class="panel-heading mt-20">
           <div class="heading-elements">
-            <a href="<?php echo base_url('vendor/products/add'); ?>" class="btn btn-primary"><?php _el('add_new');?><i class="icon-plus-circle2 position-right"></i></a>
-            <a href="javascript:delete_selected();" class="btn btn-danger" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
+            <a href="<?php echo base_url('vendor/products/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new');?><i class="icon-plus-circle2 position-right"></i></a>
+            <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
           </div>
       </div>
       <!-- /Panel heading -->
@@ -40,29 +40,46 @@
             <th width="20%"><?php _el('name');?></th>
             <th width="20%"><?php _el('category');?></th>
             <th width="20%"><?php _el('brand');?></th>
-            <th width="10%"><?php _el('price');?></th>
+            <th width="15%"><?php _el('price');?></th>
             <th width="8%" class="text-center"><?php _el('status');?></th>
-            <th width="20%" class="text-center"><?php _el('actions');?></th>
+            <th width="15%" class="text-center"><?php _el('actions');?></th>
           </tr>
         </thead>
         <tbody>
-            <tr>
+            <?php
+
+            	foreach ($products as $key => $product)
+            	{
+            	?>
+            <tr id="<?php echo $product['id']; ?>">
                 <td>
-                  <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo 'p-id'; ?>">
+                  <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $product['id']; ?>">
                 </td>
-                <td>fgfg</td>
-                <td>fgfg</td>
-                <td>fgfg</td>
-                <td>fgfg</td>
+                <td><?php echo ucwords($product['name']); ?></td>
+                <td><?php echo ucwords(get_category_name($product['category_id'])); ?></td>
+                <td><?php echo ucwords(get_brand_name($product['brand_id'])); ?></td>
+                <td><?php echo '&#8377;'.'. '.$product['price']; ?></td>
                 <td class="text-center switchery-sm">
-                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="" >
+                    <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $product['id']; ?>"
+<?php
+
+		if ($product['is_active'] == 1)
+		{
+			echo 'checked';}
+
+	?>>
                 </td>
                 <td class="text-center">
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('vendor/users/detail/') ?>" id="" class="text-warning"><i class="icon-info3"></i></a>
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('vendor/users/edit/') ?>" id="" class="text-info"><i class="icon-pencil7"></i></a>
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record();" class="text-danger delete" id=""><i class=" icon-trash"></i></a>
+                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('vendor/products/details/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-warning"><i class="icon-info3"></i></a>
+
+                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('vendor/products/edit/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
+
+                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $product['id']; ?>);" class="text-danger delete" id="<?php echo $product['id']; ?>"><i class=" icon-trash"></i></a>
                 </td>
             </tr>
+        <?php }
+
+        ?>
         </tbody>
       </table>
     </div>
@@ -86,21 +103,6 @@ $(function() {
     //add class to style style datatable select box
     $('div.dataTables_length select').addClass('datatable-select');
  });
-
-$("#productform").validate({
-    rules: {
-        name:
-        {
-            required: true,
-        },
-    },
-    messages: {
-        name: {
-            required:"<?php _el('please_enter_', _l('product_name'))?>",
-        },
-    }
-});
-
 
 var BASE_URL = "<?php echo base_url(); ?>";
 

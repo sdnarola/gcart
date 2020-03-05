@@ -3,7 +3,8 @@
 /**
  * get category name
  * @param  int 		$id 	category id
- * @return string  			name of category
+ *
+ * @return string 	name of category.
  */
 function get_category_name($id)
 {
@@ -17,7 +18,8 @@ function get_category_name($id)
 /**
  * get sub category name
  * @param  int 		$id 	sub category id
- * @return string  			name of sub category
+ *
+ * @return string 	name of sub category.
  */
 function get_sub_category_name($id)
 {

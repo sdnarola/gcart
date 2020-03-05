@@ -280,3 +280,11 @@ function log_activity($description, $user_id = '')
 		$CI->activity_log->insert($data);
 	}
 }
+
+function pro_images($id)
+{
+	$CI = &get_instance();
+	$CI->load->model('product_model', 'products');
+
+	return $CI->products->get_images($id);
+}

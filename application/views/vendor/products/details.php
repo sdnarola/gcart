@@ -10,10 +10,10 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
+                <a href="<?php echo base_url('vendor/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
             <li>
-                <a href="<?php echo base_url('admin/products'); ?>"><?php _el('products');?></a>
+                <a href="<?php echo base_url('vendor/products'); ?>"><?php _el('products');?></a>
             </li>
             <li class="active"><?php _el('detail');?></li>
         </ul>

@@ -42,7 +42,7 @@
                 <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
-                    <form action="<?php echo base_url('admin/products/add'); ?>" id="product_form" method="POST">
+                    <form action="<?php echo base_url('vendor/products/add'); ?>" id="product_form" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
@@ -53,8 +53,17 @@
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('brand');?>:</label>
                                 <select class="form-control" name="brand_id" id="brand_id" >
-                                    <option value="" readonly >----- Select Brand -----</option>
-                                    <option value='2'>abc</option>
+                                    <option value="0" selected readonly disabled >----- Select Brand -----</option>
+<?php
+
+	foreach ($brands as $key => $brand)
+	{
+	?>
+    <option value="<?php echo $brand['id']; ?>" name="brand"><?php echo ucwords($brand['name']); ?></option>
+<?php
+	}
+
+?>
                                 </select>
                             </div>
                         </div>
@@ -62,17 +71,26 @@
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('category');?>:</label>
-                                <select class="form-control" name="category_id" id="category_id" >
-                                    <option value="" readonly >----- Select Category -----</option>
-                                    <option value='1'>abc</option>
+                                <select class="form-control" name="category_id" id="category_id" onchange="get_sub_categories();">
+                                    <option value="0" selected readonly disabled>----- Select Category -----</option>
+<?php
+
+	foreach ($categories as $key => $category)
+	{
+	?>
+    <option value="<?php echo $category['id']; ?>"><?php echo ucwords($category['name']); ?></option>
+<?php
+	}
+
+?>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('sub_category');?>:</label>
                                 <select class="form-control" name="sub_category_id" id="sub_category_id" >
-                                    <option value="" readonly >----- Select Sub Category -----</option>
-                                    <option value='2'>abc</option>
+                                    <option value="0" selected readonly disabled >----- Select Sub Category -----</option>
+
                                 </select>
                             </div>
                         </div>
@@ -109,17 +127,25 @@
                                 <input type="file" name="thumb_image" id="thumb_image" class="form-control">
                             </div>
                         </div>
+
                         <!-- for multiple images upload -->
-                        <!-- <div class="row images field_wrapper">
+                        <div class="row images field_wrapper" style="display: none;">
                             <div class="form-group col-md-12 ">
-                                <a href="javascript:void(0);" class="remove_button_1" title="remove Image"><i class="icon-minus-circle2"></i></a>
+                                <a href="javascript:void(0);" class="remove_button_1" title="remove Image"><i class="icon-minus-circle2"></i></a>&nbsp;
                                 <label><?php _el('image');?>(s):</label>
                                 <div class="row add_image">
                                     <div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div>
-                                    <div class="col-md-1 text-right"><a href="javascript:void(0);" class="add_button" title="Add Image"><i class="icon-plus-circle2 mt-10"></i></a></div>
+                                    <div class="col-md-1 text-right"><a href="javascript:void(0);" class="add_button" title="Add Image"><i class="icon-file-plus2 mt-10"></i></a></div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <a href="javascript:void(0);" class="btn btn-sm btn-primary set"><i class="icon-file-plus position-left"></i>Set Images</a>
+                            </div>
+                        </div>
+                        <!-- End multiple file upload -->
 
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -147,10 +173,16 @@
                                 <label><?php _el('related_products');?></label>
                                 <div class="multi-select-full">
                                     <select class="multiselect" multiple="multiple" name="related_products[]" id="related_products">
-                                        <option value="cheese">Cheese</option>
-                                        <option value="tomatoes">Tomatoes</option>
-                                        <option value="mozarella">Mozzarella</option>
-                                        <option value="mushrooms">Mushrooms</option>
+<?php
+
+	foreach ($products as $key => $product)
+	{
+	?>
+    <option value="<?php echo $product['id']; ?>" name="product"><?php echo ucwords($product['name']); ?></option>
+<?php
+	}
+
+?>
                                     </select>
                                 </div>
                             </div>
@@ -239,37 +271,69 @@ $("#product_form").validate({
     },
 });
 
+/**
+ * enable multiple file uploading
+ */
+var maxField = 4; //Input fields increment limitation
+var addButton = $('.add_button'); //Add button selector
+var wrapper = $('.field_wrapper'); //Input field wrapper
+var fieldHTML = '<div><div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div><div class="col-md-1 text-right"><a href="javascript:void(0);" title="Remove Image" class="remove_button"><i class="icon-file-minus2 mt-10"></i></a></div></div>'; //New input field html
+var x = 1; //Initial field counter is 1
 
-$(document).ready(function(){
-    var maxField = 10; //Input fields increment limitation
-    var addButton = $('.add_button'); //Add button selector
-    var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<div><div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div><div class="col-md-1 text-right"><a href="javascript:void(0);" title="Remove Image" class="remove_button"><i class="icon-minus-circle2 mt-10"></i></a></div></div>'; //New input field html
-    var x = 1; //Initial field counter is 1
-
-    //Once add button is clicked
-    $(addButton).click(function(){
-        //Check maximum number of input fields
-        if(x < maxField){
-            x++; //Increment field counter
-            $('.add_image').append(fieldHTML); //Add field html
-        }
-    });
-
-    //Once remove button is clicked
-    $('.add_image').on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent().parent('div').remove(); //Remove field html
-        x--; //Decrement field counter
-    });
-
-     //To remove whole images block
-    $(wrapper).on('click', '.remove_button_1', function(e){
-        e.preventDefault();
-        $('.images').remove(); //Remove div named images
-    });
+//Once add button is clicked
+$(addButton).click(function(){
+    //Check maximum number of input fields
+    if(x < maxField){
+        x++; //Increment field counter
+        $('.add_image').append(fieldHTML); //Add field html
+    }
 });
 
+//Once remove button is clicked
+$('.add_image').on('click', '.remove_button', function(e){
+    e.preventDefault();
+    $(this).parent().parent('div').remove(); //Remove field html
+    x--; //Decrement field counter
+});
 
+$('.set').on('click', function(){
+    $('.images').css({'display':'block'});
+});
+
+ //To remove whole images division
+$(wrapper).on('click', '.remove_button_1', function(e){
+    e.preventDefault();
+    $('.images').css({'display':'none'}); //hide div named images
+});
+
+//end multiple file uploading
+
+//to get sub categories of parent category
+function get_sub_categories()
+{
+    var id = $( "#category_id option:selected" ).val();
+    var category = $( "#category_id option:selected" ).text();
+    $( ".sub_category").remove();
+    $.ajax({
+        type:'post',
+        url:BASE_URL+'vendor/products/get_sub_categories/'+id,
+        data: { id:id },
+        dataType: 'json',
+        success:function(response){
+            if(response != null)
+            {
+                var len = response.length;
+                for( var i = 0; i<len; i++){
+                    var id = response[i]['id'];
+                    var name = response[i]['name'];
+                    $("#sub_category_id").append("<option value='"+id+"' class='sub_category'>"+name.charAt(0).toUpperCase() + name.substr(1).toLowerCase()+"</option>");
+                }
+            }
+            else{
+                $("#sub_category_id").append("<option value='0' selected>No Sub Category</option>");
+            }
+
+        }
+    });
+}
 </script>
-

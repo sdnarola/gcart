@@ -253,7 +253,7 @@ switches.forEach(function(html) {
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown dropdown-user">
 					<a class="dropdown-toggle" data-toggle="dropdown">
-						<span><?php echo get_loggedin_info('vendorname'); ?></span>
+						<span><?php echo get_loggedin_info('vendor_name'); ?></span>
 						<i class="caret"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
@@ -278,7 +278,7 @@ switches.forEach(function(html) {
 							<div class="media">
 								<div class="media-body">
 									<span class="media-heading text-semibold">
-										<?php echo _l('welcome').'&nbsp;'.get_loggedin_info('vendorname').'&nbsp;'; ?>
+										<?php echo _l('welcome').'&nbsp;'.get_loggedin_info('vendor_name').'&nbsp;'; ?>
 										<a style="color: white;" href="<?php echo vendor_url('authentication/logout'); ?>" align="padding-right"><i class="icon-switch2" data-popup="tooltip" data-placement="top"  title="<?php _el('logout')?>"></i></a>
 									</span>
 								</div>

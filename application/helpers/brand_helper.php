@@ -3,7 +3,8 @@
 /**
  * get brand name
  * @param  int 		$id 	brand id
- * @return string  			name of brand
+ *
+ * @return string 	name of brand.
  */
 function get_brand_name($id)
 {

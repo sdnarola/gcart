@@ -118,7 +118,7 @@ class Authentication_model extends MY_Model
 				return ['vendor_inactive' => true, 'id' => $vendor->id];
 			}
 
-			if ($vendor->is_admin != 1 && $vendor->is_email_verified == 0)
+			if ($vendor->is_email_verified == 0)
 			{
 				return ['email_unverified' => true, 'id' => $vendor->id];
 			}
@@ -126,8 +126,7 @@ class Authentication_model extends MY_Model
 			$vendor_data = [
 				'vendor_id'        => $vendor->id,
 				'email'            => $vendor->email,
-				'vendorname'       => ucwords($vendor->firstname.' '.$vendor->lastname),
-				'is_admin'         => $vendor->is_admin,
+				'vendor_name'      => ucwords($vendor->firstname.' '.$vendor->lastname),
 				'vendor_logged_in' => true
 			];
 

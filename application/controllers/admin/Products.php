@@ -32,31 +32,31 @@ class Products extends Admin_Controller
 		if ($this->input->post())
 		{
 			$data                     = $this->input->post();
+			$data['vendor_id']        = 0;
 			$data['related_products'] = serialize($this->input->post('related_products'));
 
 			if ($_FILES['thumb_image']['name'] != null)
 			{
-				//upload start
-				$config['upload_path']   = 'assets/uploads/';
-				$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG';
-				$config['max_size']      = 10000;
-				$config['file_name']     = time().'-'.$_FILES['thumb_image']['name'];
+				$upload = image_upload();
 
-				$this->load->library('upload', $config);
-
-				if (!$this->upload->do_upload('thumb_image'))
+				if (!$upload)
 				{
-					$error = array('error' => $this->upload->display_errors());
-					set_alert('danger', ucwords($error['error']));
 					redirect('admin/products');
 				}
-				else
+
+				$data['thumb_image'] = $upload['thumb_image'];
+			}
+
+			if (!empty($_FILES['image']['name'][0]))
+			{
+				$multi_upload = multiple_image_upload();
+
+				if (!$multi_upload)
 				{
-					$UploadData          = $this->upload->data();
-					$data['thumb_image'] = $config['upload_path'].$UploadData['file_name'];
+					redirect('admin/products');
 				}
 
-				//upload ends
+				$data['images'] = $multi_upload['images'];
 			}
 
 			$insert = $this->products->insert($data);
@@ -96,27 +96,26 @@ class Products extends Admin_Controller
 
 				if ($_FILES['thumb_image']['name'] != null)
 				{
-					//upload start
-					$config['upload_path']   = 'assets/uploads/';
-					$config['allowed_types'] = 'gif|jpg|png|jpeg|JPG';
-					$config['max_size']      = 10000;
-					$config['file_name']     = time().'-'.$_FILES['thumb_image']['name'];
+					$upload = image_upload();
 
-					$this->load->library('upload', $config);
-
-					if (!$this->upload->do_upload('thumb_image'))
+					if (!$upload)
 					{
-						$error = array('error' => $this->upload->display_errors());
-						set_alert('danger', ucwords($error['error']));
 						redirect('admin/products');
 					}
-					else
+
+					$data['thumb_image'] = $upload['thumb_image'];
+				}
+
+				if (!empty($_FILES['image']['name'][0]))
+				{
+					$multi_upload = multiple_image_upload();
+
+					if (!$multi_upload)
 					{
-						$UploadData          = $this->upload->data();
-						$data['thumb_image'] = $config['upload_path'].$UploadData['file_name'];
+						redirect('admin/products');
 					}
 
-					//upload ends
+					$data['images'] = $multi_upload['images'];
 				}
 
 				$update = $this->products->update($id, $data);
@@ -147,9 +146,9 @@ class Products extends Admin_Controller
 		}
 	}
 
-/**
- * Toggles the porduct status to Active or Inactive
- */
+	/**
+	 * Toggles the porduct status to Active or Inactive
+	 */
 	public function update_status()
 	{
 		$product_id = $this->input->post('product_id');
@@ -217,15 +216,13 @@ class Products extends Admin_Controller
 		{
 			$data['product'] = $this->products->get($id);
 
-			if ($data['product'])
-			{
-				$data['content'] = $this->load->view('admin/products/details', $data, TRUE);
-				$this->load->view('admin/layouts/index', $data);
-			}
-			else
+			if (!$data['product'])
 			{
 				redirect('admin/products');
 			}
+
+			$data['content'] = $this->load->view('admin/products/details', $data, TRUE);
+			$this->load->view('admin/layouts/index', $data);
 		}
 		else
 		{
