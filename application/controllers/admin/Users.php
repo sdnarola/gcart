@@ -31,47 +31,32 @@ class Users extends Admin_Controller
 	 *
 	 * @param int  $id  The user id
 	 */
-	public function edit($id = '')
-	{
-		$this->set_page_title(_l('users').' | '._l('edit'));
+	public function edit($id = '') {
+		$this->set_page_title(_l('users') . ' | ' . _l('edit'));
 
-		if ($this->input->post())
+		if ($this->input->post()) 
 		{
-			print_r($this->input->post());
-			echo $id;
 
 			$data = array
 				(
 				'firstname' => $this->input->post('firstname'),
-				'lastname'  => $this->input->post('lastname'),
-				'email'     => $this->input->post('email'),
-				'mobile'    => $this->input->post('mobile'),
-				'is_active' => ($this->input->post('is_active')) ? 1 : 0
+				'lastname' => $this->input->post('lastname'),
+				'email' => $this->input->post('email'),
+				'mobile' => $this->input->post('mobile'),
+				'is_active' => ($this->input->post('is_active')) ? 1 : 0,
 			);
 
 			$result1 = $this->users->edit($data, $id);
 
-			if ($result1)
-			{
+			if ($result1) {
 				set_alert('success', _l('_updated_successfully', _l('user')));
 
 				redirect('admin/users');
 			}
-		}
-		else
-		{
+		} else {
 			$data['users'] = $this->users->show($id);
-
-			if ($data['users'][0]['profile_image'])
-			{
-				$path         = $record['profile_image'];
-				$data['path'] = $path;
-			}
-			else
-			{
-				$data['path'] = 'C:/wamp64/www/ci/Uploads/users/default_img.png';
-			}
-
+			$data['path'] = $data['users'][0]['profile_image'];
+		
 			$data['content'] = $this->load->view('admin/users/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
@@ -108,6 +93,7 @@ class Users extends Admin_Controller
 		//get image path from database
 		$record = $this->users->get($id);
 
+
 		if ($record['profile_image'])
 		{
 			$path         = $record['profile_image'];
@@ -117,6 +103,8 @@ class Users extends Admin_Controller
 		{
 			$data['path'] = 'C:/wamp64/www/ci/Uploads/default_img.png';
 		}
+		$data['path'] = $record['profile_image'];
+
 
 		$data['content'] = $this->load->view('admin/users/details', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);

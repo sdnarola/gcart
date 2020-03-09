@@ -69,6 +69,26 @@ $lang['close']           = 'Close';
 $lang['no_cancel_it']    = 'No, Cancel It';
 $lang['yes_i_am_sure']   = 'Yes, I am sure';
 $lang['click_to_sort']   = 'Click to sort';
+$lang['search'] = 'Search';
+$lang['id'] = 'ID';
+$lang['name'] = 'Name';
+$lang['status'] = 'Status';
+$lang['active'] = 'Active';
+$lang['inactive'] = 'Inactive';
+$lang['description'] = 'Description';
+$lang['created_at'] = 'Created at';
+$lang['actions'] = 'Actions';
+$lang['confirm'] = 'Confirm';
+$lang['save'] = 'Save';
+$lang['back'] = 'Back';
+$lang['close'] = 'Close';
+$lang['no_cancel_it'] = 'No, Cancel It';
+$lang['yes_i_am_sure'] = 'Yes, I am sure';
+$lang['click_to_sort'] = 'Click to sort';
+$lang['number'] = 'Number';
+$lang['total'] = 'Total';
+$lang['details'] = 'Details';
+$lang['ago'] = 'ago';
 
 #Login/Logout/Forgot Password/Change Password/Profile
 #----------------------------------------------------
@@ -96,6 +116,18 @@ $lang['profile']          = 'Profile';
 $lang['edit_profile']     = 'Edit Profile';
 $lang['login']            = 'Log In';
 $lang['logout']           = 'Log Out';
+$lang['repeat_password'] = 'Repeat Password';
+$lang['reset_password'] = 'Reset Password';
+$lang['change_password'] = 'Change Password';
+$lang['remember_me'] = 'Remember Me';
+$lang['forgot_password'] = 'Forgot Password?';
+$lang['profile'] = 'Profile';
+$lang['edit_profile'] = 'Edit Profile';
+$lang['login'] = 'Log In';
+$lang['logout'] = 'Log Out';
+$lang['registration'] = 'Registration';
+
+
 #Dashboard
 #---------
 $lang['dashboard'] = 'Dashboard';
@@ -119,12 +151,61 @@ $lang['users']          = 'Users';
 $lang['add_user']       = 'Add User';
 $lang['edit_user']      = 'Edit User';
 $lang['user_details']   = 'User Details';
+$lang['id'] = 'ID';
+$lang['name'] = 'Name';
+$lang['firstname'] = 'Firstname';
+$lang['lastname'] = 'Lastname';
+$lang['contact_no'] = 'Contact No';
+$lang['mobile_no'] = 'Mobile No';
+$lang['last_login'] = 'Last Login';
+$lang['address1'] = 'Address1';
+$lang['address2'] = 'Address2';
+$lang['pincode'] = 'Pincode';
+$lang['city'] = 'City';
+$lang['state'] = 'State';
+$lang['user'] = 'User';
+$lang['users'] = 'Users';
+$lang['add_user'] = 'Add User';
+$lang['edit_user'] = 'Edit User';
 $lang['email_varified'] = 'Email Verified';
 $lang['varified']       = 'Verified';
 $lang['not_varified']   = 'NOT Verified';
 $lang['img_alt_msg']    = "profile image can't loaded";
 
-#orders
+#vendors
+#-------
+$lang['vendors'] = 'Vendors';
+$lang['vendor'] = 'Vendor';
+$lang['list'] = 'List';
+$lang['store'] = 'Store';
+$lang['shop'] = 'Shop';
+$lang['address'] = 'Address';
+$lang['owner'] = 'Owner';
+$lang['logo'] = 'Logo';
+$lang['image'] = 'Image';
+$lang['subscription_plan'] = 'Subscription Plan';
+$lang['join_date'] = 'Joining Date';
+$lang['expired'] = 'Expired';
+
+#Subscriptions
+#-------------
+$lang['subscriptions'] = 'Subscriptions';
+$lang['subscription'] = 'Subscription';
+$lang['title'] = 'Title';
+$lang['allowed'] = 'Allowed';
+$lang['duration'] = 'Duration';
+$lang['cost'] = 'Cost';
+
+#Products
+#---------
+$lang['products'] = 'Products';
+$lang['products_added'] = "Products Added";
+$lang['product'] = 'Product';
+$lang['stock'] = 'Stock';
+$lang['price'] = 'Price';
+$lang['limitations'] = 'Limitations';
+
+#Orders
 #--------
 $lang['order_number']    = 'Order Number';
 $lang['purchase_date']   = 'Purchase Date';
