@@ -29,6 +29,11 @@ $lang['close'] = 'Close';
 $lang['no_cancel_it'] = 'No, Cancel It';
 $lang['yes_i_am_sure'] = 'Yes, I am sure';
 $lang['click_to_sort'] = 'Click to sort';
+$lang['number'] = 'Number';
+$lang['total'] = 'Total';
+$lang['details'] = 'Details';
+$lang['ago'] = 'ago';
+
 
 #Login/Logout/Forgot Password/Change Password/Profile
 #----------------------------------------------------
@@ -46,6 +51,10 @@ $lang['profile'] = 'Profile';
 $lang['edit_profile'] = 'Edit Profile';
 $lang['login'] = 'Log In';
 $lang['logout'] = 'Log Out';
+$lang['registration'] = 'Registration';
+
+
+
 
 #Dashboard
 #---------
@@ -69,13 +78,45 @@ $lang['user'] = 'User';
 $lang['users'] = 'Users';
 $lang['add_user'] = 'Add User';
 $lang['edit_user'] = 'Edit User';
-$lang['user_details'] = 'User Details';
 $lang['email_varified'] = 'Email Verified';
 $lang['varified'] = 'Verified';
 $lang['not_varified'] = 'NOT Verified';
 $lang['img_alt_msg']	= "profile image can't loaded";
 
-#orders
+#vendors
+#-------
+$lang['vendors'] = 'Vendors';
+$lang['vendor'] = 'Vendor';
+$lang['list'] = 'List';
+$lang['store'] = 'Store';
+$lang['shop'] = 'Shop';
+$lang['address'] = 'Address';
+$lang['owner'] = 'Owner';
+$lang['logo'] = 'Logo';
+$lang['image'] = 'Image';
+$lang['subscription_plan'] = 'Subscription Plan';
+$lang['join_date'] = 'Joining Date';
+$lang['expired'] = 'Expired';
+
+#Subscriptions
+#-------------
+$lang['subscriptions'] = 'Subscriptions';
+$lang['subscription'] = 'Subscription';
+$lang['title'] = 'Title';
+$lang['allowed'] = 'Allowed';
+$lang['duration'] = 'Duration';
+$lang['cost'] = 'Cost';
+
+#Products
+#---------
+$lang['products'] = 'Products';
+$lang['products_added'] = "Products Added";
+$lang['product'] = 'Product';
+$lang['stock'] = 'Stock';
+$lang['price'] = 'Price';
+$lang['limitations'] = 'Limitations';
+
+#Orders
 #--------
 $lang['order_number'] = 'Order Number';
 $lang['purchase_date'] = 'Purchase Date';

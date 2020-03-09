@@ -37,7 +37,7 @@
     $file = basename($path);
 ?>
                     <div class="user-image">
-                    <img src="<?php echo base_url() . 'Uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
+                    <img src="<?php echo base_url() . 'assets/Uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
                 </div>
                 </div>
                 <!-- table shows the user's details -->
@@ -178,13 +178,13 @@
                 if ($record['order_status'] == 0) 
                 {
                 		$status = _l('pending');
-                } else if ($record['order_status'] == 1) 
+                } elseif ($record['order_status'] == 1) 
                 {
-                        $status = _l('completed');
-                } else if ($record['order_status'] == 2) 
+                        $status = _l('processing');
+                } elseif ($record['order_status'] == 2) 
                 {
-                		$status = _l('processing');
-                } else 
+                		$status = _l('completed');
+                } elseif($record['order_status'] == 3)
                 {
                 		$status = _l('declined');
                 }

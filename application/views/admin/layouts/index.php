@@ -88,6 +88,10 @@ border-radius: 3px;
 
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
 
+<!-- to load boots strap switch on/off -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.js" data-turbolinks-track="true"></script>
+
+
 
 <script type="text/javascript">
 
@@ -173,13 +177,11 @@ $.extend($.fn.dataTable.defaults, {
 	            }
             },
             buttons: [
-            'copyHtml5',
-            'csvHtml5',
             'pdfHtml5'
             ]
         },
-        "pageLength": 25,
-        "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ]
+        "pageLength": 10,
+        "lengthMenu": [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
     });
 
 
@@ -338,7 +340,7 @@ if (is_active_controller('vendors')) {
 
 ?>
 										 >
-											<a href="<?php echo base_url('admin/vendors'); ?>">
+											<a href="<?php echo base_url('admin/subscriptions/'); ?>">
 												<span>Subscriptions</span>
 											</a>
 										</li>
@@ -350,7 +352,7 @@ if (is_active_controller('vendors')) {
 
 ?>
 										 >
-											<a href="<?php echo base_url('admin/vendors'); ?>">
+											<a href="<?php echo base_url('admin/vendors/'); ?>">
 												<span>List</span>
 											</a>
 										</li>
@@ -506,7 +508,7 @@ if (is_active_controller('settings')) {
 				<!-- Footer -->
 				<div class="footer text-muted text-center pl-20">
 					<?php echo date('Y') ?>. <a href="#">Admin Panel</a> by <a target="_blank">
-					<?php echo "get_settings('company_name')"; ?></a>
+					<?php echo get_settings('company_name'); ?></a>
 				</div>
 				<!-- /Footer -->
 			</div>

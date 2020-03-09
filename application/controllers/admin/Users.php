@@ -31,10 +31,8 @@ class Users extends Admin_Controller {
 	public function edit($id = '') {
 		$this->set_page_title(_l('users') . ' | ' . _l('edit'));
 
-		if ($this->input->post()) {
-
-			print_r($this->input->post());
-			echo $id;
+		if ($this->input->post()) 
+		{
 
 			$data = array
 				(
@@ -54,14 +52,8 @@ class Users extends Admin_Controller {
 			}
 		} else {
 			$data['users'] = $this->users->show($id);
-
-			if ($data['users'][0]['profile_image']) {
-				$path = $record['profile_image'];
-				$data['path'] = $path;
-			} else {
-				$data['path'] = "C:/wamp64/www/ci/Uploads/users/default_img.png";
-			}
-
+			$data['path'] = $data['users'][0]['profile_image'];
+		
 			$data['content'] = $this->load->view('admin/users/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
@@ -93,14 +85,7 @@ class Users extends Admin_Controller {
 
 		//get image path from database
 		$record = $this->users->get($id);
-
-		if ($record['profile_image']) 
-		{
-			$path = $record['profile_image'];
-			$data['path'] = $path;
-		} else {
-			$data['path'] = "C:/wamp64/www/ci/Uploads/default_img.png";
-		}
+		$data['path'] = $record['profile_image'];
 
 		$data['content'] = $this->load->view('admin/users/details', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
