@@ -1,4 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
+
+// =========================== Bhavik ==================================//
+
 /**
  * Upload single image file
  *
@@ -79,5 +82,7 @@ function multiple_image_upload()
 
 	return $data;
 }
+
+// =========================== Bhavik ==================================//
 
 ?>

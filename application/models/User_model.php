@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_model extends MY_Model {
+class User_model extends MY_Model
+{
 	/**
 	 * @var boolean
 	 */
@@ -15,7 +16,8 @@ class User_model extends MY_Model {
 	/**
 	 * Constructor for the class
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 	}
 
@@ -24,8 +26,9 @@ class User_model extends MY_Model {
 	 *
 	 * @return     <object>  The users.
 	 */
-	public function get_users() {
-		$array = array('role_id' => 0, 'is_deleted' => 0);
+	public function get_users()
+	{
+		$array = array('is_admin' => 0, 'is_deleted' => 0);
 
 		$this->db->where($array);
 		$data = $this->db->get('users')->result();
@@ -40,14 +43,14 @@ class User_model extends MY_Model {
 	 *
 	 * @return     <array>  ( The user's details like name,address etc. )
 	 */
-	public function show($id) {
-		$sql = "SELECT users.*,users_address.address_1,users_address.address_2,users_address.city,users_address.state,users_address.pincode,users_address.state FROM users INNER JOIN users_address ON users.id = users_address.users_id wHERE users.id=$id ";
+	public function show($id)
+	{
+		$sql   = "SELECT users.*,users_address.address_1,users_address.address_2,users_address.city,users_address.state,users_address.pincode,users_address.state FROM users INNER JOIN users_address ON users.id = users_address.users_id wHERE users.id=$id ";
 		$query = $this->db->query($sql);
-	
-		return $query->result_array();
 
+		return $query->result_array();
 	}
-	
+
 	/**
 	 * { update particular user's details }
 	 *
@@ -56,8 +59,24 @@ class User_model extends MY_Model {
 	 *
 	 * @return     <bool>  ( shows update sucessfully or not )
 	 */
-	public function edit($data, $id) {
+	public function edit($data, $id)
+	{
 		$result = $this->update($id, $data);
+
 		return $result;
+	}
+
+	/**
+	 * Get user's address
+	 * @param  int  	$id    		The id of the user.
+	 *
+	 * @return mixed 	$address 	The Address Information.
+	 */
+	public function get_user_address($id)
+	{
+		$this->_table = 'users_address';
+		$address      = $this->get($id);
+
+		return $address;
 	}
 }

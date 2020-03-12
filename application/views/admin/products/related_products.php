@@ -1,6 +1,10 @@
-<select class="multiselect" multiple="multiple" name="related_products[]" id="related_products">
+<select class="multiselect-filtering" multiple="multiple" name="related_products[]" id="related_products">
 <?php
 	$related_products = unserialize($product['related_products']);
+	array_multisort(array_map(function ($product)
+	{
+		return $product['name'];
+	}, $products), SORT_ASC, $products);
 
 	foreach ($products as $key => $product)
 	{

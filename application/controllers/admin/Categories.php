@@ -46,9 +46,20 @@ class Categories extends Admin_Controller
 		}
 	}
 
+// =========================== Bhavik ==================================//
+
+	/**
+	 * Get sub categories of parent category.
+	 *
+	 * @param  int  	$id  	Id of parent category.
+	 *
+	 * @return mixed 			array of json-data
+	 */
 	public function get_sub_categories($id)
 	{
 		$data = $this->categories->get_sub_categories($id);
 		echo json_encode($data);
 	}
+
+// =========================== Bhavik ==================================//
 }

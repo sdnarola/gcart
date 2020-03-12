@@ -1,5 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
+// =========================== Bhavik ==================================//
+
 /**
  * Gets the vendor url.
  *
@@ -75,5 +77,7 @@ function get_vendor_info($id, $info = '')
 		return '-----';
 	}
 }
+
+// =========================== Bhavik ==================================//
 
 ?>

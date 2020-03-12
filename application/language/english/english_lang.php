@@ -21,6 +21,7 @@ $lang['id']                = 'ID';
 $lang['name']              = 'Name';
 $lang['image']             = 'Image';
 $lang['tags']              = 'Tags';
+$lang['total']             = 'Total';
 $lang['thumb_image']       = 'Thumbnail Image';
 $lang['status']            = 'Status';
 $lang['price']             = 'Price';
@@ -109,6 +110,7 @@ $lang['lastname']       = 'Lastname';
 $lang['contact_no']     = 'Contact No';
 $lang['mobile_no']      = 'Mobile No';
 $lang['last_login']     = 'Last Login';
+$lang['address']        = 'Address';
 $lang['address1']       = 'Address1';
 $lang['address2']       = 'Address2';
 $lang['pincode']        = 'Pincode';
@@ -126,21 +128,37 @@ $lang['img_alt_msg']    = "profile image can't loaded";
 
 #orders
 #--------
-$lang['order_number']    = 'Order Number';
-$lang['purchase_date']   = 'Purchase Date';
-$lang['amount']          = 'Amount';
-$lang['ordered']         = 'Ordered';
-$lang['pending']         = 'Pending';
-$lang['processing']      = 'Processing';
-$lang['completed']       = 'Completed';
-$lang['decline']         = 'Decline';
-$lang['products_orders'] = 'Products Orders';
+$lang['order']            = 'Order';
+$lang['orders']           = 'Orders';
+$lang['edit_order']       = 'Edit Order';
+$lang['order_details']    = 'Order Details';
+$lang['order_number']     = 'Order Number';
+$lang['order_date']       = 'Order Date';
+$lang['total_products']   = 'Total Products';
+$lang['total_amount']     = 'Total Amount';
+$lang['grand_total']      = 'Grand Total';
+$lang['amount']           = 'Amount';
+$lang['ordered']          = 'Ordered';
+$lang['order_invoice']    = 'Order Invoice';
+$lang['print_invoice']    = 'Print Invoice';
+$lang['invoice']          = 'Invoice';
+$lang['invoice_number']   = 'Invoice Number';
+$lang['pending']          = 'Pending';
+$lang['processing']       = 'Processing';
+$lang['completed']        = 'Completed';
+$lang['decline']          = 'Decline';
+$lang['products_ordered'] = 'Products Ordered';
+$lang['payment_method']   = 'Payment Method';
+$lang['payment_status']   = 'Payment Status';
+$lang['billing_details']  = 'Billing Details';
 
 #Vendors
 #-----
-$lang['name']    = 'Name';
-$lang['vendor']  = 'Vendor';
-$lang['vendors'] = 'Vendors';
+$lang['name']          = 'Name';
+$lang['vendor']        = 'Vendor';
+$lang['vendors']       = 'Vendors';
+$lang['vendor_status'] = 'Vendor Status';
+$lang['shop_name']     = 'Shop Name';
 
 #Projects
 #--------
@@ -168,7 +186,7 @@ $lang['products']       = 'Products';
 $lang['product_name']   = 'Product Name';
 $lang['add_product']    = 'Add Product';
 $lang['edit_product']   = 'Edit Product';
-$lang['product_detail'] = 'Product`s Detail';
+$lang['product_detail'] = 'Product Detail';
 
 #Brands
 #----------
@@ -177,13 +195,6 @@ $lang['brands']     = 'Brands';
 $lang['brand_name'] = 'Brand Name';
 $lang['add_brand']  = 'Add Brand';
 $lang['edit_brand'] = 'Edit Brand';
-
-#Orders
-#----------
-$lang['order']        = 'Order';
-$lang['orders']       = 'Orders';
-$lang['edit_order']   = 'Edit Order';
-$lang['order_detail'] = 'Order Detail';
 
 #Roles
 #-----
@@ -244,10 +255,14 @@ $lang['multiple_deletion_alert']    = 'Are you sure you want to delete selected 
 $lang['multiple_recovery_alert']    = 'You will not be able to recover these records after deletion.';
 $lang['select_before_delete_alert'] = 'Please select some records to delete.';
 $lang['access_denied']              = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
+$lang['denied']                     = 'You do not have rights to change this.';
 
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------
+$lang['customer_email']                       = 'Customer Email';
+$lang['customer_name']                        = 'Customer Name';
 $lang['login_to_your_account']                = 'Login to your account';
+$lang['login_as_vendor']                      = 'Login As a Vendor';
 $lang['enter_your_credentials_below']         = 'Please enter your credentials below';
 $lang['incorrect_email']                      = 'Incorrect email.';
 $lang['incorrect_password']                   = 'Incorrect password.';

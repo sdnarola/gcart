@@ -12,7 +12,7 @@
 		<link href="<?php echo base_url('assets/admin/css/components.css'); ?>" rel="stylesheet" type="text/css">
 		<link href="<?php echo base_url('assets/admin/css/colors.css'); ?>" rel="stylesheet" type="text/css">
 		<!-- /global stylesheets -->
-		
+
 		<!-- Core JS files -->
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/libraries/jquery.min.js'); ?>"></script>
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/libraries/bootstrap.min.js'); ?>"></script>
@@ -22,7 +22,7 @@
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
 		<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/styling/uniform.min.js'); ?>"></script>
 		<!-- /theme JS files -->
-		
+
 		<script type="text/javascript">
 		$.validator.setDefaults({
 		  ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
@@ -82,7 +82,7 @@
 			// Style checkboxes and radios
 			$('.styled').uniform();
 
-		});	
+		});
 		</script>
 	</head>
 	<body class="login-container">
@@ -96,7 +96,7 @@
 						<?php echo $content; ?>
 						<!-- Footer -->
 						<div class="footer text-muted text-center">
-							&copy;<?php echo date('Y') ?>. Admin Panel by <a target="_blank">NISL</a>
+							&copy;<?php echo date('Y') ?>. Admin Panel by <a target="_blank">Gcart</a>
 						</div>
 						<!-- /footer -->
 					</div>

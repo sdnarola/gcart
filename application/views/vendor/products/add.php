@@ -147,13 +147,17 @@
                         </div>
                         <!-- End multiple file upload -->
 
+
                         <div class="row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('short_description');?></label>
-                                <textarea name="short_description" id="short_description" class="form-control" rows="5"></textarea>
+                                <textarea name="short_description" id="short_description" class="form-control" rows="3"></textarea>
                             </div>
-                            <div class="form-group col-md-6">
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('long_description');?></label>
                                 <textarea name="long_description" id="long_description" class="form-control" rows="5"></textarea>
@@ -172,8 +176,12 @@
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('related_products');?></label>
                                 <div class="multi-select-full">
-                                    <select class="multiselect" multiple="multiple" name="related_products[]" id="related_products">
+                                    <select class="multiselect-filtering" multiple="multiple" name="related_products[]" id="related_products">
 <?php
+	array_multisort(array_map(function ($product)
+	{
+		return $product['name'];
+	}, $products), SORT_ASC, $products);
 
 	foreach ($products as $key => $product)
 	{
@@ -192,7 +200,7 @@
                             <div class="form-group col-md-12">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
-                                    <a href="javascript:window.history.back();" class="btn btn-danger"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
                                 </div>
                             </div>
                         </div>

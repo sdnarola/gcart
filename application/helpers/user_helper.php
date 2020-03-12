@@ -47,6 +47,32 @@ function get_user_info($id, $info = '')
 	}
 }
 
+// =========================== Bhavik ==================================//
+
+/**
+ * Gets the address info of user.
+ *
+ * @param  int  $id    The id of the user.
+ *
+ * @return mixed The Address Information,bool False otherwise.
+ */
+function get_user_address($id)
+{
+	$CI = &get_instance();
+	$CI->load->model('user_model', 'users');
+
+	$address = $CI->users->get_user_address($id);
+
+	if ($address == '')
+	{
+		return false;
+	}
+
+	return $address;
+}
+
+// =========================== Bhavik ==================================//
+
 /**
  * Determines if user has permissions.
  *

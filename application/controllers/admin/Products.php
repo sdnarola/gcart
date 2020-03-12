@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// =========================== Bhavik ==================================//
+
 class Products extends Admin_Controller
 {
 	/**
@@ -32,7 +34,7 @@ class Products extends Admin_Controller
 		if ($this->input->post())
 		{
 			$data                     = $this->input->post();
-			$data['vendor_id']        = 0;
+			$data['vendor_id']        = 1;
 			$data['related_products'] = serialize($this->input->post('related_products'));
 
 			if ($_FILES['thumb_image']['name'] != null)
@@ -147,7 +149,7 @@ class Products extends Admin_Controller
 	}
 
 	/**
-	 * Toggles the porduct status to Active or Inactive
+	 * Toggles the product status to Active or Inactive
 	 */
 	public function update_status()
 	{
@@ -229,4 +231,6 @@ class Products extends Admin_Controller
 			redirect('admin/products');
 		}
 	}
+
+// =========================== Bhavik ==================================//
 }

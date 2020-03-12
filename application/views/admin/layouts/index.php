@@ -265,6 +265,7 @@ switches.forEach(function(html) {
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li><a href="<?php echo base_url('admin/profile/edit'); ?>" ><?php _el('edit_profile');?></a></li>
+						<li><a href="<?php echo base_url('admin/authentication/login_as_vendor'); ?>" ><?php _el('login_as_vendor');?></a></li>
 						<li><a href="<?php echo admin_url('authentication/logout'); ?>" ><?php _el('logout');?></a></li>
 					</ul>
 				</li>
@@ -322,6 +323,7 @@ switches.forEach(function(html) {
 									<a href="<?php echo base_url('admin/products'); ?>"><i class="icon-cart5"></i> <span>Products</span></a>
 								</li>
 								<!-- orders -->
+
 								<li
 									<?php
 
@@ -329,9 +331,9 @@ switches.forEach(function(html) {
 										{
 											echo 'class="active"';}
 
-									?>
-									>
-									<a href="<?php echo base_url('admin/orders'); ?>"><i class="icon-list-ordered"></i> <span>Orders</span></a>
+									?>>
+									<a href="<?php echo base_url('admin/orders'); ?>"><i class="icon-list-ordered"></i><span>Orders</span></a>
+
 								</li>
 								<!-- users -->
 								<li
