@@ -43,10 +43,16 @@ class User_model extends MY_Model
 	 *
 	 * @return     <array>  ( The user's details like name,address etc. )
 	 */
+
 	public function show($id)
 	{
-		$sql   = "SELECT users.*,users_address.address_1,users_address.address_2,users_address.city,users_address.state,users_address.pincode,users_address.state FROM users INNER JOIN users_address ON users.id = users_address.users_id wHERE users.id=$id ";
-		$query = $this->db->query($sql);
+		$this->db->select('*');
+		$this->db->from('users');
+		$this->db->join('users_address', 'users.id = users_address.users_id');
+		$this->db->where('users_id', $id);
+		$query = $this->db->get();
+
+		return $query->result_array();
 
 		return $query->result_array();
 	}

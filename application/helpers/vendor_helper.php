@@ -80,4 +80,61 @@ function get_vendor_info($id, $info = '')
 
 // =========================== Bhavik ==================================//
 
+/**
+ * Gets the subscription information.
+ *
+ * @param      <int>  $subscription_id  The subscription identifier
+ * @param      string  $info             The key of the information required.
+ *
+ * @return     mixed The information required.
+ */
+function get_subscription_info($subscription_id, $info = '')
+{
+	$CI = &get_instance();
+	$CI->load->model('subscriptions_model', 'subscription');
+
+	$vendor = $CI->subscription->get_($subscription_id);
+
+	if ($info != '')
+	{
+		return $vendor[$info];
+	}
+	else
+	{
+		return $vendor;
+	}
+}
+
+/**
+ * calculate the subscription expired date
+ *
+ * @param      <int>   $id     The identifier of vendor
+ *
+ * @return     integer  ( if expire then 1 else 0 )
+ */
+function expire_subscription($id)
+{
+	$CI = &get_instance();
+	$CI->load->model('subscriptions_model', 'subscription');
+	$subscription_id = get_vendor_info($id, 'subscription_id');
+	$date1           = get_vendor_info($id, 'subscribe_date');
+	$days            = get_subscription_info($subscription_id, 'days');
+	//calculate expire date of subscription
+	$date     = new DateTime($date1);
+	$day      = 'P'.$days.'D';
+	$exp_date = $date->add(new DateInterval($day));
+	$exp      = $exp_date->format('Y-m-d H:i:s');
+
+	$current = date('Y-m-d H:i:s');
+
+	if ($current >= $exp)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
 ?>

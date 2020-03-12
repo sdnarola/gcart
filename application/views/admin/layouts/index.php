@@ -87,8 +87,15 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
 
+
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/bootstrap_multiselect.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_multiselect.js'); ?>"></script>
+
+<!-- to load boots strap switch on/off -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.js" data-turbolinks-track="true"></script>
+
+
+
 
 <script type="text/javascript">
 
@@ -360,7 +367,7 @@ switches.forEach(function(html) {
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/vendors'); ?>">
+											<a href="<?php echo base_url('admin/subscriptions/'); ?>">
 												<span>Subscriptions</span>
 											</a>
 										</li>
@@ -373,7 +380,7 @@ switches.forEach(function(html) {
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/vendors'); ?>">
+											<a href="<?php echo base_url('admin/vendors/'); ?>">
 												<span>List</span>
 											</a>
 										</li>

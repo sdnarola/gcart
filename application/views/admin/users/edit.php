@@ -30,8 +30,9 @@
 		
 		foreach ($users as $user) 
 		{
+		
 ?>
-			<form action="<?php echo base_url('admin/users/edit/') . $user['id']; ?>" id="profileform" name="profileform" method="POST">
+			<form action="<?php echo base_url('admin/users/edit/') . $user['users_id']; ?>" id="profileform" name="profileform" method="POST">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<!-- Panel -->
@@ -108,20 +109,22 @@ $file = basename($path);
 										<div class="form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('state');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo ucfirst($user['state']); ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo $user['state']; ?>">
 										</div>
+<?php
+			$readonly = '';
+
+			if ($user['users_id'] == get_loggedin_user_id()) 
+			{
+				$readonly = "readonly";
+
+			}
+?>
 
 										<div class="form-group">
 											<label><?php _el('status');?>:</label>
-<?php
-			$readonly = '';
-			if ($user['id'] == get_loggedin_user_id()) 
-			{
-				$readonly = "readonly";
-			}
-?>
-									<input type="checkbox" class="switchery" name="is_active"
-									id="<?php echo $user['id']; ?>" <?php if ($user['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?> >
+
+											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['users_id']; ?>" <?php if ($user['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
 								</div>
 <?php
 		}

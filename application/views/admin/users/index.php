@@ -16,18 +16,18 @@
         </ul>
     </div>
 </div>
+
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
     <!-- Panel -->
     <div class="panel panel-flat">
 
-        <!-- Panel heading -->
-
-        <!-- add users block commented -->
-        <div class="panel-heading">
-           <a href="javascript:delete_selected();" class="btn btn-danger" id="delete_selected"><?php _el('delete_selected');?></a>
-        </div>
+        <div class="panel-heading mt-20">
+          <div class="heading-elements">
+            <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
+          </div>
+      </div>
         <!-- /Panel heading -->
 
         <!-- Listing table -->
@@ -35,10 +35,14 @@
             <table id="users_table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th width="2%" class="text-center">
+                          <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
+
                         </th>
+
                         <th width="20%" class="text-center"><?php _el('firstname');?></a><?php _el('lastname');?></th>
+
+                        <th width="20%" class="text-center"><?php _el('name');?></a></th>
                         <th width="20%" class="text-center"><?php _el('email');?></th>
                         <th width="20%" class="text-center"><?php _el('mobile_no');?></th>
                         <th width="10%" class="text-center"><?php _el('status');?></th>
@@ -110,22 +114,13 @@
 </div>
 <!-- /Content area -->
 
+
+
 <script type="text/javascript">
 $(function() {
 
     $('#users_table').DataTable({
-        buttons: {
-            dom: {
-            button: {
-                className: 'btn btn-default'
-            }
-            },
-            buttons: [
-            'copyHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-            ]
-        },
+
         'columnDefs': [ {
         'targets': [0,3,4], /* column index */
         'orderable': false, /* disable sorting */
