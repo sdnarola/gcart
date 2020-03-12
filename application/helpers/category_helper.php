@@ -1,33 +1,57 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
+// =========================== Bhavik ==================================//
+
 /**
- * get category name
- * @param  int 		$id 	category id
+ * Gets the requested info of category.
  *
- * @return string 	name of category.
+ * @param  int  $id    The id of category.
+ * @param  str  $info  The key of information required.
+ *
+ * @return mixed The information required.
  */
-function get_category_name($id)
+function get_category($id, $info = '')
 {
 	$CI = &get_instance();
 	$CI->load->model('category_model', 'categories');
 	$category = $CI->categories->get($id);
 
 	return $category['name'];
+
+	if ($info != '')
+	{
+		return $category[$info];
+	}
+	else
+	{
+		return $category;
+	}
 }
 
 /**
- * get sub category name
- * @param  int 		$id 	sub category id
+ * Gets the requested info of sub category.
  *
- * @return string 	name of sub category.
+ * @param  int  $id    The id of parent category.
+ * @param  str  $info  The key of information required.
+ *
+ * @return mixed The information required.
  */
-function get_sub_category_name($id)
+function get_sub_category($id, $info = '')
 {
 	$CI = &get_instance();
 	$CI->load->model('category_model', 'categories');
 	$sub_category = $CI->categories->get_sub_category($id);
 
-	return $sub_category['name'];
+	if ($info != '')
+	{
+		return $sub_category[$info];
+	}
+	else
+	{
+		return $sub_category;
+	}
 }
+
+// =========================== Bhavik ==================================//
 
 ?>

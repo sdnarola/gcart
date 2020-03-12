@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 27, 2020 at 05:33 AM
+-- Generation Time: Mar 12, 2020 at 11:58 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -37,7 +37,14 @@ CREATE TABLE IF NOT EXISTS `banners` (
   `banner` text NOT NULL,
   `is_deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `banners`
+--
+
+INSERT INTO `banners` (`id`, `title`, `sub_title`, `description`, `banner`, `is_deleted`) VALUES
+(1, 'cat', 'cattt', 'trtrt', 'fd', 0);
 
 -- --------------------------------------------------------
 
@@ -50,8 +57,19 @@ CREATE TABLE IF NOT EXISTS `brands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `logo` mediumtext NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `name`, `logo`, `is_deleted`) VALUES
+(1, 'nike', '-', 0),
+(2, 'puma', '-', 0),
+(3, 'lg', '-', 0),
+(4, 'samsung', '-', 0);
 
 -- --------------------------------------------------------
 
@@ -88,11 +106,20 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `icon` mediumtext NOT NULL,
   `is_header` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `banner_id` (`banner_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `banner_id`, `name`, `slug`, `icon`, `is_header`, `is_active`, `is_deleted`) VALUES
+(1, 1, 'sports', 'sports-item', '-', 1, 1, 0),
+(2, 1, 'pants', 'pant', '-', 1, 1, 0),
+(3, 1, 'electronics', 'ele-item', '-', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -120,14 +147,21 @@ CREATE TABLE IF NOT EXISTS `coupons` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(32) NOT NULL,
   `type` varchar(20) NOT NULL,
-  `amount` decimal(5,2) NOT NULL,
+  `amount` decimal(7,2) NOT NULL,
   `quantity` int(11) NOT NULL,
   `start_date` datetime DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `coupons`
+--
+
+INSERT INTO `coupons` (`id`, `code`, `type`, `amount`, `quantity`, `start_date`, `end_date`, `is_deleted`) VALUES
+(1, 'BDP7', 'amount', '100.00', 12, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -183,19 +217,30 @@ CREATE TABLE IF NOT EXISTS `news_letters` (
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `coupon_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `coupon_id` int(11) DEFAULT '0',
   `order_number` varchar(32) NOT NULL,
+  `invoice_number` bigint(20) NOT NULL,
   `total_products` int(11) NOT NULL,
-  `total_amount` decimal(7,2) NOT NULL,
+  `grand_total` decimal(7,2) NOT NULL,
   `order_date` datetime NOT NULL,
   `order_status` tinyint(1) NOT NULL,
-  `payment_method` varchar(20) NOT NULL DEFAULT 'CASH ON DELIVERY',
+  `payment_method` varchar(20) NOT NULL DEFAULT 'cash on delivery',
   `payment_status` tinyint(1) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_number` (`order_number`),
-  KEY `coupon_id` (`coupon_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `coupon_id` (`coupon_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `coupon_id`, `order_number`, `invoice_number`, `total_products`, `grand_total`, `order_date`, `order_status`, `payment_method`, `payment_status`, `is_deleted`) VALUES
+(1, 2, NULL, '7490285', 6584130147, 4, '24820.94', '2020-03-11 15:36:48', 0, 'cash on delivery', 0, 0),
+(2, 3, NULL, '7654321', 972014563, 6, '55620.94', '2020-03-10 03:05:05', 0, 'cash on delivery', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -207,15 +252,26 @@ DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE IF NOT EXISTS `order_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `vendor_status` tinyint(1) NOT NULL DEFAULT '0',
   `quantity` int(11) NOT NULL,
-  `price` decimal(5,2) NOT NULL,
+  `total_amount` decimal(7,2) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
-  KEY `product_id` (`product_id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `vendor_status`, `quantity`, `total_amount`, `is_deleted`) VALUES
+(1, 1, 1, 0, 2, '15700.70', 0),
+(2, 1, 2, 2, 2, '9120.24', 0),
+(3, 2, 3, 2, 2, '30800.00', 0),
+(4, 2, 2, 2, 2, '9120.24', 0),
+(5, 2, 1, 0, 2, '15700.70', 0);
 
 -- --------------------------------------------------------
 
@@ -226,44 +282,40 @@ CREATE TABLE IF NOT EXISTS `order_items` (
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vendor_id` int(11) NOT NULL,
+  `vendor_id` int(11) NOT NULL DEFAULT '0',
   `brand_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `sub_category_id` int(11) NOT NULL,
+  `sub_category_id` int(11) DEFAULT '0',
   `name` varchar(50) NOT NULL,
-  `sku` int(11) NOT NULL,
+  `sku` varchar(20) NOT NULL,
   `short_description` mediumtext NOT NULL,
   `long_description` longtext NOT NULL,
   `thumb_image` mediumtext NOT NULL,
+  `images` mediumtext NOT NULL,
   `quantity` int(11) NOT NULL,
-  `old_price` decimal(5,2) NOT NULL,
-  `new_price` decimal(5,2) NOT NULL,
-  `related_products` text NOT NULL,
+  `price` decimal(7,2) NOT NULL,
+  `old_price` decimal(7,2) NOT NULL,
+  `related_products` text,
   `tags` text NOT NULL,
-  `is_sale` tinyint(1) NOT NULL,
-  `is_hot` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL,
+  `is_sale` tinyint(1) NOT NULL DEFAULT '0',
+  `is_hot` tinyint(1) NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `vendor_id` (`vendor_id`),
   KEY `brand_id` (`brand_id`),
   KEY `category_id` (`category_id`),
   KEY `sub_category_id` (`sub_category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `product_images`
+-- Dumping data for table `products`
 --
 
-DROP TABLE IF EXISTS `product_images`;
-CREATE TABLE IF NOT EXISTS `product_images` (
-  `product_id` int(11) NOT NULL,
-  `image` mediumint(9) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL,
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `sku`, `short_description`, `long_description`, `thumb_image`, `images`, `quantity`, `price`, `old_price`, `related_products`, `tags`, `is_sale`, `is_hot`, `is_active`, `is_deleted`) VALUES
+(1, 1, 1, 1, 1, 'nike rn6', '8311-8a40', 'running shoes', 'nike brand, shoes for men, sports shoes', 'assets/uploads/products/1583995973-nike1.jpg', 'a:3:{i:0;s:45:\"assets/uploads/products/1583995973--nike2.jpg\";i:1;s:45:\"assets/uploads/products/1583995973--nike3.jpg\";i:2;s:45:\"assets/uploads/products/1583995973--nike4.jpg\";}', 7, '7850.35', '0.00', 'N;', 'nike, shoes, running', 0, 0, 1, 0),
+(2, 2, 2, 1, 1, 'puma tr-7', '222-2044', 'sports shoes', 'puma brand, shoes for men.', 'assets/uploads/products/1583996844-puma.png', 'a:4:{i:0;s:45:\"assets/uploads/products/1583996844--puma1.jpg\";i:1;s:45:\"assets/uploads/products/1583996844--puma2.png\";i:2;s:45:\"assets/uploads/products/1583996844--puma3.png\";i:3;s:45:\"assets/uploads/products/1583996844--puma4.png\";}', 9, '4560.12', '0.00', 'a:1:{i:0;s:1:\"1\";}', 'puma, men shoes', 0, 0, 1, 0),
+(3, 2, 4, 3, 5, 'Samsung-32', '2764-cb26', 'led tv', 'samsung brand, 32 led tv, samrt tv', 'assets/uploads/products/1584003043-tv1.jpg', 'a:4:{i:0;s:43:\"assets/uploads/products/1584003043--tv3.jpg\";i:1;s:43:\"assets/uploads/products/1584003043--tv4.jpg\";i:2;s:43:\"assets/uploads/products/1584003043--tv5.png\";i:3;s:43:\"assets/uploads/products/1584003043--tv6.jpg\";}', 23, '15400.00', '0.00', 'N;', 'tv, samsung, smart tv', 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -296,14 +348,15 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `name` varchar(100) NOT NULL,
   `permissions` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`, `permissions`) VALUES
-(1, 'admin', '-');
+(1, 'admin', '-'),
+(2, 'user', '-');
 
 -- --------------------------------------------------------
 
@@ -317,7 +370,14 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `name` varchar(50) NOT NULL,
   `value` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `name`, `value`) VALUES
+(1, 'company_name', 'Gcart');
 
 -- --------------------------------------------------------
 
@@ -346,7 +406,7 @@ DROP TABLE IF EXISTS `subscriptions`;
 CREATE TABLE IF NOT EXISTS `subscriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(30) NOT NULL,
-  `cost` decimal(5,2) NOT NULL,
+  `cost` decimal(8,2) NOT NULL,
   `days` int(11) NOT NULL,
   `product_limit` int(11) NOT NULL,
   `description` text NOT NULL,
@@ -378,7 +438,18 @@ CREATE TABLE IF NOT EXISTS `sub_categories` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sub_categories`
+--
+
+INSERT INTO `sub_categories` (`id`, `category_id`, `name`, `slug`, `is_active`, `is_deleted`) VALUES
+(1, 1, 'shoes', 's-sh', 1, 0),
+(2, 1, 'tracks', 'sp-track', 1, 0),
+(3, 2, 'tracks', 'sp-tr', 1, 0),
+(4, 3, 'mobile', 'mb-ele', 1, 0),
+(5, 3, 'tv', 'ele-tv', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -398,23 +469,26 @@ CREATE TABLE IF NOT EXISTS `users` (
   `profile_image` mediumtext NOT NULL,
   `last_login` datetime NOT NULL,
   `last_ip` varchar(50) NOT NULL,
+  `signup_date` datetime NOT NULL,
   `new_pass_key` varchar(32) NOT NULL,
   `new_pass_key_requested` datetime NOT NULL,
   `sign_up_key` varchar(32) NOT NULL,
   `is_email_verified` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
-  `is_deleted` tinyint(1) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `last_login`, `last_ip`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
-(1, 1, 'Bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '', '2020-02-27 11:02:29', '::1', '', '2020-02-24 03:04:19', '', 1, 1, 1, 0);
+INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `last_login`, `last_ip`, `signup_date`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
+(1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '', '2020-03-12 15:32:46', '::1', '2020-02-27 12:11:21', '', '2020-02-24 03:04:19', '', 1, 1, 1, 0),
+(2, 2, 'user', 'user', 'user@gmail.com', 7878787878, 'ee11cbb19052e40b07aac0ca060c23ee', '-', '2020-03-12 17:12:32', '::1', '2020-03-03 00:00:00', '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0),
+(3, 2, 'anonymous', 'user', 'anonymous@gmail.com', 6565656565, '294de3557d9d00b3d2d8a1e6aab028cf', '-', '2020-03-12 12:28:39', '::1', '2020-03-03 00:00:00', '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -431,9 +505,19 @@ CREATE TABLE IF NOT EXISTS `users_address` (
   `city` varchar(50) NOT NULL,
   `state` varchar(50) NOT NULL,
   `pincode` int(6) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `users_id` (`users_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users_address`
+--
+
+INSERT INTO `users_address` (`id`, `users_id`, `address_1`, `address_2`, `city`, `state`, `pincode`, `is_deleted`) VALUES
+(1, 1, 'asw', 'mrl', 'navsari', 'gujarat', 396436, 0),
+(2, 2, 'asw', 'mrl', 'navsari', 'gujarat', 396436, 0),
+(3, 3, 'annyms-1', 'ayms-2', 'annnn', 'gujarat', 396436, 0);
 
 -- --------------------------------------------------------
 
@@ -459,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `user_auto_login` (
 DROP TABLE IF EXISTS `vendors`;
 CREATE TABLE IF NOT EXISTS `vendors` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `subscription_id` int(11) NOT NULL,
+  `subscription_id` int(11) DEFAULT '0',
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -483,6 +567,7 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `sign_up_key` varchar(32) NOT NULL,
   `is_email_verified` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `subscription_id` (`subscription_id`)
@@ -492,8 +577,9 @@ CREATE TABLE IF NOT EXISTS `vendors` (
 -- Dumping data for table `vendors`
 --
 
-INSERT INTO `vendors` (`id`, `subscription_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `owner_name`, `shop_name`, `address`, `city`, `pincode`, `logo`, `shop_number`, `registration_number`, `shop_details`, `total_products`, `last_login`, `last_ip`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_deleted`) VALUES
-(1, 1, 'Bhavik', 'patel', 'bdp@mail.com', 9978554691, '53acf5f531943514246a7ed92f496a7d', '-', '-', '-', '-', '-', 333333, '-', 1212, 22, '-', 1, '2020-02-17 10:32:20', '::1', '', '2020-02-26 00:00:00', '', 1, 1, 0);
+INSERT INTO `vendors` (`id`, `subscription_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `owner_name`, `shop_name`, `address`, `city`, `pincode`, `logo`, `shop_number`, `registration_number`, `shop_details`, `total_products`, `last_login`, `last_ip`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
+(1, NULL, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '-', 'admin', 'A7', 'mrl', 'nvs', 396445, '-', 7, 0, '-', 12, '2020-03-01 00:00:00', '::1', '-', '2020-03-01 00:00:00', '-', 1, 1, 1, 0),
+(2, 1, 'bdp', '7', 'bdp@mail.com', 9978554691, '53acf5f531943514246a7ed92f496a7d', '-', '-', 'B7', '-', '-', 333333, '-', 1212, 22, '-', 1, '2020-02-17 10:32:20', '::1', '', '2020-02-26 00:00:00', '', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -545,30 +631,24 @@ ALTER TABLE `hot_deals`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  ADD CONSTRAINT `order_items_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`),
   ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `brands` (`id`),
   ADD CONSTRAINT `products_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `products_ibfk_4` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`id`);
-
---
--- Constraints for table `product_images`
---
-ALTER TABLE `product_images`
-  ADD CONSTRAINT `product_images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `products_ibfk_4` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_categories` (`id`),
+  ADD CONSTRAINT `products_ibfk_5` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `reviews`

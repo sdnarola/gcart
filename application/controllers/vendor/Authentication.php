@@ -40,29 +40,23 @@ class Authentication extends My_Controller
 			if (is_array($vendor) && isset($vendor['vendor_inactive']))
 			{
 				set_alert('error', _l('your_account_is_not_active'));
-				log_activity("Inactive vendor Tried to Login [Email: $email]", $vendor['id']);
 				redirect(vendor_url('authentication'));
 			}
 			elseif (is_array($vendor) && isset($vendor['invalid_email']))
 			{
 				set_alert('error', _l('incorrect_email'));
-				log_activity("Non Existing vendor Tried to Login [Email: $email]");
 				redirect(vendor_url('authentication'));
 			}
 			elseif (is_array($vendor) && isset($vendor['invalid_password']))
 			{
 				set_alert('error', _l('incorrect_password'));
-				log_activity("Failed Login Attempt With Incorrect Password [Email: $email]", $vendor['id']);
 				redirect(vendor_url('authentication'));
 			}
 			elseif ($vendor == false)
 			{
 				set_alert('error', _l('incorrect_email_or_password'));
-				log_activity("Failed Login Attempt [Email: $email]");
 				redirect(vendor_url('authentication'));
 			}
-
-			log_activity("vendor Logged In [Email: $email]");
 
 			//If previous redirect URL is set in session, redirect to that URL
 			maybe_redirect_to_previous_url();
@@ -167,7 +161,6 @@ class Authentication extends My_Controller
 			elseif ($success == true)
 			{
 				set_alert('success', _l('password_reset_message'));
-				log_activity('vendor Resetted the Password', $vendor_id);
 			}
 			else
 			{
@@ -196,7 +189,6 @@ class Authentication extends My_Controller
 	 */
 	public function logout()
 	{
-		log_activity('vendor Logged Out [Email: '.get_loggedin_info('email').']', get_loggedin_vendor_id());
 		$this->Authentication_model->logout();
 		redirect(vendor_url('authentication'));
 	}

@@ -34,10 +34,10 @@
                 <!-- profile pic display -->
                 <div class="col-md-2">
 <?php
-    $file = basename($path);
+	$file = basename($path);
 ?>
                     <div class="user-image">
-                    <img src="<?php echo base_url() . 'assets/Uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
+                    <img src="<?php echo base_url().'assets/Uploads/users/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
                 </div>
                 </div>
                 <!-- table shows the user's details -->
@@ -46,14 +46,15 @@
                         <table class="table">
                              <tbody>
 <?php
-    if ($users) 
-    {
-    	foreach ($users as $user) 
-        {
-?>
+
+	if ($users)
+	{
+		foreach ($users as $user)
+		{
+		?>
                                     <tr>
                                         <th><?php echo _el('name'); ?></th>
-                                        <td><?php echo ucfirst($user['firstname']) . ' ' . ucfirst($user['lastname']); ?></td>
+                                        <td><?php echo ucfirst($user['firstname']).' '.ucfirst($user['lastname']); ?></td>
                                     </tr>
                                     <tr>
                                         <th><?php echo _el('email'); ?></th>
@@ -66,22 +67,25 @@
                                     <tr>
                                         <th><?php echo _el('last_login'); ?> </th>
                                             <td>
-                                                <?php $time =time_to_words($user['last_login']); echo $time; ?>
+                                                <?php $time = time_to_words($user['last_login']);
+                                                		echo $time;?>
                                             </td>
                                     </tr>
                                       <tr>
                                         <th><?php echo _el('email_varified'); ?> </th>
                                             <td>
-<?php 
-                                                if($user['is_email_verified']==1) 
-                                                {
-                                                   _el('varified');
-                                                }
-                                                else
-                                                {
-                                                    _el('not_varified');
-                                                }
-?>
+<?php
+
+			if ($user['is_email_verified'] == 1)
+			{
+				_el('varified');
+			}
+			else
+			{
+				_el('not_varified');
+			}
+
+		?>
                                             </td>
                                     </tr>
 
@@ -117,8 +121,9 @@
                                         <td><?php echo $user['pincode'] ?></td>
                                     </tr>
 <?php
-        }
-    }
+	}
+	}
+
 ?>
                             </tbody>
                         </table>
@@ -156,11 +161,12 @@
                         </thead>
                         <tbody>
 <?php
-        if ($records) 
-        {
-        	foreach ($records as $record) 
-            {
-?>
+
+	if ($records)
+	{
+		foreach ($records as $record)
+		{
+		?>
                             <tr class="text-center">
                                 <td>
                                     <input type="checkbox" class="checkbox styled"  name="delete">
@@ -175,31 +181,37 @@
                                     <?php echo $record['total_amount'] ?>
                                 </td>
 <?php
-                if ($record['order_status'] == 0) 
-                {
-                		$status = _l('pending');
-                } elseif ($record['order_status'] == 1) 
-                {
-                        $status = _l('processing');
-                } elseif ($record['order_status'] == 2) 
-                {
-                		$status = _l('completed');
-                } elseif($record['order_status'] == 3)
-                {
-                		$status = _l('declined');
-                }
-?>
+
+			if ($record['order_status'] == 0)
+			{
+				$status = _l('pending');
+			}
+			elseif ($record['order_status'] == 1)
+			{
+				$status = _l('processing');
+			}
+			elseif ($record['order_status'] == 2)
+			{
+				$status = _l('completed');
+			}
+			elseif ($record['order_status'] == 3)
+			{
+				$status = _l('declined');
+			}
+
+		?>
 
                                 <td>
                                     <?php echo $status ?>
                                 </td>
                                 <td>
-                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/') . $user['id']; ?>" class=" text-success text-teal-400" ><i class="icon-eye"></i></a>
+                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/').$user['id']; ?>" class=" text-success text-teal-400" ><i class="icon-eye"></i></a>
                                 </td>
                             </tr>
 <?php
-            }
-        }
+	}
+	}
+
 ?>
                          </tbody>
                     </table>

@@ -21,7 +21,6 @@ class Product_model extends MY_Model
 		parent::__construct();
 	}
 
-
 	/**
 	 * Add new Product image
 	 * @param  string $image path and image name
@@ -89,9 +88,9 @@ class Product_model extends MY_Model
 		$this->db->select('products.*,categories.name AS category_name,categories.is_active AS category_status');
 		$this->db->from('products');
 		$this->db->join('categories', 'products.category_id = categories.id');
-		$this->db->where('vendor_id',$id);
+		$this->db->where('vendor_id', $id);
 		$query = $this->db->get();
-		
+
 		return $query->result_array();
 	}
 }

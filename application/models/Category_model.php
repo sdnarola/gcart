@@ -23,8 +23,10 @@ class Category_model extends MY_Model
 
 	/**
 	 * get sub categories of parent category
+	 *
 	 * @param  int 		$id 	parent category id
-	 * @return array
+	 *
+	 * @return mixed 	sub categories
 	 */
 	function get_sub_categories($id = '')
 	{
@@ -58,13 +60,15 @@ class Category_model extends MY_Model
 
 	/**
 	 * get sub category of product
+	 *
 	 * @param  int 		$id 	product id
-	 * @return array
+	 *
+	 * @return mixed 	sub category
 	 */
 	function get_sub_category($id)
 	{
-		$this->_table = 'sub_categories';
-		$result       = $this->get($id);
+		$this->db->where('id', $id);
+		$result = $this->db->get('sub_categories')->row_array();
 
 		if ($result)
 		{

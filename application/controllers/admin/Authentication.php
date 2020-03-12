@@ -40,29 +40,23 @@ class Authentication extends My_Controller
 			if (is_array($user) && isset($user['user_inactive']))
 			{
 				set_alert('error', _l('your_account_is_not_active'));
-				log_activity("Inactive User Tried to Login [Email: $email]", $user['id']);
 				redirect(admin_url('authentication'));
 			}
 			elseif (is_array($user) && isset($user['invalid_email']))
 			{
 				set_alert('error', _l('incorrect_email'));
-				log_activity("Non Existing User Tried to Login [Email: $email]");
 				redirect(admin_url('authentication'));
 			}
 			elseif (is_array($user) && isset($user['invalid_password']))
 			{
 				set_alert('error', _l('incorrect_password'));
-				log_activity("Failed Login Attempt With Incorrect Password [Email: $email]", $user['id']);
 				redirect(admin_url('authentication'));
 			}
 			elseif ($user == false)
 			{
 				set_alert('error', _l('incorrect_email_or_password'));
-				log_activity("Failed Login Attempt [Email: $email]");
 				redirect(admin_url('authentication'));
 			}
-
-			log_activity("User Logged In [Email: $email]");
 
 			//If previous redirect URL is set in session, redirect to that URL
 			maybe_redirect_to_previous_url();
@@ -147,7 +141,6 @@ class Authentication extends My_Controller
 			elseif ($success == true)
 			{
 				set_alert('success', _l('password_reset_message'));
-				log_activity('User Resetted the Password', $user_id);
 			}
 			else
 			{
@@ -177,7 +170,6 @@ class Authentication extends My_Controller
 	 */
 	public function logout()
 	{
-		log_activity('User Logged Out [Email: '.get_loggedin_info('email').']', get_loggedin_user_id());
 		$this->Authentication_model->logout();
 		redirect(admin_url('authentication'));
 	}
@@ -193,5 +185,25 @@ class Authentication extends My_Controller
 		}
 
 		$this->logout();
+	}
+
+	/**
+	 * Allow admin to login as vendor.
+	 */
+	public function login_as_vendor()
+	{
+		$this->session->unset_userdata(array('email', 'user_id', 'username', 'is_admin', 'user_logged_in'));
+		$vendor      = get_vendor_info(1);
+		$vendor_data = [
+			'vendor_id'        => 1,
+			'email'            => $vendor['email'],
+			'vendor_name'      => ucwords($vendor['firstname'].' '.$vendor['lastname']),
+			'is_admin'         => $vendor['is_admin'],
+			'vendor_logged_in' => true
+		];
+
+		$this->session->set_userdata($vendor_data);
+
+		redirect(site_url('vendor'));
 	}
 }

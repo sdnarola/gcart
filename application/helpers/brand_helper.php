@@ -1,18 +1,31 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
+// =========================== Bhavik ==================================//
+
 /**
- * get brand name
- * @param  int 		$id 	brand id
+ * Gets the requested info of brand.
  *
- * @return string 	name of brand.
+ * @param  int  $id    The id of the brand.
+ * @param  str  $info  The key of the information required.
+ *
+ * @return mixed The information required.
  */
-function get_brand_name($id)
+function get_brand($id, $info = '')
 {
 	$CI = &get_instance();
 	$CI->load->model('brand_model', 'brands');
 	$brand = $CI->brands->brands->get($id);
 
-	return $brand['name'];
+	if ($info != '')
+	{
+		return $brand[$info];
+	}
+	else
+	{
+		return $brand;
+	}
 }
+
+// =========================== Bhavik ==================================//
 
 ?>

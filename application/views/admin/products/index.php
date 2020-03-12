@@ -38,39 +38,44 @@
               <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
             </th>
             <th width="20%"><?php _el('name');?></th>
-            <th width="20%"><?php _el('category');?></th>
-            <th width="20%"><?php _el('brand');?></th>
+            <th width="15%"><?php _el('category');?></th>
+            <th width="15%"><?php _el('sub_category');?></th>
+            <th width="15%"><?php _el('brand');?></th>
             <th width="15%"><?php _el('price');?></th>
             <th width="8%" class="text-center"><?php _el('status');?></th>
-            <th width="15%" class="text-center"><?php _el('actions');?></th>
+            <th width="10%" class="text-center"><?php _el('actions');?></th>
           </tr>
         </thead>
         <tbody>
-            <?php
+<?php
 
-            	foreach ($products as $key => $product)
-            	{
-            	?>
+	if ($products)
+	{
+		foreach ($products as $product)
+		{
+		?>
             <tr id="<?php echo $product['id']; ?>">
                 <td>
                   <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $product['id']; ?>">
                 </td>
                 <td><?php echo ucwords($product['name']); ?></td>
-                <td><?php echo ucwords(get_category_name($product['category_id'])); ?></td>
-                <td><?php echo ucwords(get_brand_name($product['brand_id'])); ?></td>
+                <td><?php echo ucwords(get_category($product['category_id'], 'name')); ?></td>
+                <td><?php echo ucwords(get_sub_category($product['sub_category_id'], 'name')); ?></td>
+                <td><?php echo ucwords(get_brand($product['brand_id'], 'name')); ?></td>
                 <td><?php echo '&#8377;'.'. '.$product['price']; ?></td>
                 <td class="text-center switchery-sm">
                     <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $product['id']; ?>"
 <?php
 
-		if ($product['is_active'] == 1)
-		{
-			echo 'checked';}
+			if ($product['is_active'] == 1)
+			{
+				echo 'checked';
+			}
 
-	?>>
+		?>>
                 </td>
                 <td class="text-center">
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-warning"><i class="icon-info3"></i></a>
+                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-slate"><i class="icon-info3"></i></a>
 
                     <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/products/edit/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
@@ -78,6 +83,7 @@
                 </td>
             </tr>
         <?php }
+        	}
 
         ?>
         </tbody>
@@ -94,7 +100,7 @@ $(function() {
 
     $('#products_table').DataTable({
         'columnDefs': [ {
-        'targets': [0,5,6], /* column index */
+        'targets': [0,6,7], /* column index */
         'orderable': false, /* disable sorting */
         }],
 
