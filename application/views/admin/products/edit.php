@@ -144,7 +144,7 @@
                             </div>
                         </div>
 
-                        <!-- for multiple images upload -->
+                        <!-- multiple images upload -->
                         <div class="row images field_wrapper" style="display: none;">
                             <div class="form-group col-md-12 ">
                                 <a href="javascript:void(0);" class="remove_button_1" title="remove Image"><i class="icon-minus-circle2"></i></a>&nbsp;
@@ -161,7 +161,7 @@
                                 <a href="javascript:void(0);" class="btn btn-sm btn-primary set"><i class="icon-file-plus position-left"></i>Set Images</a>
                             </div>
                         </div>
-                        <!-- End multiple file upload -->
+                        <!-- End multiple images upload -->
 
                         <div class="row">
                             <div class="form-group col-md-12">

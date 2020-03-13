@@ -36,26 +36,22 @@ class Category_model extends MY_Model
 		{
 			$result = $this->get_all();
 
-			if ($result)
+			if (!$result)
 			{
-				return $result;
+				return false;
 			}
-			else
-			{
-				return null;
-			}
+
+			return $result;
 		}
 
 		$result = $this->get_many_by('category_id', $id);
 
-		if ($result)
+		if (!$result)
 		{
-			return $result;
+			return false;
 		}
-		else
-		{
-			return null;
-		}
+
+		return $result;
 	}
 
 	/**
@@ -70,13 +66,11 @@ class Category_model extends MY_Model
 		$this->db->where('id', $id);
 		$result = $this->db->get('sub_categories')->row_array();
 
-		if ($result)
+		if (!$result)
 		{
-			return $result;
+			return false;
 		}
-		else
-		{
-			return null;
-		}
+
+		return $result;
 	}
 }

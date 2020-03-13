@@ -57,7 +57,7 @@ class Authentication_model extends MY_Model
 				return ['user_inactive' => true, 'id' => $user->id];
 			}
 
-			if ($user->is_admin != 1 && $user->is_email_verified == 0)
+			if ($user->is_email_verified == 0)
 			{
 				return ['email_unverified' => true, 'id' => $user->id];
 			}

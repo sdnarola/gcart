@@ -294,19 +294,19 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('store'))
+										if (is_active_controller('dashboard') && is_active_method('store'))
 										{
 											echo 'class="active"';}
 
 									?>
 									>
-									<a href="<?php echo base_url('vendor/store'); ?>"><i class="icon-eye4"></i> <span>Visit Your Store</span></a>
+									 <a href="<?php echo base_url('vendor/dashboard/store'); ?>"><i class="icon-eye4"></i> <span>Visit Your Store</span></a>
 								</li>
 								<!-- home link -->
 								<li
 									<?php
 
-										if (is_active_controller('dashboard'))
+										if (is_active_controller('dashboard') && is_active_method('index'))
 										{
 											echo 'class="active"';}
 
@@ -345,7 +345,7 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('productss'))
+											if (is_active_controller('products') && is_active_method('reviews'))
 											{
 												echo 'class="active"';}
 
@@ -358,7 +358,7 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('productss'))
+											if (is_active_controller('products') && is_active_method('comments'))
 											{
 												echo 'class="active"';}
 

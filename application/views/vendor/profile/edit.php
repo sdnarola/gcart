@@ -20,14 +20,14 @@
 	<div class="row">
 		<!-- Left column -->
 		<div class="col-md-7">
-			<form action="<?php echo base_url('vendor/profile/edit/') ?>" id="myprofileform" method="POST">
+			<form action="<?php echo base_url('vendor/profile/edit/') ?>" id="myprofileform" method="POST" enctype="multipart/form-data">
 				<!-- Panel -->
 				<div class="panel panel-flat">
 					<!-- Panel heading -->
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-md-10">
-							<h5 class="panel-title"><?php echo get_loggedin_info('username'); ?></h5>
+							<h5 class="panel-title"><?php echo get_loggedin_info('vendor_name'); ?></h5>
 							</div>
 						</div>
 					</div>
@@ -39,26 +39,48 @@
 								<div class="form-group">
 									<small class="req text-danger">* </small>
 									<label><?php _el('firstname');?>:</label>
-									<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $user['firstname']; ?>">
+									<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $vendor['firstname']; ?>">
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
 									<label><?php _el('lastname');?>:</label>
-									<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $user['lastname']; ?>">
+									<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $vendor['lastname']; ?>">
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
 									<label><?php _el('email');?>:</label>
-									<input type="text" class="form-control"  id="email" name="email" class="email"value="<?php echo $user['email']; ?>">
+									<input type="text" class="form-control"  id="email" name="email" class="email"value="<?php echo $vendor['email']; ?>">
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
 									<label><?php _el('contact_no');?>:</label>
-									<input type="text" class="form-control" id="mobile_no" name="mobile_no" value="<?php echo $user['mobile_no']; ?>">
+									<input type="text" class="form-control" id="mobile" name="mobile" value="<?php echo $vendor['mobile']; ?>">
 								</div>
-								<div class="form-group" align="right">
-									<button type="submit" class="btn btn-success" name="submit" id="save"><?php _el('save');?></button>
-								</div>
+								<div class="row">
+		                            <div class="form-group col-md-12 ">
+		                                <label><?php _el('profile_image');?>:</label><br>
+<?php
+
+	if ($vendor['profile_image'] != null)
+	{
+	?>
+		                                <div class="col-md-3">
+			                                <div class="thumbnail">
+			                                    <img src="<?php echo base_url().$vendor['profile_image']; ?>">
+			                                </div>
+		                                </div>
+<?php
+	}
+
+?>
+		                                <input type="file" name="profile_image" id="profile_image" class="form-control">
+		                            </div>
+		                        </div>
+								<div class="form-group">
+	                                <div class="pull-right">
+	                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+	                                </div>
+		                        </div>
 							</div>
 						</div>
 					</div>
@@ -88,11 +110,13 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<?php
-										if (null != $user['last_password_change'])
+
+										if (null != $vendor['last_password_change'])
 										{
 										?>
-									<small><?php _el('last_password_change_msg', time_to_words($user['last_password_change']))?></small>
+									<small><?php _el('last_password_change_msg', time_to_words($vendor['last_password_change']))?></small>
 									<?php }
+
 									?>
 								</div>
 								<div class="form-group">
@@ -110,9 +134,11 @@
 									<label><?php _el('confirm_password');?>:</label>
 									<input type="password" class="form-control" id="confirm_password" name="confirm_password" autocomplete="off">
 								</div>
-								<div class="form-group" align="right">
-									<button type="submit" class="btn btn-success" name="submit_password" id="submit_password"><?php _el('save');?></button>
-								</div>
+								<div class="form-group">
+	                                <div class="pull-right">
+	                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+	                                </div>
+		                        </div>
 							</div>
 						</div>
 					</div>
@@ -170,9 +196,9 @@ $("#myprofileform").validate(
 $.validator.addMethod("matcholdpassword", function(value, element)
 {
 	var old_password = CryptoJS.MD5($(element).val());
-	var user_password = "<?php echo $user['password']; ?>";
+	var vendor_password = "<?php echo $vendor['password']; ?>";
 
-	if (old_password == user_password)
+	if (old_password == vendor_password)
 		return true;
 
 }, "<?php _el('incorrect_password')?>");

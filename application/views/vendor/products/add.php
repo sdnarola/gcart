@@ -145,7 +145,7 @@
                                 <a href="javascript:void(0);" class="btn btn-sm btn-primary set"><i class="icon-file-plus position-left"></i>Set Images</a>
                             </div>
                         </div>
-                        <!-- End multiple file upload -->
+                        <!-- End multiple images upload -->
 
 
                         <div class="row">

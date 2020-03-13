@@ -42,7 +42,7 @@ class Authentication extends My_Controller
 				set_alert('error', _l('your_account_is_not_active'));
 				redirect(admin_url('authentication'));
 			}
-			elseif (is_array($user) && isset($user['invalid_email']))
+			elseif (is_array($user) && isset($user['email_unverified']))
 			{
 				set_alert('error', _l('incorrect_email'));
 				redirect(admin_url('authentication'));
@@ -192,18 +192,25 @@ class Authentication extends My_Controller
 	 */
 	public function login_as_vendor()
 	{
-		$this->session->unset_userdata(array('email', 'user_id', 'username', 'is_admin', 'user_logged_in'));
-		$vendor      = get_vendor_info(1);
-		$vendor_data = [
-			'vendor_id'        => 1,
-			'email'            => $vendor['email'],
-			'vendor_name'      => ucwords($vendor['firstname'].' '.$vendor['lastname']),
-			'is_admin'         => $vendor['is_admin'],
-			'vendor_logged_in' => true
-		];
+		$vendor = get_vendor_info(1);
 
-		$this->session->set_userdata($vendor_data);
+		if ($vendor['is_admin'] == 1)
+		{
+			$this->session->unset_userdata(array('email', 'user_id', 'username', 'is_admin', 'user_logged_in'));
 
-		redirect(site_url('vendor'));
+			$vendor_data = [
+				'vendor_id'        => 1,
+				'email'            => $vendor['email'],
+				'vendor_name'      => ucwords($vendor['firstname'].' '.$vendor['lastname']),
+				'is_admin'         => $vendor['is_admin'],
+				'vendor_logged_in' => true
+			];
+
+			$this->session->set_userdata($vendor_data);
+
+			redirect(site_url('vendor'));
+		}
+
+		redirect(site_url('admin'));
 	}
 }
