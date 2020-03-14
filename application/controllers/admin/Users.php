@@ -48,12 +48,15 @@ class Users extends Admin_Controller
 
 			$result1 = $this->users->edit($data, $id);
 
-			if ($result1) {
+			if ($result1) 
+			{
 				set_alert('success', _l('_updated_successfully', _l('user')));
 
 				redirect('admin/users');
 			}
-		} else {
+		} 
+		else 
+		{
 			$data['users'] = $this->users->show($id);
 			$data['path'] = $data['users'][0]['profile_image'];
 		
@@ -87,6 +90,8 @@ class Users extends Admin_Controller
 	 */
 	public function details($id)
 	{
+		$this->set_page_title(_l('users') . ' | ' . _l('details'));
+
 		$data['users']   = $this->users->show($id);
 		$data['records'] = $this->order_details($id);
 
@@ -96,23 +101,17 @@ class Users extends Admin_Controller
 
 		if ($record['profile_image'])
 		{
-			$path         = $record['profile_image'];
-			$data['path'] = $path;
+			
+			$data['path'] = $record['profile_image'];
 		}
-		else
-		{
-			$data['path'] = 'C:/wamp64/www/ci/Uploads/default_img.png';
-		}
-		$data['path'] = $record['profile_image'];
-
 
 		$data['content'] = $this->load->view('admin/users/details', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
 
-/**
- * Deletes multiple user records
- */
+	/**
+	 * Deletes multiple user records
+	 */
 	public function delete_selected()
 	{
 		$where   = $this->input->post('ids');
@@ -129,9 +128,9 @@ class Users extends Admin_Controller
 		}
 	}
 
-/**
- * Toggles the user status to Active or Inactive
- */
+	/**
+	 * Toggles the user status to Active or Inactive
+	 */
 	public function update_status()
 	{
 		$user_id = $this->input->post('user_id');
@@ -151,16 +150,16 @@ class Users extends Admin_Controller
 		}
 	}
 
-/**
- * return orders of particular user
- *
- * @param      <int>  $id     The user_id
- *
- * @return     <array>  ( orders of particular user )
- */
-	public function order_details($id)
+	/**
+	 * return orders of particular user
+	 *
+	 * @param      <int>  $id     The user_id
+	 *
+	 * @return     <array>  ( orders of particular user )
+	 */
+	public function order_details($user_id)
 	{
-		$order_records = $this->orders->user_order_details($id);
+		$order_records = $this->orders->get_many_by('user_id',$user_id);
 
 		return $order_records;
 	}

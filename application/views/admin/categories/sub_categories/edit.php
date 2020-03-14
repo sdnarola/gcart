@@ -3,7 +3,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('edit_category'); ?></span>
+                <span class="text-semibold"><?php _el('edit_sub_category'); ?></span>
             </h4>
         </div>
     </div>
@@ -14,7 +14,7 @@
             </li>
             <li class="active"><?php _el('categories'); ?></li>
              <li>
-                <a href="<?php echo base_url('admin/categories'); ?>"><?php _el('main_categories'); ?></a>
+                <a href="<?php echo base_url('admin/sub_categories'); ?>"><?php _el('sub_categories'); ?></a>
             </li>
             <li class="active"><?php _el('edit'); ?></li>
         </ul>
@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('category'); ?></strong>
+                                <strong><?php _el('sub_category'); ?></strong>
                             </h5>
                         </div>
                     </div>
@@ -40,37 +40,53 @@
                 <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
-                     <form action="<?php echo base_url('admin/categories/edit/'). $category['id']; ?>" id="categories_form" method="POST" enctype="multipart/form-data">
+                    <form action="<?php echo base_url('admin/sub_categories/edit/'). $sub_category['id']; ?>" id="categories_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
+                            <div class="form-group">
+                              <small class="req text-danger">* </small>
+                              <label>category name</label>
+                              <select class="select-search" name="category_id" id="category_id">
+<?php
+                            $categories = get_all_categories();
+                            foreach ($categories as $category ) 
+                            {
+?>
+                                    <option id="<?php echo $category['id']?>" name="category" value="<?php echo $category['id'];?>"
+                                    <?php 
+                                    if($category['id']==$sub_category['category_id'])
+                                        {echo ' selected';}
+                                    ?>><?php echo $category['name']?></option>
+<?php                                  
+                            }
+?> 
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" value="<?php echo $category['name']?>" oninput="generate_slug()">
+                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" oninput="generate_slug();" value="<?php echo $sub_category['name'];?>">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('slug'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('slug'); ?>" id="slug" name="slug" value="<?php echo $category['slug']?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('slug'); ?>" id="slug" name="slug" value="<?php echo $sub_category['slug'];?>">
                             </div>
-<?php 
-$file = basename($category['icon']);
-?>
 
-                            <div class="form-group">
-                                <label><?php _el('icon'); ?>:</label>
-                                <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/main_categories/').$file ?>" width="400" height="200">
-                            </div>
-                            <div class="form-group">
-                                <input type="file"  class="file-input"  name="icon" id='icon' data-show-caption="false" data-show-upload="false">
-                            </div>
+
+
 <?php
-    $readonly = '';
+                            $category = get_category($sub_category['category_id']); 
+                            $readonly = '';
 
+                            if($category['is_active'] == 0)
+                            {
+                                $readonly = "readonly";
+                            }
 ?>
-                            <div class="form-group">
-                                <label><?php _el('status');?>:</label>
-                                <input type="checkbox" class="switchery" name="is_active" id="<?php echo $category['id']; ?>" <?php if ($category['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
-                            </div>
+                        <div  class=" form-group">
+                            <label><?php _el('status');?>:</label>
+                            <input type="checkbox" onchange="change_status(this);" class="switchery" name="is_active" id="<?php echo $sub_category['id']; ?>" <?php if ($sub_category['is_active']==1) { echo "checked"; }  ?> <?php echo  $readonly; ?>>
+                        </div>
 
                         </div> 
                         <div class="row">
@@ -86,17 +102,20 @@ $file = basename($category['icon']);
                 <!-- /Panel body -->    
             </div>
             <!-- /Panel -->
-            </div>    
-  </div>
+            </div>
+</div>
 <!-- /Content area -->
 
 <script type="text/javascript">
+//for deop-down search
+$('.select-search').select2();
+
 $("#categories_form").validate({
     rules: {
         name: {
             required: true,
         },
-        slug: {
+        slug:{
             required: true,
         }
     },
@@ -104,33 +123,15 @@ $("#categories_form").validate({
         name: {
             required:"<?php _el('please_enter_', _l('name')) ?>"
         },
-        slug: {
+        slug:{
             required:"<?php _el('please_enter_', _l('slug')) ?>"
         },
     }
 });
 
-$('.file-input').fileinput({
-        browseLabel: 'Browse',
-        browseIcon: '<i class="icon-file-plus"></i>',
-        removeIcon: '<i class="icon-cross3"></i>',
-        layoutTemplates: {
-            icon: '<i class="icon-file-check"></i>',
-            main1: "{preview}\n" +
-            "<div class='input-group {class}'>\n" +
-            "   <div class='input-group-btn'>\n" +
-            "       {browse}\n" +
-            "   </div>\n" +
-            "   {caption}\n" +
-            "   <div class='input-group-btn'>\n" +
-            "       {remove}\n" +
-            "   </div>\n" +
-            "</div>"
-        },
-        initialCaption: "choose file",
-        allowedFileExtensions: ["jpg", "jpeg", "png"],
-    }); 
-
+/**
+ *  generate a slug from caegory_name
+ */
 function generate_slug()
 {
     var str = document.getElementById('name').value; 
@@ -144,5 +145,4 @@ function generate_slug()
     var slug = slug.toLowerCase();
     document.getElementById("slug").value = slug;
 }
-        
 </script>

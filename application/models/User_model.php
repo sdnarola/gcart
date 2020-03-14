@@ -25,7 +25,7 @@ class User_model extends MY_Model {
 	 * @return     <object>  The users.
 	 */
 	public function get_users() {
-		$array = array('role_id' => 0, 'is_deleted' => 0);
+		$array = array('is_admin' => 0, 'is_deleted' => 0);
 
 		$this->db->where($array);
 		$data = $this->db->get('users')->result();

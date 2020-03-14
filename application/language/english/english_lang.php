@@ -234,13 +234,20 @@ $lang['edit_project'] = 'Edit Project';
 #Categories
 #----------
 $lang['category']      = 'Category';
-$lang['sub_category']  = 'Sub Category';
-$lang['categories']    = 'Categories';
-$lang['category']      = 'Category';
 $lang['categories']    = 'Categories';
 $lang['category_name'] = 'Category Name';
 $lang['add_category']  = 'Add Category';
 $lang['edit_category'] = 'Edit Category';
+$lang['slug'] = 'Slug';
+$lang['main_categories'] = 'Main Category';
+$lang['icon'] = 'Icon';
+
+#Sub Categories
+#----------
+$lang['sub_category']  = 'Sub Category';
+$lang['sub_categories']    = 'Sub Categories';
+$lang['add_sub_category']  = 'Add Sub Category';
+$lang['edit_sub_category'] = 'Edit Sub Category';
 
 #Products
 #----------

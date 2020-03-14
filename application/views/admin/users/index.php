@@ -39,9 +39,9 @@
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                       
                         </th>
-                        <th width="20%" class="text-center"><?php _el('name');?></a></th>
-                        <th width="20%" class="text-center"><?php _el('email');?></th>
-                        <th width="20%" class="text-center"><?php _el('mobile_no');?></th>
+                        <th width="20%" ><?php _el('name');?></a></th>
+                        <th width="20%" ><?php _el('email');?></th>
+                        <th width="20%" ><?php _el('mobile_no');?></th>
                         <th width="10%" class="text-center"><?php _el('status');?></th>
                         <th width="10%" class="text-center"><?php _el('actions');?></th>
 
@@ -53,7 +53,7 @@
 if ($users != ' ') {
 	foreach ($users as $user) {
 		?>
-                    <tr class="text-center">
+                    <tr>
 
                          <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php
@@ -79,13 +79,13 @@ if ($user->is_active == 1) {
 		?>>
                         </td>
 
-                        <td>
+                        <td class="text-center">
 
-                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/') . $user->id; ?> " class=" text-success text-teal-600" id="<?php echo $user->id; ?>" ><i class="icon-eye"></i></a>
+                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/') . $user->id; ?> " class="text-slate" id="<?php echo $user->id; ?>" ><i class="icon-info3"></i></a>
 
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/') . $user->id; ?>" id="<?php echo $user->id; ?>" class="text-info text-teal-600"><i class="icon-pencil7"></i></a>
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/') . $user->id; ?>" id="<?php echo $user->id; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $user->id; ?>);" class="text-danger text-teal-600" id="<?php echo $user->id; ?>"><i class=" icon-trash"></i></a>
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $user->id; ?>);" class="text-danger" id="<?php echo $user->id; ?>"><i class=" icon-trash"></i></a>
 
                         </td>
                     </tr>
@@ -111,7 +111,7 @@ $(function() {
     $('#users_table').DataTable({
 
         'columnDefs': [ {
-        'targets': [0,3,4], /* column index */
+        'targets': [0,4,5], /* column index */
         'orderable': false, /* disable sorting */
         }],
 

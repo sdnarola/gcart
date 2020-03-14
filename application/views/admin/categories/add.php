@@ -3,7 +3,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('edit_category'); ?></span>
+                <span class="text-semibold"><?php _el('add_category'); ?></span>
             </h4>
         </div>
     </div>
@@ -16,7 +16,7 @@
              <li>
                 <a href="<?php echo base_url('admin/categories'); ?>"><?php _el('main_categories'); ?></a>
             </li>
-            <li class="active"><?php _el('edit'); ?></li>
+            <li class="active"><?php _el('add'); ?></li>
         </ul>
     </div>
 </div>
@@ -40,40 +40,25 @@
                 <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
-                     <form action="<?php echo base_url('admin/categories/edit/'). $category['id']; ?>" id="categories_form" method="POST" enctype="multipart/form-data">
+                    <form action="<?php echo base_url('admin/categories/add'); ?>" id="categories_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" value="<?php echo $category['name']?>" oninput="generate_slug()">
+                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="category_name" name="name" oninput="generate_slug();">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('slug'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('slug'); ?>" id="slug" name="slug" value="<?php echo $category['slug']?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('slug'); ?>" id="slug" name="slug">
                             </div>
-<?php 
-$file = basename($category['icon']);
-?>
-
+                           
                             <div class="form-group">
                                 <label><?php _el('icon'); ?>:</label>
-                                <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/main_categories/').$file ?>" width="400" height="200">
+                                <input type="file"  class="file-input"  name="icon" id='icon'>
                             </div>
-                            <div class="form-group">
-                                <input type="file"  class="file-input"  name="icon" id='icon' data-show-caption="false" data-show-upload="false">
-                            </div>
-<?php
-    $readonly = '';
-
-?>
-                            <div class="form-group">
-                                <label><?php _el('status');?>:</label>
-                                <input type="checkbox" class="switchery" name="is_active" id="<?php echo $category['id']; ?>" <?php if ($category['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
-                            </div>
-
                         </div> 
-                        <div class="row">
+                          <div class="row">
                             <div class="form-group col-md-12">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
@@ -86,8 +71,8 @@ $file = basename($category['icon']);
                 <!-- /Panel body -->    
             </div>
             <!-- /Panel -->
-            </div>    
-  </div>
+            </div>
+</div>
 <!-- /Content area -->
 
 <script type="text/javascript">
@@ -96,7 +81,7 @@ $("#categories_form").validate({
         name: {
             required: true,
         },
-        slug: {
+        slug:{
             required: true,
         }
     },
@@ -104,15 +89,17 @@ $("#categories_form").validate({
         name: {
             required:"<?php _el('please_enter_', _l('name')) ?>"
         },
-        slug: {
+        slug:{
             required:"<?php _el('please_enter_', _l('slug')) ?>"
         },
     }
 });
 
+//for file input field
 $('.file-input').fileinput({
         browseLabel: 'Browse',
         browseIcon: '<i class="icon-file-plus"></i>',
+        uploadIcon: '<i class="icon-file-upload2"></i>',
         removeIcon: '<i class="icon-cross3"></i>',
         layoutTemplates: {
             icon: '<i class="icon-file-check"></i>',
@@ -123,17 +110,22 @@ $('.file-input').fileinput({
             "   </div>\n" +
             "   {caption}\n" +
             "   <div class='input-group-btn'>\n" +
+            "       {upload}\n" +
             "       {remove}\n" +
             "   </div>\n" +
             "</div>"
         },
-        initialCaption: "choose file",
-        allowedFileExtensions: ["jpg", "jpeg", "png"],
+        initialCaption: "No file selected",
+        allowedFileExtensions: ["jpg", "jpeg", "png"]
+
     }); 
 
+/**
+ *  generate a slug from caegory_name
+ */
 function generate_slug()
 {
-    var str = document.getElementById('name').value; 
+    var str = document.getElementById('category_name').value; 
     var slug = '';
     var trimmed = $.trim(str);
     slug = trimmed.replace(/[^a-z0-9&-]/gi, '-').
@@ -144,5 +136,4 @@ function generate_slug()
     var slug = slug.toLowerCase();
     document.getElementById("slug").value = slug;
 }
-        
 </script>

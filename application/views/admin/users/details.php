@@ -2,7 +2,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('users');?></span>
+                <span class="text-semibold"><?php _el('user_details')?></span>
             </h4>
         </div>
     </div>
@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('user_details')?></strong>
+                                <strong><?php _el('user')?></strong>
                             </h5>
                         </div>
                     </div>
@@ -84,8 +84,6 @@
 ?>
                                             </td>
                                     </tr>
-
-
                             </tbody>
                         </table>
                     </div>
@@ -144,12 +142,9 @@
                     <table id="info_table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="2%" class="text-center">
-                                    <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
-                                </th>
-                                <th width="20%" class="text-center"><?php _el('order_number')?></th>
-                                <th width="20%" class="text-center"><?php _el('purchase_date')?></th>
-                                <th width="20%" class="text-center"><?php _el('amount')?></th>
+                                <th width="20%"><?php _el('order_number')?></th>
+                                <th width="20%" ><?php _el('purchase_date')?></th>
+                                <th width="20%"><?php _el('amount')?></th>
                                 <th width="20%" class="text-center"><?php _el('status')?></th>
                                 <th width="8%" class="text-center"><?php _el('actions')?></th>
                             </tr>
@@ -161,10 +156,7 @@
         	foreach ($records as $record) 
             {
 ?>
-                            <tr class="text-center">
-                                <td>
-                                    <input type="checkbox" class="checkbox styled"  name="delete">
-                                </td>
+                            <tr>
                                 <td>
                                     <?php echo $record['order_number'] ?>
                                 </td>
@@ -172,7 +164,7 @@
                                     <?php echo $record['order_date'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $record['total_amount'] ?>
+                                    <?php echo $record['grand_total'] ?>
                                 </td>
 <?php
                 if ($record['order_status'] == 0) 
@@ -193,8 +185,8 @@
                                 <td>
                                     <?php echo $status ?>
                                 </td>
-                                <td>
-                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/') . $user['id']; ?>" class=" text-success text-teal-400" ><i class="icon-eye"></i></a>
+                                <td class="text-center">
+                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/') . $user['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
                                 </td>
                             </tr>
 <?php
@@ -203,6 +195,7 @@
 ?>
                          </tbody>
                     </table>
+                    
                 </div>
     <!-- /Panel -->
 </div>
@@ -212,20 +205,9 @@
 $(function() {
 
     $('#info_table').DataTable({
-        buttons: {
-            dom: {
-            button: {
-                className: 'btn btn-default'
-            }
-            },
-            buttons: [
-            'copyHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-            ]
-        },
+      
         'columnDefs': [ {
-        'targets': [0,5], /* column index */
+        'targets': [4], /* column index */
         'orderable': false, /* disable sorting */
         }],
 

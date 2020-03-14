@@ -10,12 +10,19 @@ class Categories extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model('category_model', 'categories');
+		$this->load->model('sub_category_model', 'sub_categories');
 	}
 
+	/**
+	 *  listing all categories 
+	 */
 	public function index()
 	{
 		$this->set_page_title(_l('categories'));
-		$data['content'] = $this->load->view('admin/categories/index', '', TRUE);
+
+		$data['categories'] = $this->categories->get_all();
+
+		$data['content'] = $this->load->view('admin/categories/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
 
@@ -29,26 +36,155 @@ class Categories extends Admin_Controller
 		if ($this->input->post())
 		{
 			$data = $this->input->post();
-			print_r($data);
 
-			$insert = $this->users->insert($data);
-
-			if ($insert)
+			if($_FILES['icon']['name']!=NULL)
 			{
-				set_alert('success', _l('_added_successfully', _l('category')));
-				redirect('admin/categories');
+				$result = upload_icon();
+
+                if (!$result)
+                {
+                    redirect('admin/categories/add');
+                }
+                
+                $data['icon'] = $result['icon'];
 			}
+			else
+			{
+				$data['icon'] = 'C:/wamp64/www/gcart/'.'assets/uploads/main_categories/default_category.png';
+			}
+
+                      $insert = $this->categories->insert($data);    
+
+						if ($insert)
+						{
+							set_alert('success', _l('_added_successfully', _l('category')));
+							redirect('admin/categories');
+						}
 		}
 		else
 		{
-			$data['content'] = $this->load->view('admin/categories/add', $data, TRUE);
+			$data['content'] = $this->load->view('admin/categories/add',' ', TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
 	}
 
-	public function get_sub_categories($id)
+	/**
+	 * edit category 
+	 *
+	 * @param      int  $id     The identifier
+	 */
+	public function edit($id = '') 
+		{
+			$this->set_page_title(_l('categories') . ' | ' . _l('edit'));
+
+			if ($this->input->post()) 
+			{
+				$data =$this->input->post(); 
+				$data['is_active'] = ($this->input->post('is_active')) ? 1 : 0;
+				//for deactive subcategories status				
+				$status = array('is_active' => $data['is_active']);
+				$sub_categories_update = $this->sub_categories->update_subcategories_status($id, $status);
+				$upload_dir = 'C:/wamp64/www/gcart/'.'assets/uploads/main_categories/';
+
+				if($_FILES['icon']['name']!=NULL)
+				{
+					$result = upload_icon();
+
+	                if (!$result)
+	                {
+	                    redirect('admin/categories/edit/'.$id);
+	                }
+	                
+	                $data['icon'] = $result['icon'];
+	                //for unlink image from folder
+	                $old_upload_image = $this->categories->get($id);
+					unlink($old_upload_image['icon']);
+				}
+
+				$result = $this->categories->update($id,$data);
+			
+				set_alert('success', _l('_updated_successfully', _l('category')));
+				redirect('admin/categories');			
+			} 
+			else 
+			 {
+				$data['category'] = $this->categories->get($id);
+				
+				$data['content'] = $this->load->view('admin/categories/edit',$data, TRUE);
+				$this->load->view('admin/layouts/index', $data);
+			}	
+
+		}
+
+	/**
+	 * Deletes the single category record
+	 */
+	public function delete() 
 	{
-		$data = $this->categories->get_sub_categories($id);
-		echo json_encode($data);
+		$category_id = $this->input->post('category_id');
+
+		$deleted = $this->categories->delete($category_id);
+		$deleted_sub_categories = $this->sub_categories->delete_sub_categories($category_id);
+	
+		if ($deleted==1 && $deleted_sub_categories==1) 
+		{
+			echo 'true';
+		} 
+		else 
+		{
+			echo 'false';
+		}
+
 	}
+
+	/**
+ 	* Deletes multiple categories records
+ 	*/
+	public function delete_multiple() {
+		$where = $this->input->post('ids');
+
+		$deleted = $this->categories->delete_many($where);
+		$deleted_sub_categories = $this->sub_categories->multi_delete_sub_categories($where);
+
+		if ($deleted==1 && $deleted_sub_categories==1) 
+		{
+			$ids = implode(',', $where);
+			echo 'true';
+		} 
+		else 
+		{
+			echo 'false';
+		}
+
+	}
+	
+	/**
+	 * Toggles the category status to Active or Inactive
+	*/
+	public function update_status() 
+	{
+		$category_id = $this->input->post('category_id');
+		$data = array('is_active' => $this->input->post('is_active'));
+
+		$update = $this->categories->update($category_id, $data);
+		$sub_categories_update = $this->sub_categories->update_subcategories_status($category_id, $data);
+
+		if ($update==1 and $sub_categories_update ==1) 
+		{
+
+			if ($this->input->post('is_active') == 1) 
+			{
+				echo 'true';
+			} 
+			else 
+			{
+				echo 'false';
+			}
+
+		}
+
+	}	
 }
+
+	
+	

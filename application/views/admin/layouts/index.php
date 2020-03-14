@@ -84,6 +84,10 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js'); ?>"></script>
 
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/uploaders/fileinput.min.js'); ?>"></script>
+
+
+
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
 
@@ -94,6 +98,7 @@ border-radius: 3px;
 <!-- to load boots strap switch on/off -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.js" data-turbolinks-track="true"></script>
 
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/select2.min.js'); ?>"></script>
 
 
 
@@ -359,13 +364,13 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('vendors'))
+											if (is_active_controller('subscriptions'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/subscriptions/'); ?>">
+											<a href="<?php echo base_url('admin/subscriptions'); ?>">
 												<span>Subscriptions</span>
 											</a>
 										</li>
@@ -378,7 +383,7 @@ switches.forEach(function(html) {
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/vendors/'); ?>">
+											<a href="<?php echo base_url('admin/vendors'); ?>">
 												<span>List</span>
 											</a>
 										</li>
@@ -435,13 +440,13 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('categories'))
+											if (is_active_controller('sub_categories'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/categories'); ?>">
+											<a href="<?php echo base_url('admin/sub_categories'); ?>">
 												<span>Sub Category</span>
 											</a>
 										</li>
