@@ -2,7 +2,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('users');?></span>
+                <span class="text-semibold"><?php _el('user_details')?></span>
             </h4>
         </div>
     </div>
@@ -24,7 +24,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('user_details')?></strong>
+                                <strong><?php _el('user')?></strong>
                             </h5>
                         </div>
                     </div>
@@ -34,10 +34,10 @@
                 <!-- profile pic display -->
                 <div class="col-md-2">
 <?php
-	$file = basename($path);
+    $file = basename($path);
 ?>
                     <div class="user-image">
-                    <img src="<?php echo base_url().'assets/Uploads/users/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
+                    <img src="<?php echo base_url() . 'assets/Uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
                 </div>
                 </div>
                 <!-- table shows the user's details -->
@@ -46,15 +46,14 @@
                         <table class="table">
                              <tbody>
 <?php
-
-	if ($users)
-	{
-		foreach ($users as $user)
-		{
-		?>
+    if ($users) 
+    {
+        foreach ($users as $user) 
+        {
+?>
                                     <tr>
                                         <th><?php echo _el('name'); ?></th>
-                                        <td><?php echo ucfirst($user['firstname']).' '.ucfirst($user['lastname']); ?></td>
+                                        <td><?php echo ucfirst($user['firstname']) . ' ' . ucfirst($user['lastname']); ?></td>
                                     </tr>
                                     <tr>
                                         <th><?php echo _el('email'); ?></th>
@@ -67,29 +66,24 @@
                                     <tr>
                                         <th><?php echo _el('last_login'); ?> </th>
                                             <td>
-                                                <?php $time = time_to_words($user['last_login']);
-                                                		echo $time;?>
+                                                <?php $time =time_to_words($user['last_login']); echo $time; ?>
                                             </td>
                                     </tr>
                                       <tr>
                                         <th><?php echo _el('email_varified'); ?> </th>
                                             <td>
-<?php
-
-			if ($user['is_email_verified'] == 1)
-			{
-				_el('varified');
-			}
-			else
-			{
-				_el('not_varified');
-			}
-
-		?>
+<?php 
+                                                if($user['is_email_verified']==1) 
+                                                {
+                                                   _el('varified');
+                                                }
+                                                else
+                                                {
+                                                    _el('not_varified');
+                                                }
+?>
                                             </td>
                                     </tr>
-
-
                             </tbody>
                         </table>
                     </div>
@@ -121,9 +115,8 @@
                                         <td><?php echo $user['pincode'] ?></td>
                                     </tr>
 <?php
-	}
-	}
-
+        }
+    }
 ?>
                             </tbody>
                         </table>
@@ -149,28 +142,21 @@
                     <table id="info_table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="2%" class="text-center">
-                                    <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
-                                </th>
-                                <th width="20%" class="text-center"><?php _el('order_number')?></th>
-                                <th width="20%" class="text-center"><?php _el('purchase_date')?></th>
-                                <th width="20%" class="text-center"><?php _el('amount')?></th>
+                                <th width="20%"><?php _el('order_number')?></th>
+                                <th width="20%" ><?php _el('purchase_date')?></th>
+                                <th width="20%"><?php _el('amount')?></th>
                                 <th width="20%" class="text-center"><?php _el('status')?></th>
                                 <th width="8%" class="text-center"><?php _el('actions')?></th>
                             </tr>
                         </thead>
                         <tbody>
 <?php
-
-	if ($records)
-	{
-		foreach ($records as $record)
-		{
-		?>
-                            <tr class="text-center">
-                                <td>
-                                    <input type="checkbox" class="checkbox styled"  name="delete">
-                                </td>
+        if ($records) 
+        {
+            foreach ($records as $record) 
+            {
+?>
+                            <tr>
                                 <td>
                                     <?php echo $record['order_number'] ?>
                                 </td>
@@ -178,43 +164,38 @@
                                     <?php echo $record['order_date'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $record['total_amount'] ?>
+                                    <?php echo $record['grand_total'] ?>
                                 </td>
 <?php
-
-			if ($record['order_status'] == 0)
-			{
-				$status = _l('pending');
-			}
-			elseif ($record['order_status'] == 1)
-			{
-				$status = _l('processing');
-			}
-			elseif ($record['order_status'] == 2)
-			{
-				$status = _l('completed');
-			}
-			elseif ($record['order_status'] == 3)
-			{
-				$status = _l('declined');
-			}
-
-		?>
+                if ($record['order_status'] == 0) 
+                {
+                        $status = _l('pending');
+                } elseif ($record['order_status'] == 1) 
+                {
+                        $status = _l('processing');
+                } elseif ($record['order_status'] == 2) 
+                {
+                        $status = _l('completed');
+                } elseif($record['order_status'] == 3)
+                {
+                        $status = _l('declined');
+                }
+?>
 
                                 <td>
                                     <?php echo $status ?>
                                 </td>
-                                <td>
-                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/').$user['id']; ?>" class=" text-success text-teal-400" ><i class="icon-eye"></i></a>
+                                <td class="text-center">
+                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/') . $record['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
                                 </td>
                             </tr>
 <?php
-	}
-	}
-
+            }
+        }
 ?>
                          </tbody>
                     </table>
+                    
                 </div>
     <!-- /Panel -->
 </div>
@@ -224,20 +205,9 @@
 $(function() {
 
     $('#info_table').DataTable({
-        buttons: {
-            dom: {
-            button: {
-                className: 'btn btn-default'
-            }
-            },
-            buttons: [
-            'copyHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-            ]
-        },
+      
         'columnDefs': [ {
-        'targets': [0,5], /* column index */
+        'targets': [4], /* column index */
         'orderable': false, /* disable sorting */
         }],
 
