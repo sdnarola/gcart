@@ -81,13 +81,12 @@ class Vendors extends Admin_Controller
 
 		if ($this->input->post()) 
 		{
-			$data =$this->input->post(); 
-			unset($data['submit'],$data['profile_image']);
+		 	$data =$this->input->post(); 
 			$data['is_active'] = ($this->input->post('is_active')) ? 1 : 0;
 
-			$result = $this->vendors->update($id,$data);
+			$update = $this->vendors->update($id,$data);
 
-			if ($result) 
+			if ($update) 
 			{
 			 	set_alert('success', _l('_updated_successfully', _l('vendor')));
 				redirect('admin/vendors');
@@ -111,6 +110,7 @@ class Vendors extends Admin_Controller
 	 */
 	public function details($id) 
 	{
+		$this->set_page_title(_l('vendors') . ' | ' . _l('details'));
 		
 		$data['vendor'] = $this->vendors->get($id);
 		$data['records'] = $this->products->get_products($id);
@@ -152,7 +152,7 @@ class Vendors extends Admin_Controller
 	public function registration_status() 
 	{
 		$data = array('value' => $this->input->post('value1'));
-		$where = array('name' => 'vendor_registration');
+		$where = array('name' => 'vendors_registration');
 
 		$update = $this->settings->update_by($where,$data);
 		

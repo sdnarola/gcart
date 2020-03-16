@@ -18,7 +18,7 @@ class Subscriptions extends Admin_Controller
 	 */
 	public function index() 
 	{
-		$this->set_page_title(_l('vendors'));
+		$this->set_page_title(_l('subscriptions'));
 
 		$data['plans'] = $this->subscriptions->get_all();
 				
@@ -35,15 +35,7 @@ class Subscriptions extends Admin_Controller
 
 		if ($this->input->post())
 		{
-			$data = array
-				(
-
-				'title' => $this->input->post('title'),
-				'cost'  => $this->input->post('cost'),
-				'days'     => $this->input->post('days'),
-				'product_limit' => $this->input->post('limitations'),
-				'description'  => $this->input->post('description')
-			);
+			$data = $this->input->post();
 
 			$insert = $this->subscriptions->insert($data);
 
@@ -72,12 +64,10 @@ class Subscriptions extends Admin_Controller
 		if ($this->input->post()) 
 		{
 			$data =$this->input->post();
-			$data['product_limit'] = $data['limitations'];
-			unset($data['submit'],$data['limitations']);
 		
-			$result = $this->subscriptions->update($id,$data);
+			$update = $this->subscriptions->update($id,$data);
 
-			if ($result) 
+			if ($update) 
 			{
 			 	set_alert('success', _l('_updated_successfully', _l('subscription')));
 				redirect('admin/subscriptions/');
@@ -130,6 +120,5 @@ class Subscriptions extends Admin_Controller
 		}
 
 	}
-
 
 }

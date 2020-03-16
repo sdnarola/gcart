@@ -21,8 +21,6 @@
 </div>
 <!-- Page header -->
 <!-- Content area -->
-
-
 <div class="content">
 <?php
 	if ($users) 
@@ -30,9 +28,7 @@
 		
 		foreach ($users as $user) 
 		{
-		
 ?>
-			<form action="<?php echo base_url('admin/users/edit/') . $user['users_id']; ?>" id="profileform" name="profileform" method="POST">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<!-- Panel -->
@@ -50,11 +46,10 @@
 							<!-- /Panel heading -->
 							<!-- Panel body -->
 							<div class="panel-body">
+								<form action="<?php echo base_url('admin/users/edit/') . $user['users_id']; ?>" id="profileform" name="profileform" method="POST">
 								<div class="row">
 									<div class="col-md-12">
-
 <?php
-
 $file = basename($path);
 ?>
 										<div class="form-group">
@@ -120,32 +115,34 @@ $file = basename($path);
 
 			}
 ?>
-
 										<div class="form-group">
 											<label><?php _el('status');?>:</label>
 
 											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['users_id']; ?>" <?php if ($user['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
-								</div>
+										</div>
 <?php
 		}
 	}
 ?>
+									</div>
+								</div>
+								<div class="row">
+		                            <div class="form-group col-md-12">
+		                                <div class="pull-right">
+		                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+		                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+		                                </div>
+		                            </div>
+		                        </div>
+                    			</form>
+                    
 							</div>
-						</div>
-					</div>
 					<!-- /Panel body -->
-				</div>
+						</div>
 				<!-- /Panel -->
-			</div>
+					</div>
 
-		</div>
-
-		<div class="btn-bottom-toolbar text-right btn-toolbar-container-out">
-				<button type="submit" class="btn btn-success" name="submit"><?php _el('save');?></button>
-				<a class="btn btn-default" onclick="window.history.back();"><?php _el('back');?></a>
-		</div>
-
-	</form>
+				</div>
 </div>
 
 <!-- /Content area -->

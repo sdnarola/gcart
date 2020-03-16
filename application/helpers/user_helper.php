@@ -47,8 +47,6 @@ function get_user_info($id, $info = '')
 	}
 }
 
-// =========================== Bhavik ==================================//
-
 /**
  * Gets the address info of user.
  *
@@ -70,8 +68,6 @@ function get_user_address($id)
 
 	return $address;
 }
-
-// =========================== Bhavik ==================================//
 
 /**
  * Determines if user has permissions.
