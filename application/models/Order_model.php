@@ -33,6 +33,7 @@ class Order_model extends MY_Model
 		return $query->result_array();
 	}
 
+// =========================== Bhavik ==================================//
 	/**
 	 * Get ordered product items.
 	 *
@@ -63,7 +64,6 @@ class Order_model extends MY_Model
 		return $items;
 	}
 
-// =========================== Bhavik ==================================//
 	/**
 	 * Get the orders of vendors/admins.
 	 *

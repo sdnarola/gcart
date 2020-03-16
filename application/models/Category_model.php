@@ -21,6 +21,8 @@ class Category_model extends MY_Model
 		parent::__construct();
 	}
 
+// =========================== Bhavik ==================================//
+
 	/**
 	 * get sub categories of parent category
 	 *
@@ -73,4 +75,6 @@ class Category_model extends MY_Model
 
 		return $result;
 	}
+
+// =========================== Bhavik ==================================//
 }

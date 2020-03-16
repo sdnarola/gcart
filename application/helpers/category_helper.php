@@ -16,8 +16,6 @@ function get_category($id, $info = '')
 	$CI->load->model('category_model', 'categories');
 	$category = $CI->categories->get($id);
 
-	return $category['name'];
-
 	if ($info != '')
 	{
 		return $category[$info];

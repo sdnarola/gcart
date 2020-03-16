@@ -13,6 +13,8 @@ class Profile extends Vendor_Controller
 		$this->load->model('vendor_model', 'vendors');
 	}
 
+// =========================== Bhavik ==================================//
+
 	/**
 	 * Updates vendor's personal profile details.
 	 */
@@ -50,6 +52,9 @@ class Profile extends Vendor_Controller
 
 				$UploadData            = $this->upload->data();
 				$data['profile_image'] = $config['upload_path'].$UploadData['file_name'];
+
+				$profile_image = get_vendor_info($id, 'profile_image');
+				unlink($profile_image);
 			}
 
 			$update = $this->vendors->update($id, $data);
@@ -61,4 +66,6 @@ class Profile extends Vendor_Controller
 			}
 		}
 	}
+
+// =========================== Bhavik ==================================//
 }

@@ -72,6 +72,7 @@ class User_model extends MY_Model
 		return $result;
 	}
 
+// =========================== Bhavik ==================================//
 	/**
 	 * Get user's address
 	 * @param  int  	$id    		The id of the user.
@@ -85,4 +86,6 @@ class User_model extends MY_Model
 
 		return $address;
 	}
+
+// =========================== Bhavik ==================================//
 }

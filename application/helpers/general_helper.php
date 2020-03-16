@@ -303,3 +303,31 @@ function log_activity($description, $user_id = '')
 		$CI->activity_log->insert($data);
 	}
 }
+
+// =========================== Bhavik ==================================//
+
+/**
+ * Gets the requested info of product.
+ *
+ * @param  int  $id    The id of the product.
+ * @param  str  $info  The key of the information required.
+ *
+ * @return mixed The information required.
+ */
+function get_product($id, $info = '')
+{
+	$CI = &get_instance();
+	$CI->load->model('product_model', 'products');
+	$product = $CI->products->get($id);
+
+	if ($info != '')
+	{
+		return $product[$info];
+	}
+	else
+	{
+		return $product;
+	}
+}
+
+// =========================== Bhavik ==================================//

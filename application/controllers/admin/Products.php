@@ -37,6 +37,7 @@ class Products extends Admin_Controller
 		{
 			$data                     = $this->input->post();
 			$data['vendor_id']        = $this->vendor_id;
+			$data['add_date']         = date('Y-m-d h:i:s', time());
 			$data['related_products'] = serialize($this->input->post('related_products'));
 
 			if ($_FILES['thumb_image']['name'] != null)
@@ -109,6 +110,9 @@ class Products extends Admin_Controller
 					}
 
 					$data['thumb_image'] = $upload['thumb_image'];
+
+					$thumb_image = get_product($id, 'thumb_image');
+					unlink($thumb_image);
 				}
 
 				if (!empty($_FILES['image']['name'][0]))
@@ -121,6 +125,12 @@ class Products extends Admin_Controller
 					}
 
 					$data['images'] = $multi_upload['images'];
+					$images         = unserialize(get_product($id, 'images'));
+
+					foreach ($images as $image)
+					{
+						unlink($image);
+					}
 				}
 
 				$update = $this->products->update($id, $data);
@@ -180,10 +190,26 @@ class Products extends Admin_Controller
 	public function delete()
 	{
 		$product_id = $this->input->post('product_id');
-		$deleted    = $this->products->delete($product_id);
+
+		$thumb_image = get_product($product_id, 'thumb_image'); //get thumb_image
+		$images      = unserialize(get_product($product_id, 'images')); //get multiple images
+
+		$deleted = $this->products->delete($product_id);
 
 		if ($deleted)
 		{
+			//thumb image//
+			$copy_thumb = str_replace('products', 'products/deleted', $thumb_image); //replace path
+			copy($thumb_image, $copy_thumb); //copy image
+			unlink($thumb_image);
+
+			foreach ($images as $image) //multiple images//
+			{
+				$copy_image = str_replace('products', 'products/deleted', $image); //replace path
+				copy($image, $copy_image); //copy image
+				unlink($image);
+			}
+
 			$this->vendors->update_total_product($this->vendor_id, 'total_products - 1');
 			echo 'true';
 		}
@@ -198,8 +224,26 @@ class Products extends Admin_Controller
 	 */
 	public function delete_selected()
 	{
-		$where   = $this->input->post('ids');
-		$count   = count($where);
+		$where = $this->input->post('ids');
+
+		foreach ($where as $product_id)
+		{
+			$thumb_image = get_product($product_id, 'thumb_image'); //get thumb_image
+			$images      = unserialize(get_product($product_id, 'images'));
+
+			//thumb image//
+			$copy_thumb = str_replace('products', 'products/deleted', $thumb_image); //replace path
+			copy($thumb_image, $copy_thumb); //copy image
+			unlink($thumb_image);
+
+			foreach ($images as $image) //multiple images//
+			{
+				$copy_image = str_replace('products', 'products/deleted', $image); //replace path
+				copy($image, $copy_image); //copy image
+				unlink($image);
+			}
+		}
+
 		$deleted = $this->products->delete_many($where);
 
 		if ($deleted)

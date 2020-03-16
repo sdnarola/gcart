@@ -63,18 +63,18 @@
 		                            <div class="form-group col-md-6">
 		                                <small class="req text-danger">* </small>
 		                                <label><?php _el('pincode');?>:</label>
-                                		<input type="number" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $vendor['pincode']; ?>">
+                                		<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $vendor['pincode']; ?>">
 		                            </div>
 		                        </div>
 		                        <div class="row">
 									<div class="form-group col-md-6">
 		                                <small class="req text-danger">* </small>
 		                                <label><?php _el('shop_number');?>:</label>
-                                		<input type="number" class="form-control" placeholder="<?php _el('shop_number');?>" id="shop_number" name="shop_number" value="<?php echo $vendor['shop_number']; ?>">
+                                		<input type="text" class="form-control" placeholder="<?php _el('shop_number');?>" id="shop_number" name="shop_number" value="<?php echo $vendor['shop_number']; ?>">
 		                            </div>
 		                            <div class="form-group col-md-6">
 		                                <label><?php _el('registration_number');?>&nbsp;(Optional):</label>
-                                		<input type="number" class="form-control" placeholder="<?php _el('registration_number');?>" id="registration_number" name="registration_number" value="<?php echo $vendor['registration_number']; ?>">
+                                		<input type="text" class="form-control" placeholder="<?php _el('registration_number');?>" id="registration_number" name="registration_number" value="<?php echo $vendor['registration_number']; ?>">
 		                            </div>
 		                        </div>
 								<div class="row">
@@ -142,30 +142,53 @@ $("#mystoreform").validate(
             required: true,
         },
         pincode: {
-            required:true,
-           	maxlength: 6,
-            digits: true
-	    },
-
+            required: true,
+            digits: true,
+            rangelength: [6,6]
+        },
+        city: {
+        	required: true,
+        },
+        shop_number: {
+        	required: true,
+        	digits: true
+        },
+        registration_number: {
+        	digits: true
+        },
+        shop_details:{
+    		required: true,
+    	}
     },
    	messages:
    	{
-    	firstname: {
+    	shop_name: {
             required:"<?php _el('please_enter_', _l('shop_name'))?>",
 		},
-        lastname: {
+        owner_name: {
             required:"<?php _el('please_enter_', _l('owner_name'))?>",
         },
         address: {
          	required:"<?php _el('please_enter_', _l('address'))?>"
         },
         pincode: {
+        	rangelength:"<?php _el('pincode_length_must_be_', 6)?>",
             required:"<?php _el('please_enter_', _l('pincode'))?>",
-           	digits:"<?php _el('please_enter_', _l('digits'))?>",
-           	maxlength: "<?php _el('pincode_max_length_must_be_', 6)?>"
+           	digits:"<?php _el('please_enter_', _l('digits'))?>"
 	    },
+        city: {
+        	required: "<?php _el('please_enter_', _l('city'))?>"
+        },
+        shop_number: {
+        	required: "<?php _el('please_enter_', _l('shop_number'))?>",
+        	digits: "<?php _el('please_enter_', _l('digits'))?>"
+        },
+        registration_number: {
+        	digits: "<?php _el('please_enter_', _l('digits'))?>"
+        },
+        shop_details:{
+    		required:"<?php _el('please_enter_', _l('shop_details'))?>",
+    	}
     }
 });
-
-
 </script>

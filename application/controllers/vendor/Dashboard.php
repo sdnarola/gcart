@@ -28,8 +28,9 @@ class Dashboard extends Vendor_Controller
 	public function store()
 	{
 		$this->set_page_title(_l('dashboard'));
-
-		$data['content'] = $this->load->view('vendor/dashboard/store', '', TRUE);
+		$id              = $this->session->userdata('vendor_id');
+		$data['vendor']  = $this->vendors->get($id);
+		$data['content'] = $this->load->view('vendor/dashboard/store', $data, TRUE);
 		$this->load->view('vendor/layouts/index', $data);
 	}
 
@@ -70,6 +71,9 @@ class Dashboard extends Vendor_Controller
 
 				$UploadData   = $this->upload->data();
 				$data['logo'] = $config['upload_path'].$UploadData['file_name'];
+
+				$logo = get_vendor_info($id, 'logo');
+				unlink($logo);
 			}
 
 			$update = $this->vendors->update($id, $data);

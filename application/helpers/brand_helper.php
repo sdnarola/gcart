@@ -14,7 +14,7 @@ function get_brand($id, $info = '')
 {
 	$CI = &get_instance();
 	$CI->load->model('brand_model', 'brands');
-	$brand = $CI->brands->brands->get($id);
+	$brand = $CI->brands->get($id);
 
 	if ($info != '')
 	{
