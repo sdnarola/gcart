@@ -161,15 +161,17 @@
                                 <a href="javascript:void(0);" class="btn btn-sm btn-primary set"><i class="icon-file-plus position-left"></i>Set Images</a>
                             </div>
                         </div>
-                        <!-- End multiple file upload -->
+                        <!-- End multiple images upload -->
 
                         <div class="row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('short_description');?></label>
-                                <textarea name="short_description" id="short_description" class="form-control" rows="5"><?php echo $product['short_description']; ?></textarea>
+                                <textarea name="short_description" id="short_description" class="form-control" rows="3"><?php echo $product['short_description']; ?></textarea>
                             </div>
-                            <div class="form-group col-md-6">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('long_description');?></label>
                                 <textarea name="long_description" id="long_description" class="form-control" rows="5"><?php echo $product['long_description']; ?></textarea>
@@ -198,7 +200,7 @@
                             <div class="form-group col-md-12">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
-                                    <a href="javascript:window.history.back();" class="btn btn-danger"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
                                 </div>
                             </div>
                         </div>

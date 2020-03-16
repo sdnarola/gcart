@@ -1,4 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
+
+// =========================== Bhavik ==================================//
+
 /**
  * Upload single image file
  *
@@ -33,9 +36,8 @@ function image_upload()
 /**
  * Uploads Multiple image files
  *
- * @param  int 	$insert_id 	product id.
- *
- * @return boolean bool True if images upload, False otherwise & deletes data from database.
+ * @return boolean bool False if images can't upload.
+ * @return mixed 	uploaded images.
  */
 function multiple_image_upload()
 {
@@ -79,5 +81,7 @@ function multiple_image_upload()
 
 	return $data;
 }
+
+// =========================== Bhavik ==================================//
 
 ?>

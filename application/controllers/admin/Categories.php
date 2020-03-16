@@ -68,13 +68,14 @@ class Categories extends Admin_Controller
 		}
 	}
 
+
 	/**
 	 * edit category 
 	 *
 	 * @param      int  $id     The identifier
 	 */
 	public function edit($id = '') 
-		{
+	{
 			$this->set_page_title(_l('categories') . ' | ' . _l('edit'));
 
 			if ($this->input->post()) 
@@ -114,7 +115,7 @@ class Categories extends Admin_Controller
 				$this->load->view('admin/layouts/index', $data);
 			}	
 
-		}
+	}
 
 	/**
 	 * Deletes the single category record
@@ -138,9 +139,35 @@ class Categories extends Admin_Controller
 	}
 
 	/**
+	 * Get sub categories of parent category.
+	 *
+	 * @param  int  	$id  	Id of parent category.
+	 *
+	 * @return mixed 			array of json-data
+	 */
+	public function get_sub_categories($id)
+	{
+		$category_id = $this->input->post('category_id');
+
+		$deleted = $this->categories->delete($category_id);
+		$deleted_sub_categories = $this->sub_categories->delete_sub_categories($category_id);
+	
+		if ($deleted==1 && $deleted_sub_categories==1) 
+		{
+			echo 'true';
+		} 
+		else 
+		{
+			echo 'false';
+		}
+
+	}
+
+	/**
  	* Deletes multiple categories records
  	*/
-	public function delete_multiple() {
+	public function delete_multiple() 
+	{
 		$where = $this->input->post('ids');
 
 		$deleted = $this->categories->delete_many($where);
@@ -157,6 +184,7 @@ class Categories extends Admin_Controller
 		}
 
 	}
+
 	
 	/**
 	 * Toggles the category status to Active or Inactive

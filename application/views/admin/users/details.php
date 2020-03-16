@@ -48,7 +48,7 @@
 <?php
     if ($users) 
     {
-    	foreach ($users as $user) 
+        foreach ($users as $user) 
         {
 ?>
                                     <tr>
@@ -153,7 +153,7 @@
 <?php
         if ($records) 
         {
-        	foreach ($records as $record) 
+            foreach ($records as $record) 
             {
 ?>
                             <tr>
@@ -169,16 +169,16 @@
 <?php
                 if ($record['order_status'] == 0) 
                 {
-                		$status = _l('pending');
+                        $status = _l('pending');
                 } elseif ($record['order_status'] == 1) 
                 {
                         $status = _l('processing');
                 } elseif ($record['order_status'] == 2) 
                 {
-                		$status = _l('completed');
+                        $status = _l('completed');
                 } elseif($record['order_status'] == 3)
                 {
-                		$status = _l('declined');
+                        $status = _l('declined');
                 }
 ?>
 
@@ -186,7 +186,7 @@
                                     <?php echo $status ?>
                                 </td>
                                 <td class="text-center">
-                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/') . $user['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
+                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/') . $record['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
                                 </td>
                             </tr>
 <?php

@@ -94,6 +94,7 @@ class Users extends Admin_Controller
 
 		$data['users']   = $this->users->show($id);
 		$data['records'] = $this->order_details($id);
+		//print_r($data['records']);
 
 		//get image path from database
 		$record = $this->users->get($id);

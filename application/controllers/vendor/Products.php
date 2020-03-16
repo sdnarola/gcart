@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// =========================== Bhavik ==================================//
+
 class Products extends Vendor_Controller
 {
 	/**
@@ -149,7 +151,7 @@ class Products extends Vendor_Controller
 	}
 
 	/**
-	 * Toggles the porduct status to Active or Inactive
+	 * Toggles the product status to Active or Inactive
 	 */
 	public function update_status()
 	{
@@ -210,7 +212,7 @@ class Products extends Vendor_Controller
 	}
 
 	/**
-	 * show the single product details
+	 * show the product details.
 	 */
 	public function details($id = '')
 	{
@@ -232,9 +234,18 @@ class Products extends Vendor_Controller
 		}
 	}
 
+	/**
+	 * Get sub categories of parent category.
+	 *
+	 * @param  int  	$id  	Id of parent category.
+	 *
+	 * @return mixed 			array of json-data
+	 */
 	public function get_sub_categories($id)
 	{
 		$data = $this->categories->get_sub_categories($id);
 		echo json_encode($data);
 	}
+
+// =========================== Bhavik ==================================//
 }

@@ -14,6 +14,8 @@ function is_admin_logged_in()
 	return false;
 }
 
+// =========================== Bhavik ==================================//
+
 /**
  * Checks if vendor is logged in or not
  * @return boolean
@@ -27,6 +29,8 @@ function is_vendor_logged_in()
 
 	return false;
 }
+
+// =========================== Bhavik ==================================//
 
 /**
  * Checks if user is logged in or not
@@ -216,6 +220,25 @@ function is_active_controller($controller)
 }
 
 /**
+ * Determines if active controller->method.
+ *
+ * @param  str  $method  The controller->method
+ *
+ * @return bool True if active controller->method, False otherwise.
+ */
+function is_active_method($method)
+{
+	$CI = &get_instance();
+
+	if ($CI->router->fetch_method() == $method)
+	{
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+/**
  * Sets the notification alert on different evets performed.
  *
  * @param str  $type     The type
@@ -279,12 +302,4 @@ function log_activity($description, $user_id = '')
 
 		$CI->activity_log->insert($data);
 	}
-}
-
-function pro_images($id)
-{
-	$CI = &get_instance();
-	$CI->load->model('product_model', 'products');
-
-	return $CI->products->get_images($id);
 }

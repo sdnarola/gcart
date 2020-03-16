@@ -235,7 +235,7 @@
                                     <input type="checkbox"  class="switchery"  id="<?php echo $record['id']; ?>" <?php if ($record['category_status'] == 1) {echo "checked";}?> readonly>
                                 </td>
                                 <td class="text-center">
-                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/product/details/') . $record['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
+                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/') . $record['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
                                 </td>
                             </tr>
 <?php

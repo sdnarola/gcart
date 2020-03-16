@@ -21,8 +21,6 @@
 </div>
 <!-- Page header -->
 <!-- Content area -->
-
-
 <div class="content">
 <?php
 	if ($users) 
@@ -30,7 +28,6 @@
 		
 		foreach ($users as $user) 
 		{
-		
 ?>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
@@ -53,7 +50,6 @@
 								<div class="row">
 									<div class="col-md-12">
 <?php
-
 $file = basename($path);
 ?>
 										<div class="form-group">

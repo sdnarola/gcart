@@ -1,8 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// =========================== Bhavik ==================================//
+
 class Products extends Admin_Controller
 {
+	public $vendor_id = '1';
 	/**
 	 * Constructor for the class
 	 */
@@ -12,6 +15,7 @@ class Products extends Admin_Controller
 		$this->load->model('brand_model', 'brands');
 		$this->load->model('category_model', 'categories');
 		$this->load->model('product_model', 'products');
+		$this->load->model('vendor_model', 'vendors');
 	}
 
 	public function index()
@@ -32,7 +36,7 @@ class Products extends Admin_Controller
 		if ($this->input->post())
 		{
 			$data                     = $this->input->post();
-			$data['vendor_id']        = 0;
+			$data['vendor_id']        = $this->vendor_id;
 			$data['related_products'] = serialize($this->input->post('related_products'));
 
 			if ($_FILES['thumb_image']['name'] != null)
@@ -63,6 +67,7 @@ class Products extends Admin_Controller
 
 			if ($insert)
 			{
+				$this->vendors->update_total_product($this->vendor_id, 'total_products + 1');
 				set_alert('success', _l('_added_successfully', _l('product')));
 				redirect('admin/products');
 			}
@@ -147,7 +152,7 @@ class Products extends Admin_Controller
 	}
 
 	/**
-	 * Toggles the porduct status to Active or Inactive
+	 * Toggles the product status to Active or Inactive
 	 */
 	public function update_status()
 	{
@@ -179,6 +184,7 @@ class Products extends Admin_Controller
 
 		if ($deleted)
 		{
+			$this->vendors->update_total_product($this->vendor_id, 'total_products - 1');
 			echo 'true';
 		}
 		else
@@ -193,12 +199,12 @@ class Products extends Admin_Controller
 	public function delete_selected()
 	{
 		$where   = $this->input->post('ids');
+		$count   = count($where);
 		$deleted = $this->products->delete_many($where);
 
 		if ($deleted)
 		{
 			$ids = implode(',', $where);
-			log_activity("Products Deleted [IDs: $ids]");
 			echo 'true';
 		}
 		else
@@ -208,7 +214,7 @@ class Products extends Admin_Controller
 	}
 
 	/**
-	 * show the single product details
+	 * show the single product details.
 	 */
 	public function details($id = '')
 	{
@@ -229,4 +235,6 @@ class Products extends Admin_Controller
 			redirect('admin/products');
 		}
 	}
+
+// =========================== Bhavik ==================================//
 }

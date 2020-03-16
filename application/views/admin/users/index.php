@@ -50,16 +50,18 @@
                 <tbody>
 <?php
 
-if ($users != ' ') {
-	foreach ($users as $user) {
-		?>
+if ($users != ' ') 
+{
+    foreach ($users as $user) 
+    {
+?>
                     <tr>
 
                          <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php
 if ($user->id != get_loggedin_info('user_id')) {
-			echo $user->id;}
-		?>" >
+            echo $user->id;}
+        ?>">
                         </td>
                         <td>
                             <?php echo ucfirst($user->firstname) . '&nbsp;' . ucfirst($user->lastname); ?>
@@ -73,10 +75,13 @@ if ($user->id != get_loggedin_info('user_id')) {
                         </td>
 
                         <td class="text-center switchery-sm">
-                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $user->id; ?>"<?php
-if ($user->is_active == 1) {
-			echo 'checked';}
-		?>>
+                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $user->id; ?>"
+<?php
+if ($user->is_active == 1) 
+{
+            echo 'checked';
+}
+?>>
                         </td>
 
                         <td class="text-center">
@@ -86,13 +91,11 @@ if ($user->is_active == 1) {
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/') . $user->id; ?>" id="<?php echo $user->id; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $user->id; ?>);" class="text-danger" id="<?php echo $user->id; ?>"><i class=" icon-trash"></i></a>
-
                         </td>
                     </tr>
 <?php
+    }
 }
-}
-
 ?>
                 </tbody>
             </table>
@@ -103,8 +106,6 @@ if ($user->is_active == 1) {
 </div>
 <!-- /Content area -->
 
-
-
 <script type="text/javascript">
 $(function() {
 
@@ -114,7 +115,6 @@ $(function() {
         'targets': [0,4,5], /* column index */
         'orderable': false, /* disable sorting */
         }],
-
     });
 
     //add class to style style datatable select box
