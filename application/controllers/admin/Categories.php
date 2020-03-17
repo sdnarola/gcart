@@ -39,14 +39,14 @@ class Categories extends Admin_Controller
 
 			if($_FILES['icon']['name']!=NULL)
 			{
-				$result = upload_icon();
+				$result = upload_logo("assets/uploads/main_categories/","icon");
 
                 if (!$result)
                 {
                     redirect('admin/categories/add');
                 }
                 
-                $data['icon'] = $result['icon'];
+                $data['icon'] = $result;
 			}
 			else
 			{
@@ -89,17 +89,21 @@ class Categories extends Admin_Controller
 
 				if($_FILES['icon']['name']!=NULL)
 				{
-					$result = upload_icon();
+					$result = upload_logo('assets/uploads/main_categories/','icon');
+					print_r($result);
 
 	                if (!$result)
 	                {
 	                    redirect('admin/categories/edit/'.$id);
 	                }
 	                
-	                $data['icon'] = $result['icon'];
+	                $data['icon'] = $result;
 	                //for unlink image from folder
 	                $old_upload_image = $this->categories->get($id);
-					unlink($old_upload_image['icon']);
+	                if(basename($old_upload_image['icon']) != 'default_category.png')
+					{
+						unlink($old_upload_image['icon']);
+					}
 				}
 
 				$result = $this->categories->update($id,$data);
@@ -123,6 +127,16 @@ class Categories extends Admin_Controller
 	public function delete() 
 	{
 		$category_id = $this->input->post('category_id');
+		//in soft delete move image to deleted folder
+		$old_upload_image = $this->categories->get($category_id);
+		$imagepath = $old_upload_image['icon'];
+		$newpath = 'C:/wamp64/www/gcart/'.'assets/uploads/main_categories/deleted/'.basename($imagepath);
+
+		if(basename($imagepath) != 'default_category.png')
+		{
+			$copied = copy($imagepath , $newpath);
+			unlink($imagepath);
+		}
 
 		$deleted = $this->categories->delete($category_id);
 		$deleted_sub_categories = $this->sub_categories->delete_sub_categories($category_id);
@@ -169,6 +183,19 @@ class Categories extends Admin_Controller
 	public function delete_multiple() 
 	{
 		$where = $this->input->post('ids');
+
+		$data= $this->categories->get_many($where);
+		foreach($data as $record)
+		{
+			$imagepath = $record['icon'];
+			$newpath = 'C:/wamp64/www/gcart/'.'assets/uploads/main_categories/deleted/'.basename($imagepath);
+
+			if(basename($imagepath) != 'default_category.png')
+			{
+			$copied = copy($imagepath , $newpath);
+			unlink($imagepath);
+			}
+		}
 
 		$deleted = $this->categories->delete_many($where);
 		$deleted_sub_categories = $this->sub_categories->multi_delete_sub_categories($where);

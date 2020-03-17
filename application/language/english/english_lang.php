@@ -71,22 +71,10 @@ $lang['search']          = 'Search';
 $lang['id']              = 'ID';
 $lang['name']            = 'Name';
 $lang['status']          = 'Status';
-$lang['active']          = 'Active';
-$lang['inactive']        = 'Inactive';
-$lang['description']     = 'Description';
-$lang['created_at']      = 'Created at';
-$lang['actions']         = 'Actions';
-$lang['confirm']         = 'Confirm';
-$lang['save']            = 'Save';
-$lang['back']            = 'Back';
-$lang['close']           = 'Close';
-$lang['no_cancel_it']    = 'No, Cancel It';
-$lang['yes_i_am_sure']   = 'Yes, I am sure';
-$lang['click_to_sort']   = 'Click to sort';
 $lang['number']          = 'Number';
 $lang['total']           = 'Total';
 $lang['details']         = 'Details';
-$lang['ago']             = 'ago';
+$lang['ago']             = 'Ago';
 
 #Login/Logout/Forgot Password/Change Password/Profile
 #----------------------------------------------------
@@ -106,24 +94,6 @@ $lang['edit_profile']     = 'Edit Profile';
 $lang['login']            = 'Log In';
 $lang['logout']           = 'Log Out';
 $lang['signup']           = 'Sign Up';
-$lang['repeat_password']  = 'Repeat Password';
-$lang['reset_password']   = 'Reset Password';
-$lang['change_password']  = 'Change Password';
-$lang['remember_me']      = 'Remember Me';
-$lang['forgot_password']  = 'Forgot Password?';
-$lang['profile']          = 'Profile';
-$lang['edit_profile']     = 'Edit Profile';
-$lang['login']            = 'Log In';
-$lang['logout']           = 'Log Out';
-$lang['repeat_password']  = 'Repeat Password';
-$lang['reset_password']   = 'Reset Password';
-$lang['change_password']  = 'Change Password';
-$lang['remember_me']      = 'Remember Me';
-$lang['forgot_password']  = 'Forgot Password?';
-$lang['profile']          = 'Profile';
-$lang['edit_profile']     = 'Edit Profile';
-$lang['login']            = 'Log In';
-$lang['logout']           = 'Log Out';
 $lang['registration']     = 'Registration';
 
 #Dashboard
@@ -134,7 +104,6 @@ $lang['dashboard'] = 'Dashboard';
 #-----#
 $lang['firstname']      = 'Firstname';
 $lang['lastname']       = 'Lastname';
-$lang['contact_no']     = 'Contact No';
 $lang['mobile_no']      = 'Mobile No';
 $lang['last_login']     = 'Last Login';
 $lang['address']        = 'Address';
@@ -148,18 +117,6 @@ $lang['users']          = 'Users';
 $lang['add_user']       = 'Add User';
 $lang['edit_user']      = 'Edit User';
 $lang['user_details']   = 'User Details';
-$lang['contact_no']     = 'Contact No';
-$lang['mobile_no']      = 'Mobile No';
-$lang['last_login']     = 'Last Login';
-$lang['address1']       = 'Address1';
-$lang['address2']       = 'Address2';
-$lang['pincode']        = 'Pincode';
-$lang['city']           = 'City';
-$lang['state']          = 'State';
-$lang['user']           = 'User';
-$lang['users']          = 'Users';
-$lang['add_user']       = 'Add User';
-$lang['edit_user']      = 'Edit User';
 $lang['email_varified'] = 'Email Verified';
 $lang['varified']       = 'Verified';
 $lang['not_varified']   = 'NOT Verified';
@@ -266,13 +223,18 @@ $lang['add_product']    = 'Add Product';
 $lang['edit_product']   = 'Edit Product';
 $lang['product_detail'] = 'Product Detail';
 
-#Brands
+#Brands / Partners
 #----------
 $lang['brand']      = 'Brand';
 $lang['brands']     = 'Brands';
 $lang['brand_name'] = 'Brand Name';
 $lang['add_brand']  = 'Add Brand';
 $lang['edit_brand'] = 'Edit Brand';
+$lang['partners'] = 'Partners';
+$lang['partner'] = 'Partner';
+$lang['add_partner'] = 'Add Partner';
+$lang['edit_partner'] = 'Edit Partner';
+
 
 #Roles
 #-----
@@ -356,22 +318,6 @@ $lang['new_password_is_same_as_old_password'] = 'The new password you are trying
 $lang['password_min_length_must_be_']         = 'Password length must be minimum %s characters.';
 $lang['pincode_length_must_be_']              = 'Pincode length must be %s characters.';
 $lang['conf_password_donot_match']            = 'Confirm password does not match with password.';
-$lang['login_to_your_account']                = 'Login to your account';
-$lang['enter_your_credentials_below']         = 'Please enter your credentials below';
-$lang['incorrect_email']                      = 'Incorrect email.';
-$lang['incorrect_password']                   = 'Incorrect password.';
-$lang['email_exists']                         = 'This Email has already been taken.';
-
-$lang['incorrect_email_or_password']                            = 'Email and/or password is incorrect.';
-$lang['your_account_is_not_active']                             = 'Your account is not active. Please contact to your Administrator.';
-$lang['forgot_password_instructions']                           = 'Please enter your email address below. <br/>We will send you instructions in email to reset your password.';
-$lang['check_email_for_resetting_password']                     = 'Check your email for further instructions for resetting your password.';
-$lang['error_setting_new_password_key']                         = 'Error setting new password.';
-$lang['password_reset_key_expired']                             = 'Reset Password key expired.';
-$lang['password_reset_message']                                 = 'Your password has been reset. You can login now!';
-$lang['new_password_is_same_as_old_password']                   = 'The new password you are trying to set is the same as your current password. You can use the same to login. Or you may change it to a different password.';
-$lang['password_min_length_must_be_']                           = 'Password length must be minimum %s characters.';
-$lang['conf_password_donot_match']                              = 'Confirm password does not match with password.';
 $lang['enter_new_password_only_if_you_want_to_change_password'] = 'Enter new password only if you want to change password. Keep it blank otherwise.';
 $lang['last_password_change_msg']                               = 'Your password was lastly changed <b>%s</b> ago.';
 
