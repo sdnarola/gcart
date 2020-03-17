@@ -235,6 +235,14 @@ $lang['partner'] = 'Partner';
 $lang['add_partner'] = 'Add Partner';
 $lang['edit_partner'] = 'Edit Partner';
 
+#Faq
+#-------
+$lang['faq']      = 'Faq';
+$lang['faq_title'] = 'Faq Title';
+$lang['faq_details'] = 'Faq Details';
+$lang['add_faq'] = 'Add Faq';
+$lang['edit_faq'] = 'Edit Faq';
+
 
 #Roles
 #-----

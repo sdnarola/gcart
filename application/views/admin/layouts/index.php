@@ -97,9 +97,13 @@ border-radius: 3px;
 
 <!-- to load boots strap switch on/off -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.js" data-turbolinks-track="true"></script>
-
+<!-- for dropdown list with search -->
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/select2.min.js'); ?>"></script>
+<!-- for add the wysihtml5 editor  -->
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/wysihtml5.min.js'); ?>"></script>
 
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/toolbar.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/parsers.js'); ?>"></script>
 
 
 <script type="text/javascript">
@@ -246,13 +250,6 @@ switches.forEach(function(html) {
 
 </script>
 
-<!-- <script type="text/javascript" src="<?php
-                                         // echo base_url('assets/admin/js/plugins/forms/tags/tokenfield.min.js');
-                                         ?>"></script>
-<script type="text/javascript" src="<?php
-                                    // echo base_url('assets/admin/js/pages/form_tags_input.js');
-                                    ?>"></script>
- -->
 </head>
 
 <body>
@@ -488,7 +485,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/faqs'); ?>"><i class="icon-question3"></i> <span>FAQs</span></a>
+									<a href="<?php echo base_url('admin/faq'); ?>"><i class="icon-question3"></i> <span>FAQ</span></a>
 								</li>
 								<!-- settings -->
 								<li>
