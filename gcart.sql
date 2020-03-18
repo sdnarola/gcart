@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 12, 2020 at 11:58 AM
+-- Generation Time: Mar 18, 2020 at 05:50 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -80,7 +80,7 @@ INSERT INTO `brands` (`id`, `name`, `logo`, `is_deleted`) VALUES
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE IF NOT EXISTS `cart` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `total_amount` decimal(7,2) NOT NULL,
@@ -89,7 +89,15 @@ CREATE TABLE IF NOT EXISTS `cart` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `total_amount`, `date`, `is_deleted`) VALUES
+(1, 1, 3, 1, '15400.00', '2020-03-18 11:10:24', 0),
+(2, 1, 2, 1, '4560.12', '2020-03-18 11:10:35', 0);
 
 -- --------------------------------------------------------
 
@@ -239,8 +247,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `coupon_id`, `order_number`, `invoice_number`, `total_products`, `grand_total`, `order_date`, `order_status`, `payment_method`, `payment_status`, `is_deleted`) VALUES
-(1, 2, NULL, '7490285', 6584130147, 4, '24820.94', '2020-03-11 15:36:48', 0, 'cash on delivery', 0, 0),
-(2, 3, NULL, '7654321', 972014563, 6, '55620.94', '2020-03-10 03:05:05', 0, 'cash on delivery', 0, 0);
+(1, 2, NULL, '7490285', 6584130147, 4, '24820.94', '2020-03-11 15:36:48', 1, 'cash on delivery', 0, 0),
+(2, 3, NULL, '7654321', 972014563, 6, '55620.94', '2020-03-10 03:05:05', 1, 'cash on delivery', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -267,11 +275,11 @@ CREATE TABLE IF NOT EXISTS `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `vendor_status`, `quantity`, `total_amount`, `is_deleted`) VALUES
-(1, 1, 1, 0, 2, '15700.70', 0),
-(2, 1, 2, 2, 2, '9120.24', 0),
+(1, 1, 1, 2, 2, '15700.70', 0),
+(2, 1, 2, 1, 2, '9120.24', 0),
 (3, 2, 3, 2, 2, '30800.00', 0),
 (4, 2, 2, 2, 2, '9120.24', 0),
-(5, 2, 1, 0, 2, '15700.70', 0);
+(5, 2, 1, 2, 2, '15700.70', 0);
 
 -- --------------------------------------------------------
 
@@ -282,7 +290,7 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `vendor_status`, `qua
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `vendor_id` int(11) NOT NULL DEFAULT '0',
+  `vendor_id` int(11) DEFAULT '0',
   `brand_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `sub_category_id` int(11) DEFAULT '0',
@@ -297,6 +305,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `old_price` decimal(7,2) NOT NULL,
   `related_products` text,
   `tags` text NOT NULL,
+  `add_date` datetime NOT NULL,
   `is_sale` tinyint(1) NOT NULL DEFAULT '0',
   `is_hot` tinyint(1) NOT NULL DEFAULT '0',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
@@ -312,10 +321,10 @@ CREATE TABLE IF NOT EXISTS `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `sku`, `short_description`, `long_description`, `thumb_image`, `images`, `quantity`, `price`, `old_price`, `related_products`, `tags`, `is_sale`, `is_hot`, `is_active`, `is_deleted`) VALUES
-(1, 1, 1, 1, 1, 'nike rn6', '8311-8a40', 'running shoes', 'nike brand, shoes for men, sports shoes', 'assets/uploads/products/1583995973-nike1.jpg', 'a:3:{i:0;s:45:\"assets/uploads/products/1583995973--nike2.jpg\";i:1;s:45:\"assets/uploads/products/1583995973--nike3.jpg\";i:2;s:45:\"assets/uploads/products/1583995973--nike4.jpg\";}', 7, '7850.35', '0.00', 'N;', 'nike, shoes, running', 0, 0, 1, 0),
-(2, 2, 2, 1, 1, 'puma tr-7', '222-2044', 'sports shoes', 'puma brand, shoes for men.', 'assets/uploads/products/1583996844-puma.png', 'a:4:{i:0;s:45:\"assets/uploads/products/1583996844--puma1.jpg\";i:1;s:45:\"assets/uploads/products/1583996844--puma2.png\";i:2;s:45:\"assets/uploads/products/1583996844--puma3.png\";i:3;s:45:\"assets/uploads/products/1583996844--puma4.png\";}', 9, '4560.12', '0.00', 'a:1:{i:0;s:1:\"1\";}', 'puma, men shoes', 0, 0, 1, 0),
-(3, 2, 4, 3, 5, 'Samsung-32', '2764-cb26', 'led tv', 'samsung brand, 32 led tv, samrt tv', 'assets/uploads/products/1584003043-tv1.jpg', 'a:4:{i:0;s:43:\"assets/uploads/products/1584003043--tv3.jpg\";i:1;s:43:\"assets/uploads/products/1584003043--tv4.jpg\";i:2;s:43:\"assets/uploads/products/1584003043--tv5.png\";i:3;s:43:\"assets/uploads/products/1584003043--tv6.jpg\";}', 23, '15400.00', '0.00', 'N;', 'tv, samsung, smart tv', 0, 0, 1, 0);
+INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `sku`, `short_description`, `long_description`, `thumb_image`, `images`, `quantity`, `price`, `old_price`, `related_products`, `tags`, `add_date`, `is_sale`, `is_hot`, `is_active`, `is_deleted`) VALUES
+(1, 1, 1, 1, 1, 'Nike Rn6', '8311-8a40', 'running shoes', 'nike brand, shoes for men, sports shoes', 'assets/uploads/products/1584331676-nike1.jpg', 'a:3:{i:0;s:45:\"assets/uploads/products/1584168342--nike4.jpg\";i:1;s:45:\"assets/uploads/products/1584168342--nike3.jpg\";i:2;s:45:\"assets/uploads/products/1584168342--nike2.jpg\";}', 7, '7850.35', '0.00', 'N;', 'nike, shoes, running', '2020-03-09 07:20:19', 0, 1, 1, 0),
+(2, 2, 2, 1, 1, 'Puma Tr-7', '222-2044', 'sports shoes', 'puma brand, shoes for men.', 'assets/uploads/products/1584331763-puma.png', 'a:4:{i:0;s:45:\"assets/uploads/products/1584332286--puma1.jpg\";i:1;s:45:\"assets/uploads/products/1584332286--puma3.png\";i:2;s:45:\"assets/uploads/products/1584332286--puma2.png\";i:3;s:45:\"assets/uploads/products/1584332286--puma4.png\";}', 9, '4560.12', '0.00', 'a:1:{i:0;s:1:\"1\";}', 'puma, men shoes', '2020-03-01 10:12:43', 1, 1, 1, 0),
+(3, 2, 4, 3, 5, 'Samsung-32', '2764-cb26', 'led tv', 'samsung brand, 32 led tv, samrt tv', 'assets/uploads/products/1584163197-tv1.jpg', 'a:4:{i:0;s:43:\"assets/uploads/products/1584163197--tv3.jpg\";i:1;s:43:\"assets/uploads/products/1584163197--tv2.jpg\";i:2;s:43:\"assets/uploads/products/1584163197--tv4.jpg\";i:3;s:43:\"assets/uploads/products/1584163197--tv6.jpg\";}', 23, '15400.00', '0.00', 'N;', 'tv, samsung, smart tv', '2020-03-04 17:18:10', 1, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -470,6 +479,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_login` datetime NOT NULL,
   `last_ip` varchar(50) NOT NULL,
   `signup_date` datetime NOT NULL,
+  `last_password_change` datetime DEFAULT NULL,
   `new_pass_key` varchar(32) NOT NULL,
   `new_pass_key_requested` datetime NOT NULL,
   `sign_up_key` varchar(32) NOT NULL,
@@ -485,10 +495,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `last_login`, `last_ip`, `signup_date`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
-(1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '', '2020-03-12 15:32:46', '::1', '2020-02-27 12:11:21', '', '2020-02-24 03:04:19', '', 1, 1, 1, 0),
-(2, 2, 'user', 'user', 'user@gmail.com', 7878787878, 'ee11cbb19052e40b07aac0ca060c23ee', '-', '2020-03-12 17:12:32', '::1', '2020-03-03 00:00:00', '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0),
-(3, 2, 'anonymous', 'user', 'anonymous@gmail.com', 6565656565, '294de3557d9d00b3d2d8a1e6aab028cf', '-', '2020-03-12 12:28:39', '::1', '2020-03-03 00:00:00', '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0);
+INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `last_login`, `last_ip`, `signup_date`, `last_password_change`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
+(1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '', '2020-03-18 11:02:29', '::1', '2020-02-27 12:11:21', '2020-03-13 14:58:30', '', '2020-02-24 03:04:19', '', 1, 1, 1, 0),
+(2, 2, 'user', 'user', 'user@gmail.com', 7878787878, 'ee11cbb19052e40b07aac0ca060c23ee', '-', '2020-03-18 11:19:49', '::1', '2020-03-03 00:00:00', NULL, '-', '2020-03-03 00:00:00', '-', 1, 0, 0, 0),
+(3, 2, 'anonymous', 'user', 'anonymous@gmail.com', 6565656565, '294de3557d9d00b3d2d8a1e6aab028cf', '-', '2020-03-12 12:28:39', '::1', '2020-03-03 00:00:00', NULL, '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -557,7 +567,7 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `pincode` int(6) NOT NULL,
   `logo` mediumtext NOT NULL,
   `shop_number` int(11) NOT NULL,
-  `registration_number` bigint(20) NOT NULL,
+  `registration_number` bigint(20) DEFAULT NULL,
   `shop_details` varchar(100) NOT NULL,
   `total_products` int(11) NOT NULL,
   `last_login` datetime NOT NULL,
@@ -565,6 +575,7 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `new_pass_key` varchar(32) NOT NULL,
   `new_pass_key_requested` datetime NOT NULL,
   `sign_up_key` varchar(32) NOT NULL,
+  `last_password_change` datetime DEFAULT NULL,
   `is_email_verified` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
@@ -577,9 +588,9 @@ CREATE TABLE IF NOT EXISTS `vendors` (
 -- Dumping data for table `vendors`
 --
 
-INSERT INTO `vendors` (`id`, `subscription_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `owner_name`, `shop_name`, `address`, `city`, `pincode`, `logo`, `shop_number`, `registration_number`, `shop_details`, `total_products`, `last_login`, `last_ip`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
-(1, NULL, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '-', 'admin', 'A7', 'mrl', 'nvs', 396445, '-', 7, 0, '-', 12, '2020-03-01 00:00:00', '::1', '-', '2020-03-01 00:00:00', '-', 1, 1, 1, 0),
-(2, 1, 'bdp', '7', 'bdp@mail.com', 9978554691, '53acf5f531943514246a7ed92f496a7d', '-', '-', 'B7', '-', '-', 333333, '-', 1212, 22, '-', 1, '2020-02-17 10:32:20', '::1', '', '2020-02-26 00:00:00', '', 1, 1, 0, 0);
+INSERT INTO `vendors` (`id`, `subscription_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `owner_name`, `shop_name`, `address`, `city`, `pincode`, `logo`, `shop_number`, `registration_number`, `shop_details`, `total_products`, `last_login`, `last_ip`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `last_password_change`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
+(1, NULL, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', 'assets/uploads/vendors/profile/1584168542-profile.png', 'admin', 'all in one sports store', 'mrl', 'surat', 396445, 'assets/uploads/vendors/logo/1584424639-logo_4.jpg', 7, 0, 'all sports items available', 50, '2020-03-01 00:00:00', '::1', '-', '2020-03-01 00:00:00', '-', '2020-03-02 14:58:30', 1, 1, 1, 0),
+(2, 1, 'bdp', '7', 'bdp@mail.com', 9978554691, '53acf5f531943514246a7ed92f496a7d', 'assets/uploads/vendors/profile/1584163289-profile.png', '-', 'B7', '-', '-', 333333, 'assets/uploads/vendors/logo/1584424477-logo_1.jpg', 1212, 22, '-', 47, '2020-02-17 10:32:20', '::1', '', '2020-02-26 00:00:00', '', NULL, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 

@@ -44,7 +44,7 @@
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
-            <li><a href="<?php echo base_url('authentication'); ?>"><i class="icon fa fa-lock"></i>Login</a></li>
+            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-lock"></i>Login</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-user"></i>Sell</a></li>
           </ul>
         </div>
@@ -65,7 +65,7 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
           <!-- ============================================================= LOGO ============================================================= -->
-          <div class="logo"> <a href="<?php echo base_url(); ?>home.html"> <img src="assets/themes/default/images/logo.png" alt="logo"> </a> </div>
+          <div class="logo"> <a href="<?php echo base_url(); ?>home.html"> <img src="<?php echo base_url(); ?>assets/themes/default/images/logo.png" alt="logo"> </a> </div>
           <!-- /.logo -->
           <!-- ============================================================= LOGO : END ============================================================= --> </div>
         <!-- /.logo-holder -->
@@ -157,8 +157,8 @@
           <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
             <div class="nav-outer">
               <ul class="nav navbar-nav">
-                <li class="active dropdown yamm-fw"> <a href="<?php echo base_url(); ?>home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
-                <li class="dropdown yamm mega-menu"> <a href="<?php echo base_url(); ?>home.html" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Clothing</a>
+                <li class="active dropdown yamm-fw"> <a href="<?php echo base_url(); ?>Home/" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
+                <li class="dropdown yamm mega-menu"> <a href="<?php echo base_url(); ?>#" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Clothing</a>
                   <ul class="dropdown-menu container">
                     <li>
                       <div class="yamm-content ">
@@ -166,7 +166,7 @@
                           <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
                             <h2 class="title">Men</h2>
                             <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>#">Dresses</a></li>
+                              <li><a href="<?php echo base_url(); ?>Categories/">Dresses</a></li>
                               <li><a href="<?php echo base_url(); ?>#">Shoes </a></li>
                               <li><a href="<?php echo base_url(); ?>#">Jackets</a></li>
                               <li><a href="<?php echo base_url(); ?>#">Sunglasses</a></li>
@@ -366,8 +366,52 @@
 
     <!-- ============================================== CONTAINER  : END============================================== -->
 
+ <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+    <div id="brands-carousel" class="logo-slider wow fadeInUp">
+      <div class="logo-slider-inner">
+        <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
+          <div class="item m-t-15"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand1.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item m-t-10"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand2.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand3.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand4.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand5.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand6.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand2.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand4.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand1.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+
+          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand5.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
+          <!--/.item-->
+        </div>
+        <!-- /.owl-carousel #logo-slider -->
+      </div>
+      <!-- /.logo-slider-inner -->
+
+    </div>
+    <!-- /.logo-slider -->
+    <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+  </div>
+
+<!-- /#top-banner-and-menu -->
 <!-- ============================================================= FOOTER ============================================================= -->
-<footer id="footer" class="footer color-bg" style="margin-top: 20px;">
+<footer id="footer" class="footer color-bg">
   <div class="footer-bottom">
     <div class="container">
       <div class="row">

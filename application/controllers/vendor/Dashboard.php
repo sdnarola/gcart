@@ -9,6 +9,8 @@ class Dashboard extends Vendor_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('vendor_model', 'vendors');
+		$this->load->model('product_model', 'products');
 	}
 
 	/**
@@ -17,20 +19,9 @@ class Dashboard extends Vendor_Controller
 	public function index()
 	{
 		$this->set_page_title(_l('dashboard'));
-
-		$data['content'] = $this->load->view('vendor/dashboard/index', '', TRUE);
-		$this->load->view('vendor/layouts/index', $data);
-	}
-
-	/**
-	 * Loads the vendor store
-	 */
-	public function store()
-	{
-		$this->set_page_title(_l('dashboard'));
 		$id              = $this->session->userdata('vendor_id');
 		$data['vendor']  = $this->vendors->get($id);
-		$data['content'] = $this->load->view('vendor/dashboard/store', $data, TRUE);
+		$data['content'] = $this->load->view('vendor/dashboard/index', '', TRUE);
 		$this->load->view('vendor/layouts/index', $data);
 	}
 
@@ -81,7 +72,7 @@ class Dashboard extends Vendor_Controller
 			if ($update)
 			{
 				set_alert('success', _l('_updated_successfully', _l('store')));
-				redirect('vendor/dashboard/store');
+				redirect('vendor/dashboard');
 			}
 		}
 	}
