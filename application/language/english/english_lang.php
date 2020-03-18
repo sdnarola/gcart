@@ -156,12 +156,20 @@ $lang['cost']          = 'Cost';
 
 #Products
 #---------
-$lang['products']       = 'Products';
-$lang['products_added'] = 'Products Added';
-$lang['product']        = 'Product';
-$lang['stock']          = 'Stock';
-$lang['price']          = 'Price';
-$lang['limitations']    = 'Limitations';
+$lang['products']        = 'Products';
+$lang['products_added']  = 'Products Added';
+$lang['product']         = 'Product';
+$lang['stock']           = 'Stock';
+$lang['price']           = 'Price';
+$lang['review']          = 'Review';
+$lang['reviews']         = 'Reviews';
+$lang['reviewer']        = 'Reviewer';
+$lang['ratings']         = 'Ratings';
+$lang['limitations']     = 'Limitations';
+$lang['comment']         = 'Comment';
+$lang['comments']        = 'Comments';
+$lang['commenter']       = 'Commenter';
+$lang['commenter_email'] = 'Commenter\'s Email';
 
 #Orders
 #--------
@@ -199,18 +207,18 @@ $lang['edit_project'] = 'Edit Project';
 
 #Categories
 #----------
-$lang['category']      = 'Category';
-$lang['categories']    = 'Categories';
-$lang['category_name'] = 'Category Name';
-$lang['add_category']  = 'Add Category';
-$lang['edit_category'] = 'Edit Category';
-$lang['slug'] = 'Slug';
+$lang['category']        = 'Category';
+$lang['categories']      = 'Categories';
+$lang['category_name']   = 'Category Name';
+$lang['add_category']    = 'Add Category';
+$lang['edit_category']   = 'Edit Category';
+$lang['slug']            = 'Slug';
 $lang['main_categories'] = 'Main Category';
-$lang['icon'] = 'Icon';
+$lang['icon']            = 'Icon';
 
 #Sub Categories
 #----------
-$lang['sub_category']  = 'Sub Category';
+$lang['sub_category']      = 'Sub Category';
 $lang['sub_categories']    = 'Sub Categories';
 $lang['add_sub_category']  = 'Add Sub Category';
 $lang['edit_sub_category'] = 'Edit Sub Category';
@@ -226,24 +234,23 @@ $lang['product_detail'] = 'Product Detail';
 
 #Brands / Partners
 #----------
-$lang['brand']      = 'Brand';
-$lang['brands']     = 'Brands';
-$lang['brand_name'] = 'Brand Name';
-$lang['add_brand']  = 'Add Brand';
-$lang['edit_brand'] = 'Edit Brand';
-$lang['partners'] = 'Partners';
-$lang['partner'] = 'Partner';
-$lang['add_partner'] = 'Add Partner';
+$lang['brand']        = 'Brand';
+$lang['brands']       = 'Brands';
+$lang['brand_name']   = 'Brand Name';
+$lang['add_brand']    = 'Add Brand';
+$lang['edit_brand']   = 'Edit Brand';
+$lang['partners']     = 'Partners';
+$lang['partner']      = 'Partner';
+$lang['add_partner']  = 'Add Partner';
 $lang['edit_partner'] = 'Edit Partner';
 
 #Faq
 #-------
-$lang['faq']      = 'Faq';
-$lang['faq_title'] = 'Faq Title';
+$lang['faq']         = 'Faq';
+$lang['faq_title']   = 'Faq Title';
 $lang['faq_details'] = 'Faq Details';
-$lang['add_faq'] = 'Add Faq';
-$lang['edit_faq'] = 'Edit Faq';
-
+$lang['add_faq']     = 'Add Faq';
+$lang['edit_faq']    = 'Edit Faq';
 
 #Roles
 #-----
@@ -308,25 +315,25 @@ $lang['denied']                     = 'You do not have rights to change this.';
 
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------
-$lang['customer_email']                       = 'Customer Email';
-$lang['customer_name']                        = 'Customer Name';
-$lang['login_to_your_account']                = 'Login to your account';
-$lang['login_as_vendor']                      = 'Login As a Vendor';
-$lang['enter_your_credentials_below']         = 'Please enter your credentials below';
-$lang['incorrect_email']                      = 'Incorrect email.';
-$lang['incorrect_password']                   = 'Incorrect password.';
-$lang['email_exists']                         = 'This Email has already been taken.';
-$lang['incorrect_email_or_password']          = 'Email and/or password is incorrect.';
-$lang['your_account_is_not_active']           = 'Your account is not active. Please contact to your Administrator.';
-$lang['forgot_password_instructions']         = 'Please enter your email address below. <br/>We will send you instructions in email to reset your password.';
-$lang['check_email_for_resetting_password']   = 'Check your email for further instructions for resetting your password.';
-$lang['error_setting_new_password_key']       = 'Error setting new password.';
-$lang['password_reset_key_expired']           = 'Reset Password key expired.';
-$lang['password_reset_message']               = 'Your password has been reset. You can login now!';
-$lang['new_password_is_same_as_old_password'] = 'The new password you are trying to set is the same as your current password. You can use the same to login. Or you may change it to a different password.';
-$lang['password_min_length_must_be_']         = 'Password length must be minimum %s characters.';
-$lang['pincode_length_must_be_']              = 'Pincode length must be %s characters.';
-$lang['conf_password_donot_match']            = 'Confirm password does not match with password.';
+$lang['customer_email']                                         = 'Customer Email';
+$lang['customer_name']                                          = 'Customer Name';
+$lang['login_to_your_account']                                  = 'Login to your account';
+$lang['login_as_vendor']                                        = 'Login As a Vendor';
+$lang['enter_your_credentials_below']                           = 'Please enter your credentials below';
+$lang['incorrect_email']                                        = 'Incorrect email.';
+$lang['incorrect_password']                                     = 'Incorrect password.';
+$lang['email_exists']                                           = 'This Email has already been taken.';
+$lang['incorrect_email_or_password']                            = 'Email and/or password is incorrect.';
+$lang['your_account_is_not_active']                             = 'Your account is not active. Please contact to your Administrator.';
+$lang['forgot_password_instructions']                           = 'Please enter your email address below. <br/>We will send you instructions in email to reset your password.';
+$lang['check_email_for_resetting_password']                     = 'Check your email for further instructions for resetting your password.';
+$lang['error_setting_new_password_key']                         = 'Error setting new password.';
+$lang['password_reset_key_expired']                             = 'Reset Password key expired.';
+$lang['password_reset_message']                                 = 'Your password has been reset. You can login now!';
+$lang['new_password_is_same_as_old_password']                   = 'The new password you are trying to set is the same as your current password. You can use the same to login. Or you may change it to a different password.';
+$lang['password_min_length_must_be_']                           = 'Password length must be minimum %s characters.';
+$lang['pincode_length_must_be_']                                = 'Pincode length must be %s characters.';
+$lang['conf_password_donot_match']                              = 'Confirm password does not match with password.';
 $lang['enter_new_password_only_if_you_want_to_change_password'] = 'Enter new password only if you want to change password. Keep it blank otherwise.';
 $lang['last_password_change_msg']                               = 'Your password was lastly changed <b>%s</b> ago.';
 

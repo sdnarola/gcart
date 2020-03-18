@@ -72,10 +72,6 @@ function get_vendor_info($id, $info = '')
 			return $vendor;
 		}
 	}
-	else
-	{
-		return '-----';
-	}
 }
 
 // =========================== Bhavik ==================================//

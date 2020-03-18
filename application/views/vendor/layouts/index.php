@@ -366,26 +366,26 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('products') && is_active_method('reviews'))
+											if (is_active_controller('reviews'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('vendor/products/reviews'); ?>">
+											<a href="<?php echo base_url('vendor/reviews'); ?>">
 												<span>Reviews</span>
 											</a>
 										</li>
 										<li
 										<?php
 
-											if (is_active_controller('products') && is_active_method('comments'))
+											if (is_active_controller('comments'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('vendor/products/comments'); ?>">
+											<a href="<?php echo base_url('vendor/comments'); ?>">
 												<span>Comments</span>
 											</a>
 										</li>

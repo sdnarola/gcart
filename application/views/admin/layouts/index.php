@@ -395,25 +395,25 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('productss'))
+											if (is_active_controller('reviews'))
 											{
 												echo 'class="active"';}
 
 										?>>
-											<a href="<?php echo base_url('admin/products/reviews'); ?>">
+											<a href="<?php echo base_url('admin/reviews'); ?>">
 												<span>Reviews</span>
 											</a>
 										</li>
 										<li
 										<?php
 
-											if (is_active_controller('productss'))
+											if (is_active_controller('comments'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/products/comments'); ?>">
+											<a href="<?php echo base_url('admin/comments'); ?>">
 												<span>Comments</span>
 											</a>
 										</li>
@@ -479,7 +479,7 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('faqs'))
+										if (is_active_controller('faq'))
 										{
 											echo 'class="active"';}
 

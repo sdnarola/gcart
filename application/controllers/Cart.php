@@ -14,6 +14,10 @@ class Cart extends Frontend_Controller
 		$this->set_page_title('Cart');
 	}
 
+	/**
+	 * Adds product in cart.
+	 * @param int 	$id 	Id of the Product.
+	 */
 	public function add($id = '')
 	{
 		if ($id)
