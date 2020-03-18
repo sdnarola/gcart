@@ -37,14 +37,11 @@
                     <tr>
                           <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
-
+                      
                         </th>
-
-                        <th width="20%" class="text-center"><?php _el('firstname');?></a><?php _el('lastname');?></th>
-
-                        <th width="20%" class="text-center"><?php _el('name');?></a></th>
-                        <th width="20%" class="text-center"><?php _el('email');?></th>
-                        <th width="20%" class="text-center"><?php _el('mobile_no');?></th>
+                        <th width="20%" ><?php _el('name');?></a></th>
+                        <th width="20%" ><?php _el('email');?></th>
+                        <th width="20%" ><?php _el('mobile_no');?></th>
                         <th width="10%" class="text-center"><?php _el('status');?></th>
                         <th width="10%" class="text-center"><?php _el('actions');?></th>
 
@@ -53,24 +50,21 @@
                 <tbody>
 <?php
 
-	if ($users != ' ')
-	{
-		foreach ($users as $user)
-		{
-		?>
-                    <tr class="text-center">
+if ($users != ' ') 
+{
+    foreach ($users as $user) 
+    {
+?>
+                    <tr>
 
                          <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php
-
-                                                                                               			if ($user->id != get_loggedin_info('user_id'))
-                                                                                               			{
-                                                                                               				echo $user->id;}
-
-                                                                                               		?>" >
+if ($user->id != get_loggedin_info('user_id')) {
+            echo $user->id;}
+        ?>">
                         </td>
                         <td>
-                            <?php echo ucfirst($user->firstname).'&nbsp;'.ucfirst($user->lastname); ?>
+                            <?php echo ucfirst($user->firstname) . '&nbsp;' . ucfirst($user->lastname); ?>
                         </td>
 
                         <td>
@@ -81,29 +75,27 @@
                         </td>
 
                         <td class="text-center switchery-sm">
-                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $user->id; ?>"<?php
-
-			if ($user->is_active == 1)
-			{
-				echo 'checked';}
-
-		?>>
+                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $user->id; ?>"
+<?php
+if ($user->is_active == 1) 
+{
+            echo 'checked';
+}
+?>>
                         </td>
 
-                        <td>
+                        <td class="text-center">
 
-                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/').$user->id; ?> " class=" text-success text-teal-600" id="<?php echo $user->id; ?>" ><i class="icon-eye"></i></a>
+                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/') . $user->id; ?> " class="text-slate" id="<?php echo $user->id; ?>" ><i class="icon-info3"></i></a>
 
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/').$user->id; ?>" id="<?php echo $user->id; ?>" class="text-info text-teal-600"><i class="icon-pencil7"></i></a>
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/') . $user->id; ?>" id="<?php echo $user->id; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $user->id; ?>);" class="text-danger text-teal-600" id="<?php echo $user->id; ?>"><i class=" icon-trash"></i></a>
-
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $user->id; ?>);" class="text-danger" id="<?php echo $user->id; ?>"><i class=" icon-trash"></i></a>
                         </td>
                     </tr>
 <?php
-	}
-	}
-
+    }
+}
 ?>
                 </tbody>
             </table>
@@ -114,18 +106,15 @@
 </div>
 <!-- /Content area -->
 
-
-
 <script type="text/javascript">
 $(function() {
 
     $('#users_table').DataTable({
 
         'columnDefs': [ {
-        'targets': [0,3,4], /* column index */
+        'targets': [0,4,5], /* column index */
         'orderable': false, /* disable sorting */
         }],
-
     });
 
     //add class to style style datatable select box

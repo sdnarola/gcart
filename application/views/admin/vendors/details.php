@@ -2,7 +2,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('vendors');?></span>
+                <span class="text-semibold"><?php _el('vendor');?> <?php _el('details');?> </span>
             </h4>
         </div>
     </div>
@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('vendor')?> <?php _el('details')?></strong>
+                                <strong><?php _el('vendor')?></strong>
                             </h5>
                         </div>
                     </div>
@@ -199,13 +199,10 @@
                     <table id="info_table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="2%" class="text-center">
-                                    <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
-                                </th>
-                                <th width="20%" class="text-center"><?php _el('product')?> <?php _el('name')?></th>
-                                <th width="20%" class="text-center"><?php _el('category')?></th>
-                                <th width="10%" class="text-center"><?php _el('price')?></th>
-                                <th width="10%" class="text-center"><?php _el('stock')?></th>
+                                <th width="20%"><?php _el('product')?> <?php _el('name')?></th>
+                                <th width="20%" ><?php _el('category')?></th>
+                                <th width="10%" ><?php _el('price')?></th>
+                                <th width="10%" ><?php _el('stock')?></th>
                                 <th width="10%" class="text-center"><?php _el('product')?> <?php _el('status')?></th>
                                 <th width="10%" class="text-center"><?php _el('category')?> <?php _el('status')?></th>
                                 <th width="8%" class="text-center"><?php _el('actions')?></th>
@@ -218,10 +215,7 @@
         	foreach ($records as $record) 
             {
 ?>
-                            <tr class="text-center">
-                                <td>
-                                    <input type="checkbox" class="checkbox styled"  name="delete">
-                                </td>
+                            <tr>
                                 <td>
                                     <?php echo $record['name'] ?>
                                 </td>
@@ -229,7 +223,7 @@
                                     <?php echo $record['category_name'] ?>
                                 </td>
                                 <td>
-                                    <?php echo $record['new_price'] ?>
+                                    <?php echo $record['price'] ?>
                                 </td>
                                 <td>
                                     <?php echo $record['quantity'] ?>
@@ -240,8 +234,8 @@
                                 <td class="text-center switchery-sm">
                                     <input type="checkbox"  class="switchery"  id="<?php echo $record['id']; ?>" <?php if ($record['category_status'] == 1) {echo "checked";}?> readonly>
                                 </td>
-                                <td>
-                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/product/details/') . $record['id']; ?>" class=" text-success text-teal-400" ><i class="icon-eye"></i></a>
+                                <td class="text-center">
+                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/') . $record['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
                                 </td>
                             </tr>
 <?php
@@ -260,7 +254,7 @@ $(function() {
 
     $('#info_table').DataTable({
         'columnDefs': [ {
-        'targets': [0,5,6,7], /* column index */
+        'targets': [4,5,6], /* column index */
         'orderable': false, /* disable sorting */
         }],
 

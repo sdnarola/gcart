@@ -195,6 +195,7 @@ class MY_Model extends CI_Model
         foreach ($result as $key => &$row)
         {
             $row = $this->trigger('after_get', $row, ($key == count($result) - 1));
+       
         }
 
         $this->_with = array();

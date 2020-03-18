@@ -25,17 +25,15 @@
 
         <!-- Panel heading -->
          <div class="panel-heading">
-        <div class="row">
-             <div class="checkbox checkbox-switch">
-                        <label ><?php echo _el('vendor') ?> <?php echo _el('registration') ?>
-                                                        <input onchange="register_status(this);" type="checkbox" class="switch" data-on-text="On" data-off-text="Off" data-size="small" onchange="register_status(this);" <?php if ($registration['value'] == 1) {echo "checked";}?>>
-                        </label>
-                </div>
-       
-            <div class="heading-elements">
+           <div class="row">
+            <label ><?php echo _el('vendor') ?> <?php echo _el('registration') ?>
+                <input onchange="register_status(this);" type="checkbox" class="switch" data-on-text="On" data-off-text="Off" data-size="small" onchange="register_status(this);" <?php if ($registration['value'] == 1) {echo "checked";}?>>
+            </label>
+             <div class="heading-elements">
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
-            </div>          
+            </div>
         </div>
+             
         </div>
         <!-- /Panel heading -->
 
@@ -47,12 +45,12 @@
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                         </th>
-                        <th width="15%" class="text-center"><?php _el('store');?>&nbsp<?php _el('name');?></th>
-                        <th width="15%" class="text-center"><?php _el('vendor');?>&nbsp<?php _el('name');?></th>
-                        <th width="15%" class="text-center"><?php _el('vendor');?>&nbsp<?php _el('email');?></th>
-                        <th width="15%" class="text-center"><?php echo _el('subscription_plan'); ?></th>
-                        <th width="8%" class="text-center"><?php _el('shop');?>&nbsp<?php _el('number');?></th>
-                        <th width="8%" class="text-center"><?php _el('total');?>&nbsp<?php _el('products');?></th>
+                        <th width="15%" ><?php _el('store');?>&nbsp<?php _el('name');?></th>
+                        <th width="15%" ><?php _el('vendor');?>&nbsp<?php _el('name');?></th>
+                        <th width="15%" ><?php _el('vendor');?>&nbsp<?php _el('email');?></th>
+                        <th width="15%" ><?php echo _el('subscription_plan'); ?></th>
+                        <th width="8%" ><?php _el('shop');?>&nbsp<?php _el('number');?></th>
+                        <th width="8%" ><?php _el('total');?>&nbsp<?php _el('products');?></th>
                         <th width="8%" class="text-center"><?php _el('status');?></th>
                         <th width="8%" class="text-center"><?php _el('actions');?></th>
 
@@ -65,7 +63,7 @@ if ($vendors)
 	foreach ($vendors as $vendor) 
     {
 		?>
-                    <tr class="text-center">
+                    <tr>
 
                          <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php if ($vendor['id'] != get_loggedin_info($vendor['id'])) {echo $vendor['id'];}?>" >
@@ -110,13 +108,13 @@ if ($vendors)
                             <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $vendor['id']; ?>" <?php if ($vendor['is_active'] == 1) {echo "checked";}?>>
                         </td>
 
-                        <td>
+                        <td class="text-center">
 
-                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/vendors/details/') . $vendor['id']; ?> " class=" text-success text-teal-600" id="<?php echo $vendor['id']; ?>" ><i class="icon-eye"></i></a>
+                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/vendors/details/') . $vendor['id']; ?> " class=" text-slate" id="<?php echo $vendor['id']; ?>" ><i class="icon-info3"></i></a>
 
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/vendors/edit/') . $vendor['id']; ?>" id="<?php echo $vendor['id']; ?>" class="text-info text-teal-600"><i class="icon-pencil7"></i></a>
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/vendors/edit/') . $vendor['id']; ?>" id="<?php echo $vendor['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $vendor['id']; ?>);" class="text-danger text-teal-600" id="<?php echo $vendor['id']; ?>"><i class=" icon-trash"></i></a>
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $vendor['id']; ?>);" class="text-danger" id="<?php echo $vendor['id']; ?>"><i class=" icon-trash"></i></a>
 
                         </td>
                     </tr>

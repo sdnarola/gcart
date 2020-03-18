@@ -3,7 +3,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('vendors');?></span>
+                <span class="text-semibold"><?php _el('subscriptions');?></span>
             </h4>
         </div>
     </div>
@@ -40,10 +40,10 @@
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                         </th>
-                        <th width="40%" class="text-center"><?php _el('title');?></th>
-                        <th width="10%" class="text-center"><?php _el('cost');?></th>
-                        <th width="10%" class="text-center"><?php _el('duration');?>(<?php _el('days');?>)</th>
-                        <th width="10%" class="text-center"><?php _el('product'); ?> <?php  _el('allowed'); ?></th>
+                        <th width="40%" ><?php _el('title');?></th>
+                        <th width="10%" ><?php _el('cost');?></th>
+                        <th width="10%" ><?php _el('duration');?>(<?php _el('days');?>)</th>
+                        <th width="10%" ><?php _el('product'); ?> <?php  _el('allowed'); ?></th>
                         <th width="8%" class="text-center"><?php _el('actions');?></th>
                     </tr>
                 </thead>
@@ -54,7 +54,7 @@ if ($plans != " ")
     foreach($plans as $plan) 
     {
         ?>
-                    <tr class="text-center">
+                    <tr >
 
                          <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $plan['id'];?>" >
@@ -71,11 +71,11 @@ if ($plans != " ")
                          <td>
                             <?php echo $plan['product_limit']; ?>
                         </td>
-                        <td>
+                        <td class="text-center">
 
-                          <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/subscriptions/edit/') . $plan['id']; ?>" id="<?php echo $plan['id']; ?>" class="text-info text-teal-600"><i class="icon-pencil7"></i></a>
+                          <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/subscriptions/edit/') . $plan['id']; ?>" id="<?php echo $plan['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $plan['id']; ?>);" class="text-danger text-teal-600" id="<?php echo $plan['id']; ?>"><i class=" icon-trash"></i></a>
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $plan['id']; ?>);" class="text-danger" id="<?php echo $plan['id']; ?>"><i class=" icon-trash"></i></a>
 
                         </td>
                     </tr>
