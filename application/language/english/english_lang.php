@@ -10,6 +10,7 @@ $lang['welcome']           = 'Welcome';
 $lang['add']               = 'Add';
 $lang['add_new']           = 'Add New';
 $lang['view']              = 'View';
+$lang['home']              = 'Home';
 $lang['create']            = 'Create';
 $lang['edit']              = 'Edit';
 $lang['details']           = 'Details';

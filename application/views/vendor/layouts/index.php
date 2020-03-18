@@ -291,16 +291,37 @@ switches.forEach(function(html) {
 						<div class="category-content no-padding">
 							<ul class="navigation navigation-main navigation-accordion">
 								<!-- store link -->
-								<li
-									<?php
 
-										if (is_active_controller('dashboard') && is_active_method('store'))
-										{
-											echo 'class="active"';}
 
-									?>
-									>
-									 <a href="<?php echo base_url('vendor/dashboard/store'); ?>"><i class="icon-eye4"></i> <span>Visit Your Store</span></a>
+
+								<li>
+									<a href="#"><i class="icon-eye4"></i> </i><span>Store</span></a>
+									<ul>
+										<li
+										<?php
+
+											if (is_active_controller('dashboard') && is_active_method('store'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('home/store/').$this->session->userdata('vendor_id'); ?>"><span>Visit Your Store</span></a>
+										</li>
+										<li
+										<?php
+
+											if (is_active_controller('dashboard') && is_active_method('edit_store'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('vendor/dashboard/edit_store'); ?>">
+												<span>Edit Store</span>
+											</a>
+										</li>
+									</ul>
 								</li>
 								<!-- home link -->
 								<li
