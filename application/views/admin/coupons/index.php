@@ -3,7 +3,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('products');?></span>
+                <span class="text-semibold"><?php _el('coupons');?></span>
             </h4>
         </div>
     </div>
@@ -12,7 +12,7 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('products');?></li>
+            <li class="active"><?php _el('coupons');?></li>
         </ul>
     </div>
 </div>
@@ -24,24 +24,24 @@
       <!-- Panel heading -->
       <div class="panel-heading mt-20">
           <div class="heading-elements">
-            <a href="<?php echo base_url('admin/products/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new');?><i class="icon-plus-circle2 position-right"></i></a>
+          	<a href="<?php echo base_url('admin/coupons/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new');?><i class="icon-plus-circle2 position-right"></i></a>
             <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
           </div>
       </div>
       <!-- /Panel heading -->
     <!-- Listing table -->
     <div class="panel-body table-responsive">
-      <table id="products_table" class="table table-bordered table-striped">
+      <table id="coupons_table" class="table table-bordered table-striped">
         <thead>
           <tr>
-             <th width="2%" class="text-center">
+            <th width="2%" class="text-center">
               <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
             </th>
-            <th width="20%"><?php _el('name');?></th>
-            <th width="15%"><?php _el('category');?></th>
-            <th width="15%"><?php _el('sub_category');?></th>
-            <th width="15%"><?php _el('brand');?></th>
-            <th width="15%"><?php _el('price');?></th>
+            <th width="20%"><?php _el('code');?></th>
+            <th width="15%"><?php _el('type');?></th>
+            <th width="15%"><?php _el('amount');?></th>
+            <th width="20%"><?php _el('quantity');?></th>
+            <th width="10%"><?php _el('used');?></th>
             <th width="8%" class="text-center"><?php _el('status');?></th>
             <th width="10%" class="text-center"><?php _el('actions');?></th>
           </tr>
@@ -49,43 +49,81 @@
         <tbody>
 <?php
 
-	if ($products)
+	if ($coupons)
 	{
-		foreach ($products as $product)
+		foreach ($coupons as $coupon)
 		{
 		?>
-            <tr id="<?php echo $product['id']; ?>">
-                <td class="text-center">
-                  <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $product['id']; ?>">
+            <tr id="<?php echo $coupon['id']; ?>">
+        		<td class="text-center">
+                  <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $coupon['id']; ?>">
                 </td>
-                <td><?php echo ucwords($product['name']); ?></td>
-                <td><?php echo ucwords(get_category($product['category_id'], 'name')); ?></td>
-                <td><?php echo ucwords(get_sub_category($product['sub_category_id'], 'name')); ?></td>
-                <td><?php echo ucwords(get_brand($product['brand_id'], 'name')); ?></td>
-                <td><?php echo '&#8377;'.'. '.$product['price']; ?></td>
-                <td class="text-center switchery-sm">
-                    <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $product['id']; ?>"
+        		<td><?php echo $coupon['code']; ?></td>
+        		<td>
+        			<?php
+
+        						if ($coupon['type'] == 0)
+        						{
+        							_el('amount');
+        						}
+        						else
+        						{
+        							_el('percentage');
+        						}
+
+        					?>
+        		</td>
+        		<td>
+        			<?php
+
+        						if ($coupon['type'] == 0)
+        						{
+        							echo '&#8377;'.'. '.$coupon['amount'];
+        						}
+        						else
+        						{
+        							echo $coupon['amount'].' &#37;';
+        						}
+
+        					?>
+        		</td>
+        		<td>
+        			<?php
+
+        						if ($coupon['quantity'] == 0)
+        						{
+        							_el('unlimited');
+        						}
+        						else
+        						{
+        							echo $coupon['quantity'];
+        						}
+
+        					?>
+        		</td>
+        		<td><?php echo $coupon['used']; ?></td>
+        		<td class="text-center switchery-sm">
+                    <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $coupon['id']; ?>"
 <?php
 
-			if ($product['is_active'] == 1)
+			if ($coupon['is_active'] == 1)
 			{
 				echo 'checked';
 			}
 
 		?>>
                 </td>
-                <td class="text-center">
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-slate"><i class="icon-info3"></i></a>
+        		<td class="text-center">
+                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/coupons/edit/'.$coupon['id']); ?>" id="<?php echo $coupon['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/products/edit/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
-
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $product['id']; ?>);" class="text-danger delete" id="<?php echo $product['id']; ?>"><i class=" icon-trash"></i></a>
+                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $coupon['id']; ?>);" class="text-danger delete" id="<?php echo $coupon['id']; ?>"><i class=" icon-trash"></i></a>
                 </td>
-            </tr>
-        <?php }
-        	}
+        	</tr>
+<?php
+	}
+	}
 
-        ?>
+?>
         </tbody>
       </table>
     </div>
@@ -98,7 +136,7 @@
 <script type="text/javascript">
 $(function() {
 
-    $('#products_table').DataTable({
+    $('#coupons_table').DataTable({
         'columnDefs': [ {
         'targets': [0,6,7], /* column index */
         'orderable': false, /* disable sorting */
@@ -111,6 +149,7 @@ $(function() {
  });
 
 var BASE_URL = "<?php echo base_url(); ?>";
+
 
 /**
  * Change status when clicked on the status switch
@@ -127,25 +166,26 @@ function change_status(obj)
     }
 
     $.ajax({
-        url:BASE_URL+'admin/products/update_status',
+        url:BASE_URL+'admin/coupons/update_status',
         type: 'POST',
         data: {
-            product_id: obj.id,
+            coupon_id: obj.id,
             is_active:checked
         },
         success: function(msg)
         {
             if (msg=='true')
             {
-                jGrowlAlert("<?php _el('_activated', _l('product'));?>", 'success');
+                jGrowlAlert("<?php _el('_activated', _l('coupon'));?>", 'success');
             }
             else
             {
-                jGrowlAlert("<?php _el('_deactivated', _l('product'));?>", 'success');
+                jGrowlAlert("<?php _el('_deactivated', _l('coupon'));?>", 'success');
             }
         }
     });
 }
+
 
 /**
  * Deletes a single record when clicked on delete icon
@@ -165,17 +205,17 @@ function delete_record(id)
     function()
     {
         $.ajax({
-            url:BASE_URL+'admin/products/delete',
+            url:BASE_URL+'admin/coupons/delete',
             type: 'POST',
             data: {
-                product_id:id
+                coupon_id:id
             },
             success: function(msg)
             {
                 if (msg=="true")
                 {
                     swal({
-                        title: "<?php _el('_deleted_successfully', _l('product'));?>",
+                        title: "<?php _el('_deleted_successfully', _l('coupon'));?>",
                         type: "success",
                     });
                     $("#"+id).closest("tr").remove();
@@ -183,7 +223,7 @@ function delete_record(id)
                 else
                 {
                     swal({
-                        title: "<?php _el('access_denied', _l('product'));?>",
+                        title: "<?php _el('access_denied', _l('coupon'));?>",
                         type: "error",
                     });
                 }
@@ -197,14 +237,14 @@ function delete_record(id)
  */
 function delete_selected()
 {
-    var product_ids = [];
+    var coupon_ids = [];
 
     $(".checkbox:checked").each(function()
     {
         var id = $(this).attr('id');
-        product_ids.push(id);
+        coupon_ids.push(id);
     });
-    if (product_ids == '')
+    if (coupon_ids == '')
     {
         jGrowlAlert("<?php _el('select_before_delete_alert')?>", 'danger');
         preventDefault();
@@ -220,20 +260,20 @@ function delete_selected()
     function()
     {
         $.ajax({
-            url:BASE_URL+'admin/products/delete_selected',
+            url:BASE_URL+'admin/coupons/delete_selected',
             type: 'POST',
             data: {
-              ids:product_ids
+              ids:coupon_ids
             },
             success: function(msg)
             {
                 if (msg=="true")
                 {
                   swal({
-                        title: "<?php _el('_deleted_successfully', _l('products'));?>",
+                        title: "<?php _el('_deleted_successfully', _l('coupons'));?>",
                         type: "success",
                     });
-                  $(product_ids).each(function(index, element)
+                  $(coupon_ids).each(function(index, element)
                   {
                       $("#"+element).closest("tr").remove();
                   });
@@ -241,7 +281,7 @@ function delete_selected()
                 else
                 {
                   swal({
-                       title: "<?php _el('access_denied', _l('product'));?>",
+                       title: "<?php _el('access_denied', _l('coupons'));?>",
                         type: "error",
                     });
                 }

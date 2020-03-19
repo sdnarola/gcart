@@ -91,7 +91,7 @@ class Products extends Admin_Controller
 	 */
 	public function edit($id = '')
 	{
-		$this->set_page_title(_l('users').' | '._l('edit'));
+		$this->set_page_title(_l('products').' | '._l('edit'));
 
 		if ($id)
 		{

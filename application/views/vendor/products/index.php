@@ -53,7 +53,7 @@
             	{
             	?>
             <tr id="<?php echo $product['id']; ?>">
-                <td>
+                <td class="text-center">
                   <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $product['id']; ?>">
                 </td>
                 <td><?php echo ucwords($product['name']); ?></td>

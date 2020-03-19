@@ -33,7 +33,7 @@
       <table id="comments_table" class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th width="2%">
+             <th width="2%" class="text-center">
               <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
             </th>
             <th width="15%"><?php _el('product');?></th>
@@ -52,7 +52,7 @@
 		{
 		?>
             <tr id="<?php echo $comment['id']; ?>">
-                <td>
+                <td class="text-center">
                   <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $comment['id']; ?>">
                 </td>
                 <td><?php echo ucwords(get_product($comment['product_id'], 'name')); ?></td>

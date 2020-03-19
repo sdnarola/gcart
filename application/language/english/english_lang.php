@@ -15,6 +15,7 @@ $lang['create']            = 'Create';
 $lang['edit']              = 'Edit';
 $lang['details']           = 'Details';
 $lang['detail']            = 'Detail';
+$lang['optional']          = 'Optional';
 $lang['delete']            = 'Delete';
 $lang['delete_selected']   = 'Delete Selected';
 $lang['search']            = 'Search';
@@ -23,6 +24,7 @@ $lang['name']              = 'Name';
 $lang['image']             = 'Image';
 $lang['tags']              = 'Tags';
 $lang['total']             = 'Total';
+$lang['value']             = 'Value';
 $lang['thumb_image']       = 'Thumbnail Image';
 $lang['status']            = 'Status';
 $lang['price']             = 'Price';
@@ -153,6 +155,21 @@ $lang['title']         = 'Title';
 $lang['allowed']       = 'Allowed';
 $lang['duration']      = 'Duration';
 $lang['cost']          = 'Cost';
+$lang['limited']       = 'Limited';
+$lang['unlimited']     = 'Unlimited';
+
+#Coupons
+#-------------
+$lang['coupon']      = 'Coupon';
+$lang['coupons']     = 'Coupons';
+$lang['code']        = 'Code';
+$lang['type']        = 'Type';
+$lang['used']        = 'Used';
+$lang['percentage']  = 'Percentage';
+$lang['start_date']  = 'Start Date';
+$lang['end_date']    = 'End Date';
+$lang['add_coupon']  = 'Add Coupon';
+$lang['edit_coupon'] = 'Edit Coupon';
 
 #Products
 #---------
@@ -312,6 +329,9 @@ $lang['multiple_recovery_alert']    = 'You will not be able to recover these rec
 $lang['select_before_delete_alert'] = 'Please select some records to delete.';
 $lang['access_denied']              = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
 $lang['denied']                     = 'You do not have rights to change this.';
+$lang['discount_amount']            = 'Discount By Amount';
+$lang['discount_percentage']        = 'Discount By Percentage';
+$lang['greater_than_start_date']    = 'End Date Must Be Greater Than Start Date.';
 
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------

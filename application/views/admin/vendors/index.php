@@ -26,14 +26,22 @@
         <!-- Panel heading -->
          <div class="panel-heading">
            <div class="row">
-            <label ><?php echo _el('vendor') ?> <?php echo _el('registration') ?>
-                <input onchange="register_status(this);" type="checkbox" class="switch" data-on-text="On" data-off-text="Off" data-size="small" onchange="register_status(this);" <?php if ($registration['value'] == 1) {echo "checked";}?>>
-            </label>
+            <div class="col-md-10">
+                <label ><?php echo _el('vendor') ?><?php echo _el('registration') ?>
+                    <input onchange="register_status(this);" type="checkbox" class="switch" data-on-text="On" data-off-text="Off" data-size="small" onchange="register_status(this);"<?php
+
+	if ($registration['value'] == 1)
+	{
+		echo 'checked';}
+
+?>>
+                </label>
+            </div>
              <div class="heading-elements">
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
-             
+
         </div>
         <!-- /Panel heading -->
 
@@ -58,44 +66,53 @@
                 </thead>
                 <tbody>
 <?php
-if ($vendors) 
-{
-	foreach ($vendors as $vendor) 
-    {
+
+	if ($vendors)
+	{
+		foreach ($vendors as $vendor)
+		{
 		?>
                     <tr>
 
-                         <td>
-                            <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php if ($vendor['id'] != get_loggedin_info($vendor['id'])) {echo $vendor['id'];}?>" >
+                         <td class="text-center">
+                            <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php
+
+                                                                                               			if ($vendor['id'] != get_loggedin_info($vendor['id']))
+                                                                                               			{
+                                                                                               				echo $vendor['id'];}
+
+                                                                                               		?>" >
                         </td>
                         <td>
                             <?php echo ucfirst($vendor['shop_name']); ?>
                         </td>
                         <td>
-                            <?php echo ucfirst($vendor['firstname']) . ' ' . ucfirst($vendor['lastname']); ?>
+                            <?php echo ucfirst($vendor['firstname']).' '.ucfirst($vendor['lastname']); ?>
                         </td>
                         <td>
                             <a href="mailto:<?php echo $vendor['email']; ?>"><?php echo $vendor['email']; ?></a>
                         </td>
                          <td>
 <?php
-                            $del = get_subscription_info($vendor['subscription_id'],'is_deleted');
-                            if($del == 1)
-                            {
-                                echo "<del>".ucfirst(get_subscription_info($vendor['subscription_id'],'title'))."</del>";
-                            }
-                            else
-                            {
-                                echo ucfirst(get_subscription_info($vendor['subscription_id'],'title')); 
+	$del = get_subscription_info($vendor['subscription_id'], 'is_deleted');
 
-                                 $expire = expire_subscription($vendor['id']);
+			if ($del == 1)
+			{
+				echo '<del>'.ucfirst(get_subscription_info($vendor['subscription_id'], 'title')).'</del>';
+			}
+			else
+			{
+				echo ucfirst(get_subscription_info($vendor['subscription_id'], 'title'));
 
-                                if($expire == 1)
-                                {
-                                    echo ' '.'<span class="label label-danger">'._l('expired').'</span>';
-                                }
-                            }    
-?>
+				$expire = expire_subscription($vendor['id']);
+
+				if ($expire == 1)
+				{
+					echo ' '.'<span class="label label-danger">'._l('expired').'</span>';
+				}
+			}
+
+		?>
                         </td>
                         <td>
                             <?php echo $vendor['shop_number']; ?>
@@ -105,22 +122,28 @@ if ($vendors)
                         </td>
 
                         <td class="text-center switchery-sm">
-                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $vendor['id']; ?>" <?php if ($vendor['is_active'] == 1) {echo "checked";}?>>
+                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $vendor['id']; ?>"<?php
+
+			if ($vendor['is_active'] == 1)
+			{
+				echo 'checked';}
+
+		?>>
                         </td>
 
                         <td class="text-center">
 
-                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/vendors/details/') . $vendor['id']; ?> " class=" text-slate" id="<?php echo $vendor['id']; ?>" ><i class="icon-info3"></i></a>
+                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/vendors/details/').$vendor['id']; ?> " class=" text-slate" id="<?php echo $vendor['id']; ?>" ><i class="icon-info3"></i></a>
 
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/vendors/edit/') . $vendor['id']; ?>" id="<?php echo $vendor['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/vendors/edit/').$vendor['id']; ?>" id="<?php echo $vendor['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $vendor['id']; ?>);" class="text-danger" id="<?php echo $vendor['id']; ?>"><i class=" icon-trash"></i></a>
 
                         </td>
                     </tr>
 <?php
-    }
-} 
+	}
+	}
 
 ?>               </tbody>
             </table>

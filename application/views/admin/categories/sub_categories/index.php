@@ -3,17 +3,17 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('sub_categories'); ?></span>
+                <span class="text-semibold"><?php _el('sub_categories');?></span>
             </h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
+                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('categories'); ?></li>
-            <li class="active"><?php _el('sub_categories'); ?></li>
+            <li class="active"><?php _el('categories');?></li>
+            <li class="active"><?php _el('sub_categories');?></li>
         </ul>
     </div>
 </div>
@@ -21,41 +21,42 @@
 <!-- Content area -->
 <div class="content">
     <!-- Panel -->
-    <div class="panel panel-flat">  
+    <div class="panel panel-flat">
         <!-- Panel heading -->
         <div class="panel-heading mt-20">
             <div class="heading-elements">
-                <a href="<?php echo base_url('admin/sub_categories/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new'); ?><i class="icon-plus-circle2 position-right"></i></a>
+                <a href="<?php echo base_url('admin/sub_categories/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new');?><i class="icon-plus-circle2 position-right"></i></a>
 
-                <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected'); ?><i class=" icon-trash position-right"></i></a>
+                <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
         <!-- /Panel heading -->
-        
-       
+
+
         <!-- Listing table -->
         <div class="panel-body table-responsive">
             <table id="categories_table" class="table  table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th width="2%">
+                        <th width="2%"  class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled"  onclick="select_all(this);" >
                         </th>
-                        <th width="25%" ><?php _el('category'); ?></th>
-                        <th width="25%" ><?php _el('name'); ?></th>
-                        <th width="25%" ><?php _el('slug'); ?></th>
-                        <th width="8%" class="text-center"><?php _el('status'); ?></th>
-                        <th width="15%" class="text-center"><?php _el('actions') ?></th>
+                        <th width="25%" ><?php _el('category');?></th>
+                        <th width="25%" ><?php _el('name');?></th>
+                        <th width="25%" ><?php _el('slug');?></th>
+                        <th width="8%" class="text-center"><?php _el('status');?></th>
+                        <th width="15%" class="text-center"><?php _el('actions')?></th>
                     </tr>
                 </thead>
                 <tbody>
-<?php 
-                foreach ($sub_categories as $sub_category) 
-                { 
-                    $category = get_category($sub_category['category_id']);
-?>
+<?php
+
+	foreach ($sub_categories as $sub_category)
+	{
+		$category = get_category($sub_category['category_id']);
+	?>
                     <tr>
-                        <td>
+                        <td class="text-center">
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $sub_category['id']; ?>">
                         </td>
                         <td><?php echo ucfirst($category['name']); ?></td>
@@ -64,29 +65,36 @@
                             <?php echo ucfirst($sub_category['slug']); ?>
                         </td>
 <?php
-                        $readonly = '';
-                        if($category['is_active'] == 0)
-                        {
-                             $readonly = "readonly";
-                        }
-?>
+	$readonly = '';
+
+		if ($category['is_active'] == 0)
+		{
+			$readonly = 'readonly';
+		}
+
+	?>
                         <td class="text-center switchery-sm">
-                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $sub_category['id']; ?>" <?php if ($sub_category['is_active']==1) { echo "checked"; }  ?> <?php echo  $readonly; ?>>
+                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $sub_category['id']; ?>"<?php
+	if ($sub_category['is_active'] == 1)
+		{
+		echo 'checked';}
+	?><?php echo $readonly; ?>>
                         </td>
                         <td class="text-center">
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit') ?>" href="<?php echo site_url('admin/sub_categories/edit/').$sub_category['id']; ?>" id="<?php echo $sub_category['id']; ?>" class="text-info">
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/sub_categories/edit/').$sub_category['id']; ?>" id="<?php echo $sub_category['id']; ?>" class="text-info">
                                 <i class="icon-pencil7"></i>
                             </a>
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete') ?>" href="javascript:delete_record(<?php echo $sub_category['id']; ?>);" class="text-danger delete" id="<?php echo $sub_category['id']; ?>">
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $sub_category['id']; ?>);" class="text-danger delete" id="<?php echo $sub_category['id']; ?>">
                                 <i class=" icon-trash"></i>
                             </a>
                         </td>
                     </tr>
-<?php 
-                } 
+<?php
+	}
+
 ?>
                 </tbody>
-            </table>           
+            </table>
         </div>
         <!-- /Listing table -->
     </div>
@@ -97,12 +105,12 @@
 <script type="text/javascript">
 $(function() {
 
-    $('#categories_table').DataTable({        
+    $('#categories_table').DataTable({
         'columnDefs': [ {
         'targets': [0,4,5], /* column index */
         'orderable': false, /* disable sorting */
         }],
-         
+
     });
 
     //add class to style style datatable select box
@@ -118,12 +126,12 @@ var BASE_URL = "<?php echo base_url(); ?>";
  */
 function change_status(obj)
 {
-    var checked = 0;     
+    var checked = 0;
 
-    if(obj.checked) 
-    { 
+    if(obj.checked)
+    {
         checked = 1;
-    }  
+    }
 
     $.ajax({
         url:BASE_URL+'admin/sub_categories/update_status',
@@ -132,18 +140,18 @@ function change_status(obj)
             sub_category_id: obj.id,
             is_active:checked
         },
-        success: function(msg) 
+        success: function(msg)
         {
             if (msg=='true')
-            {                           
-                jGrowlAlert("<?php _el('_activated', _l('sub_category')); ?>", 'success');
+            {
+                jGrowlAlert("<?php _el('_activated', _l('sub_category'));?>", 'success');
             }
             else
-            {                  
-                jGrowlAlert("<?php _el('_deactivated', _l('sub_category')); ?>", 'success');
+            {
+                jGrowlAlert("<?php _el('_deactivated', _l('sub_category'));?>", 'success');
             }
         }
-    }); 
+    });
 }
 
 /**
@@ -151,18 +159,18 @@ function change_status(obj)
  *
  * @param {int}  id  The identifier
  */
-function delete_record(id) 
-{ 
+function delete_record(id)
+{
     swal({
-        title: "<?php _el('single_deletion_alert'); ?>",
-        text: "<?php _el('single_recovery_alert'); ?>",
-        type: "warning",  
-        showCancelButton: true, 
-        cancelButtonText:"<?php _el('no_cancel_it'); ?>",
-        confirmButtonText: "<?php _el('yes_i_am_sure'); ?>",      
+        title: "<?php _el('single_deletion_alert');?>",
+        text: "<?php _el('single_recovery_alert');?>",
+        type: "warning",
+        showCancelButton: true,
+        cancelButtonText:"<?php _el('no_cancel_it');?>",
+        confirmButtonText: "<?php _el('yes_i_am_sure');?>",
     },
     function()
-    {       
+    {
         $.ajax({
             url:BASE_URL+'admin/sub_categories/delete',
             type: 'POST',
@@ -172,20 +180,20 @@ function delete_record(id)
             success: function(msg)
             {
                 if (msg=="true")
-                {                    
-                    swal({                        
-                        title: "<?php _el('_deleted_successfully', _l('sub_category')); ?>",       
-                        type: "success",                            
+                {
+                    swal({
+                        title: "<?php _el('_deleted_successfully', _l('sub_category'));?>",
+                        type: "success",
                     });
                     $("#"+id).closest("tr").remove();
                 }
                 else
-                {                        
-                    swal({                           
-                        title: "<?php _el('access_denied', _l('sub_category')); ?>",
-                        type: "error",                               
+                {
+                    swal({
+                        title: "<?php _el('access_denied', _l('sub_category'));?>",
+                        type: "error",
                     });
-                }  
+                }
             }
         });
     });
@@ -194,8 +202,8 @@ function delete_record(id)
 /**
  * Deletes all the selected records when clicked on DELETE SELECTED button
  */
-function delete_selected() 
-{     
+function delete_selected()
+{
     var sub_category_ids = [];
 
     $(".checkbox:checked").each(function()
@@ -205,16 +213,16 @@ function delete_selected()
     });
     if (sub_category_ids == '')
     {
-        jGrowlAlert("<?php _el('select_before_delete_alert') ?>", 'danger');
+        jGrowlAlert("<?php _el('select_before_delete_alert')?>", 'danger');
         preventDefault();
     }
     swal({
-        title: "<?php _el('multiple_deletion_alert'); ?>",
-        text: "<?php _el('multiple_recovery_alert'); ?>",
+        title: "<?php _el('multiple_deletion_alert');?>",
+        text: "<?php _el('multiple_recovery_alert');?>",
         type: "warning",
-        showCancelButton: true, 
-        cancelButtonText:"<?php _el('no_cancel_it'); ?>",
-        confirmButtonText: "<?php _el('yes_i_am_sure'); ?>", 
+        showCancelButton: true,
+        cancelButtonText:"<?php _el('no_cancel_it');?>",
+        confirmButtonText: "<?php _el('yes_i_am_sure');?>",
     },
     function()
     {
@@ -227,21 +235,21 @@ function delete_selected()
             success: function(msg)
             {
                 if (msg=="true")
-                {                     
-                  swal({                           
-                        title: "<?php _el('_deleted_successfully', _l('sub_categories')); ?>",                    
-                        type: "success",                            
+                {
+                  swal({
+                        title: "<?php _el('_deleted_successfully', _l('sub_categories'));?>",
+                        type: "success",
                     });
-                  $(sub_category_ids).each(function(index, element) 
+                  $(sub_category_ids).each(function(index, element)
                   {
                       $("#"+element).closest("tr").remove();
                   });
                 }
                 else
                 {
-                  swal({                            
-                       title: "<?php _el('access_denied', _l('sub_category')); ?>",
-                        type: "error",   
+                  swal({
+                       title: "<?php _el('access_denied', _l('sub_category'));?>",
+                        type: "error",
                     });
                 }
             }

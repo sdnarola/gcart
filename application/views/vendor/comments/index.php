@@ -52,7 +52,7 @@
 		{
 		?>
             <tr id="<?php echo $comment['id']; ?>">
-                <td>
+                <td class="text-center">
                   <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $comment['id']; ?>">
                 </td>
                 <td><?php echo ucwords(get_product($comment['product_id'], 'name')); ?></td>
