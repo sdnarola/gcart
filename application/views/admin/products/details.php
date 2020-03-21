@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <table class="table table-hover table-sm table-striped rounded">
+                            <table class="table table-hover table-framed table-sm table-striped rounded">
                                 <tbody>
                                     <tr> <td width="40%" class="text-semibold"><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($product['name']); ?></td> </tr>
 
@@ -67,9 +67,10 @@
                             </table>
                         </div>
                         <div class="col-md-5">
-                            <table class="table table-hover table-sm table-striped rounded">
+                            <table class="table table-hover table-framed table-sm table-striped rounded">
                                 <tbody>
-                                    <tr> <td width="40%" class="text-semibold"><?php _el('vendor');?></td><td width="10%">:</td><td width="40%" ><?php echo ucwords(get_vendor_info($product['vendor_id'], 'shop_name')); ?></td> </tr>
+                                    <tr> <td width="40%" class="text-semibold"><?php _el('vendor');?></td><td width="10%">:</td><td width="40%" ><a data-popup="tooltip" data-placement="top"  title="<?php _el('vendor')?>" href="<?php echo base_url('home/store/').$product['vendor_id']; ?>"><?php echo ucwords(get_vendor_info($product['vendor_id'], 'shop_name')); ?>
+                                        </a></td> </tr>
 
                                     <tr> <td width="40%" class="text-semibold"><?php _el('price');?></td><td width="10%">:</td><td width="40%" ><?php echo '&#8377;'.'. '.$product['price']; ?></td> </tr>
 
@@ -80,6 +81,7 @@
                             </table>
                         </div>
                     </div>
+                    <br>
                     <!-- multiple images of product -->
                     <div class="row">
 <?php

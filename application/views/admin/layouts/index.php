@@ -105,7 +105,10 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/toolbar.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/parsers.js'); ?>"></script>
 
-
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/media/fancybox.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/gallery.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_select2.js'); ?>"></script>
+	<!-- /theme JS files -->
 <script type="text/javascript">
 
 
@@ -317,7 +320,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home4"></i> <span>Dashboard</span></a>
+									<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home4"></i> <span><?php _el('dashboard')?></span></a>
 								</li>
 								<!-- product -->
 								<li
@@ -329,7 +332,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/products'); ?>"><i class="icon-cart5"></i> <span>Products</span></a>
+									<a href="<?php echo base_url('admin/products'); ?>"><i class="icon-cart5"></i> <span><?php _el('products')?></span></a>
 								</li>
 								<!-- orders -->
 
@@ -341,7 +344,7 @@ switches.forEach(function(html) {
 											echo 'class="active"';}
 
 									?>>
-									<a href="<?php echo base_url('admin/orders'); ?>"><i class="icon-list-ordered"></i><span>Orders</span></a>
+									<a href="<?php echo base_url('admin/orders'); ?>"><i class="icon-list-ordered"></i><span><?php _el('orders')?></span></a>
 
 								</li>
 								<!-- users -->
@@ -354,11 +357,11 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/users'); ?>"><i class="icon-users"></i> <span>Users</span></a>
+									<a href="<?php echo base_url('admin/users'); ?>"><i class="icon-users"></i> <span><?php _el('users')?></span></a>
 								</li>
 								<!-- vendors -->
 								<li>
-									<a href="#"><i class="icon-user-tie"></i><span>Vendors</span></a>
+									<a href="#"><i class="icon-user-tie"></i><span><?php _el('vendors')?></span></a>
 									<ul>
 										<li
 										<?php
@@ -370,7 +373,7 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/subscriptions'); ?>">
-												<span>Subscriptions</span>
+												<span><?php _el('subscriptions')?></span>
 											</a>
 										</li>
 										<li
@@ -383,14 +386,45 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/vendors'); ?>">
-												<span>List</span>
+												<span><?php _el('list')?></span>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- product deals & sales -->
+								<li>
+									<a href="#"><i class="icon-cash3"></i><span><?php _el('product_deals_sales')?></span></a>
+									<ul>
+										<li
+										<?php
+
+											if (is_active_controller('deals'))
+											{
+												echo 'class="active"';}
+
+										?>>
+											<a href="<?php echo base_url('admin/deals'); ?>">
+												<span><?php _el('deals')?></span>
+											</a>
+										</li>
+										<li
+										<?php
+
+											if (is_active_controller('sales'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('admin/sales'); ?>">
+												<span><?php _el('sales')?></span>
 											</a>
 										</li>
 									</ul>
 								</li>
 								<!-- product discussion -->
 								<li>
-									<a href="#"><i class="icon-bubbles9"></i><span>Product Discussion</span></a>
+									<a href="#"><i class="icon-bubbles9"></i><span><?php _el('product_discussion')?></span></a>
 									<ul>
 										<li
 										<?php
@@ -401,7 +435,7 @@ switches.forEach(function(html) {
 
 										?>>
 											<a href="<?php echo base_url('admin/reviews'); ?>">
-												<span>Reviews</span>
+												<span><?php _el('reviews')?></span>
 											</a>
 										</li>
 										<li
@@ -414,14 +448,14 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/comments'); ?>">
-												<span>Comments</span>
+												<span><?php _el('comments')?></span>
 											</a>
 										</li>
 									</ul>
 								</li>
 								<!-- categories -->
 								<li>
-									<a href="#"><i class="icon-tree7"></i><span>Manage Categories</span></a>
+									<a href="#"><i class="icon-tree7"></i><span><?php _el('manage_categories')?></span></a>
 									<ul>
 										<li
 										<?php
@@ -433,7 +467,7 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/categories'); ?>">
-												<span>Main Category</span>
+												<span><?php _el('main_category')?></span>
 											</a>
 										</li>
 										<li
@@ -446,7 +480,7 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/sub_categories'); ?>">
-												<span>Sub Category</span>
+												<span><?php _el('sub_category')?></span>
 											</a>
 										</li>
 									</ul>
@@ -461,7 +495,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/coupons'); ?>"><i class="icon-ticket"></i> <span>Manage Coupons</span></a>
+									<a href="<?php echo base_url('admin/coupons'); ?>"><i class="icon-ticket"></i> <span><?php _el('manage_coupons')?></span></a>
 								</li>
 								<!-- brands -->
 								<li
@@ -473,7 +507,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/brands'); ?>"><i class="icon-people"></i> <span>Partners</span></a>
+									<a href="<?php echo base_url('admin/brands'); ?>"><i class="icon-people"></i> <span><?php _el('partners')?></span></a>
 								</li>
 								<!-- FAQs -->
 								<li
@@ -485,11 +519,11 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/faq'); ?>"><i class="icon-question3"></i> <span>FAQ</span></a>
+									<a href="<?php echo base_url('admin/faq'); ?>"><i class="icon-question3"></i> <span><?php _el('faqs')?></span></a>
 								</li>
 								<!-- settings -->
 								<li>
-									<a href="#"><i class="icon-cog3"></i><span>Settings</span></a>
+									<a href="#"><i class="icon-cog3"></i><span><?php _el('settings')?></span></a>
 									<ul>
 										<li
 										<?php
@@ -501,7 +535,7 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/menu'); ?>">
-												<span>Menu Setup</span>
+												<span><?php _el('menu_setup')?></span>
 											</a>
 										</li>
 										<li
@@ -514,7 +548,7 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/home_settings'); ?>">
-												<span>Home Page Setup</span>
+												<span><?php _el('home_setup')?></span>
 											</a>
 										</li>
 										<li
@@ -527,7 +561,7 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/settings'); ?>">
-												<span>Website Setup</span>
+												<span><?php _el('website_setup')?></span>
 											</a>
 										</li>
 

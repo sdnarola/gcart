@@ -280,5 +280,10 @@ class Products extends Admin_Controller
 		}
 	}
 
+	public function add_sale($id = '')
+	{
+		// update content
+	}
+
 // =========================== Bhavik ==================================//
 }

@@ -1,4 +1,4 @@
-<!-- Page header -->
+ select-search<!-- Page header -->
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
@@ -45,7 +45,7 @@
                             <div class="form-group col-md-12">
 	                            <small class="req text-danger">* </small>
 	                            <label><?php _el('code');?>:</label>
-	                            <input type="text" class="form-control" placeholder="<?php _el('code');?>" id="code" name="code" value="<?php echo $coupon['code']; ?>" >
+	                            <input type="text" class="form-control " placeholder="<?php _el('code');?>" id="code" name="code" value="<?php echo $coupon['code']; ?>" >
                             </div>
                         </div>
                         <!-- discount select-->
@@ -53,7 +53,7 @@
                             <div class="form-group col-md-12">
 	                            <small class="req text-danger">* </small>
 	                            <label><?php _el('type');?>:</label>
-	                            <select class="form-control" name="type" id="type" onchange="enable_discount();">
+	                            <select class="form-control select-search" name="type" id="type" onchange="enable_discount();">
                                     <option value="" selected readonly disabled >----- Select Type -----</option>
                                     <option value="0"<?php
 
@@ -81,7 +81,7 @@
                             <div class="form-group col-md-12">
 	                            <small class="req text-danger">* </small>
 	                            <label><?php _el('quantity');?>:</label>
-	                            <select class="form-control" name="quantity" id="quantity" onchange="enable_quantity();" >
+	                            <select class="form-control select-search" name="quantity" id="quantity" onchange="enable_quantity();" >
                                     <option value="" selected readonly disabled >----- Select Quantity -----</option>
                                     <option value="0"<?php
 

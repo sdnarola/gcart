@@ -9,15 +9,10 @@
 $lang['welcome']           = 'Welcome';
 $lang['add']               = 'Add';
 $lang['add_new']           = 'Add New';
-$lang['view']              = 'View';
 $lang['home']              = 'Home';
-$lang['create']            = 'Create';
-$lang['edit']              = 'Edit';
 $lang['details']           = 'Details';
 $lang['detail']            = 'Detail';
 $lang['optional']          = 'Optional';
-$lang['delete']            = 'Delete';
-$lang['delete_selected']   = 'Delete Selected';
 $lang['search']            = 'Search';
 $lang['id']                = 'ID';
 $lang['name']              = 'Name';
@@ -29,6 +24,7 @@ $lang['thumb_image']       = 'Thumbnail Image';
 $lang['status']            = 'Status';
 $lang['price']             = 'Price';
 $lang['old_price']         = 'Old Price';
+$lang['new_price']         = 'New Price';
 $lang['active']            = 'Active';
 $lang['inactive']          = 'Inactive';
 $lang['description']       = 'Description';
@@ -51,8 +47,6 @@ $lang['click_to_sort']     = 'Click to sort';
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 
 $lang['welcome']         = 'Welcome';
-$lang['add']             = 'Add';
-$lang['add_new']         = 'Add New';
 $lang['view']            = 'View';
 $lang['create']          = 'Create';
 $lang['edit']            = 'Edit';
@@ -76,6 +70,7 @@ $lang['name']            = 'Name';
 $lang['status']          = 'Status';
 $lang['number']          = 'Number';
 $lang['total']           = 'Total';
+$lang['add_sale']        = 'Add sale';
 $lang['details']         = 'Details';
 $lang['ago']             = 'Ago';
 
@@ -128,11 +123,13 @@ $lang['img_alt_msg']    = "profile image can't loaded";
 #vendors
 #-------
 $lang['vendor']              = 'Vendor';
+$lang['vendor_details']      = 'Vendor Details';
 $lang['vendors']             = 'Vendors';
 $lang['vendor_status']       = 'Vendor Status';
 $lang['shop_name']           = 'Shop Name';
 $lang['list']                = 'List';
 $lang['store']               = 'Store';
+$lang['visit_store']         = 'Visit Your Store';
 $lang['shop']                = 'Shop';
 $lang['shop_number']         = 'Shop Number';
 $lang['registration_number'] = 'Registration Number';
@@ -160,33 +157,39 @@ $lang['unlimited']     = 'Unlimited';
 
 #Coupons
 #-------------
-$lang['coupon']      = 'Coupon';
-$lang['coupons']     = 'Coupons';
-$lang['code']        = 'Code';
-$lang['type']        = 'Type';
-$lang['used']        = 'Used';
-$lang['percentage']  = 'Percentage';
-$lang['start_date']  = 'Start Date';
-$lang['end_date']    = 'End Date';
-$lang['add_coupon']  = 'Add Coupon';
-$lang['edit_coupon'] = 'Edit Coupon';
+$lang['coupon']         = 'Coupon';
+$lang['coupons']        = 'Coupons';
+$lang['code']           = 'Code';
+$lang['type']           = 'Type';
+$lang['used']           = 'Used';
+$lang['percentage']     = 'Percentage';
+$lang['start_date']     = 'Start Date';
+$lang['end_date']       = 'End Date';
+$lang['add_coupon']     = 'Add Coupon';
+$lang['edit_coupon']    = 'Edit Coupon';
+$lang['manage_coupons'] = 'Manage Coupons';
 
 #Products
 #---------
-$lang['products']        = 'Products';
-$lang['products_added']  = 'Products Added';
-$lang['product']         = 'Product';
-$lang['stock']           = 'Stock';
-$lang['price']           = 'Price';
-$lang['review']          = 'Review';
-$lang['reviews']         = 'Reviews';
-$lang['reviewer']        = 'Reviewer';
-$lang['ratings']         = 'Ratings';
-$lang['limitations']     = 'Limitations';
-$lang['comment']         = 'Comment';
-$lang['comments']        = 'Comments';
-$lang['commenter']       = 'Commenter';
-$lang['commenter_email'] = 'Commenter\'s Email';
+$lang['products']           = 'Products';
+$lang['product_details']    = 'Product Details';
+$lang['products_added']     = 'Products Added';
+$lang['product']            = 'Product';
+$lang['stock']              = 'Stock';
+$lang['price']              = 'Price';
+$lang['review']             = 'Review';
+$lang['reviews']            = 'Reviews';
+$lang['reviewer']           = 'Reviewer';
+$lang['ratings']            = 'Ratings';
+$lang['limitations']        = 'Limitations';
+$lang['comment']            = 'Comment';
+$lang['comments']           = 'Comments';
+$lang['commenter']          = 'Commenter';
+$lang['commenter_email']    = 'Commenter\'s Email';
+$lang['product_discussion'] = 'Product Discussion';
+$lang['sale']               = 'Sale';
+$lang['hot']                = 'Hot';
+$lang['new']                = 'New';
 
 #Orders
 #--------
@@ -224,14 +227,17 @@ $lang['edit_project'] = 'Edit Project';
 
 #Categories
 #----------
-$lang['category']        = 'Category';
-$lang['categories']      = 'Categories';
-$lang['category_name']   = 'Category Name';
-$lang['add_category']    = 'Add Category';
-$lang['edit_category']   = 'Edit Category';
-$lang['slug']            = 'Slug';
-$lang['main_categories'] = 'Main Category';
-$lang['icon']            = 'Icon';
+$lang['category']          = 'Category';
+$lang['categories']        = 'Categories';
+$lang['category_name']     = 'Category Name';
+$lang['add_category']      = 'Add Category';
+$lang['edit_category']     = 'Edit Category';
+$lang['slug']              = 'Slug';
+$lang['main_categories']   = 'Main Category';
+$lang['icon']              = 'Icon';
+$lang['manage_categories'] = 'Manage Categories';
+$lang['main_category']     = 'Main Category';
+$lang['sub_category']      = 'Sub Category';
 
 #Sub Categories
 #----------
@@ -260,10 +266,12 @@ $lang['partners']     = 'Partners';
 $lang['partner']      = 'Partner';
 $lang['add_partner']  = 'Add Partner';
 $lang['edit_partner'] = 'Edit Partner';
+$lang['partners']     = 'Partners';
 
 #Faq
 #-------
 $lang['faq']         = 'Faq';
+$lang['faqs']        = 'Faqs';
 $lang['faq_title']   = 'Faq Title';
 $lang['faq_details'] = 'Faq Details';
 $lang['add_faq']     = 'Add Faq';
@@ -279,10 +287,26 @@ $lang['edit_role']    = 'Edit Role';
 $lang['features']     = 'Features';
 $lang['capabilities'] = 'Capabilities';
 
+#Deals & Sales
+#-----
+$lang['deal']                = 'Deal';
+$lang['deals']               = 'Deals';
+$lang['add_deal']            = 'Add Deal';
+$lang['hot_deal']            = 'Hot Deal';
+$lang['hot_deals']           = 'Hot Deals';
+$lang['product_deals_sales'] = 'Product Deals And Sales';
+$lang['sale']                = 'Sale';
+$lang['sales']               = 'Sales';
+$lang['discount']            = 'Discount';
+$lang['discount_type']       = 'Type Of Discount';
+
 #Settings
 #--------
 $lang['settings']      = 'Settings';
 $lang['general']       = 'General';
+$lang['menu_setup']    = 'Menu Setup';
+$lang['home_setup']    = 'Home Page Setup';
+$lang['website_setup'] = 'Website Setup';
 $lang['company_info']  = 'Company Information';
 $lang['company_name']  = 'Company Name';
 $lang['company_email'] = 'Company Email';
@@ -332,6 +356,7 @@ $lang['denied']                     = 'You do not have rights to change this.';
 $lang['discount_amount']            = 'Discount By Amount';
 $lang['discount_percentage']        = 'Discount By Percentage';
 $lang['greater_than_start_date']    = 'End Date Must Be Greater Than Start Date.';
+$lang['only_digits']                = 'Only Digits Are Allowed.';
 
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------

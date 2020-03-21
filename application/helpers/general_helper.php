@@ -331,6 +331,30 @@ function get_product($id, $info = '')
 }
 
 /**
+ * Gets the requested info of deal.
+ *
+ * @param  int  $id    The id of the deal.
+ * @param  str  $info  The key of the information required.
+ *
+ * @return mixed The information required.
+ */
+function get_deal($id, $info = '')
+{
+	$CI = &get_instance();
+	$CI->load->model('deal_model', 'deals');
+	$deal = $CI->deals->get($id);
+
+	if ($info != '')
+	{
+		return $deal[$info];
+	}
+	else
+	{
+		return $deal;
+	}
+}
+
+/**
  * configuration for creating Pagination Links.
  *
  * @param  string  		$url         	URL for the pagination.
@@ -380,9 +404,8 @@ function pagination($url, $total_rows, $per_page, $uri_segment)
  *
  * @return     array  ( returns uploaded data path else return error )
  */
-function upload_logo($path,$fieldname)
+function upload_logo($path, $fieldname)
 {
-
 	$CI = &get_instance();
 
 	$config['upload_path']   = $path;
@@ -396,10 +419,11 @@ function upload_logo($path,$fieldname)
 	{
 		$error = array('error' => $CI->upload->display_errors());
 		set_alert('danger', ucwords($error['error']));
+
 		return false;
 	}
 
-	$uploadData          =$CI->upload->data();
+	$uploadData = $CI->upload->data();
 
 	$data = $uploadData['full_path'];
 

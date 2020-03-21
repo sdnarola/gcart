@@ -194,14 +194,14 @@
                                                     		if ($product['is_sale'] == 1)
                                                     		{
                                                     		?>
-                                                    <div class="tag sale"><span>sale</span></div>
+                                                    <div class="tag sale"><span><?php _el('sale');?></span></div>
                                                     <?php
                                                     	}
 
                                                     		if ($product['is_hot'] == 1)
                                                     		{
                                                     		?>
-                                                    <div class="tag hot"><span>hot</span></div>
+                                                    <div class="tag hot"><span><?php _el('hot');?></span></div>
                                                     <?php
                                                     	}
 
@@ -234,6 +234,9 @@
                                                             <li class="add-cart-button btn-group">
                                                                 <a href="<?php echo base_url('cart/add/').$product['id']; ?>"<?php echo $disabled; ?>class="btn btn-primary icon"><i class="fa fa-shopping-cart"></i></a>
 
+                                                            </li>
+                                                            <li class="wishlist-button btn-group">
+                                                                <a href="<?php echo base_url('wishlist/add/').$product['id']; ?>"<?php echo $disabled; ?>class="btn btn-primary icon"><i class="icon fa fa-heart"></i></a>
                                                             </li>
                                                         </ul>
                                                     </div>

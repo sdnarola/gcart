@@ -1,8 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-
 /**
- * get all categories 
+ * get all categories
  * @param  int 		$id 	category id
  *
  * @return array details of categories.
@@ -11,9 +10,8 @@ function get_all_categories()
 {
 	$CI = &get_instance();
 	$CI->load->model('category_model', 'categories');
-	$CI->categories->order_by('name','ASC');
+	$CI->categories->order_by('name', 'ASC');
 	$category = $CI->categories->get_all();
-
 
 	return $category;
 }
@@ -29,7 +27,7 @@ function get_category_id($name)
 {
 	$CI = &get_instance();
 	$CI->load->model('category_model', 'categories');
-	$category = $CI->categories->get_by('name',$name);
+	$category = $CI->categories->get_by('name', $name);
 
 	return $category['id'];
 }
@@ -89,7 +87,6 @@ function get_sub_category($id, $info = '')
  */
 function upload_icon()
 {
-
 	$CI = &get_instance();
 	$CI->load->model('category_model', 'categories');
 
@@ -104,13 +101,15 @@ function upload_icon()
 	{
 		$error = array('error' => $CI->upload->display_errors());
 		set_alert('danger', ucwords($error['error']));
+
 		return false;
 	}
 
-	$uploadData          =$CI->upload->data();
+	$uploadData = $CI->upload->data();
 	print_r($uploadData);
 	$data['icon'] = $uploadData['full_path'];
 
 	return $data;
 }
+
 ?>

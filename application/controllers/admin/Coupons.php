@@ -89,24 +89,6 @@ class Coupons extends Admin_Controller
 	}
 
 	/**
-	 * Delete the single coupon record
-	 */
-	public function delete()
-	{
-		$coupon_id = $this->input->post('coupon_id');
-		$deleted   = $this->coupons->delete($coupon_id);
-
-		if ($deleted)
-		{
-			echo 'true';
-		}
-		else
-		{
-			echo 'false';
-		}
-	}
-
-	/**
 	 * Toggles the coupon status to Active or Inactive
 	 */
 	public function update_status()
@@ -126,6 +108,24 @@ class Coupons extends Admin_Controller
 			{
 				echo 'false';
 			}
+		}
+	}
+
+	/**
+	 * Delete the single coupon record
+	 */
+	public function delete()
+	{
+		$coupon_id = $this->input->post('coupon_id');
+		$deleted   = $this->coupons->delete($coupon_id);
+
+		if ($deleted)
+		{
+			echo 'true';
+		}
+		else
+		{
+			echo 'false';
 		}
 	}
 

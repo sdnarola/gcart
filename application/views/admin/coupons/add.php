@@ -53,7 +53,7 @@
                             <div class="form-group col-md-12">
 	                            <small class="req text-danger">* </small>
 	                            <label><?php _el('type');?>:</label>
-	                            <select class="form-control" name="type" id="type" onchange="enable_discount(this);">
+	                            <select class="form-control select-search" name="type" id="type" onchange="enable_discount(this);">
                                     <option value="" selected readonly disabled >----- Select Type -----</option>
                                     <option value="0"><?php _el('discount_amount')?></option>
                                     <option value="1"><?php _el('discount_percentage')?></option>
@@ -67,7 +67,7 @@
                             <div class="form-group col-md-12">
 	                            <small class="req text-danger">* </small>
 	                            <label><?php _el('quantity');?>:</label>
-	                            <select class="form-control" name="quantity" id="quantity" onchange="enable_quantity(this);" >
+	                            <select class="form-control select-search" name="quantity" id="quantity" onchange="enable_quantity(this);" >
                                     <option value="" selected readonly disabled >----- Select Quantity -----</option>
                                     <option value="0"><?php _el('limited')?></option>
                                     <option value="1"><?php _el('unlimited')?></option>
@@ -163,6 +163,7 @@ $("#coupon_form").validate({
     	},
     	amount:{
     		required:"<?php _el('please_enter_', _l('value'))?>",
+            digits:"<?php _el('only_digits');?>"
     	},
     	value:{
     		required:"<?php _el('please_enter_', _l('value'))?>",

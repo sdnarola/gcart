@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 19, 2020 at 11:25 AM
+-- Generation Time: Mar 20, 2020 at 11:35 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `cart` (
 --
 
 INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `total_amount`, `date`, `is_deleted`) VALUES
-(1, 1, 3, 1, '15400.00', '2020-03-18 11:10:24', 0),
-(2, 1, 2, 1, '4560.12', '2020-03-18 11:10:35', 0);
+(1, 1, 2, 2, '9120.24', '2020-03-20 10:54:29', 0),
+(2, 1, 3, 2, '30800.00', '2020-03-20 10:54:41', 0);
 
 -- --------------------------------------------------------
 
@@ -222,11 +222,22 @@ DROP TABLE IF EXISTS `hot_deals`;
 CREATE TABLE IF NOT EXISTS `hot_deals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
-  `from_date_time` datetime NOT NULL,
-  `to_date_time` datetime NOT NULL,
+  `type` tinyint(1) NOT NULL,
+  `value` bigint(20) NOT NULL,
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hot_deals`
+--
+
+INSERT INTO `hot_deals` (`id`, `product_id`, `type`, `value`, `start_date`, `end_date`, `is_deleted`) VALUES
+(1, 1, 0, 500, '2020-03-21 00:00:00', '2020-03-29 00:00:00', 0),
+(2, 2, 1, 50, '2020-03-21 00:00:00', '2020-03-28 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -349,8 +360,8 @@ CREATE TABLE IF NOT EXISTS `products` (
 --
 
 INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `sku`, `short_description`, `long_description`, `thumb_image`, `images`, `quantity`, `price`, `old_price`, `related_products`, `tags`, `add_date`, `is_sale`, `is_hot`, `is_active`, `is_deleted`) VALUES
-(1, 1, 1, 1, 1, 'Nike Rn6', '8311-8a40', 'running shoes', 'nike brand, shoes for men, sports shoes', 'assets/uploads/products/1584331676-nike1.jpg', 'a:3:{i:0;s:45:\"assets/uploads/products/1584168342--nike4.jpg\";i:1;s:45:\"assets/uploads/products/1584168342--nike3.jpg\";i:2;s:45:\"assets/uploads/products/1584168342--nike2.jpg\";}', 7, '7850.35', '0.00', 'N;', 'nike, shoes, running', '2020-03-09 07:20:19', 0, 1, 1, 0),
-(2, 2, 2, 1, 1, 'Puma Tr-7', '222-2044', 'sports shoes', 'puma brand, shoes for men.', 'assets/uploads/products/1584331763-puma.png', 'a:4:{i:0;s:45:\"assets/uploads/products/1584332286--puma1.jpg\";i:1;s:45:\"assets/uploads/products/1584332286--puma3.png\";i:2;s:45:\"assets/uploads/products/1584332286--puma2.png\";i:3;s:45:\"assets/uploads/products/1584332286--puma4.png\";}', 9, '4560.12', '0.00', 'a:1:{i:0;s:1:\"1\";}', 'puma, men shoes', '2020-03-01 10:12:43', 1, 1, 1, 0),
+(1, 1, 1, 1, 1, 'Nike Rn6', '8311-8a40', 'running shoes', 'nike brand, shoes for men, sports shoes', 'assets/uploads/products/1584331676-nike1.jpg', 'a:3:{i:0;s:45:\"assets/uploads/products/1584168342--nike4.jpg\";i:1;s:45:\"assets/uploads/products/1584168342--nike3.jpg\";i:2;s:45:\"assets/uploads/products/1584168342--nike2.jpg\";}', 7, '7350.35', '7850.35', 'N;', 'nike, shoes, running', '2020-03-09 07:20:19', 0, 1, 1, 0),
+(2, 2, 2, 1, 1, 'Puma Tr-7', '222-2044', 'sports shoes', 'puma brand, shoes for men.', 'assets/uploads/products/1584331763-puma.png', 'a:4:{i:0;s:45:\"assets/uploads/products/1584332286--puma1.jpg\";i:1;s:45:\"assets/uploads/products/1584332286--puma3.png\";i:2;s:45:\"assets/uploads/products/1584332286--puma2.png\";i:3;s:45:\"assets/uploads/products/1584332286--puma4.png\";}', 9, '2280.06', '4560.12', 'a:1:{i:0;s:1:\"1\";}', 'puma, men shoes', '2020-03-01 10:12:43', 1, 1, 1, 0),
 (3, 2, 4, 3, 5, 'Samsung-32', '2764-cb26', 'led tv', 'samsung brand, 32 led tv, samrt tv', 'assets/uploads/products/1584163197-tv1.jpg', 'a:4:{i:0;s:43:\"assets/uploads/products/1584163197--tv3.jpg\";i:1;s:43:\"assets/uploads/products/1584163197--tv2.jpg\";i:2;s:43:\"assets/uploads/products/1584163197--tv4.jpg\";i:3;s:43:\"assets/uploads/products/1584163197--tv6.jpg\";}', 23, '15400.00', '0.00', 'N;', 'tv, samsung, smart tv', '2020-03-04 17:18:10', 1, 0, 1, 0);
 
 -- --------------------------------------------------------
@@ -533,8 +544,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `last_login`, `last_ip`, `signup_date`, `last_password_change`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
-(1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '', '2020-03-19 14:59:45', '::1', '2020-02-27 12:11:21', '2020-03-13 14:58:30', '', '2020-02-24 03:04:19', '', 1, 1, 1, 0),
-(2, 2, 'user', 'user', 'user@gmail.com', 7878787878, 'ee11cbb19052e40b07aac0ca060c23ee', '-', '2020-03-19 09:14:30', '::1', '2020-03-03 00:00:00', NULL, '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0),
+(1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '', '2020-03-20 17:01:17', '::1', '2020-02-27 12:11:21', '2020-03-13 14:58:30', '', '2020-02-24 03:04:19', '', 1, 1, 1, 0),
+(2, 2, 'user', 'user', 'user@gmail.com', 7878787878, 'ee11cbb19052e40b07aac0ca060c23ee', '-', '2020-03-20 09:43:12', '::1', '2020-03-03 00:00:00', NULL, '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0),
 (3, 2, 'anonymous', 'user', 'anonymous@gmail.com', 6565656565, '294de3557d9d00b3d2d8a1e6aab028cf', '-', '2020-03-12 12:28:39', '::1', '2020-03-03 00:00:00', NULL, '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
@@ -645,7 +656,16 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`id`, `user_id`, `product_id`, `is_deleted`) VALUES
+(1, 1, 3, 0),
+(2, 1, 3, 0),
+(3, 1, 2, 0);
 
 --
 -- Constraints for dumped tables

@@ -16,6 +16,7 @@ class Cart extends Frontend_Controller
 
 	/**
 	 * Adds product in cart.
+	 *
 	 * @param int 	$id 	Id of the Product.
 	 */
 	public function add($id = '')
@@ -27,11 +28,27 @@ class Cart extends Frontend_Controller
 			$data['quantity']     = 1;
 			$data['total_amount'] = $data['quantity'] * (get_product($id, 'price'));
 			$data['date']         = date('Y-m-d h:i:s', time());
-			$insert               = $this->cart->insert($data);
 
-			if ($insert)
+			$cart = $this->cart->get_by(array('user_id' => $data['user_id'], 'product_id' => $id));
+
+			if ($cart['product_id'] == $id && $cart['user_id'] == $data['user_id'])
 			{
-				redirect(site_url('home'));
+				$update_data['quantity']     = $cart['quantity'] + 1;
+				$update_data['total_amount'] = $update_data['quantity'] * (get_product($id, 'price'));
+
+				if ($this->cart->update($cart['id'], $update_data, FALSE))
+				{
+					redirect(site_url('home'));
+				}
+			}
+			else
+			{
+				$insert = $this->cart->insert($data);
+
+				if ($insert)
+				{
+					redirect(site_url('home'));
+				}
 			}
 		}
 	}
