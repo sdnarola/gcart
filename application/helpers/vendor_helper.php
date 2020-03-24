@@ -89,15 +89,15 @@ function get_subscription_info($subscription_id, $info = '')
 	$CI = &get_instance();
 	$CI->load->model('subscriptions_model', 'subscription');
 
-	$vendor = $CI->subscription->get_($subscription_id);
+	$subscription = $CI->subscription->get_($subscription_id);
 
 	if ($info != '')
 	{
-		return $vendor[$info];
+		return $subscription[$info];
 	}
 	else
 	{
-		return $vendor;
+		return $subscription;
 	}
 }
 
@@ -118,6 +118,7 @@ function expire_subscription($id)
 	//calculate expire date of subscription
 	$date     = new DateTime($date1);
 	$day      = 'P'.$days.'D';
+	
 	$exp_date = $date->add(new DateInterval($day));
 	$exp      = $exp_date->format('Y-m-d H:i:s');
 

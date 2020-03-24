@@ -87,7 +87,6 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/uploaders/fileinput.min.js'); ?>"></script>
 
 
-
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
 
@@ -101,7 +100,6 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/select2.min.js'); ?>"></script>
 <!-- for add the wysihtml5 editor  -->
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/wysihtml5.min.js'); ?>"></script>
-
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/toolbar.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/parsers.js'); ?>"></script>
 
@@ -124,7 +122,6 @@ $.validator.setDefaults({
         unhighlight: function(element, errorClass) {
             $(element).removeClass(errorClass);
         },
-
         // Different components require proper error label placement
         errorPlacement: function(error, element) {
 
@@ -246,7 +243,6 @@ switches.forEach(function(html) {
 		jGrowlAlert("<?php echo $this->session->flashdata($alert_class) ?>",'<?php echo $alert_class; ?>');
 <?php
 	}
-
 ?>
 
 });
@@ -513,13 +509,23 @@ switches.forEach(function(html) {
 								<li
 									<?php
 
-										if (is_active_controller('faq'))
+										if (is_active_controller('faqs'))
 										{
 											echo 'class="active"';}
-
 									?>
 									>
-									<a href="<?php echo base_url('admin/faq'); ?>"><i class="icon-question3"></i> <span><?php _el('faqs')?></span></a>
+									<a href="<?php echo base_url('admin/faqs'); ?>"><i class="icon-question3"></i> <span>FAQ</span></a>
+								</li>
+									<!-- news_letters subscribers -->
+								<li
+									<?php
+
+										if (is_active_controller('subscribers'))
+										{
+											echo 'class="active"';}
+									?>
+									>
+									<a href="<?php echo base_url('admin/subscribers'); ?>"><i class=" icon-users4"></i> <span><?php _el('subscribers') ?></span></a>
 								</li>
 								<!-- settings -->
 								<li>
@@ -528,29 +534,61 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('settings'))
+											if (is_active_controller('menu_setup'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/menu'); ?>">
-												<span><?php _el('menu_setup')?></span>
+											<a href="<?php echo base_url('admin/menu_setup'); ?>">
+												<span>Menu Setup</span>
 											</a>
 										</li>
-										<li
-										<?php
+										<li>
+											<a href="#"><span>Home Page</span></a>
+												<ul>
+													<li
+													<?php
 
-											if (is_active_controller('settings'))
-											{
-												echo 'class="active"';}
+														if (is_active_controller('sliders'))
+														{
+															echo 'class="active"';}
 
-										?>
-										 >
-											<a href="<?php echo base_url('admin/home_settings'); ?>">
-												<span><?php _el('home_setup')?></span>
-											</a>
+													?>
+													 >
+														<a href="<?php echo base_url('admin/sliders'); ?>">
+															<span>Sliders</span>
+														</a>
+													</li>
+													<li
+													<?php
+
+														if (is_active_controller('banners'))
+														{
+															echo 'class="active"';}
+
+													?>
+													 >
+														<a href="<?php echo base_url('admin/banners'); ?>">
+															<span>Banners</span>
+														</a>
+													</li>
+												</ul>
 										</li>
+										<li 
+										<?php 
+											if (is_active_controller('emails')) 
+												{
+													echo 'class="active"';}
+												?> 
+												>
+												<a href="<?php echo base_url('admin/emails'); ?>">
+												<span>Email Templates</span>
+												</a>
+										</li>
+									
+										
+
 										<li
 										<?php
 

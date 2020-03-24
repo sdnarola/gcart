@@ -64,7 +64,7 @@
                                     <label><?php _el('product'); ?> <?php _el('limitations'); ?>:</label>
                                     <input type="number" class="form-control" placeholder="<?php _el('limitations'); ?>" id="product_limit" name="product_limit" value="<?php echo $plan['product_limit'];?>">
                                 </div>
-                        </div>
+                            </div>
                             <div class="form-group">
                                 <div>
                                     <small class="req text-danger">* </small>
@@ -105,7 +105,7 @@ $("#subscription_form").validate({
         days: {
             required: true,           
         },
-        limitations: {
+        product_limit: {
             required: true,          
         },
         description: {
@@ -122,7 +122,7 @@ $("#subscription_form").validate({
         days: {
             required:"<?php _el('please_enter_', _l('days')) ?>",
         },        
-        limitations: {
+        product_limit: {
             required:"<?php _el('please_enter_', _l('limitations')) ?>",
         },
         description: {

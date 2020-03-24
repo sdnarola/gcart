@@ -167,24 +167,36 @@
 								<!-- tab pane for group-general -->
 								<div class="tab-pane has-padding" id="group-dummy-2">
 									<div class="form-group">
-										<label><?php _el('log_activity'); ?> ?:</label>										
+										<label><?php _el('maintenance'); ?> :</label>										
 										<br>
-										<input type="hidden" name="log_activity" value="0" />
-										<input type="checkbox" name="log_activity" id="log_activity" value="1" class="switchery form-control" <?php if( get_settings('log_activity') == 1 ) echo 'checked'; ?> >
+										<input type="hidden" name="maintenance" value="0" />
+										<input type="checkbox" name="maintenance" id="maintenance" value="1" class="switchery form-control" <?php if( get_settings('maintenance') == 1 ) echo 'checked'; ?> >
+									</div>		
+									<div class="form-group">
+										<label><?php _el('vendors');?> <?php _el('registration');?> :</label>										
+										<br>
+										<input type="hidden" name="vendors_registration" value="0" />
+										<input type="checkbox" name="vendors_registration" id="vendors_registration" value="1" class="switchery form-control" <?php if( get_settings('vendors_registration') == 1 ) echo 'checked'; ?> >
 									</div>																	
 								</div>
 								<!-- /tab pane for group-general -->
 							</div>
 						</div>
+						<div class="row">
+                            <div class="form-group col-md-12">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                                </div>
+                            </div>
+                     	</div>
 					</div>
 					<!-- /Panel body -->
+					
 				</div>
 				<!-- /Panel -->
 			</div>
 		</div>			
-		<div class="btn-bottom-toolbar text-right btn-toolbar-container-out">
-			<button type="submit" class="btn btn-success"><?php _el('save');?> <?php _el('settings') ?></button>			
-		</div>
 	</form>
 </div>
 <!-- /Content area -->

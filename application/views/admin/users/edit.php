@@ -25,9 +25,8 @@
 <?php
 	if ($users) 
 	{
+		$user = $users[0];
 		
-		foreach ($users as $user) 
-		{
 ?>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
@@ -47,64 +46,68 @@
 							<!-- Panel body -->
 							<div class="panel-body">
 								<form action="<?php echo base_url('admin/users/edit/') . $user['users_id']; ?>" id="profileform" name="profileform" method="POST">
-								<div class="row">
-									<div class="col-md-12">
+								
 <?php
-$file = basename($path);
-?>
+$file = basename($user['profile_image']);
+?>									
+									<div>
 										<div class="form-group">
-											 <img src="<?php echo base_url() . 'Uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
+											 <p align="center"><img src="<?php echo base_url() . 'assets/uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img></p>
 										</div>
-
-										<div class="form-group">
+									</div>
+									<div class="row">
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('firstname');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('firstname');?>" id="firstname" name="firstname" value="<?php echo ucfirst($user['firstname']); ?>">
 										</div>
-										<div class="form-group">
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('lastname');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('lastname');?>" id="lastname" name="lastname" value="<?php echo ucfirst($user['lastname']); ?>">
 										</div>
-										<div class="form-group">
+									</div>
+									<div class="row">
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('email');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('email');?>" id="email" name="email" class="email"value="<?php echo $user['email']; ?>">
 										</div>
-										<div class="form-group">
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('mobile_no');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('mobile_no');?>" id="mobile" name="mobile" value="<?php echo $user['mobile']; ?>">
 										</div>
-
-										<div class="form-group">
+									</div>
+									<div class="row">
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('address1');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('address1');?>" id="address1" name="address1" value="<?php echo ucfirst($user['address_1']); ?>">
-										</div>
-
-										<div class="form-group">
+										</div>							
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('address2');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('address2');?>" id="address2" name="address2" value="<?php echo ucfirst($user['address_2']); ?>">
 										</div>
-
-										<div class="form-group">
+									</div>
+									<div class="row">
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('pincode');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $user['pincode']; ?>">
 										</div>
-
-										<div class="form-group">
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('city');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo ucfirst($user['city']); ?>">
 										</div>
-
-										<div class="form-group">
+									</div>
+									<div class="row">
+										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('state');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo $user['state']; ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo ucfirst($user['state']); ?>">
 										</div>
 <?php
 			$readonly = '';
@@ -115,17 +118,16 @@ $file = basename($path);
 
 			}
 ?>
-										<div class="form-group">
+										<div class="col-md-6 form-group">
 											<label><?php _el('status');?>:</label>
 
 											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['users_id']; ?>" <?php if ($user['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
 										</div>
 <?php
-		}
+		
 	}
 ?>
 									</div>
-								</div>
 								<div class="row">
 		                            <div class="form-group col-md-12">
 		                                <div class="pull-right">
@@ -141,7 +143,6 @@ $file = basename($path);
 						</div>
 				<!-- /Panel -->
 					</div>
-
 				</div>
 </div>
 

@@ -53,8 +53,6 @@ class User_model extends MY_Model
 		$query = $this->db->get();
 
 		return $query->result_array();
-
-		return $query->result_array();
 	}
 
 	/**
