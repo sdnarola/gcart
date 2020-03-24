@@ -134,8 +134,7 @@ class Sub_categories extends Admin_Controller
 			{
 				$data =$this->input->post(); 
 				$data['is_active'] = ($this->input->post('is_active')) ? 1 : 0;
-				print_r($data);
-			 			
+						 			
 				$update = $this->sub_categories->update($id,$data);
 
 				 if($update)

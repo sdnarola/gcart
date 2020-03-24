@@ -18,187 +18,190 @@
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
-    <!-- Panel -->
-    <div class="panel panel-flat">
-        <div class="panel-heading">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Panel -->
+            <div class="panel panel-flat">
+                <!-- Panel heading -->
+                <!-- /Panel heading -->
+                <!-- Panel body -->
+                <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-10">
-                            <h5 class="panel-title">
-                                <strong><?php _el('user')?></strong>
-                            </h5>
-                        </div>
-                    </div>
-        </div>
-        <div class="body-area">
-            <div class="row">
-                <!-- profile pic display -->
-                <div class="col-md-2">
+                        <div class="col-md-2">
 <?php
     $file = basename($path);
 ?>
                     <div class="user-image">
-                    <img src="<?php echo base_url() . 'assets/Uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
-                </div>
-                </div>
-                <!-- table shows the user's details -->
-                <div class="col-md-5">
-                    <div class="table-responsive show-table">
-                        <table class="table">
-                             <tbody>
-<?php
-    if ($users) 
-    {
-        foreach ($users as $user) 
-        {
-?>
-                                    <tr>
-                                        <th><?php echo _el('name'); ?></th>
-                                        <td><?php echo ucfirst($user['firstname']) . ' ' . ucfirst($user['lastname']); ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th><?php echo _el('email'); ?></th>
-                                        <td><a href="mailto:<?php echo $user['email']; ?>"><?php echo $user['email'] ?></a></td>
-                                    </tr>
-                                    <tr>
-                                        <th><?php echo _el('mobile_no'); ?></th>
-                                        <td><?php echo $user['mobile'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th><?php echo _el('last_login'); ?> </th>
-                                            <td>
-                                                <?php $time =time_to_words($user['last_login']); echo $time; ?>
-                                            </td>
-                                    </tr>
-                                      <tr>
-                                        <th><?php echo _el('email_varified'); ?> </th>
-                                            <td>
+                    <img src="<?php echo base_url() . 'assets/uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="280" width="226" border="10" class="img-circle"></img>
+                    </div>
+                        </div>
+
+                        <div class="col-md-5">
+                            <table class="table table-hover table-framed table-sm table-striped rounded">
+                              <thead>
+                                <tr class="alpha-slate"><th colspan="3"><h3 class="panel-title"><strong><?php _el('user');?></strong></h3></th></tr>
+                              </thead>
+                              <tbody>
 <?php 
-                                                if($user['is_email_verified']==1) 
+    $user = $user[0];
+?>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($user['firstname']) . ' ' . ucfirst($user['lastname']);?></td>
+                                </tr>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('email');?></td><td width="10%">:</td><td width="40%"><a href="mailto:<?php echo $user['email']; ?>"><?php echo $user['email']; ?></a></td>
+                                </tr>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('mobile_no');?></td><td width="10%">:</td><td width="40%"><?php echo $user['mobile']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('last_login');?></td><td width="10%">:</td><td width="40%"><?php $time =time_to_words($user['last_login']); echo $time; ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('email_varified');?></td><td width="10%">:</td><td width="40%">
+<?php                                           if($user['is_email_verified']==1) 
                                                 {
-                                                   _el('varified');
+                                                   echo ' '.'<span class="label label-success label-rounded">'._l('varified').'</span>';
                                                 }
                                                 else
                                                 {
-                                                    _el('not_varified');
-                                                }
+                                                   echo ' '.'<span class="label label-danger label-rounded">'._l('not_varified').'</span>';
+                                                } 
 ?>
-                                            </td>
+                                                    
+                                                </td>
+                                </tr>
+                             </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-5">
+                            <table class="table table-hover table-framed table-sm table-striped rounded">
+                                <thead>
+                                    <tr class="alpha-slate"><th colspan="3"><h3 class="panel-title"><strong><?php _el('address')?> <?php _el('details');?></strong></h3></th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($user['address_1'].', '.$user['address_2']); ?></td>
                                     </tr>
-                            </tbody>
-                        </table>
+                                    <tr>
+                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo $user['city']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($user['state']); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="40%" class="text-semibold"><?php _el('pincode');?></td><td width="10%">:</td><td width="40%"><?php echo $user['pincode']; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <!-- table shows the user's address details -->
-                <div class="col-md-5">
-                    <div class="table-responsive show-table">
-
-                        <table class="table">
-                            <tbody>
+                     <br><hr><br>
+                     <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-hover table-framed table-sm table-striped rounded">
+                               <thead>
+                                <tr class="alpha-slate"><th colspan="5"><h3 class="panel-title"><strong><?php _el('products_ordered');?></strong></h3></th></tr>
+                                </thead> 
+                                <thead>
+                                    <th width="30%"><?php _el('order_number')?></th>
+                                    <th width="30%" ><?php _el('order_date')?></th>
+                                    <th width="20%"><?php _el('amount')?></th>
+                                    <th width="10%"  class="text-center"><?php _el('status')?></th>
+                                    <th width="10%" class="text-center"><?php _el('actions')?></th>
+                                </thead>
+                                <tbody>
+<?php
+                                if ($records) 
+                                {
+                                    foreach ($records as $record) 
+                                    {
+?>
                                     <tr>
-                                        <th><?php echo _el('address1'); ?></th>
-                                        <td><?php echo ucfirst($user['address_1']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th><?php echo _el('address2'); ?></th>
-                                        <td><?php echo ucfirst($user['address_2']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th><?php echo _el('city'); ?></th>
-                                        <td><?php echo ucfirst($user['city']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th><?php echo _el('state'); ?></th>
-                                        <td><?php echo ucfirst($user['state']) ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th><?php echo _el('pincode'); ?></th>
-                                        <td><?php echo $user['pincode'] ?></td>
+                                       <td>
+                                            <?php echo $record['order_number'] ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $record['order_date'] ?>
+                                        </td>        
+                                        <td><?php echo $record['grand_total'] ?></td>
+                                        <td class="text-center">
+<?php
+                                        if ($record['order_status'] == 0) 
+                                        {
+                                                  echo '<span class="label label-warning label-rounded">'. _l('pending') .'</span>';
+                                        } elseif ($record['order_status'] == 1) 
+                                        {
+                                                echo '<span class="label label-info label-rounded">'. _l('processing') .'</span>';
+                                        } elseif ($record['order_status'] == 2) 
+                                        {
+                                                  echo '<span class="label label-success label-rounded">'. _l('completed') .'</span>';
+                                        } elseif($record['order_status'] == 3)
+                                        {
+                                                  echo '<span class="label label-danger label-rounded">'. _l('Declined') .'</span>';
+                                        }
+?>
+                                        </td>       
+                                        <td class="text-center">
+                                                 <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/') . $record['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
+                                        </td>
                                     </tr>
 <?php
-        }
-    }
-?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    echo "<tr >
+                                            <td colspan=5 class='text-center'>". _l('no_data_found'). "</td>
+                                        </tr>";
+                                }
 
-    </div>
-            <div class="panel panel-flat">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h5 class="panel-title">
-                                <strong><?php _el('products_orders');?></strong>
-                            </h5>
+?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-
-                <div class="panel-body table-responsive">
-                 <!-- table shows the user's orders details -->
-                    <table id="info_table" class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th width="20%"><?php _el('order_number')?></th>
-                                <th width="20%" ><?php _el('purchase_date')?></th>
-                                <th width="20%"><?php _el('amount')?></th>
-                                <th width="20%" class="text-center"><?php _el('status')?></th>
-                                <th width="8%" class="text-center"><?php _el('actions')?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-<?php
-        if ($records) 
-        {
-            foreach ($records as $record) 
-            {
-?>
-                            <tr>
-                                <td>
-                                    <?php echo $record['order_number'] ?>
-                                </td>
-                                <td>
-                                    <?php echo $record['order_date'] ?>
-                                </td>
-                                <td>
-                                    <?php echo $record['grand_total'] ?>
-                                </td>
-<?php
-                if ($record['order_status'] == 0) 
-                {
-                        $status = _l('pending');
-                } elseif ($record['order_status'] == 1) 
-                {
-                        $status = _l('processing');
-                } elseif ($record['order_status'] == 2) 
-                {
-                        $status = _l('completed');
-                } elseif($record['order_status'] == 3)
-                {
-                        $status = _l('declined');
-                }
-?>
-
-                                <td>
-                                    <?php echo $status ?>
-                                </td>
-                                <td class="text-center">
-                                    <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/') . $record['id']; ?>" class=" text-slate" ><i class="icon-info3"></i></a>
-                                </td>
-                            </tr>
-<?php
-            }
-        }
-?>
-                         </tbody>
-                    </table>
-                    
-                </div>
-    <!-- /Panel -->
+                <!-- /Panel body -->
+            </div>
+            <!-- /Panel -->
+        </div>
+    </div>
 </div>
+<!-- /Content area
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <script type="text/javascript">

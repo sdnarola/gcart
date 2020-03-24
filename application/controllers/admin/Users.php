@@ -36,7 +36,6 @@ class Users extends Admin_Controller
 
 		if ($this->input->post()) 
 		{
-
 			$data = array
 				(
 				'firstname' => $this->input->post('firstname'),
@@ -45,20 +44,17 @@ class Users extends Admin_Controller
 				'mobile' => $this->input->post('mobile'),
 				'is_active' => ($this->input->post('is_active')) ? 1 : 0,
 			);
+			$edit = $this->users->edit($data, $id);
 
-			$result1 = $this->users->edit($data, $id);
-
-			if ($result1) 
+			if ($edit) 
 			{
 				set_alert('success', _l('_updated_successfully', _l('user')));
-
 				redirect('admin/users');
 			}
 		} 
 		else 
 		{
 			$data['users'] = $this->users->show($id);
-			$data['path'] = $data['users'][0]['profile_image'];
 		
 			$data['content'] = $this->load->view('admin/users/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
@@ -92,17 +88,13 @@ class Users extends Admin_Controller
 	{
 		$this->set_page_title(_l('users') . ' | ' . _l('details'));
 
-		$data['users']   = $this->users->show($id);
+		$data['user']   = $this->users->show($id);
 		$data['records'] = $this->order_details($id);
-		//print_r($data['records']);
-
 		//get image path from database
 		$record = $this->users->get($id);
 
-
 		if ($record['profile_image'])
 		{
-			
 			$data['path'] = $record['profile_image'];
 		}
 

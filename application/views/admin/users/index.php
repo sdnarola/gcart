@@ -16,34 +16,31 @@
         </ul>
     </div>
 </div>
-
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
     <!-- Panel -->
     <div class="panel panel-flat">
-
         <div class="panel-heading mt-20">
           <div class="heading-elements">
             <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
           </div>
       </div>
         <!-- /Panel heading -->
-
         <!-- Listing table -->
         <div class="panel-body table-responsive">
             <table id="users_table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                          <th width="2%" class="text-center">
+                        <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                       
                         </th>
-                        <th width="20%" ><?php _el('name');?></a></th>
-                        <th width="20%" ><?php _el('email');?></th>
+                        <th width="30%" ><?php _el('name');?></a></th>
+                        <th width="30%" ><?php _el('email');?></th>
                         <th width="20%" ><?php _el('mobile_no');?></th>
                         <th width="10%" class="text-center"><?php _el('status');?></th>
-                        <th width="10%" class="text-center"><?php _el('actions');?></th>
+                        <th width="8%" class="text-center"><?php _el('actions');?></th>
 
                     </tr>
                 </thead>
@@ -56,8 +53,7 @@ if ($users != ' ')
     {
 ?>
                     <tr>
-
-                         <td>
+                        <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php
 if ($user->id != get_loggedin_info('user_id')) {
             echo $user->id;}
@@ -66,14 +62,12 @@ if ($user->id != get_loggedin_info('user_id')) {
                         <td>
                             <?php echo ucfirst($user->firstname) . '&nbsp;' . ucfirst($user->lastname); ?>
                         </td>
-
                         <td>
                             <a href="mailto:<?php echo $user->email; ?>"><?php echo $user->email; ?></a>
                         </td>
                          <td>
                             <?php echo $user->mobile; ?>
                         </td>
-
                         <td class="text-center switchery-sm">
                             <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $user->id; ?>"
 <?php
@@ -83,13 +77,9 @@ if ($user->is_active == 1)
 }
 ?>>
                         </td>
-
                         <td class="text-center">
-
                             <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/') . $user->id; ?> " class="text-slate" id="<?php echo $user->id; ?>" ><i class="icon-info3"></i></a>
-
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/') . $user->id; ?>" id="<?php echo $user->id; ?>" class="text-info"><i class="icon-pencil7"></i></a>
-
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $user->id; ?>);" class="text-danger" id="<?php echo $user->id; ?>"><i class=" icon-trash"></i></a>
                         </td>
                     </tr>
@@ -120,7 +110,6 @@ $(function() {
     //add class to style style datatable select box
     $('div.dataTables_length select').addClass('datatable-select');
  });
-
 
 var BASE_URL = "<?php echo base_url(); ?>";
 

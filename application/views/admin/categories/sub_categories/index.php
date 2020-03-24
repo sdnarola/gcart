@@ -30,9 +30,7 @@
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected'); ?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
-        <!-- /Panel heading -->
-        
-       
+        <!-- /Panel heading -->       
         <!-- Listing table -->
         <div class="panel-body table-responsive">
             <table id="categories_table" class="table  table-bordered table-striped">
@@ -41,11 +39,11 @@
                         <th width="2%">
                             <input type="checkbox" name="select_all" id="select_all" class="styled"  onclick="select_all(this);" >
                         </th>
-                        <th width="25%" ><?php _el('category'); ?></th>
-                        <th width="25%" ><?php _el('name'); ?></th>
-                        <th width="25%" ><?php _el('slug'); ?></th>
-                        <th width="8%" class="text-center"><?php _el('status'); ?></th>
-                        <th width="15%" class="text-center"><?php _el('actions') ?></th>
+                        <th width="30%" ><?php _el('category'); ?></th>
+                        <th width="30%" ><?php _el('name'); ?></th>
+                        <th width="20%" ><?php _el('slug'); ?></th>
+                        <th width="10%" class="text-center"><?php _el('status'); ?></th>
+                        <th width="8%" class="text-center"><?php _el('actions') ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,7 +59,7 @@
                         <td><?php echo ucfirst($category['name']); ?></td>
                         <td ><?php echo ucfirst($sub_category['name']); ?></td>
                         <td >
-                            <?php echo ucfirst($sub_category['slug']); ?>
+                            <?php echo $sub_category['slug']; ?>
                         </td>
 <?php
                         $readonly = '';

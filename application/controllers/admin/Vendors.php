@@ -36,7 +36,6 @@ class Vendors extends Admin_Controller
 	public function delete() 
 	{
 		$vendor_id = $this->input->post('vendor_id');
-
 		$deleted = $this->vendors->delete($vendor_id);
 
 		if ($deleted) 
@@ -118,7 +117,6 @@ class Vendors extends Admin_Controller
 		$data['content'] = $this->load->view('admin/vendors/details', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
-
 
 	/**
 	 * Toggles the vendor status to Active or Inactive

@@ -12,6 +12,7 @@
 			<li>
 				<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>	
 			</li>
+			  <li class="active"><?php _el('settings'); ?></li>
 			<li>
 				<a href="<?php echo base_url('admin/emails'); ?>">Email Templates</a>
 			</li>
@@ -64,6 +65,14 @@
 								</div>
 							</div>
 						</div>
+						<div class="row">
+                            <div class="form-group col-md-12">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                                </div>
+                            </div>
+                     </div>
 					</div>
 					<!-- /Panel body -->
 				</div>
@@ -100,10 +109,6 @@
 				</div>
 				<!-- /Panel -->
 			</div>
-		</div>
-		<div class="btn-bottom-toolbar text-right btn-toolbar-container-out">
-		<button type="submit" class="btn btn-success" name="submit"><?php _el('save'); ?></button>
-		<a class="btn btn-default" onclick="window.history.back();"><?php _el('back'); ?></a>
 		</div>
 	</form>
 </div>

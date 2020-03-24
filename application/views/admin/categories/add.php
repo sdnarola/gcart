@@ -42,6 +42,24 @@
                 <div class="panel-body">
                     <form action="<?php echo base_url('admin/categories/add'); ?>" id="categories_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
+
+
+
+                            <div class="form-group">
+                              <small class="req text-danger">* </small>
+                              <label>banner name</label>
+                              <select class="select-search" name="banner_id" id="banner_id">
+<?php
+                                $banners = get_banners();
+                                foreach ($banners as $banner) 
+                                {
+?>
+                                    <option id="$banner['id']" name="banner" value="<?php echo $banner['id'] ?>"><?php echo ucfirst($banner['title']) ?></option>
+<?php
+                                }
+?>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name'); ?>:</label>
@@ -76,6 +94,7 @@
 <!-- /Content area -->
 
 <script type="text/javascript">
+$('.select-search').select2();
 $("#categories_form").validate({
     rules: {
         name: {
@@ -116,8 +135,6 @@ $('.file-input').fileinput({
             "</div>"
         },
         initialCaption: "No file selected",
-        allowedFileExtensions: ["jpg", "jpeg", "png"]
-
     }); 
 
 /**

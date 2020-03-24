@@ -40,10 +40,10 @@
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                         </th>
-                        <th width="40%" ><?php _el('title');?></th>
-                        <th width="10%" ><?php _el('cost');?></th>
-                        <th width="10%" ><?php _el('duration');?>(<?php _el('days');?>)</th>
-                        <th width="10%" ><?php _el('product'); ?> <?php  _el('allowed'); ?></th>
+                        <th width="45%" ><?php _el('title');?></th>
+                        <th width="15%" ><?php _el('cost');?></th>
+                        <th width="15%" ><?php _el('duration');?>(<?php _el('days');?>)</th>
+                        <th width="15%" ><?php _el('product'); ?> <?php  _el('allowed'); ?></th>
                         <th width="8%" class="text-center"><?php _el('actions');?></th>
                     </tr>
                 </thead>

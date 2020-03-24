@@ -20,18 +20,12 @@ class Emails extends Admin_Controller
 	{
 		$this->set_page_title('Email Templates');
 
-		if (!has_permissions('email_templates', 'view'))
-		{
-			$this->access_denied('email_templates', 'view');
-		}
-		else
-		{
-			$this->load_default_templates();
+		$this->load_default_templates();
 
 			$data['templates'] = $this->emails->get_all();
-			$data['content']   = $this->load->view('admin/emails/index', $data, TRUE);
+			$data['content']   = $this->load->view('admin/settings/emails/index', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
-		}
+		
 	}
 
 	/**
@@ -42,12 +36,6 @@ class Emails extends Admin_Controller
 	public function email_template($id = '')
 	{
 		$this->set_page_title('Email Templates | Edit');
-
-		if (!has_permissions('email_templates', 'edit'))
-		{
-			$this->access_denied('email_templates', 'edit');
-		}
-		else
 
 		if ($id)
 		{
@@ -72,7 +60,7 @@ class Emails extends Admin_Controller
 			}
 			else
 			{
-				$data['content'] = $this->load->view('admin/emails/email_template', $data, TRUE);
+				$data['content'] = $this->load->view('admin/settings/emails/email_template', $data, TRUE);
 				$this->load->view('admin/layouts/index', $data);
 			}
 		}

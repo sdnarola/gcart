@@ -49,7 +49,7 @@ class Brands extends Admin_Controller
 			}
 			else
 			{
-				$data['logo'] = 'C:/wamp64/www/gcart/'.'assets/uploads/brands/default_brand.png';
+				$data['logo'] = 'assets/uploads/brands/default_brand.png';
 			}
 
                       $insert = $this->brands->insert($data);    
@@ -108,7 +108,6 @@ class Brands extends Admin_Controller
 			else 
 			{
 				$data['brand'] = $this->brands->get($id);
-				
 				$data['content'] = $this->load->view('admin/brands/edit',$data, TRUE);
 				$this->load->view('admin/layouts/index', $data);
 			}	
@@ -123,7 +122,7 @@ class Brands extends Admin_Controller
 		//in soft delete move image to deleted folder
 		$old_upload_image = $this->brands->get($id);
 		$imagepath = $old_upload_image['logo'];
-		$newpath = 'C:/wamp64/www/gcart/'.'assets/uploads/brands/deleted/'.basename($imagepath);
+		$newpath = 'assets/uploads/brands/deleted/'.basename($imagepath);
 
 		if(basename($imagepath) != 'default_brand.png')
 		{
@@ -155,7 +154,7 @@ class Brands extends Admin_Controller
 		foreach($data as $record)
 		{
 			$imagepath = $record['logo'];
-			$newpath = 'C:/wamp64/www/gcart/'.'assets/uploads/brands/deleted/'.basename($imagepath);
+			$newpath = 'assets/uploads/brands/deleted/'.basename($imagepath);
 			
 			if(basename($imagepath) != 'default_brand.png')
 			{

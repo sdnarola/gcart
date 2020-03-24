@@ -103,7 +103,5 @@ $('.file-input').fileinput({
             "</div>"
         },
         initialCaption: "No file selected",
-        allowedFileExtensions: ["jpg", "jpeg", "png"]
-
     }); 
 </script>

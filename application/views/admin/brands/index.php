@@ -38,8 +38,8 @@
                         <th width="2%">
                             <input type="checkbox" name="select_all" id="select_all" class="styled"  onclick="select_all(this);" >
                         </th>
-                        <th width="70%" ><?php _el('name'); ?></th>
-                        <th width="20%" class="text-center"><?php _el('logo'); ?></th>
+                        <th width="45%"><?php _el('logo'); ?></th>
+                        <th width="45%" ><?php _el('name'); ?></th>
                         <th width="8%" class="text-center"><?php _el('actions') ?></th>
                     </tr>
                 </thead>
@@ -52,14 +52,13 @@
                         <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $brand['id']; ?>">
                         </td>
-                        <td ><?php echo ucfirst($brand['name']); ?></td>
-                        
 <?php 
             $file = basename($brand['logo']);
 ?>
-                        <td class="text-center">
+                        <td>
                                 <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/brands/').$file ?>" width="200" height="100" border=2>
                         </td>
+                        <td ><?php echo ucfirst($brand['name']); ?></td>
                         <td class="text-center">
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit') ?>" href="<?php echo site_url('admin/brands/edit/').$brand['id']; ?>" id="<?php echo $brand['id']; ?>" class="text-info">
                                 <i class="icon-pencil7"></i>
@@ -86,7 +85,7 @@ $(function() {
 
     $('#categories_table').DataTable({        
         'columnDefs': [ {
-        'targets': [0,2,3], /* column index */
+        'targets': [0,1,3], /* column index */
         'orderable': false, /* disable sorting */
         }],
          

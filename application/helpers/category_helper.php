@@ -14,7 +14,6 @@ function get_all_categories()
 	$CI->categories->order_by('name','ASC');
 	$category = $CI->categories->get_all();
 
-
 	return $category;
 }
 
@@ -83,34 +82,17 @@ function get_sub_category($id, $info = '')
 }
 
 /**
- * Uploads an icon.
+ * Gets the banners.
  *
- * @return     array  ( returns uploaded data path else return error )
+ * @return     <array>  The banners.
  */
-function upload_icon()
+function get_banners()
 {
-
 	$CI = &get_instance();
-	$CI->load->model('category_model', 'categories');
+	$CI->load->model('banner_model', 'banners');
+	$CI->banners->order_by('title','ASC');
+	$banners = $CI->banners->get_all();
 
-	$config['upload_path']   = 'assets/uploads/main_categories/';
-	$config['allowed_types'] = 'gif|jpg|png|jpeg';
-	$config['max_size']      = 100;
-	$config['file_name']     = time().'-'.$_FILES['icon']['name'];
-
-	$CI->upload->initialize($config);
-
-	if (!$CI->upload->do_upload('icon'))
-	{
-		$error = array('error' => $CI->upload->display_errors());
-		set_alert('danger', ucwords($error['error']));
-		return false;
-	}
-
-	$uploadData          =$CI->upload->data();
-	print_r($uploadData);
-	$data['icon'] = $uploadData['full_path'];
-
-	return $data;
+ 	return $banners;
 }
 ?>

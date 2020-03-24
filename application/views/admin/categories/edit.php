@@ -42,10 +42,33 @@
                 <div class="panel-body">
                      <form action="<?php echo base_url('admin/categories/edit/'). $category['id']; ?>" id="categories_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
+
+
+                            <div class="form-group">
+                              <small class="req text-danger">* </small>
+                              <label>banner name</label>
+                              <select class="select-search" name="banner_id" id="banner_id">
+<?php
+                                $banners = get_banners();
+                                foreach ($banners as $banner) 
+                                {
+?>
+                                    <option id="$banner['id']" name="banner" value="<?php echo $banner['id'] ?>"
+                                        <?php 
+                                        if($banner['id']==$category['banner_id'])
+                                        {
+                                            echo 'selected';
+                                        }
+                                        ?>><?php echo ucfirst($banner['title']) ?></option>
+<?php
+                                }
+?>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" value="<?php echo $category['name']?>" oninput="generate_slug()">
+                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" value="<?php echo ucfirst($category['name'])?>" oninput="generate_slug()">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
@@ -71,7 +94,6 @@ $file = basename($category['icon']);
                                 <label><?php _el('status');?>:</label>
                                 <input type="checkbox" class="switchery" name="is_active" id="<?php echo $category['id']; ?>" <?php if ($category['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
                             </div>
-
                         </div> 
                         <div class="row">
                             <div class="form-group col-md-12">
@@ -91,6 +113,8 @@ $file = basename($category['icon']);
 <!-- /Content area -->
 
 <script type="text/javascript">
+$('.select-search').select2();
+
 $("#categories_form").validate({
     rules: {
         name: {
@@ -128,7 +152,6 @@ $('.file-input').fileinput({
             "</div>"
         },
         initialCaption: "choose file",
-        allowedFileExtensions: ["jpg", "jpeg", "png"],
     }); 
 
 function generate_slug()

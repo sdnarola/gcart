@@ -344,7 +344,7 @@ function upload_logo($path,$fieldname)
 
 	$config['upload_path']   = $path;
 	$config['allowed_types'] = 'gif|jpg|png|jpeg';
-	$config['max_size']      = 100;
+	$config['max_size']      = 1000;
 	$config['file_name']     = time().'-'.$_FILES[$fieldname]['name'];
 
 	$CI->upload->initialize($config);
@@ -358,7 +358,7 @@ function upload_logo($path,$fieldname)
 
 	$uploadData          =$CI->upload->data();
 
-	$data = $uploadData['full_path'];
+	$data = $config['upload_path'].$uploadData['file_name'];
 
 	return $data;
 }

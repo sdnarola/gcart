@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Faq extends Admin_Controller
+class Faqs extends Admin_Controller
 {
 	/**
 	 * Constructor for the class
@@ -21,7 +21,7 @@ class Faq extends Admin_Controller
 
 		$data['faq'] = $this->faq->get_all();
 		
-		$data['content'] = $this->load->view('admin/faq/index',$data, TRUE);
+		$data['content'] = $this->load->view('admin/faqs/index',$data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
 
@@ -63,12 +63,12 @@ class Faq extends Admin_Controller
 						if ($insert)
 						{
 							set_alert('success', _l('_added_successfully', _l('faq')));
-							redirect('admin/faq');
+							redirect('admin/faqs');
 						}
 		}
 		else
 		{
-			$data['content'] = $this->load->view('admin/faq/add',' ', TRUE);
+			$data['content'] = $this->load->view('admin/faqs/add',' ', TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
 	}
@@ -78,10 +78,7 @@ class Faq extends Admin_Controller
  	*/
 	public function delete_multiple() 
 	{
-		$where = $this->input->post('ids');
-		//in soft delete move image to deleted folder
-		$data= $this->faq->get_many($where);
-		
+		$where = $this->input->post('ids');	
 		$deleted = $this->faq->delete_many($where);
 
 		if ($deleted) 
@@ -114,13 +111,13 @@ class Faq extends Admin_Controller
 
 			
 				set_alert('success', _l('_updated_successfully', _l('faq')));
-				redirect('admin/faq');			
+				redirect('admin/faqs');			
 			} 
 			else 
 			{
 				$data['faq'] = $this->faq->get($id);
 				
-				$data['content'] = $this->load->view('admin/faq/edit',$data, TRUE);
+				$data['content'] = $this->load->view('admin/faqs/edit',$data, TRUE);
 				$this->load->view('admin/layouts/index', $data);
 			}	
 	}
