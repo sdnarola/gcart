@@ -164,7 +164,7 @@
                             </table>
                         </div>
                     </div>
- <br><br><br>
+ <br><hr><br>
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table table-hover table-framed table-sm table-striped rounded">

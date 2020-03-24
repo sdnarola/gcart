@@ -152,6 +152,7 @@ class Users extends Admin_Controller
 	 */
 	public function order_details($user_id)
 	{
+		$this->orders->order_by('order_number', 'ASC');
 		$order_records = $this->orders->get_many_by('user_id',$user_id);
 
 		return $order_records;

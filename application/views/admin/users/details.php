@@ -67,8 +67,7 @@
                                                 {
                                                    echo ' '.'<span class="label label-danger label-rounded">'._l('not_varified').'</span>';
                                                 } 
-?>
-                                                    
+?>   
                                                 </td>
                                 </tr>
                              </tbody>
@@ -84,7 +83,7 @@
                                         <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($user['address_1'].', '.$user['address_2']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo $user['city']; ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($user['city']); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($user['state']); ?></td>

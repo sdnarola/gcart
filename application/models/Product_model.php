@@ -31,4 +31,11 @@ class Product_model extends MY_Model
 
 		return $query->result_array();
 	}
+
+	public function get_vendor_products($id)
+	{
+		$this->db->where('vendor_id', $id);
+
+		return $this->db->get('products')->num_rows();
+	}
 }

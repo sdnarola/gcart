@@ -1,8 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-
 /**
- * get all categories 
+ * get all categories
  * @param  int 		$id 	category id
  *
  * @return array details of categories.
@@ -11,7 +10,7 @@ function get_all_categories()
 {
 	$CI = &get_instance();
 	$CI->load->model('category_model', 'categories');
-	$CI->categories->order_by('name','ASC');
+	$CI->categories->order_by('name', 'ASC');
 	$category = $CI->categories->get_all();
 
 	return $category;
@@ -28,7 +27,7 @@ function get_category_id($name)
 {
 	$CI = &get_instance();
 	$CI->load->model('category_model', 'categories');
-	$category = $CI->categories->get_by('name',$name);
+	$category = $CI->categories->get_by('name', $name);
 
 	return $category['id'];
 }
@@ -95,4 +94,5 @@ function get_banners()
 
  	return $banners;
 }
+
 ?>

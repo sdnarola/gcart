@@ -53,7 +53,7 @@
 <?php
                 if ($vendors) 
                 {
-                	foreach ($vendors as $vendor) 
+                    foreach ($vendors as $vendor) 
                     {
 ?>
                     <tr>

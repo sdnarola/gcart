@@ -49,10 +49,11 @@
                                 <label><?php _el('name');?>:</label>
                                 <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name">
                             </div>
+
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('brand');?>:</label>
-                                <select class="form-control" name="brand_id" id="brand_id" >
+                                <select class="form-control select-search" name="brand_id" id="brand_id" >
                                     <option value="0" selected readonly disabled >----- Select Brand -----</option>
 <?php
 
@@ -71,7 +72,7 @@
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('category');?>:</label>
-                                <select class="form-control" name="category_id" id="category_id" onchange="get_sub_categories();">
+                                <select class="form-control select-search" name="category_id" id="category_id" onchange="get_sub_categories();">
                                     <option value="0" selected readonly disabled>----- Select Category -----</option>
 <?php
 
@@ -88,7 +89,7 @@
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('sub_category');?>:</label>
-                                <select class="form-control" name="sub_category_id" id="sub_category_id" >
+                                <select class="form-control select-search" name="sub_category_id" id="sub_category_id" >
                                     <option value="0" selected readonly disabled >----- Select Sub Category -----</option>
                                 </select>
                             </div>

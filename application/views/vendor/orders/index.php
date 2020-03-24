@@ -26,11 +26,11 @@
       <table id="orders_table" class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th width="15%"><?php _el('order_number');?></th>
-            <th width="15%"><?php _el('total_products');?></th>
-            <th width="15%"><?php _el('total_amount');?></th>
-            <th width="15%"><?php _el('payment_method');?></th>
-            <th width="15%" class="text-center"><?php _el('status');?></th>
+            <th width="20%"><?php _el('order_number');?></th>
+            <th width="18%"><?php _el('total_products');?></th>
+            <th width="20%"><?php _el('total_amount');?></th>
+            <th width="20%"><?php _el('payment_method');?></th>
+            <th width="20%" class="text-center"><?php _el('status');?></th>
             <th width="2%" class="text-center"><?php _el('actions');?></th>
           </tr>
         </thead>
@@ -98,7 +98,7 @@ $(function() {
 
     $('#orders_table').DataTable({
         'columnDefs': [ {
-        'targets': [5], /* column index */
+        'targets': [3,5], /* column index */
         'orderable': false, /* disable sorting */
         }],
 

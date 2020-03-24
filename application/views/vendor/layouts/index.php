@@ -87,8 +87,13 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
 
+
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/media/fancybox.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/gallery.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/bootstrap_multiselect.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_multiselect.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_select2.js'); ?>"></script>
+	<!-- /theme JS files -->
 
 
 <script type="text/javascript">
@@ -291,16 +296,37 @@ switches.forEach(function(html) {
 						<div class="category-content no-padding">
 							<ul class="navigation navigation-main navigation-accordion">
 								<!-- store link -->
-								<li
-									<?php
 
-										if (is_active_controller('dashboard') && is_active_method('store'))
-										{
-											echo 'class="active"';}
 
-									?>
-									>
-									 <a href="<?php echo base_url('vendor/dashboard/store'); ?>"><i class="icon-eye4"></i> <span>Visit Your Store</span></a>
+
+								<li>
+									<a href="#"><i class="icon-eye4"></i> </i><span><?php _el('store')?></span></a>
+									<ul>
+										<li
+										<?php
+
+											if (is_active_controller('dashboard') && is_active_method('store'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('home/store/').$this->session->userdata('vendor_id'); ?>"><span><?php _el('visit_store')?></span></a>
+										</li>
+										<li
+										<?php
+
+											if (is_active_controller('dashboard') && is_active_method('edit_store'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('vendor/dashboard/edit_store'); ?>">
+												<span><?php _el('edit_store')?></span>
+											</a>
+										</li>
+									</ul>
 								</li>
 								<!-- home link -->
 								<li
@@ -312,7 +338,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('vendor/dashboard'); ?>"><i class="icon-home4"></i> <span>Dashboard</span></a>
+									<a href="<?php echo base_url('vendor/dashboard'); ?>"><i class="icon-home4"></i> <span><?php _el('dashboard')?></span></a>
 								</li>
 								<!-- product -->
 								<li
@@ -324,7 +350,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('vendor/products'); ?>"><i class="icon-cart5"></i> <span>Products</span></a>
+									<a href="<?php echo base_url('vendor/products'); ?>"><i class="icon-cart5"></i> <span><?php _el('products')?></span></a>
 								</li>
 								<!-- orders -->
 								<li
@@ -336,36 +362,36 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('vendor/orders'); ?>"><i class="icon-list-ordered"></i> <span>Orders</span></a>
+									<a href="<?php echo base_url('vendor/orders'); ?>"><i class="icon-list-ordered"></i> <span><?php _el('orders')?></span></a>
 								</li>
 								<!-- product discussion -->
 								<li>
-									<a href="#"><i class="icon-bubbles9"></i><span>Product Discussion</span></a>
+									<a href="#"><i class="icon-bubbles9"></i><span><?php _el('product_discussion')?></span></a>
 									<ul>
 										<li
 										<?php
 
-											if (is_active_controller('products') && is_active_method('reviews'))
+											if (is_active_controller('reviews'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('vendor/products/reviews'); ?>">
-												<span>Reviews</span>
+											<a href="<?php echo base_url('vendor/reviews'); ?>">
+												<span><?php _el('reviews')?></span>
 											</a>
 										</li>
 										<li
 										<?php
 
-											if (is_active_controller('products') && is_active_method('comments'))
+											if (is_active_controller('comments'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('vendor/products/comments'); ?>">
-												<span>Comments</span>
+											<a href="<?php echo base_url('vendor/comments'); ?>">
+												<span><?php _el('comments')?></span>
 											</a>
 										</li>
 									</ul>
