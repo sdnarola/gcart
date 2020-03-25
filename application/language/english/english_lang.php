@@ -22,6 +22,7 @@ $lang['thumb_image']       = 'Thumbnail Image';
 $lang['status']            = 'Status';
 $lang['total']             = 'Total';
 $lang['value']             = 'Value';
+$lang['view_all']          = 'View All';
 $lang['thumb_image']       = 'Thumbnail Image';
 $lang['status']            = 'Status';
 $lang['price']             = 'Price';
@@ -83,25 +84,28 @@ $lang['dashboard'] = 'Dashboard';
 
 #Users
 #-----#
-$lang['firstname']      = 'Firstname';
-$lang['lastname']       = 'Lastname';
-$lang['mobile_no']      = 'Mobile No';
-$lang['last_login']     = 'Last Login';
-$lang['address']        = 'Address';
-$lang['address1']       = 'Address1';
-$lang['address2']       = 'Address2';
-$lang['pincode']        = 'Pincode';
-$lang['city']           = 'City';
-$lang['state']          = 'State';
-$lang['user']           = 'User';
-$lang['users']          = 'Users';
-$lang['add_user']       = 'Add User';
-$lang['edit_user']      = 'Edit User';
-$lang['user_details']   = 'User Details';
-$lang['email_varified'] = 'Email Verified';
-$lang['varified']       = 'Verified';
-$lang['not_varified']   = 'NOT Verified';
-$lang['img_alt_msg']    = "profile image can't loaded";
+$lang['firstname']        = 'Firstname';
+$lang['lastname']         = 'Lastname';
+$lang['mobile_no']        = 'Mobile No';
+$lang['last_login']       = 'Last Login';
+$lang['address']          = 'Address';
+$lang['address1']         = 'Address1';
+$lang['address2']         = 'Address2';
+$lang['pincode']          = 'Pincode';
+$lang['city']             = 'City';
+$lang['state']            = 'State';
+$lang['user']             = 'User';
+$lang['users']            = 'Users';
+$lang['add_user']         = 'Add User';
+$lang['edit_user']        = 'Edit User';
+$lang['user_details']     = 'User Details';
+$lang['email_varified']   = 'Email Verified';
+$lang['varified']         = 'Verified';
+$lang['not_varified']     = 'NOT Verified';
+$lang['total_users']      = 'Total Users';
+$lang['total_customers']  = 'Total Customers';
+$lang['recent_customers'] = 'Recent Customer(s)';
+$lang['img_alt_msg']      = "profile image can't loaded";
 
 #vendors
 #-------
@@ -109,6 +113,7 @@ $lang['vendor']              = 'Vendor';
 $lang['vendor_details']      = 'Vendor Details';
 $lang['vendors']             = 'Vendors';
 $lang['vendor_status']       = 'Vendor Status';
+$lang['total_vendors']       = 'Total Vendors';
 $lang['shop_name']           = 'Shop Name';
 $lang['list']                = 'List';
 $lang['store']               = 'Store';
@@ -155,6 +160,8 @@ $lang['manage_coupons'] = 'Manage Coupons';
 $lang['products']           = 'Products';
 $lang['product_details']    = 'Product Details';
 $lang['products_added']     = 'Products Added';
+$lang['recent_products']    = 'Recent Product(s)';
+$lang['popular_products']   = 'Popular Product(s)';
 $lang['product']            = 'Product';
 $lang['stock']              = 'Stock';
 $lang['price']              = 'Price';
@@ -181,10 +188,14 @@ $lang['order_details']    = 'Order Details';
 $lang['order_number']     = 'Order Number';
 $lang['order_date']       = 'Order Date';
 $lang['total_products']   = 'Total Products';
+$lang['recent_orders']    = 'Recent Order(s)';
+$lang['total_earnings']   = 'Total Earnings';
+$lang['total_orders']     = 'Total Orders';
 $lang['total_amount']     = 'Total Amount';
 $lang['grand_total']      = 'Grand Total';
 $lang['amount']           = 'Amount';
 $lang['ordered']          = 'Ordered';
+$lang['items_sold']       = 'Total Items Sold';
 $lang['order_invoice']    = 'Order Invoice';
 $lang['print_invoice']    = 'Print Invoice';
 $lang['invoice']          = 'Invoice';
@@ -361,6 +372,7 @@ $lang['discount_amount']            = 'Discount By Amount';
 $lang['discount_percentage']        = 'Discount By Percentage';
 $lang['greater_than_start_date']    = 'End Date Must Be Greater Than Start Date.';
 $lang['only_digits']                = 'Only Digits Are Allowed.';
+$lang['last_30_day_sale']           = 'Total Sales in Last 30 Days';
 
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------

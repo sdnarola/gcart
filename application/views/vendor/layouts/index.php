@@ -295,10 +295,19 @@ switches.forEach(function(html) {
 					<div class="sidebar-category sidebar-category-visible">
 						<div class="category-content no-padding">
 							<ul class="navigation navigation-main navigation-accordion">
+								<!-- home link -->
+								<li
+									<?php
+
+										if (is_active_controller('dashboard') && is_active_method('index'))
+										{
+											echo 'class="active"';}
+
+									?>
+									>
+									<a href="<?php echo base_url('vendor/dashboard'); ?>"><i class="icon-home4"></i> <span><?php _el('dashboard')?></span></a>
+								</li>
 								<!-- store link -->
-
-
-
 								<li>
 									<a href="#"><i class="icon-eye4"></i> </i><span><?php _el('store')?></span></a>
 									<ul>
@@ -327,18 +336,6 @@ switches.forEach(function(html) {
 											</a>
 										</li>
 									</ul>
-								</li>
-								<!-- home link -->
-								<li
-									<?php
-
-										if (is_active_controller('dashboard') && is_active_method('index'))
-										{
-											echo 'class="active"';}
-
-									?>
-									>
-									<a href="<?php echo base_url('vendor/dashboard'); ?>"><i class="icon-home4"></i> <span><?php _el('dashboard')?></span></a>
 								</li>
 								<!-- product -->
 								<li

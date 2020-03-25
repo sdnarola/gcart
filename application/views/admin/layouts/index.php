@@ -103,10 +103,16 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/toolbar.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/parsers.js'); ?>"></script>
 
+<!-- chart.js -->
+
+
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/media/fancybox.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/gallery.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_select2.js'); ?>"></script>
 	<!-- /theme JS files -->
+
+
+
 <script type="text/javascript">
 
 
@@ -630,3 +636,6 @@ switches.forEach(function(html) {
 	<!-- /Page container -->
 </body>
 </html>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/visualization/d3/d3.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/visualization/d3/d3_tooltip.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/charts/d3/bars/bars_basic_vertical.js'); ?>"></script>

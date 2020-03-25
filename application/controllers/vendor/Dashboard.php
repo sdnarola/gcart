@@ -10,6 +10,7 @@ class Dashboard extends Vendor_Controller
 	{
 		parent::__construct();
 		$this->load->model('vendor_model', 'vendors');
+		$this->load->model('order_model', 'orders');
 		$this->load->model('product_model', 'products');
 	}
 
@@ -19,9 +20,15 @@ class Dashboard extends Vendor_Controller
 	public function index()
 	{
 		$this->set_page_title(_l('dashboard'));
-		$id              = $this->session->userdata('vendor_id');
-		$data['vendor']  = $this->vendors->get($id);
-		$data['content'] = $this->load->view('vendor/dashboard/index', '', TRUE);
+		$id             = $this->session->userdata('vendor_id');
+		$data['vendor'] = $this->vendors->get($id);
+
+		$data['total_products'] = $this->products->count_by('vendor_id', $id);
+		$data['total_orders']   = $this->orders->total_orders($id);
+		$data['total_earnings'] = $this->orders->total_earnings($id);
+		$data['items_sold']     = $this->orders->items_sold($id);
+
+		$data['content'] = $this->load->view('vendor/dashboard/index', $data, TRUE);
 		$this->load->view('vendor/layouts/index', $data);
 	}
 
