@@ -429,3 +429,4 @@ function upload_logo($path, $fieldname)
 
 	return $data;
 }
+
