@@ -63,7 +63,7 @@ class Categories extends Admin_Controller
 		}
 		else
 		{
-			$data['content'] = $this->load->view('admin/categories/add','', TRUE);
+			$data['content'] = $this->load->view('admin/categories/add',' ', TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
 	}
@@ -195,7 +195,7 @@ class Categories extends Admin_Controller
 		$data = array('is_active' => $this->input->post('is_active'));
 
 		$update = $this->categories->update($category_id, $data);
-
+		
 		if ($update==1) 
 		{
 

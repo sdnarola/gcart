@@ -11,7 +11,10 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('users');?></li>
+            <li>
+                <a href="<?php echo base_url('admin/users'); ?>"><?php _el('users');?></a>
+            </li>
+            <li class="active"><?php _el('details');?></li>
         </ul>
     </div>
 </div>
@@ -32,7 +35,7 @@
     $file = basename($path);
 ?>
                     <div class="user-image">
-                    <img src="<?php echo base_url() . 'assets/uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="280" width="226" border="10" class="img-circle"></img>
+                    <img src="<?php echo base_url() . 'assets/uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="280" width="208" border="10"></img>
                     </div>
                         </div>
 

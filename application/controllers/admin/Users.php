@@ -67,8 +67,19 @@ class Users extends Admin_Controller
 	public function delete()
 	{
 		$user_id = $this->input->post('user_id');
-		$deleted = $this->users->delete($user_id);
+		
+		$user = $this->users->get($user_id);
+		$imagepath = $user['profile_image'];
+		$newpath = 'assets/uploads/users/deleted/'.basename($imagepath);
 
+		if(basename($imagepath) != 'default_img.png')
+		{
+			$copied = copy($imagepath , $newpath);
+			unlink($imagepath);
+		} 
+
+		$deleted = $this->users->delete($user_id);
+		
 		if ($deleted)
 		{
 			echo 'true';
@@ -108,6 +119,21 @@ class Users extends Admin_Controller
 	public function delete_selected()
 	{
 		$where   = $this->input->post('ids');
+
+		$data= $this->users->get_many($where);
+		
+		foreach($data as $record)
+		{
+			$imagepath = $record['profile_image'];
+			$newpath = 'assets/uploads/users/deleted/'.basename($imagepath);
+
+			if(basename($imagepath) != 'default_img.png')
+			{
+			$copied = copy($imagepath , $newpath);
+			unlink($imagepath);
+			}
+		}
+
 		$deleted = $this->users->delete_many($where);
 
 		if ($deleted)
