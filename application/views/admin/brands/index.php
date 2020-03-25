@@ -3,16 +3,16 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('partners');?></span>
+                <span class="text-semibold"><?php _el('partners'); ?></span>
             </h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
+                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
             </li>
-            <li class="active"><?php _el('partners');?></li>
+            <li class="active"><?php _el('partners'); ?></li>
         </ul>
     </div>
 </div>
@@ -20,13 +20,13 @@
 <!-- Content area -->
 <div class="content">
     <!-- Panel -->
-    <div class="panel panel-flat">
+    <div class="panel panel-flat">  
         <!-- Panel heading -->
         <div class="panel-heading mt-20">
             <div class="heading-elements">
-                <a href="<?php echo base_url('admin/brands/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new');?><i class="icon-plus-circle2 position-right"></i></a>
+                <a href="<?php echo base_url('admin/brands/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new'); ?><i class="icon-plus-circle2 position-right"></i></a>
 
-                <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
+                <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected'); ?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
         <!-- /Panel heading -->
@@ -35,47 +35,44 @@
             <table id="categories_table" class="table  table-bordered table-striped">
                 <thead>
                     <tr>
-                         <th width="2%" class="text-center">
+                        <th width="2%">
                             <input type="checkbox" name="select_all" id="select_all" class="styled"  onclick="select_all(this);" >
                         </th>
-                        <th width="70%" ><?php _el('name');?></th>
-                        <th width="20%" class="text-center"><?php _el('logo');?></th>
-                        <th width="8%" class="text-center"><?php _el('actions')?></th>
+                        <th width="45%"><?php _el('logo'); ?></th>
+                        <th width="45%" ><?php _el('name'); ?></th>
+                        <th width="8%" class="text-center"><?php _el('actions') ?></th>
                     </tr>
                 </thead>
                 <tbody>
-<?php
-
-	foreach ($brands as $brand)
-	{
-	?>
+<?php 
+            foreach ($brands as $brand) 
+            { 
+?>
                     <tr>
-                        <td class="text-center">
+                        <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $brand['id']; ?>">
                         </td>
-                        <td ><?php echo ucfirst($brand['name']); ?></td>
-
-<?php
-	$file = basename($brand['logo']);
-	?>
-                        <td class="text-center">
+<?php 
+            $file = basename($brand['logo']);
+?>
+                        <td>
                                 <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/brands/').$file ?>" width="200" height="100" border=2>
                         </td>
+                        <td ><?php echo ucfirst($brand['name']); ?></td>
                         <td class="text-center">
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/brands/edit/').$brand['id']; ?>" id="<?php echo $brand['id']; ?>" class="text-info">
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit') ?>" href="<?php echo site_url('admin/brands/edit/').$brand['id']; ?>" id="<?php echo $brand['id']; ?>" class="text-info">
                                 <i class="icon-pencil7"></i>
                             </a>
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $brand['id']; ?>);" class="text-danger delete" id="<?php echo $brand['id']; ?>">
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete') ?>" href="javascript:delete_record(<?php echo $brand['id']; ?>);" class="text-danger delete" id="<?php echo $brand['id']; ?>">
                                 <i class=" icon-trash"></i>
                             </a>
                         </td>
                     </tr>
-<?php
-	}
-
+<?php 
+            } 
 ?>
                 </tbody>
-            </table>
+            </table>           
         </div>
         <!-- /Listing table -->
     </div>
@@ -86,12 +83,12 @@
 <script type="text/javascript">
 $(function() {
 
-    $('#categories_table').DataTable({
+    $('#categories_table').DataTable({        
         'columnDefs': [ {
-        'targets': [0,2,3], /* column index */
+        'targets': [0,1,3], /* column index */
         'orderable': false, /* disable sorting */
         }],
-
+         
     });
 
     //add class to style style datatable select box
@@ -105,18 +102,18 @@ var BASE_URL = "<?php echo base_url(); ?>";
  *
  * @param {int}  id  The identifier
  */
-function delete_record(id)
-{
+function delete_record(id) 
+{ 
     swal({
-        title: "<?php _el('single_deletion_alert');?>",
-        text: "<?php _el('single_recovery_alert');?>",
-        type: "warning",
-        showCancelButton: true,
-        cancelButtonText:"<?php _el('no_cancel_it');?>",
-        confirmButtonText: "<?php _el('yes_i_am_sure');?>",
+        title: "<?php _el('single_deletion_alert'); ?>",
+        text: "<?php _el('single_recovery_alert'); ?>",
+        type: "warning",  
+        showCancelButton: true, 
+        cancelButtonText:"<?php _el('no_cancel_it'); ?>",
+        confirmButtonText: "<?php _el('yes_i_am_sure'); ?>",      
     },
     function()
-    {
+    {       
         $.ajax({
             url:BASE_URL+'admin/brands/delete',
             type: 'POST',
@@ -126,20 +123,20 @@ function delete_record(id)
             success: function(msg)
             {
                 if (msg=="true")
-                {
-                    swal({
-                        title: "<?php _el('_deleted_successfully', _l('partner'));?>",
-                        type: "success",
+                {                    
+                    swal({                        
+                        title: "<?php _el('_deleted_successfully', _l('partner')); ?>",       
+                        type: "success",                            
                     });
                     $("#"+id).closest("tr").remove();
                 }
                 else
-                {
-                    swal({
-                        title: "<?php _el('access_denied', _l('partner'));?>",
-                        type: "error",
+                {                        
+                    swal({                           
+                        title: "<?php _el('access_denied', _l('partner')); ?>",
+                        type: "error",                               
                     });
-                }
+                }  
             }
         });
     });
@@ -148,10 +145,10 @@ function delete_record(id)
 /**
  * Deletes all the selected records when clicked on DELETE SELECTED button
  */
-function delete_selected()
-{
+function delete_selected() 
+{     
     var brand_ids = [];
-
+    
     $(".checkbox:checked").each(function()
     {
         var id = $(this).attr('id');
@@ -159,16 +156,16 @@ function delete_selected()
     });
     if (brand_ids == '')
     {
-        jGrowlAlert("<?php _el('select_before_delete_alert')?>", 'danger');
+        jGrowlAlert("<?php _el('select_before_delete_alert') ?>", 'danger');
         preventDefault();
     }
     swal({
-        title: "<?php _el('multiple_deletion_alert');?>",
-        text: "<?php _el('multiple_recovery_alert');?>",
+        title: "<?php _el('multiple_deletion_alert'); ?>",
+        text: "<?php _el('multiple_recovery_alert'); ?>",
         type: "warning",
-        showCancelButton: true,
-        cancelButtonText:"<?php _el('no_cancel_it');?>",
-        confirmButtonText: "<?php _el('yes_i_am_sure');?>",
+        showCancelButton: true, 
+        cancelButtonText:"<?php _el('no_cancel_it'); ?>",
+        confirmButtonText: "<?php _el('yes_i_am_sure'); ?>", 
     },
     function()
     {
@@ -181,21 +178,21 @@ function delete_selected()
             success: function(msg)
             {
                 if (msg=="true")
-                {
-                  swal({
-                        title: "<?php _el('_deleted_successfully', _l('partners'));?>",
-                        type: "success",
+                {                     
+                  swal({                           
+                        title: "<?php _el('_deleted_successfully', _l('partners')); ?>",                    
+                        type: "success",                            
                     });
-                  $(brand_ids).each(function(index, element)
+                  $(brand_ids).each(function(index, element) 
                   {
                       $("#"+element).closest("tr").remove();
                   });
                 }
                 else
                 {
-                  swal({
-                       title: "<?php _el('access_denied', _l('partners'));?>",
-                        type: "error",
+                  swal({                            
+                       title: "<?php _el('access_denied', _l('partners')); ?>",
+                        type: "error",   
                     });
                 }
             }

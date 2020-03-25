@@ -24,7 +24,7 @@ class Vendors extends Admin_Controller
 		$this->set_page_title(_l('vendors'));
 
 		$data['vendors']      = $this->vendors->get_all();
-		$data['registration'] = $this->settings->get_by('name', 'vendor_registration');
+		$data['registration'] = $this->settings->get_by('name', 'vendors_registration');
 
 		$data['content'] = $this->load->view('admin/vendors/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
@@ -36,7 +36,6 @@ class Vendors extends Admin_Controller
 	public function delete()
 	{
 		$vendor_id = $this->input->post('vendor_id');
-
 		$deleted = $this->vendors->delete($vendor_id);
 
 		if ($deleted)
@@ -110,6 +109,7 @@ class Vendors extends Admin_Controller
 		$this->set_page_title(_l('vendors').' | '._l('details'));
 
 		$data['vendor']  = $this->vendors->get($id);
+		$this->products->order_by('name', 'ASC');
 		$data['records'] = $this->products->get_products($id);
 
 		$data['content'] = $this->load->view('admin/vendors/details', $data, TRUE);

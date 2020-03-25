@@ -22,8 +22,6 @@
 </div>
 <!-- Page header -->
 <!-- Content area -->
-
-
 <div class="content">
 <?php
 	if ($vendor) 
@@ -50,12 +48,10 @@
 									<div class="col-md-6">
 										<fieldset>
 											<legend class="text-semibold"><i class="icon-reading position-left"></i><?php _el('vendor')?> <?php _el('details')?></legend>
-
 <?php
 
 	$file = basename($vendor['profile_image']);
 ?>
-
 											<div class="form-group">
 												<label><?php _el('profile');?> <?php _el('image');?>:</label>
 										         <div>
@@ -99,10 +95,6 @@
 											</div>
 <?php
 	$readonly = '';
-	if ($vendor['id'] == get_loggedin_vendor_id()) 
-	{
-		$readonly = "readonly";
-	}
 ?>
 											<div class="form-group">
 											<label><?php _el('status');?>:</label>
@@ -110,7 +102,6 @@
 											</div>
 										</fieldset>
 									</div>
-
 									<div class="col-md-6">
 										<fieldset>
 							                <legend class="text-semibold"><i class="icon-store position-left"></i><?php _el('shop')?> <?php _el('details')?></legend>
@@ -123,7 +114,6 @@
 															 <img src="<?php echo base_url() . 'assets/Uploads/vendors/logo/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
 														</div>
 													</div>
-
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('owner');?>&nbsp<?php _el('name');?>:</label>
@@ -134,7 +124,6 @@
 														<label><?php _el('shop');?>&nbsp<?php _el('name');?>:</label>
 														<input type="text" class="form-control" placeholder="<?php _el('shop');?> <?php _el('name');?>" id="shop_name" name="shop_name" value="<?php echo ucfirst($vendor['shop_name']); ?>">
 													</div>
-
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('shop');?>&nbsp<?php _el('number');?>:</label>
@@ -145,7 +134,6 @@
 														<label><?php _el('shop');?>&nbsp<?php _el('details');?>:</label>
 														<textarea  rows="9" cols="50" class="form-control" placeholder="<?php _el('shop')?> <?php _el('details')?>" id="shop_details" name="shop_details"><?php echo ucfirst($vendor['shop_details']); ?></textarea>
 													</div>
-
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('total');?>&nbsp<?php _el('products');?>:</label>

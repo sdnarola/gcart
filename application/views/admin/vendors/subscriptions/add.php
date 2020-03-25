@@ -107,7 +107,7 @@ $("#subscription_form").validate({
         days: {
             required: true,           
         },
-        limitations: {
+        product_limit: {
             required: true,          
         },
         description: {
@@ -124,7 +124,7 @@ $("#subscription_form").validate({
         days: {
             required:"<?php _el('please_enter_', _l('days')) ?>",
         },        
-        limitations: {
+        product_limit: {
             required:"<?php _el('please_enter_', _l('limitations')) ?>",
         },
         description: {

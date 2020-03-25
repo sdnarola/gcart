@@ -55,25 +55,22 @@
                                     <?php 
                                     if($category['id']==$sub_category['category_id'])
                                         {echo ' selected';}
-                                    ?>><?php echo $category['name']?></option>
+                                    ?>><?php echo ucfirst($category['name'])?></option>
 <?php                                  
                             }
 ?> 
-                                </select>
+                               </select>
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" oninput="generate_slug();" value="<?php echo $sub_category['name'];?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" oninput="generate_slug();" value="<?php echo ucfirst($sub_category['name']);?>">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('slug'); ?>:</label>
                                 <input type="text" class="form-control" placeholder="<?php _el('slug'); ?>" id="slug" name="slug" value="<?php echo $sub_category['slug'];?>">
                             </div>
-
-
-
 <?php
                             $category = get_category($sub_category['category_id']); 
                             $readonly = '';
@@ -83,10 +80,10 @@
                                 $readonly = "readonly";
                             }
 ?>
-                        <div  class=" form-group">
-                            <label><?php _el('status');?>:</label>
-                            <input type="checkbox" onchange="change_status(this);" class="switchery" name="is_active" id="<?php echo $sub_category['id']; ?>" <?php if ($sub_category['is_active']==1) { echo "checked"; }  ?> <?php echo  $readonly; ?>>
-                        </div>
+                            <div  class=" form-group">
+                                <label><?php _el('status');?>:</label>
+                                <input type="checkbox" onchange="change_status(this);" class="switchery" name="is_active" id="<?php echo $sub_category['id']; ?>" <?php if ($sub_category['is_active']==1) { echo "checked"; }  ?> <?php echo  $readonly; ?>>
+                            </div>
 
                         </div> 
                         <div class="row">

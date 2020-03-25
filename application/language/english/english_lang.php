@@ -18,6 +18,8 @@ $lang['id']                = 'ID';
 $lang['name']              = 'Name';
 $lang['image']             = 'Image';
 $lang['tags']              = 'Tags';
+$lang['thumb_image']       = 'Thumbnail Image';
+$lang['status']            = 'Status';
 $lang['total']             = 'Total';
 $lang['value']             = 'Value';
 $lang['view_all']          = 'View All';
@@ -28,6 +30,8 @@ $lang['old_price']         = 'Old Price';
 $lang['new_price']         = 'New Price';
 $lang['active']            = 'Active';
 $lang['inactive']          = 'Inactive';
+$lang['price']             = 'Price';
+$lang['old_price']         = 'Old Price';
 $lang['description']       = 'Description';
 $lang['short_description'] = 'Short Description';
 $lang['long_description']  = 'Long Description';
@@ -44,35 +48,14 @@ $lang['close']             = 'Close';
 $lang['no_cancel_it']      = 'No, Cancel It';
 $lang['yes_i_am_sure']     = 'Yes, I am sure';
 $lang['click_to_sort']     = 'Click to sort';
-
-#Login/Logout/Sign Up/Forgot Password/Change Password/Profile
-
-$lang['welcome']         = 'Welcome';
+$lang['number']          = 'Number';
+$lang['total']           = 'Total';
 $lang['view']            = 'View';
 $lang['create']          = 'Create';
 $lang['edit']            = 'Edit';
 $lang['delete']          = 'Delete';
 $lang['delete_selected'] = 'Delete Selected';
-$lang['active']          = 'Active';
-$lang['inactive']        = 'Inactive';
-$lang['description']     = 'Description';
-$lang['created_at']      = 'Created at';
-$lang['actions']         = 'Actions';
-$lang['confirm']         = 'Confirm';
-$lang['save']            = 'Save';
-$lang['back']            = 'Back';
-$lang['close']           = 'Close';
-$lang['no_cancel_it']    = 'No, Cancel It';
-$lang['yes_i_am_sure']   = 'Yes, I am sure';
-$lang['click_to_sort']   = 'Click to sort';
-$lang['search']          = 'Search';
-$lang['id']              = 'ID';
-$lang['name']            = 'Name';
-$lang['status']          = 'Status';
-$lang['number']          = 'Number';
-$lang['total']           = 'Total';
 $lang['add_sale']        = 'Add sale';
-$lang['details']         = 'Details';
 $lang['ago']             = 'Ago';
 
 #Login/Logout/Forgot Password/Change Password/Profile
@@ -140,11 +123,9 @@ $lang['shop_number']         = 'Shop Number';
 $lang['registration_number'] = 'Registration Number';
 $lang['shop_details']        = 'Shop Details';
 $lang['edit_store']          = 'Edit Store';
-$lang['address']             = 'Address';
 $lang['owner']               = 'Owner';
 $lang['owner_name']          = 'Owner Name';
 $lang['logo']                = 'Logo';
-$lang['image']               = 'Image';
 $lang['subscription_plan']   = 'Subscription Plan';
 $lang['join_date']           = 'Joining Date';
 $lang['expired']             = 'Expired';
@@ -238,17 +219,18 @@ $lang['edit_project'] = 'Edit Project';
 
 #Categories
 #----------
-$lang['category']          = 'Category';
-$lang['categories']        = 'Categories';
-$lang['category_name']     = 'Category Name';
-$lang['add_category']      = 'Add Category';
-$lang['edit_category']     = 'Edit Category';
-$lang['slug']              = 'Slug';
-$lang['main_categories']   = 'Main Category';
-$lang['icon']              = 'Icon';
+$lang['category']      = 'Category';
+$lang['categories']    = 'Categories';
+$lang['category_name'] = 'Category Name';
+$lang['add_category']  = 'Add Category';
+$lang['edit_category'] = 'Edit Category';
+$lang['slug'] = 'Slug';
+$lang['main_categories'] = 'Main Category';
+$lang['icon'] = 'Icon';
+$lang['display'] = 'Display';
+$lang['display_header'] = 'Display Header';
 $lang['manage_categories'] = 'Manage Categories';
 $lang['main_category']     = 'Main Category';
-$lang['sub_category']      = 'Sub Category';
 
 #Sub Categories
 #----------
@@ -285,8 +267,11 @@ $lang['faq']         = 'Faq';
 $lang['faqs']        = 'Faqs';
 $lang['faq_title']   = 'Faq Title';
 $lang['faq_details'] = 'Faq Details';
-$lang['add_faq']     = 'Add Faq';
-$lang['edit_faq']    = 'Edit Faq';
+$lang['add_faq'] = 'Add Faq';
+$lang['edit_faq'] = 'Edit Faq';
+
+#news_letters subscribers
+$lang['subscribers'] = 'Subscribers';
 
 #Roles
 #-----
@@ -324,6 +309,25 @@ $lang['company_email'] = 'Company Email';
 $lang['date_time']     = 'Date & Time';
 $lang['social_media']  = 'Social Media';
 $lang['log_activity']  = 'Log Activity';
+$lang['maintenance'] = 'Maintenance';
+$lang['home_page'] = 'Home Page';
+$lang['menu_setup'] = 'Menu Setup';
+
+#Sliders
+#--------
+$lang['slider'] = 'Slider';
+$lang['sliders'] = 'Sliders';
+$lang['add_slider'] = 'Add Slider';
+$lang['edit_slider'] = 'Edit Slider';
+$lang['sub_title'] = "Sub Title";
+
+#Banners
+#--------
+$lang['banner'] = 'Banner';
+$lang['banners'] = 'Banners';
+$lang['add_banner'] = 'ADD Banners';
+$lang['edit_banner'] = 'EDIT Banners';
+$lang['no_select'] = 'No Select';
 
 #Time related
 #------------
