@@ -51,7 +51,7 @@
                                 foreach ($categories as $category) 
                                 {
 ?>
-                                    <option id="category" name="category" value="<?php echo $category['name'] ?>"><?php echo $category['name'] ?></option>
+                                    <option id="category" name="category" value="<?php echo $category['name'] ?>"><?php echo ucfirst($category['name']) ?></option>
 <?php
                                 }
 ?>

@@ -39,18 +39,18 @@ class Categories extends Admin_Controller
 
 			if($_FILES['icon']['name']!=NULL)
 			{
-				$result = upload_icon();
+				$result = upload_logo("assets/uploads/main_categories/","icon");
 
                 if (!$result)
                 {
                     redirect('admin/categories/add');
                 }
                 
-                $data['icon'] = $result['icon'];
+                $data['icon'] = $result;
 			}
 			else
 			{
-				$data['icon'] = 'C:/wamp64/www/gcart/'.'assets/uploads/main_categories/default_category.png';
+				$data['icon'] = 'assets/uploads/main_categories/default_category.png';
 			}
 
                       $insert = $this->categories->insert($data);    
@@ -63,11 +63,10 @@ class Categories extends Admin_Controller
 		}
 		else
 		{
-			$data['content'] = $this->load->view('admin/categories/add',' ', TRUE);
+			$data['content'] = $this->load->view('admin/categories/add','', TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
 	}
-
 
 	/**
 	 * edit category 
@@ -81,25 +80,29 @@ class Categories extends Admin_Controller
 			if ($this->input->post()) 
 			{
 				$data =$this->input->post(); 
+				print_r($data);
 				$data['is_active'] = ($this->input->post('is_active')) ? 1 : 0;
 				//for deactive subcategories status				
 				$status = array('is_active' => $data['is_active']);
 				$sub_categories_update = $this->sub_categories->update_subcategories_status($id, $status);
-				$upload_dir = 'C:/wamp64/www/gcart/'.'assets/uploads/main_categories/';
+				$upload_dir = 'assets/uploads/main_categories/';
 
 				if($_FILES['icon']['name']!=NULL)
 				{
-					$result = upload_icon();
+					$result = upload_logo('assets/uploads/main_categories/','icon');
 
 	                if (!$result)
 	                {
 	                    redirect('admin/categories/edit/'.$id);
 	                }
 	                
-	                $data['icon'] = $result['icon'];
+	                $data['icon'] = $result;
 	                //for unlink image from folder
 	                $old_upload_image = $this->categories->get($id);
-					unlink($old_upload_image['icon']);
+	                if(basename($old_upload_image['icon']) != 'default_category.png')
+					{
+						unlink($old_upload_image['icon']);
+					}
 				}
 
 				$result = $this->categories->update($id,$data);
@@ -110,7 +113,6 @@ class Categories extends Admin_Controller
 			else 
 			 {
 				$data['category'] = $this->categories->get($id);
-				
 				$data['content'] = $this->load->view('admin/categories/edit',$data, TRUE);
 				$this->load->view('admin/layouts/index', $data);
 			}	
@@ -123,31 +125,16 @@ class Categories extends Admin_Controller
 	public function delete() 
 	{
 		$category_id = $this->input->post('category_id');
+		//in soft delete move image to deleted folder
+		$old_upload_image = $this->categories->get($category_id);
+		$imagepath = $old_upload_image['icon'];
+		$newpath = 'assets/uploads/main_categories/deleted/'.basename($imagepath);
 
-		$deleted = $this->categories->delete($category_id);
-		$deleted_sub_categories = $this->sub_categories->delete_sub_categories($category_id);
-	
-		if ($deleted==1 && $deleted_sub_categories==1) 
+		if(basename($imagepath) != 'default_category.png')
 		{
-			echo 'true';
-		} 
-		else 
-		{
-			echo 'false';
+			$copied = copy($imagepath , $newpath);
+			unlink($imagepath);
 		}
-
-	}
-
-	/**
-	 * Get sub categories of parent category.
-	 *
-	 * @param  int  	$id  	Id of parent category.
-	 *
-	 * @return mixed 			array of json-data
-	 */
-	public function get_sub_categories($id)
-	{
-		$category_id = $this->input->post('category_id');
 
 		$deleted = $this->categories->delete($category_id);
 		$deleted_sub_categories = $this->sub_categories->delete_sub_categories($category_id);
@@ -170,6 +157,20 @@ class Categories extends Admin_Controller
 	{
 		$where = $this->input->post('ids');
 
+		$data= $this->categories->get_many($where);
+		
+		foreach($data as $record)
+		{
+			$imagepath = $record['icon'];
+			$newpath = 'assets/uploads/main_categories/deleted/'.basename($imagepath);
+
+			if(basename($imagepath) != 'default_category.png')
+			{
+			$copied = copy($imagepath , $newpath);
+			unlink($imagepath);
+			}
+		}
+
 		$deleted = $this->categories->delete_many($where);
 		$deleted_sub_categories = $this->sub_categories->multi_delete_sub_categories($where);
 
@@ -185,7 +186,6 @@ class Categories extends Admin_Controller
 
 	}
 
-	
 	/**
 	 * Toggles the category status to Active or Inactive
 	*/
@@ -195,9 +195,8 @@ class Categories extends Admin_Controller
 		$data = array('is_active' => $this->input->post('is_active'));
 
 		$update = $this->categories->update($category_id, $data);
-		$sub_categories_update = $this->sub_categories->update_subcategories_status($category_id, $data);
 
-		if ($update==1 and $sub_categories_update ==1) 
+		if ($update==1) 
 		{
 
 			if ($this->input->post('is_active') == 1) 
@@ -212,7 +211,28 @@ class Categories extends Admin_Controller
 		}
 
 	}	
+
+	// =========================== Bhavik ==================================//
+
+	 /* Get sub categories of parent category.
+	 *
+	 * @param  int  	$id  	Id of parent category.
+	 *
+	 * @return mixed 			array of json-data
+	 */
+	public function get_sub_categories($id)
+	{
+		$data = $this->categories->get_sub_categories($id);
+		echo json_encode($data);
+	}
+
+// =========================== Bhavik ==================================//
 }
 
 	
+	
+
+
+
+
 	

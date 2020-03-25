@@ -26,7 +26,6 @@
         <div class="panel-heading mt-20">
             <div class="heading-elements">
                 <a href="<?php echo base_url('admin/categories/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new'); ?><i class="icon-plus-circle2 position-right"></i></a>
-
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected'); ?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
@@ -39,9 +38,9 @@
                         <th width="2%">
                             <input type="checkbox" name="select_all" id="select_all" class="styled"  onclick="select_all(this);" >
                         </th>
-                        <th width="30%" ><?php _el('name'); ?></th>
-                        <th width="30%" ><?php _el('slug'); ?></th>
-                        <th width="8%" class="text-center"><?php _el('status'); ?></th>
+                        <th width="40%" ><?php _el('name'); ?></th>
+                        <th width="40%" ><?php _el('slug'); ?></th>
+                        <th width="10%" class="text-center"><?php _el('status'); ?></th>
                         <th width="8%" class="text-center"><?php _el('actions') ?></th>
                     </tr>
                 </thead>
@@ -56,7 +55,7 @@
                         </td>
                         <td ><?php echo ucfirst($category['name']); ?></td>
                         <td >
-                            <?php echo ucfirst($category['slug']); ?>
+                            <?php echo $category['slug']; ?>
                         </td>
 <?php
                  $readonly_status = '';
@@ -87,7 +86,6 @@
 
 <script type="text/javascript">
 $(function() {
-
     $('#categories_table').DataTable({        
         'columnDefs': [ {
         'targets': [0,3,4], /* column index */

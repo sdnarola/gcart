@@ -303,3 +303,34 @@ function log_activity($description, $user_id = '')
 		$CI->activity_log->insert($data);
 	}
 }
+	/**
+ * Uploads a logo.
+ *
+ * @return     array  ( returns uploaded data path else return error )
+ */
+function upload_logo($path, $fieldname)
+{
+	$CI = &get_instance();
+
+	$config['upload_path']   = $path;
+	$config['allowed_types'] = 'gif|jpg|png|jpeg';
+	$config['max_size']      = 1000;
+	$config['file_name']     = time().'-'.$_FILES[$fieldname]['name'];
+
+	$CI->upload->initialize($config);
+
+	if (!$CI->upload->do_upload($fieldname))
+	{
+		$error = array('error' => $CI->upload->display_errors());
+		set_alert('danger', ucwords($error['error']));
+
+		return false;
+	}
+
+	$uploadData = $CI->upload->data();
+
+	$data = $config['upload_path'].$uploadData['file_name'];
+
+	return $data;
+}
+
