@@ -195,9 +195,8 @@ class Categories extends Admin_Controller
 		$data = array('is_active' => $this->input->post('is_active'));
 
 		$update = $this->categories->update($category_id, $data);
-		$sub_categories_update = $this->sub_categories->update_subcategories_status($category_id, $data);
-
-		if ($update==1 and $sub_categories_update ==1) 
+		
+		if ($update==1) 
 		{
 
 			if ($this->input->post('is_active') == 1) 

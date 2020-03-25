@@ -36,6 +36,26 @@ class Vendors extends Admin_Controller
 	public function delete()
 	{
 		$vendor_id = $this->input->post('vendor_id');
+
+		$vendor = $this->vendors->get($vendor_id);
+		$imagepath = $vendor['profile_image'];
+		$newpath = 'assets/uploads/vendors/profile/deleted/'.basename($imagepath);
+
+		$logopath = $vendor['logo'];
+		$new_logopath = 'assets/uploads/vendors/logo/deleted/'.basename($logopath);
+
+		if(basename($imagepath) != 'default_img.png')
+		{
+			$copied = copy($imagepath , $newpath);
+			unlink($imagepath);
+		} 
+
+		if(basename($logopath) != 'default_logo.png')
+		{
+			$copied = copy($logopath , $new_logopath);
+			unlink($logopath);
+		} 
+
 		$deleted = $this->vendors->delete($vendor_id);
 
 		if ($deleted)
@@ -54,6 +74,29 @@ class Vendors extends Admin_Controller
 	public function delete_multiple()
 	{
 		$where = $this->input->post('ids');
+
+		$data= $this->vendors->get_many($where);
+		
+		foreach($data as $record)
+		{
+			$imagepath = $record['profile_image'];
+			$newpath = 'assets/uploads/vendors/profile/deleted/'.basename($imagepath);
+			$logopath = $record['logo'];
+			$new_logopath = 'assets/uploads/vendors/logo/deleted/'.basename($logopath);
+
+			if(basename($imagepath) != 'default_img.png')
+			{
+				$copied = copy($imagepath , $newpath);
+				unlink($imagepath);
+			}
+
+			if(basename($logopath) != 'default_logo.png')
+			{
+				$copied = copy($logopath , $new_logopath);
+				unlink($logopath);
+			} 
+		}
+
 
 		$deleted = $this->vendors->delete_many($where);
 
