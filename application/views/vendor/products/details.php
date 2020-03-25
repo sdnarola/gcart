@@ -41,14 +41,6 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-2">
-
-
-
-
-
-
-
-
                             <div class="thumbnail">
                                 <div class="thumb">
                                     <img src="<?php echo base_url().$product['thumb_image']; ?>">

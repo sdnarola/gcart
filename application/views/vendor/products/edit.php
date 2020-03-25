@@ -47,7 +47,7 @@
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name');?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" value="<?php echo ucwords($product['name']); ?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" value="<?php echo $product['name']; ?>">
                             </div>
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
