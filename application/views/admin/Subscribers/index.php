@@ -27,19 +27,20 @@
                 <thead>
                     <tr>
                         <th width="30%" ><?php _el('email');?></a></th>
-                        <th width="30%" ><?php _el('join_date');?></th>
+                        <th width="30%" ><?php _el('subscribe_date');?></th>
                     </tr>
                 </thead>
                 <tbody>
 <?php
-            if ($subscribers != ' ') 
-            {
-                foreach ($subscribers as $subscriber) 
-                {
-?>
+
+	if ($subscribers != ' ')
+	{
+		foreach ($subscribers as $subscriber)
+		{
+		?>
                     <tr>
                         <td>
-                         <a href="mailto:<?php echo $subscriber['email']?> ?>"><?php echo $subscriber['email']?></a>    
+                         <a href="mailto:<?php echo $subscriber['email'] ?> ?>"><?php echo $subscriber['email'] ?></a>
                         </td>
 
                         <td>
@@ -47,8 +48,9 @@
                         </td>
                     </tr>
 <?php
-                }
-            }
+	}
+	}
+
 ?>
                 </tbody>
             </table>

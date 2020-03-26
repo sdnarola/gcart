@@ -3,20 +3,22 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('edit_sub_category'); ?></span>
+                <span class="text-semibold"><?php _el('edit_sub_category');?></span>
             </h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
+                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('categories'); ?></li>
-             <li>
-                <a href="<?php echo base_url('admin/sub_categories'); ?>"><?php _el('sub_categories'); ?></a>
+            <li>
+                <a href="<?php echo base_url('admin/categories'); ?>"><?php _el('categories');?></a>
             </li>
-            <li class="active"><?php _el('edit'); ?></li>
+            <li>
+                <a href="<?php echo base_url('admin/sub_categories'); ?>"><?php _el('sub_categories');?></a>
+            </li>
+            <li class="active"><?php _el('edit');?></li>
         </ul>
     </div>
 </div>
@@ -32,7 +34,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('sub_category'); ?></strong>
+                                <strong><?php _el('sub_category');?></strong>
                             </h5>
                         </div>
                     </div>
@@ -40,52 +42,64 @@
                 <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
-                    <form action="<?php echo base_url('admin/sub_categories/edit/'). $sub_category['id']; ?>" id="categories_form" method="POST" enctype="multipart/form-data">
+                    <form action="<?php echo base_url('admin/sub_categories/edit/').$sub_category['id']; ?>" id="categories_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
                               <label>category name</label>
                               <select class="select-search" name="category_id" id="category_id">
 <?php
-                            $categories = get_all_categories();
-                            foreach ($categories as $category ) 
-                            {
+	$categories = get_all_categories();
+
+	foreach ($categories as $category)
+	{
+	?>
+                                    <option id="<?php echo $category['id'] ?>" name="category" value="<?php echo $category['id']; ?>"
+                                    <?php
+
+                                    		if ($category['id'] == $sub_category['category_id'])
+                                    		{
+                                    			echo ' selected';}
+
+                                    	?>><?php echo ucfirst($category['name']) ?></option>
+<?php
+	}
+
 ?>
-                                    <option id="<?php echo $category['id']?>" name="category" value="<?php echo $category['id'];?>"
-                                    <?php 
-                                    if($category['id']==$sub_category['category_id'])
-                                        {echo ' selected';}
-                                    ?>><?php echo ucfirst($category['name'])?></option>
-<?php                                  
-                            }
-?> 
                                </select>
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('name'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" oninput="generate_slug();" value="<?php echo ucfirst($sub_category['name']);?>">
+                                <label><?php _el('name');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" oninput="generate_slug();" value="<?php echo ucfirst($sub_category['name']); ?>">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('slug'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('slug'); ?>" id="slug" name="slug" value="<?php echo $sub_category['slug'];?>">
+                                <label><?php _el('slug');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('slug');?>" id="slug" name="slug" value="<?php echo $sub_category['slug']; ?>">
                             </div>
 <?php
-                            $category = get_category($sub_category['category_id']); 
-                            $readonly = '';
+	$category = get_category($sub_category['category_id']);
+	$readonly = '';
 
-                            if($category['is_active'] == 0)
-                            {
-                                $readonly = "readonly";
-                            }
+	if ($category['is_active'] == 0)
+	{
+		$readonly = 'readonly';
+	}
+
 ?>
                             <div  class=" form-group">
                                 <label><?php _el('status');?>:</label>
-                                <input type="checkbox" onchange="change_status(this);" class="switchery" name="is_active" id="<?php echo $sub_category['id']; ?>" <?php if ($sub_category['is_active']==1) { echo "checked"; }  ?> <?php echo  $readonly; ?>>
+                                <input type="checkbox" onchange="change_status(this);" class="switchery" name="is_active" id="<?php echo $sub_category['id']; ?>"<?php
+
+	if ($sub_category['is_active'] == 1)
+	{
+		echo 'checked';}
+
+?><?php echo $readonly; ?>>
                             </div>
 
-                        </div> 
+                        </div>
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <div class="pull-right">
@@ -96,7 +110,7 @@
                         </div>
                     </form>
                 </div>
-                <!-- /Panel body -->    
+                <!-- /Panel body -->
             </div>
             <!-- /Panel -->
             </div>
@@ -118,10 +132,10 @@ $("#categories_form").validate({
     },
     messages: {
         name: {
-            required:"<?php _el('please_enter_', _l('name')) ?>"
+            required:"<?php _el('please_enter_', _l('name'))?>"
         },
         slug:{
-            required:"<?php _el('please_enter_', _l('slug')) ?>"
+            required:"<?php _el('please_enter_', _l('slug'))?>"
         },
     }
 });
@@ -131,12 +145,12 @@ $("#categories_form").validate({
  */
 function generate_slug()
 {
-    var str = document.getElementById('name').value; 
+    var str = document.getElementById('name').value;
     var slug = '';
     var trimmed = $.trim(str);
     slug = trimmed.replace(/[^a-z0-9&-]/gi, '-').
     replace(/[&]/g,'and').
-    replace(/-+/g, '-').   
+    replace(/-+/g, '-').
     replace(/^-|-$/g, '');
 
     var slug = slug.toLowerCase();

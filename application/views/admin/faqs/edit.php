@@ -3,19 +3,19 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('edit_faq'); ?></span>
+                <span class="text-semibold"><?php _el('edit_faq');?></span>
             </h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
+                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
             <li>
-                <a href="<?php echo base_url('admin/faq'); ?>"><?php _el('faq');?></a>
+                <a href="<?php echo base_url('admin/faqs'); ?>"><?php _el('faq');?></a>
             </li>
-            <li class="active"><?php _el('edit'); ?></li>
+            <li class="active"><?php _el('edit');?></li>
         </ul>
     </div>
 </div>
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('faq'); ?></strong>
+                                <strong><?php _el('faq');?></strong>
                             </h5>
                         </div>
                     </div>
@@ -39,22 +39,22 @@
                 <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
-                     <form action="<?php echo base_url('admin/faqs/edit/'). $faq['id']; ?>" id="faq_form" method="POST" enctype="multipart/form-data">
+                     <form action="<?php echo base_url('admin/faqs/edit/').$faq['id']; ?>" id="faq_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('title'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('title'); ?>" id="title" name="title" value="<?php echo ucfirst($faq['question'])?>">
+                                <label><?php _el('title');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('title');?>" id="title" name="title" value="<?php echo ucfirst($faq['question']) ?>">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('description'); ?>:</label>
+                                <label><?php _el('description');?>:</label>
                                <textarea name="details"  id="details" cols="18" rows="18" class="wysihtml5 wysihtml5-min form-control" placeholder="<?php _el('description')?>">
-                                <?php echo ucfirst($faq['answer']);?>
+                                <?php echo ucfirst($faq['answer']); ?>
                                 </textarea>
-                               <label id="details-error" class="validation-error-label" for="details"></label>  
+                               <label id="details-error" class="validation-error-label" for="details"></label>
                             </div>
-                        </div> 
+                        </div>
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <div class="pull-right">
@@ -65,10 +65,10 @@
                         </div>
                     </form>
                 </div>
-                <!-- /Panel body -->    
+                <!-- /Panel body -->
             </div>
             <!-- /Panel -->
-            </div>    
+            </div>
   </div>
 <!-- /Content area -->
 
@@ -89,10 +89,10 @@ $("#faq_form").validate({
     },
     messages: {
        title: {
-            required:"<?php _el('please_enter_', _l('title')) ?>"
+            required:"<?php _el('please_enter_', _l('title'))?>"
         },
          details: {
-            required:"<?php _el('please_enter_', _l('details')) ?>"
+            required:"<?php _el('please_enter_', _l('details'))?>"
         },
     }
 });

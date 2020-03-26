@@ -3,27 +3,29 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('add'); ?> <?php _el('subscription')?></span>
+                <span class="text-semibold"><?php _el('add');?><?php _el('subscription')?></span>
             </h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
+                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('vendors'); ?></li>
-             <li>
-                <a href="<?php echo base_url('admin/subscriptions'); ?>"><?php _el('subscriptions'); ?></a>
+            <li>
+                <a href="<?php echo base_url('admin/vendors'); ?>"><?php _el('vendors');?></a>
             </li>
-            <li class="active"><?php _el('add'); ?></li>
+            <li>
+                <a href="<?php echo base_url('admin/subscriptions'); ?>"><?php _el('subscriptions');?></a>
+            </li>
+            <li class="active"><?php _el('add');?></li>
         </ul>
     </div>
 </div>
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
-   
+
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
             <!-- Panel -->
@@ -33,7 +35,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('subscription'); ?></strong>
+                                <strong><?php _el('subscription');?></strong>
                             </h5>
                         </div>
                     </div>
@@ -46,33 +48,33 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('title'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('title'); ?>" id="title" name="title">
+                                <label><?php _el('title');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('title');?>" id="title" name="title">
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('cost'); ?>:</label>
-                                    <input type="number" class="form-control" placeholder="<?php _el('cost'); ?>" id="cost" name="cost">
+                                    <label><?php _el('cost');?>:</label>
+                                    <input type="number" class="form-control" placeholder="<?php _el('cost');?>" id="cost" name="cost">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('days'); ?>:</label>
-                                    <input type="number" class="form-control" placeholder="<?php _el('days'); ?>" id="days" name="days" >
+                                    <label><?php _el('days');?>:</label>
+                                    <input type="number" class="form-control" placeholder="<?php _el('days');?>" id="days" name="days" >
                                 </div>
                                 <div class="form-group col-md-4">
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('product'); ?> <?php _el('limitations'); ?>:</label>
-                                    <input type="number" class="form-control" placeholder="<?php _el('limitations'); ?>" id="product_limit" name="product_limit">
+                                    <label><?php _el('product');?><?php _el('limitations');?>:</label>
+                                    <input type="number" class="form-control" placeholder="<?php _el('limitations');?>" id="product_limit" name="product_limit">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div>
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('description'); ?>:</label>
+                                    <label><?php _el('description');?>:</label>
                                 </div>
                                 <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"></textarea>
-                                
+
                             </div>
                         </div>
 
@@ -87,7 +89,7 @@
                     </div>
                     </form>
                 </div>
-                <!-- /Panel body -->	
+                <!-- /Panel body -->
             </div>
             <!-- /Panel -->
             </div>
@@ -105,10 +107,10 @@ $("#subscription_form").validate({
             required: true,
         },
         days: {
-            required: true,           
+            required: true,
         },
         product_limit: {
-            required: true,          
+            required: true,
         },
         description: {
             required: true,
@@ -116,21 +118,21 @@ $("#subscription_form").validate({
     },
     messages: {
         title: {
-            required:"<?php _el('please_enter_', _l('title')) ?>",
+            required:"<?php _el('please_enter_', _l('title'))?>",
         },
         cost: {
-            required:"<?php _el('please_enter_', _l('cost')) ?>",
+            required:"<?php _el('please_enter_', _l('cost'))?>",
         },
         days: {
-            required:"<?php _el('please_enter_', _l('days')) ?>",
-        },        
+            required:"<?php _el('please_enter_', _l('days'))?>",
+        },
         product_limit: {
-            required:"<?php _el('please_enter_', _l('limitations')) ?>",
+            required:"<?php _el('please_enter_', _l('limitations'))?>",
         },
         description: {
-            required:"<?php _el('please_enter_', _l('description')) ?>",
-        }, 
+            required:"<?php _el('please_enter_', _l('description'))?>",
+        },
     },
-}); 
-    	
+});
+
 </script>

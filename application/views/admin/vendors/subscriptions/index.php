@@ -12,7 +12,9 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('vendors');?></li>
+            <li>
+                <a href="<?php echo base_url('admin/vendors'); ?>"><?php _el('vendors');?></a>
+            </li>
             <li class="active"><?php _el('subscriptions');?></li>
         </ul>
     </div>
@@ -26,7 +28,7 @@
         <!-- Panel heading -->
         <div class="panel-heading mt-20">
           <div class="heading-elements">
-            <a href="<?php echo base_url('admin/subscriptions/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new'); ?><i class="icon-plus-circle2 position-right"></i></a> 
+            <a href="<?php echo base_url('admin/subscriptions/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new');?><i class="icon-plus-circle2 position-right"></i></a>
             <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
         </div>
     </div>
@@ -40,24 +42,25 @@
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                         </th>
-                        <th width="45%" ><?php _el('title');?></th>
+                        <th width="40%" ><?php _el('title');?></th>
                         <th width="15%" ><?php _el('cost');?></th>
                         <th width="15%" ><?php _el('duration');?>(<?php _el('days');?>)</th>
-                        <th width="15%" ><?php _el('product'); ?> <?php  _el('allowed'); ?></th>
+                        <th width="20%" ><?php _el('product');?><?php _el('allowed');?></th>
                         <th width="8%" class="text-center"><?php _el('actions');?></th>
                     </tr>
                 </thead>
                 <tbody>
 <?php
-if ($plans != " ") 
-{
-    foreach($plans as $plan) 
-    {
-        ?>
+
+	if ($plans)
+	{
+		foreach ($plans as $plan)
+		{
+		?>
                     <tr >
 
-                         <td>
-                            <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $plan['id'];?>" >
+                        <td class="text-center">
+                            <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $plan['id']; ?>" >
                         </td>
                         <td>
                             <?php echo ucfirst($plan['title']); ?>
@@ -73,15 +76,16 @@ if ($plans != " ")
                         </td>
                         <td class="text-center">
 
-                          <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/subscriptions/edit/') . $plan['id']; ?>" id="<?php echo $plan['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
+                          <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/subscriptions/edit/').$plan['id']; ?>" id="<?php echo $plan['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $plan['id']; ?>);" class="text-danger" id="<?php echo $plan['id']; ?>"><i class=" icon-trash"></i></a>
 
                         </td>
                     </tr>
 <?php
-    }
-} 
+	}
+	}
+
 ?>
        </tbody>
             </table>

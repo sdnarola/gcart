@@ -12,8 +12,10 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('categories');?></li>
-             <li>
+            <li>
+                <a href="<?php echo base_url('admin/categories'); ?>"><?php _el('categories');?></a>
+            </li>
+            <li>
                 <a href="<?php echo base_url('admin/sub_categories'); ?>"><?php _el('sub_categories');?></a>
             </li>
             <li class="active"><?php _el('add');?></li>
@@ -47,13 +49,15 @@
                               <label>category name</label>
                               <select class="select-search" name="category_name" id="category_name">
 <?php
-                                $categories = get_all_categories();
-                                foreach ($categories as $category) 
-                                {
-?>
+	$categories = get_all_categories();
+
+	foreach ($categories as $category)
+	{
+	?>
                                     <option id="category" name="category" value="<?php echo $category['name'] ?>"><?php echo ucfirst($category['name']) ?></option>
 <?php
-                                }
+	}
+
 ?>
                                 </select>
                             </div>

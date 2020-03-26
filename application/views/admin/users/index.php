@@ -34,33 +34,36 @@
                     <tr>
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
-                      
+
                         </th>
                         <th width="30%" ><?php _el('name');?></a></th>
                         <th width="30%" ><?php _el('email');?></th>
                         <th width="20%" ><?php _el('mobile_no');?></th>
-                        <th width="10%" class="text-center"><?php _el('status');?></th>
-                        <th width="8%" class="text-center"><?php _el('actions');?></th>
+                        <th width="8%" class="text-center"><?php _el('status');?></th>
+                        <th width="10%" class="text-center"><?php _el('actions');?></th>
 
                     </tr>
                 </thead>
                 <tbody>
 <?php
 
-if ($users != ' ') 
-{
-    foreach ($users as $user) 
-    {
-?>
+	if ($users != ' ')
+	{
+		foreach ($users as $user)
+		{
+		?>
                     <tr>
                         <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php
-if ($user->id != get_loggedin_info('user_id')) {
-            echo $user->id;}
-        ?>">
+
+                                                                                               			if ($user->id != get_loggedin_info('user_id'))
+                                                                                               			{
+                                                                                               				echo $user->id;}
+
+                                                                                               		?>">
                         </td>
                         <td>
-                            <?php echo ucfirst($user->firstname) . '&nbsp;' . ucfirst($user->lastname); ?>
+                            <?php echo ucfirst($user->firstname).'&nbsp;'.ucfirst($user->lastname); ?>
                         </td>
                         <td>
                             <a href="mailto:<?php echo $user->email; ?>"><?php echo $user->email; ?></a>
@@ -71,21 +74,24 @@ if ($user->id != get_loggedin_info('user_id')) {
                         <td class="text-center switchery-sm">
                             <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $user->id; ?>"
 <?php
-if ($user->is_active == 1) 
-{
-            echo 'checked';
-}
-?>>
+
+			if ($user->is_active == 1)
+			{
+				echo 'checked';
+			}
+
+		?>>
                         </td>
                         <td class="text-center">
-                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/') . $user->id; ?> " class="text-slate" id="<?php echo $user->id; ?>" ><i class="icon-info3"></i></a>
-                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/') . $user->id; ?>" id="<?php echo $user->id; ?>" class="text-info"><i class="icon-pencil7"></i></a>
+                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/').$user->id; ?> " class="text-slate" id="<?php echo $user->id; ?>" ><i class="icon-info3"></i></a>
+                            <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/').$user->id; ?>" id="<?php echo $user->id; ?>" class="text-info"><i class="icon-pencil7"></i></a>
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $user->id; ?>);" class="text-danger" id="<?php echo $user->id; ?>"><i class=" icon-trash"></i></a>
                         </td>
                     </tr>
 <?php
-    }
-}
+	}
+	}
+
 ?>
                 </tbody>
             </table>

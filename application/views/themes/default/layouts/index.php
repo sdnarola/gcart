@@ -8,7 +8,7 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title>GCART</title>
+<title><?php echo $this->page_title; ?></title>
 
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">

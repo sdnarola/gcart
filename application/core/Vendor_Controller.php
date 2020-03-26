@@ -14,6 +14,11 @@ class Vendor_Controller extends My_Controller
 
 		$this->load->model('setting_model', 'settings');
 
+		if (get_settings('maintenance') == 1)
+		{
+			redirect(site_url('authentication/maintenance'));
+		}
+
 /* If user is not logged in, redirect to the vendor login page */
 		if (!is_vendor_logged_in())
 		{

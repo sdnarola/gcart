@@ -249,6 +249,7 @@ switches.forEach(function(html) {
 		jGrowlAlert("<?php echo $this->session->flashdata($alert_class) ?>",'<?php echo $alert_class; ?>');
 <?php
 	}
+
 ?>
 
 });
@@ -368,19 +369,6 @@ switches.forEach(function(html) {
 										<li
 										<?php
 
-											if (is_active_controller('subscriptions'))
-											{
-												echo 'class="active"';}
-
-										?>
-										 >
-											<a href="<?php echo base_url('admin/subscriptions'); ?>">
-												<span><?php _el('subscriptions')?></span>
-											</a>
-										</li>
-										<li
-										<?php
-
 											if (is_active_controller('vendors'))
 											{
 												echo 'class="active"';}
@@ -389,6 +377,19 @@ switches.forEach(function(html) {
 										 >
 											<a href="<?php echo base_url('admin/vendors'); ?>">
 												<span><?php _el('list')?></span>
+											</a>
+										</li>
+										<li
+										<?php
+
+											if (is_active_controller('subscriptions'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('admin/subscriptions'); ?>">
+												<span><?php _el('subscriptions')?></span>
 											</a>
 										</li>
 									</ul>
@@ -518,6 +519,7 @@ switches.forEach(function(html) {
 										if (is_active_controller('faqs'))
 										{
 											echo 'class="active"';}
+
 									?>
 									>
 									<a href="<?php echo base_url('admin/faqs'); ?>"><i class="icon-question3"></i> <span>FAQ</span></a>
@@ -529,9 +531,10 @@ switches.forEach(function(html) {
 										if (is_active_controller('subscribers'))
 										{
 											echo 'class="active"';}
+
 									?>
 									>
-									<a href="<?php echo base_url('admin/subscribers'); ?>"><i class=" icon-users4"></i> <span><?php _el('subscribers') ?></span></a>
+									<a href="<?php echo base_url('admin/subscribers'); ?>"><i class=" icon-users4"></i> <span><?php _el('subscribers')?></span></a>
 								</li>
 								<!-- settings -->
 								<li>
@@ -581,19 +584,21 @@ switches.forEach(function(html) {
 													</li>
 												</ul>
 										</li>
-										<li 
-										<?php 
-											if (is_active_controller('emails')) 
-												{
-													echo 'class="active"';}
-												?> 
+										<li
+										<?php
+
+											if (is_active_controller('emails'))
+											{
+												echo 'class="active"';}
+
+										?>
 												>
 												<a href="<?php echo base_url('admin/emails'); ?>">
 												<span>Email Templates</span>
 												</a>
 										</li>
-									
-										
+
+
 
 										<li
 										<?php

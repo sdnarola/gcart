@@ -3,20 +3,19 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('add_category'); ?></span>
+                <span class="text-semibold"><?php _el('add_category');?></span>
             </h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
+                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('categories'); ?></li>
-             <li>
-                <a href="<?php echo base_url('admin/categories'); ?>"><?php _el('main_categories'); ?></a>
+            <li>
+                <a href="<?php echo base_url('admin/categories'); ?>"><?php _el('categories');?></a>
             </li>
-            <li class="active"><?php _el('add'); ?></li>
+            <li class="active"><?php _el('add');?></li>
         </ul>
     </div>
 </div>
@@ -32,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('category'); ?></strong>
+                                <strong><?php _el('category');?></strong>
                             </h5>
                         </div>
                     </div>
@@ -50,32 +49,34 @@
                               <label>banner name</label>
                               <select class="select-search" name="banner_id" id="banner_id">
 <?php
-                                $banners = get_banners();
-                                foreach ($banners as $banner) 
-                                {
-?>
+	$banners = get_banners();
+
+	foreach ($banners as $banner)
+	{
+	?>
                                     <option id="$banner['id']" name="banner" value="<?php echo $banner['id'] ?>"><?php echo ucfirst($banner['title']) ?></option>
 <?php
-                                }
+	}
+
 ?>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('name'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="category_name" name="name" oninput="generate_slug();">
+                                <label><?php _el('name');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="category_name" name="name" oninput="generate_slug();">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('slug'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('slug'); ?>" id="slug" name="slug">
+                                <label><?php _el('slug');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('slug');?>" id="slug" name="slug">
                             </div>
-                           
+
                             <div class="form-group">
-                                <label><?php _el('icon'); ?>:</label>
+                                <label><?php _el('icon');?>:</label>
                                 <input type="file"  class="file-input"  name="icon" id='icon'>
                             </div>
-                        </div> 
+                        </div>
                           <div class="row">
                             <div class="form-group col-md-12">
                                 <div class="pull-right">
@@ -86,7 +87,7 @@
                         </div>
                     </form>
                 </div>
-                <!-- /Panel body -->    
+                <!-- /Panel body -->
             </div>
             <!-- /Panel -->
             </div>
@@ -106,10 +107,10 @@ $("#categories_form").validate({
     },
     messages: {
         name: {
-            required:"<?php _el('please_enter_', _l('name')) ?>"
+            required:"<?php _el('please_enter_', _l('name'))?>"
         },
         slug:{
-            required:"<?php _el('please_enter_', _l('slug')) ?>"
+            required:"<?php _el('please_enter_', _l('slug'))?>"
         },
     }
 });
@@ -135,19 +136,19 @@ $('.file-input').fileinput({
             "</div>"
         },
         initialCaption: "No file selected",
-    }); 
+    });
 
 /**
  *  generate a slug from caegory_name
  */
 function generate_slug()
 {
-    var str = document.getElementById('category_name').value; 
+    var str = document.getElementById('category_name').value;
     var slug = '';
     var trimmed = $.trim(str);
     slug = trimmed.replace(/[^a-z0-9&-]/gi, '-').
     replace(/[&]/g,'and').
-    replace(/-+/g, '-').   
+    replace(/-+/g, '-').
     replace(/^-|-$/g, '');
 
     var slug = slug.toLowerCase();

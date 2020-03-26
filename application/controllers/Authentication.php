@@ -7,6 +7,11 @@ class Authentication extends My_Controller
 		parent::__construct();
 		$this->load->model('Authentication_model');
 		$this->load->model('User_model', 'users');
+
+		if (get_settings('maintenance') != 1)
+		{
+			redirect(site_url());
+		}
 	}
 
 	/**
@@ -16,6 +21,15 @@ class Authentication extends My_Controller
 	public function index()
 	{
 		$this->login();
+	}
+
+	/**
+	 * Loads Maintenance page.
+	 */
+	public function maintenance()
+	{
+		$this->set_page_title(_l('maintenance'));
+		$this->load->view('themes/default/maintenance');
 	}
 
 	/**

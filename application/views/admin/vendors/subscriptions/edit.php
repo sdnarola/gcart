@@ -3,20 +3,22 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('edit'); ?> <?php _el('subscription')?></span>
+                <span class="text-semibold"><?php _el('edit');?><?php _el('subscription')?></span>
             </h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li>
-                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
+                <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('vendors'); ?></li>
-             <li>
-                <a href="<?php echo base_url('admin/subscriptions'); ?>"><?php _el('subscriptions'); ?></a>
+            <li>
+                <a href="<?php echo base_url('admin/vendors'); ?>"><?php _el('vendors');?></a>
             </li>
-            <li class="active"><?php _el('edit'); ?></li>
+            <li >
+                <a href="<?php echo base_url('admin/subscriptions'); ?>"><?php _el('subscriptions');?></a>
+            </li>
+            <li class="active"><?php _el('edit');?></li>
         </ul>
     </div>
 </div>
@@ -32,7 +34,7 @@
                     <div class="row">
                         <div class="col-md-10">
                             <h5 class="panel-title">
-                                <strong><?php _el('subscription'); ?></strong>
+                                <strong><?php _el('subscription');?></strong>
                             </h5>
                         </div>
                     </div>
@@ -40,38 +42,38 @@
                 <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
-                    <form action="<?php echo base_url('admin/subscriptions/edit/'). $plan['id']; ; ?>" id="subscription_form" method="POST">
+                    <form action="<?php echo base_url('admin/subscriptions/edit/').$plan['id']; ?>" id="subscription_form" method="POST">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('title'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('title'); ?>" id="title" name="title" value="<?php echo $plan['title'];?>">
+                                <label><?php _el('title');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('title');?>" id="title" name="title" value="<?php echo $plan['title']; ?>">
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('cost'); ?>:</label>
-                                    <input type="number" class="form-control" placeholder="<?php _el('cost'); ?>" id="cost" name="cost" value="<?php echo $plan['cost'];?>">
+                                    <label><?php _el('cost');?>:</label>
+                                    <input type="number" class="form-control" placeholder="<?php _el('cost');?>" id="cost" name="cost" value="<?php echo $plan['cost']; ?>">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('days'); ?>:</label>
-                                    <input type="number" class="form-control" placeholder="<?php _el('days'); ?>" id="days" name="days" value="<?php echo $plan['days'];?>">
+                                    <label><?php _el('days');?>:</label>
+                                    <input type="number" class="form-control" placeholder="<?php _el('days');?>" id="days" name="days" value="<?php echo $plan['days']; ?>">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('product'); ?> <?php _el('limitations'); ?>:</label>
-                                    <input type="number" class="form-control" placeholder="<?php _el('limitations'); ?>" id="product_limit" name="product_limit" value="<?php echo $plan['product_limit'];?>">
+                                    <label><?php _el('product');?><?php _el('limitations');?>:</label>
+                                    <input type="number" class="form-control" placeholder="<?php _el('limitations');?>" id="product_limit" name="product_limit" value="<?php echo $plan['product_limit']; ?>">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div>
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('description'); ?>:</label>
+                                    <label><?php _el('description');?>:</label>
                                 </div>
-                                <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"><?php echo $plan['description'];?></textarea>
-                                
+                                <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"><?php echo $plan['description']; ?></textarea>
+
                             </div>
                         </div>
                     </div>
@@ -85,7 +87,7 @@
                     </div>
                     </form>
                 </div>
-                <!-- /Panel body -->	
+                <!-- /Panel body -->
             </div>
             <!-- /Panel -->
             </div>
@@ -103,10 +105,10 @@ $("#subscription_form").validate({
             required: true,
         },
         days: {
-            required: true,           
+            required: true,
         },
         product_limit: {
-            required: true,          
+            required: true,
         },
         description: {
             required: true,
@@ -114,21 +116,21 @@ $("#subscription_form").validate({
     },
     messages: {
         title: {
-            required:"<?php _el('please_enter_', _l('title')) ?>",
+            required:"<?php _el('please_enter_', _l('title'))?>",
         },
         cost: {
-            required:"<?php _el('please_enter_', _l('cost')) ?>",
+            required:"<?php _el('please_enter_', _l('cost'))?>",
         },
         days: {
-            required:"<?php _el('please_enter_', _l('days')) ?>",
-        },        
+            required:"<?php _el('please_enter_', _l('days'))?>",
+        },
         product_limit: {
-            required:"<?php _el('please_enter_', _l('limitations')) ?>",
+            required:"<?php _el('please_enter_', _l('limitations'))?>",
         },
         description: {
-            required:"<?php _el('please_enter_', _l('description')) ?>",
-        }, 
+            required:"<?php _el('please_enter_', _l('description'))?>",
+        },
     },
-}); 
-    	
+});
+
 </script>
