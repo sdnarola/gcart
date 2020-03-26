@@ -55,7 +55,7 @@
 											<div class="form-group">
 												<label><?php _el('profile');?><?php _el('image');?>:</label>
 										         <div>
-													<img src="<?php echo base_url().'assets/Uploads/vendors/profile/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="2" class="img-circle"></img>
+													<img src="<?php echo base_url().'assets/Uploads/vendors/profile/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="2"></img>
 												</div>
 											</div>
 											<div class="form-group">
@@ -117,7 +117,7 @@
 													<div class="form-group">
 														<label><?php _el('shop');?>&nbsp<?php _el('logo');?>:</label>
 										                <div>
-															 <img src="<?php echo base_url().'assets/Uploads/vendors/logo/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10" class="img-circle"></img>
+															 <img src="<?php echo base_url().'assets/Uploads/vendors/logo/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10"></img>
 														</div>
 													</div>
 													<div class="form-group">

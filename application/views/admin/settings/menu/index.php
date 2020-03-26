@@ -39,7 +39,7 @@
 				$readonly = ' ';
 		?>
 		<tr>
-			<td><?php echo $category['name']?></td>
+			<td><?php echo ucfirst($category['name'])?></td>
 			<td>
 				<label>
 					<input type="checkbox" id="<?php echo $category['id']?>" class="switchery"<?php if($category['is_header'] == 1){echo "checked";} ?><?php echo $readonly; ?> onclick="change_display_status(this);">
