@@ -36,10 +36,10 @@
             <th width="2%">
               <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
             </th>
-            <th width="20%"><?php _el('product');?></th>
-            <th width="20%"><?php _el('reviewer');?></th>
+            <th width="15%"><?php _el('product');?></th>
+            <th width="15%"><?php _el('reviewer');?></th>
             <th width="20%"><?php _el('ratings');?></th>
-            <th width="30%"><?php _el('review');?></th>
+            <th width="40%"><?php _el('review');?></th>
             <th width="8%" class="text-center"><?php _el('actions');?></th>
           </tr>
         </thead>
