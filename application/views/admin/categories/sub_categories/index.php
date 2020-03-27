@@ -65,20 +65,23 @@
                             <?php echo $sub_category['slug']; ?>
                         </td>
 <?php
-	$readonly = '';
-
-		if ($category['is_active'] == 0)
-		{
-			$readonly = 'readonly';
-		}
-
-	?>
+	    $status = '';
+        if ($category['is_active'] == 0)
+        {
+            $result='readonly';
+        }
+        else
+        {
+            $result = '';
+        }
+?>
                         <td class="text-center switchery-sm">
-                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $sub_category['id']; ?>"<?php
-	if ($sub_category['is_active'] == 1)
-		{
-		echo 'checked';}
-	?><?php echo $readonly; ?>>
+                            <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $sub_category['id']; ?>"
+                        <?php
+                    	if ($sub_category['is_active'] == 1)
+                    		{
+                    		echo 'checked';}else{
+                         echo $status;}?> <?php echo $result?>>
                         </td>
                         <td class="text-center">
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/sub_categories/edit/').$sub_category['id']; ?>" id="<?php echo $sub_category['id']; ?>" class="text-info">
@@ -91,7 +94,6 @@
                     </tr>
 <?php
 	}
-
 ?>
                 </tbody>
             </table>
