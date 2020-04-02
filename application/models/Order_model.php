@@ -54,7 +54,8 @@ class Order_model extends MY_Model
 	/**
 	 * Get the orders of vendors/admins.
 	 *
-	 * @param  int 		$id 		id of vendor/admin.
+	 * @param  int 		$vendor_id 	Id of vendor/admin.
+	 * @param  int 		$id 		Id of order.
 	 *
 	 * @return mixed 	$orders 	order information.
 	 */

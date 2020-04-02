@@ -52,7 +52,7 @@
 					<div class="row">
 						<div class="col-md-12 x-text text-center">
 							<h1 style="font-size: 100px;"><?php _el('under_maintenance')?></h1>
-							<p>Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="mailto:<?php echo get_settings('company_email'); ?>">contact us</a>, otherwise we&rsquo;ll be back online shortly!</p>
+							<p>Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need you can always <a href="mailto:<?php echo get_settings('company_email'); ?>">contact us</a>, otherwise we&rsquo;ll be back online shortly!</p>
 							<p>&mdash; The Team</p>
 						</div>
 					</div>

@@ -229,9 +229,8 @@ class Products extends Admin_Controller
 		foreach ($where as $product_id)
 		{
 			$thumb_image = get_product($product_id, 'thumb_image'); //get thumb_image
-			$images      = unserialize(get_product($product_id, 'images'));
+			$images      = unserialize(get_product($product_id, 'images')); //thumb image//
 
-			//thumb image//
 			$copy_thumb = str_replace('products', 'products/deleted', $thumb_image); //replace path
 			copy($thumb_image, $copy_thumb); //copy image
 			unlink($thumb_image);
@@ -245,8 +244,9 @@ class Products extends Admin_Controller
 		}
 
 		$deleted = $this->products->delete_many($where);
+		$update  = $this->vendors->update_vendors_total_products($where);
 
-		if ($deleted)
+		if ($deleted && $update)
 		{
 			$ids = implode(',', $where);
 			echo 'true';
@@ -262,6 +262,8 @@ class Products extends Admin_Controller
 	 */
 	public function details($id = '')
 	{
+		$this->set_page_title(_l('product_details'));
+
 		if ($id)
 		{
 			$data['product'] = $this->products->get($id);
@@ -280,9 +282,8 @@ class Products extends Admin_Controller
 		}
 	}
 
-	public function add_sale($id = '')
+	public function check()
 	{
-		// update content
 	}
 
 // =========================== Bhavik ==================================//

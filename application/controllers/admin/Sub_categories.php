@@ -13,7 +13,7 @@ class Sub_categories extends Admin_Controller
 	}
 
 	/**
-	 *  listing all sub_categories 
+	 *  listing all sub_categories
 	 */
 	public function index()
 	{
@@ -21,74 +21,70 @@ class Sub_categories extends Admin_Controller
 
 		$data['sub_categories'] = $this->sub_categories->get_all();
 
-		$data['content'] = $this->load->view('admin/categories/sub_categories/index',$data, TRUE);
+		$data['content'] = $this->load->view('admin/categories/sub_categories/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
 
 	/**
 	 * Deletes the single sub_category record
 	 */
-	public function delete() 
+	public function delete()
 	{
 		$sub_category_id = $this->input->post('sub_category_id');
 
 		$deleted = $this->sub_categories->delete($sub_category_id);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			echo 'true';
-		} 
-		else 
+		}
+		else
 		{
 			echo 'false';
 		}
-
 	}
 
 	/**
 	 * Toggles the sub_category status to Active or Inactive
-	*/
-	public function update_status() 
+	 */
+	public function update_status()
 	{
 		$sub_category_id = $this->input->post('sub_category_id');
-		$data = array('is_active' => $this->input->post('is_active'));
+		$data            = array('is_active' => $this->input->post('is_active'));
 
 		$update = $this->sub_categories->update($sub_category_id, $data);
 
-		if ($update) 
+		if ($update)
 		{
-
-			if ($this->input->post('is_active') == 1) 
+			if ($this->input->post('is_active') == 1)
 			{
 				echo 'true';
-			} 
-			else 
+			}
+			else
 			{
 				echo 'false';
 			}
-
 		}
-
-	}	
+	}
 
 	/**
- 	* Deletes multiple sub_categories records
- 	*/
-	public function delete_multiple() {
+	 * Deletes multiple sub_categories records
+	 */
+	public function delete_multiple()
+	{
 		$where = $this->input->post('ids');
 
 		$deleted = $this->sub_categories->delete_many($where);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			$ids = implode(',', $where);
 			echo 'true';
-		} 
-		else 
+		}
+		else
 		{
 			echo 'false';
 		}
-
 	}
 
 	/**
@@ -100,76 +96,53 @@ class Sub_categories extends Admin_Controller
 
 		if ($this->input->post())
 		{
-			$data = $this->input->post();
-			$data['category_id']= get_category_id($data['category_name']);
+			$data                = $this->input->post();
+			$data['category_id'] = get_category_id($data['category_name']);
 			unset($data['category_name']);
-			
-			$insert = $this->sub_categories->insert($data); 
+
+			$insert = $this->sub_categories->insert($data);
 
 			if ($insert)
 			{
-							set_alert('success', _l('_added_successfully', _l('sub_category')));
-							redirect('admin/sub_categories/');
+				set_alert('success', _l('_added_successfully', _l('sub_category')));
+				redirect('admin/sub_categories/');
 			}
-
 		}
 		else
 		{
-			$data['content'] = $this->load->view('admin/categories/sub_categories/add',' ', TRUE);
+			$data['content'] = $this->load->view('admin/categories/sub_categories/add', ' ', TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
-
 	}
 
 	/**
-	 * edit sub_category 
+	 * edit sub_category
 	 *
 	 * @param      int  $id     The identifier
 	 */
-	public function edit($id = '') 
+	public function edit($id = '')
+	{
+		$this->set_page_title(_l('sub_category').' | '._l('edit'));
+
+		if ($this->input->post())
 		{
-			$this->set_page_title(_l('sub_category') . ' | ' . _l('edit'));
+			$data              = $this->input->post();
+			$data['is_active'] = ($this->input->post('is_active')) ? 1 : 0;
 
-			if ($this->input->post()) 
+			$update = $this->sub_categories->update($id, $data);
+
+			if ($update)
 			{
-				$data =$this->input->post(); 
-				$data['is_active'] = ($this->input->post('is_active')) ? 1 : 0;
-						 			
-				$update = $this->sub_categories->update($id,$data);
-
-				 if($update)
-				 {
-
-				 	set_alert('success', _l('_updated_successfully', _l('sub_category')));
-						redirect('admin/sub_categories');
-				}
-				
-			} 
-			else 
-			 {
-				$data['sub_category'] = $this->sub_categories->get($id);
-
-				$data['content'] = $this->load->view('admin/categories/sub_categories/edit',$data, TRUE);
-				$this->load->view('admin/layouts/index', $data);
-			}	
-
+				set_alert('success', _l('_updated_successfully', _l('sub_category')));
+				redirect('admin/sub_categories');
+			}
 		}
+		else
+		{
+			$data['sub_category'] = $this->sub_categories->get($id);
+
+			$data['content'] = $this->load->view('admin/categories/sub_categories/edit', $data, TRUE);
+			$this->load->view('admin/layouts/index', $data);
+		}
+	}
 }
-
-	
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-	

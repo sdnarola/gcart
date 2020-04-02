@@ -203,16 +203,20 @@
             <td><?php echo $record['quantity'] ?></td>
             <td class="text-center switchery-sm">
                 <input type="checkbox" class="switchery" id="<?php echo $record['id']; ?>"<?php
-	if ($record['is_active'] == 1)
+
+			if ($record['is_active'] == 1)
 			{
-			echo 'checked';}
+				echo 'checked';}
+
 		?> readonly>
             </td>
             <td class="text-center switchery-sm">
                 <input type="checkbox"  class="switchery"  id="<?php echo $record['id']; ?>"<?php
-	if ($record['category_status'] == 1)
+
+			if ($record['category_status'] == 1)
 			{
-			echo 'checked';}
+				echo 'checked';}
+
 		?> readonly>
             </td>
             <td class="text-center">

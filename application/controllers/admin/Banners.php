@@ -19,7 +19,7 @@ class Banners extends Admin_Controller
 	{
 		$this->set_page_title(_l('banners'));
 
-		$data['banners'] = $this->banners->get_all();		
+		$data['banners'] = $this->banners->get_all();
 		$data['content'] = $this->load->view('admin/settings/banners/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
@@ -34,151 +34,145 @@ class Banners extends Admin_Controller
 		if ($this->input->post())
 		{
 			$data = $this->input->post();
-			
-			if($_FILES['banner']['name']!=NULL)
-			{
-				$result = upload_logo("assets/uploads/banners/","banner");
 
-                if (!$result)
-                {
-                    redirect('admin/banners/add');
-                }
-                
-                $data['banner'] = $result;
+			if ($_FILES['banner']['name'] != NULL)
+			{
+				$result = upload_logo('assets/uploads/banners/', 'banner');
+
+				if (!$result)
+				{
+					redirect('admin/banners/add');
+				}
+
+				$data['banner'] = $result;
 			}
 			else
 			{
 				$data['banner'] = 'assets/uploads/banners/default_banner.png';
 			}
 
-                      $insert = $this->banners->insert($data);    
+			$insert = $this->banners->insert($data);
 
-						if ($insert)
-						{
-							set_alert('success', _l('_added_successfully', _l('banner')));
-							redirect('admin/banners');
-						}
+			if ($insert)
+			{
+				set_alert('success', _l('_added_successfully', _l('banner')));
+				redirect('admin/banners');
+			}
 		}
 		else
 		{
-			$data['content'] = $this->load->view('admin/settings/banners/add',' ', TRUE);
+			$data['content'] = $this->load->view('admin/settings/banners/add', ' ', TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
 	}
 
 	/**
-	 * edit banner 
+	 * edit banner
 	 *
 	 * @param      int  $id     The identifier
 	 */
-	public function edit($id = '') 
+	public function edit($id = '')
 	{
-			$this->set_page_title(_l('banners') . ' | ' . _l('edit'));
+		$this->set_page_title(_l('banners').' | '._l('edit'));
 
-			if ($this->input->post()) 
+		if ($this->input->post())
+		{
+			$data = $this->input->post();
+			print_r($data);
+
+			if ($_FILES['banner']['name'] != NULL)
 			{
-				$data =$this->input->post(); 
-				print_r($data);
+				$result = upload_logo('assets/uploads/banners/', 'banner');
 
-				if($_FILES['banner']['name']!=NULL)
+				if (!$result)
 				{
-					$result = upload_logo("assets/uploads/banners/","banner");
-
-	                if (!$result)
-	                {
-	                    redirect('admin/banners/edit/'.$id);
-	                }
-	                
-	                $data['banner'] = $result;
-
-	                //for unlink image from folder
-	                $old_upload_image = $this->banners->get($id);
-
-	                if(basename($old_upload_image['banner']) != 'default_banner.png')
-					{
-		             	unlink($old_upload_image['banner']);
-					}
+					redirect('admin/banners/edit/'.$id);
 				}
 
-				$result = $this->banners->update($id,$data);
-			
-				set_alert('success', _l('_updated_successfully', _l('banner')));
-				redirect('admin/banners');			
-			} 
-			else 
-			{
-				$data['banner'] = $this->banners->get($id);
-				$data['content'] = $this->load->view('admin/settings/banners/edit',$data, TRUE);
-				$this->load->view('admin/layouts/index', $data);
-			}	
+				$data['banner'] = $result;
+
+				//for unlink image from folder
+				$old_upload_image = $this->banners->get($id);
+
+				if (basename($old_upload_image['banner']) != 'default_banner.png')
+				{
+					unlink($old_upload_image['banner']);
+				}
+			}
+
+			$result = $this->banners->update($id, $data);
+
+			set_alert('success', _l('_updated_successfully', _l('banner')));
+			redirect('admin/banners');
+		}
+		else
+		{
+			$data['banner']  = $this->banners->get($id);
+			$data['content'] = $this->load->view('admin/settings/banners/edit', $data, TRUE);
+			$this->load->view('admin/layouts/index', $data);
+		}
 	}
 
 	/**
 	 * Deletes the single banner record
 	 */
-	public function delete() 
+	public function delete()
 	{
 		$id = $this->input->post('banner_id');
 		//in soft delete move image to deleted folder
 		$old_upload_image = $this->banners->get($id);
-		$imagepath = $old_upload_image['banner'];
-		$newpath = 'assets/uploads/banners/deleted/'.basename($imagepath);
+		$imagepath        = $old_upload_image['banner'];
+		$newpath          = 'assets/uploads/banners/deleted/'.basename($imagepath);
 
-		if(basename($imagepath) != 'default_banner.png')
+		if (basename($imagepath) != 'default_banner.png')
 		{
-			$copied = copy($imagepath , $newpath);
+			$copied = copy($imagepath, $newpath);
 			unlink($imagepath);
-		} 
-		
+		}
+
 		$deleted = $this->banners->delete($id);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			echo 'true';
-		} 
-		else 
+		}
+		else
 		{
 			echo 'false';
 		}
-
 	}
 
 	/**
- 	* Deletes multiple banners records
- 	*/
-	public function delete_multiple() 
+	 * Deletes multiple banners records
+	 */
+	public function delete_multiple()
 	{
 		$where = $this->input->post('ids');
 		//in soft delete move image to deleted folder
-		$data= $this->banners->get_many($where);
-		foreach($data as $record)
+		$data = $this->banners->get_many($where);
+
+		foreach ($data as $record)
 		{
 			$imagepath = $record['banner'];
-			$newpath = 'assets/uploads/banners/deleted/'.basename($imagepath);
-			
-			if(basename($imagepath) != 'default_banner.png')
+			$newpath   = 'assets/uploads/banners/deleted/'.basename($imagepath);
+
+			if (basename($imagepath) != 'default_banner.png')
 			{
-				$copied = copy($imagepath , $newpath);
+				$copied = copy($imagepath, $newpath);
 				unlink($imagepath);
 			}
 		}
 
 		$deleted = $this->banners->delete_many($where);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			$ids = implode(',', $where);
 			echo 'true';
-		} 
-		else 
+		}
+		else
 		{
 			echo 'false';
 		}
-
 	}
-
 }
-	
-
-	
-	

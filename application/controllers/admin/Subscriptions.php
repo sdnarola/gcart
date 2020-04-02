@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Subscriptions extends Admin_Controller 
+class Subscriptions extends Admin_Controller
 {
 	/**
 	 * Constructor for the class
 	 */
-	public function __construct() 
+	public function __construct()
 	{
 		parent::__construct();
 
@@ -16,20 +16,20 @@ class Subscriptions extends Admin_Controller
 	/**
 	 * Loads the list of vendors.
 	 */
-	public function index() 
+	public function index()
 	{
 		$this->set_page_title(_l('subscriptions'));
 
 		$data['plans'] = $this->subscriptions->get_all();
-				
-		$data['content'] = $this->load->view('admin/vendors/subscriptions/index',$data, TRUE);
+
+		$data['content'] = $this->load->view('admin/vendors/subscriptions/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
 
 	/**
- 	* add records
- 	*/
-	public function add() 
+	 * add records
+	 */
+	public function add()
 	{
 		$this->set_page_title(_l('subscriptions').' | '._l('add'));
 
@@ -47,7 +47,7 @@ class Subscriptions extends Admin_Controller
 		}
 		else
 		{
-			$data['content'] = $this->load->view('admin/vendors/subscriptions/add','', TRUE);
+			$data['content'] = $this->load->view('admin/vendors/subscriptions/add', '', TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
 	}
@@ -57,68 +57,65 @@ class Subscriptions extends Admin_Controller
 	 *
 	 * @param int  $id  The subscription id
 	 */
-	public function edit($id = '') 
+	public function edit($id = '')
 	{
-		$this->set_page_title(_l('subscription') . ' | ' . _l('edit'));
+		$this->set_page_title(_l('subscription').' | '._l('edit'));
 
-		if ($this->input->post()) 
+		if ($this->input->post())
 		{
-			$data =$this->input->post();
-		
-			$update = $this->subscriptions->update($id,$data);
+			$data = $this->input->post();
 
-			if ($update) 
+			$update = $this->subscriptions->update($id, $data);
+
+			if ($update)
 			{
-			 	set_alert('success', _l('_updated_successfully', _l('subscription')));
+				set_alert('success', _l('_updated_successfully', _l('subscription')));
 				redirect('admin/subscriptions/');
 			}
-
-		} 
-		else 
+		}
+		else
 		{
 			$data['plan'] = $this->subscriptions->get($id);
 
-			$data['content'] = $this->load->view('admin/vendors/subscriptions/edit',$data, TRUE);
+			$data['content'] = $this->load->view('admin/vendors/subscriptions/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
-		}	
-
+		}
 	}
 
 	/**
 	 * Deletes the single record
 	 */
-	public function delete() 
+	public function delete()
 	{
-		$id = $this->input->post('plan_id');
+		$id      = $this->input->post('plan_id');
 		$deleted = $this->subscriptions->delete($id);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			echo 'true';
-		} else 
+		}
+		else
 		{
 			echo 'false';
 		}
-
 	}
 
 	/**
- 	* Deletes multiple  records
- 	*/
-	public function delete_multiple() {
-		$where = $this->input->post('ids');
+	 * Deletes multiple  records
+	 */
+	public function delete_multiple()
+	{
+		$where   = $this->input->post('ids');
 		$deleted = $this->subscriptions->delete_many($where);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			$ids = implode(',', $where);
 			echo 'true';
-		} 
-		else 
+		}
+		else
 		{
 			echo 'false';
 		}
-
 	}
-
 }

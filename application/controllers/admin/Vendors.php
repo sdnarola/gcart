@@ -37,24 +37,24 @@ class Vendors extends Admin_Controller
 	{
 		$vendor_id = $this->input->post('vendor_id');
 
-		$vendor = $this->vendors->get($vendor_id);
+		$vendor    = $this->vendors->get($vendor_id);
 		$imagepath = $vendor['profile_image'];
-		$newpath = 'assets/uploads/vendors/profile/deleted/'.basename($imagepath);
+		$newpath   = 'assets/uploads/vendors/profile/deleted/'.basename($imagepath);
 
-		$logopath = $vendor['logo'];
+		$logopath     = $vendor['logo'];
 		$new_logopath = 'assets/uploads/vendors/logo/deleted/'.basename($logopath);
 
-		if(basename($imagepath) != 'default_img.png')
+		if (basename($imagepath) != 'default_img.png')
 		{
-			$copied = copy($imagepath , $newpath);
+			$copied = copy($imagepath, $newpath);
 			unlink($imagepath);
-		} 
+		}
 
-		if(basename($logopath) != 'default_logo.png')
+		if (basename($logopath) != 'default_logo.png')
 		{
-			$copied = copy($logopath , $new_logopath);
+			$copied = copy($logopath, $new_logopath);
 			unlink($logopath);
-		} 
+		}
 
 		$deleted = $this->vendors->delete($vendor_id);
 
@@ -75,28 +75,27 @@ class Vendors extends Admin_Controller
 	{
 		$where = $this->input->post('ids');
 
-		$data= $this->vendors->get_many($where);
-		
-		foreach($data as $record)
+		$data = $this->vendors->get_many($where);
+
+		foreach ($data as $record)
 		{
-			$imagepath = $record['profile_image'];
-			$newpath = 'assets/uploads/vendors/profile/deleted/'.basename($imagepath);
-			$logopath = $record['logo'];
+			$imagepath    = $record['profile_image'];
+			$newpath      = 'assets/uploads/vendors/profile/deleted/'.basename($imagepath);
+			$logopath     = $record['logo'];
 			$new_logopath = 'assets/uploads/vendors/logo/deleted/'.basename($logopath);
 
-			if(basename($imagepath) != 'default_img.png')
+			if (basename($imagepath) != 'default_img.png')
 			{
-				$copied = copy($imagepath , $newpath);
+				$copied = copy($imagepath, $newpath);
 				unlink($imagepath);
 			}
 
-			if(basename($logopath) != 'default_logo.png')
+			if (basename($logopath) != 'default_logo.png')
 			{
-				$copied = copy($logopath , $new_logopath);
+				$copied = copy($logopath, $new_logopath);
 				unlink($logopath);
-			} 
+			}
 		}
-
 
 		$deleted = $this->vendors->delete_many($where);
 
@@ -151,7 +150,7 @@ class Vendors extends Admin_Controller
 	{
 		$this->set_page_title(_l('vendors').' | '._l('details'));
 
-		$data['vendor']  = $this->vendors->get($id);
+		$data['vendor'] = $this->vendors->get($id);
 		$this->products->order_by('name', 'ASC');
 		$data['records'] = $this->products->get_products($id);
 

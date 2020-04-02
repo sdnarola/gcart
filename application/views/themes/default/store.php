@@ -140,27 +140,8 @@
                             <!-- /.filter-tabs -->
                         </div>
                         <!-- /.col -->
-                        <div class="col col-sm-12 col-md-6">
-                            <div class="col col-sm-3 col-md-6 no-padding">
-                                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
-                                    <div class="fld inline">
-                                        <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                                            <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                                            <ul role="menu" class="dropdown-menu">
-                                                <li role="presentation"><a href="#">position</a></li>
-                                                <li role="presentation"><a href="#">Price:Lowest first</a></li>
-                                                <li role="presentation"><a href="#">Price:HIghest first</a></li>
-                                                <li role="presentation"><a href="#">Product Name:A to Z</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- /.fld -->
-                                </div>
-                                <!-- /.lbl-cnt -->
-                            </div>
-                            <!-- /.col -->
+                        <div class="col col-sm-3 col-md-6 no-padding">
 
-                            <!-- /.col -->
                         </div>
                         <!-- /.col -->
                         <div class="col col-sm-6 col-md-4 text-right">
@@ -168,7 +149,8 @@
                                 <?php echo $link; ?>
                                 <!-- /.list-inline -->
                             </div>
-                            <!-- /.pagination-container --> </div>
+                            <!-- /.pagination-container -->
+                        </div>
                         <!-- /.col -->
                     </div>
                     <!-- /.row -->
@@ -301,6 +283,9 @@
                                                                 <ul class="list-unstyled">
                                                                     <li class="add-cart-button btn-group">
                                                                         <a href="<?php echo base_url('cart/add/').$product['id']; ?>"<?php echo $disabled; ?>class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> Add to cart</a>
+                                                                    </li>
+                                                                    <li class="wishlist-button btn-group">
+                                                                        <a href="<?php echo base_url('wishlist/add/').$product['id']; ?>"<?php echo $disabled; ?>class="btn icon" style="background-color: yellow;"><i class="icon fa fa-heart" style="color: black;"></i></a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
