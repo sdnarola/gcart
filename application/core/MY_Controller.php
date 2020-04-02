@@ -17,6 +17,7 @@ class MY_Controller extends CI_Controller
 	{
 		parent::__construct();
 		$this->lang->load('english');
+		$this->load->model('category_model', 'category');
 	}
 
 	/**

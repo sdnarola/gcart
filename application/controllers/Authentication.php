@@ -7,6 +7,7 @@ class Authentication extends My_Controller
 		parent::__construct();
 		$this->load->model('Authentication_model');
 		$this->load->model('User_model', 'users');
+		$this->load->model('brand_model', 'brand');
 	}
 
 	public function index()
@@ -14,6 +15,10 @@ class Authentication extends My_Controller
 		$this->login();
 	}
 
+/**
+ * [login user]
+ * @return [type] [description]
+ */
 	public function login()
 	{
 		if (is_user_logged_in())
@@ -72,16 +77,26 @@ class Authentication extends My_Controller
 		$this->template->load('index', 'content', 'authentication/login_signup');
 	}
 
+/**user signup
+ * [signup users]
+ * @return [type] [description]
+ */
 	public function signup()
 	{
 		if ($this->input->post())
 		{
 			$data = $this->input->post();
 
+			if (empty($data['firstname']))
+			{
+				redirect(site_url('authentication/login_signup'));
+			}
+
 			$data['password'] = md5($data['password']);
 			unset($data['confirm_password']);
+			//$data['profile_image']='./assets/uploads/users/user1.png';
 
-			$data['signup_key'] = app_generate_hash();
+			$data['sign_up_key'] = app_generate_hash();
 
 			if ($this->users->insert($data))
 			{
@@ -101,7 +116,7 @@ class Authentication extends My_Controller
 				$replace = [
 					$data['firstname'],
 					$data['lastname'],
-					site_url('authentication/verify_email/').$data['signup_key'],
+					site_url('authentication/verify_email/').$data['sign_up_key'],
 					get_settings('email_signature'),
 					get_settings('company_name')
 				];
@@ -121,17 +136,23 @@ class Authentication extends My_Controller
 		}
 
 		$this->set_page_title('Sign Up');
+
 		$this->template->load('index', 'content', 'authentication/login_signup');
 	}
 
-	public function verify_email($signup_key = '')
+/**
+ * [verify_email description]
+ * @param  string $sign_up_key [description]
+ * @return [type]              [description]
+ */
+	public function verify_email($sign_up_key = '')
 	{
-		if ($signup_key == '')
+		if ($sign_up_key == '')
 		{
 			redirect(site_url());
 		}
 
-		$success = $this->Authentication_model->verify_email($signup_key);
+		$success = $this->Authentication_model->verify_email($sign_up_key);
 
 		if ($success == true)
 		{
@@ -147,6 +168,7 @@ class Authentication extends My_Controller
 
 	/**
 	 * Loads forgot password form & performs forgot password
+	 * @return [type] [description]
 	 */
 	public function forgot_password()
 	{
@@ -236,6 +258,7 @@ class Authentication extends My_Controller
 
 	/**
 	 * Checks if user with provided email id exists or not
+	 * @return [type] [description]
 	 */
 	public function email_exists()
 	{
@@ -245,7 +268,8 @@ class Authentication extends My_Controller
 	}
 
 	/**
-	 * Does logout
+	 * logout [Does logout]
+	 * @return [type] [description]
 	 */
 	public function logout()
 	{

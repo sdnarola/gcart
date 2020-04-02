@@ -1,0 +1,104 @@
+.col-carousel {
+	margin: 70px 0;
+}
+
+/* owl nav */
+#arrival .owl-prev span, .owl-next span {
+	color: #FFF;
+
+}
+
+#arrival.owl-prev span:hover, 
+#arrival.owl-next span:hover {
+	color: #8199A3;
+}
+#arrival .owl-controls {
+  position: absolute;
+  right: 20px;
+  top: -32px;
+  width: 100%;
+  display: block;
+}
+#arrival.owl-controls .owl-prev {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: -25px;
+  right: 27px;
+  -webkit-transition: all linear 0.2s;
+  -moz-transition: all linear 0.2s;
+  -ms-transition: all linear 0.2s;
+  -o-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background: #dddddd;
+}
+#arrival .owl-prev:before {
+  color: #fff;
+  content: "\f104";
+  font-family: fontawesome;
+  font-size: 13px;
+  left: 7px;
+  position: absolute;
+  top: 2px;
+}
+#arrival .owl-next {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: -25px;
+  right: 0px;
+  -webkit-transition: all linear 0.2s;
+  -moz-transition: all linear 0.2s;
+  -ms-transition: all linear 0.2s;
+  -o-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background: #dddddd;
+}
+#arrival .owl-next:before {
+  content: "\f105";
+  font-family: fontawesome;
+  color: #fff;
+  font-size: 13px;
+  left: 7px;
+  position: absolute;
+  top: 2px;
+}
+
+#arrival .owl-prev, .owl-next {
+  position: absolute;
+  content: "\f105";
+  width: 20px;
+  height: 20px;
+  top: -25px;
+  right: 0px;
+  -webkit-transition: all linear 0.2s;
+  -moz-transition: all linear 0.2s;
+  -ms-transition: all linear 0.2s;
+  -o-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background: #dddddd;
+}
+
+#arrival .owl-prev {
+	right: 30px;
+
+}
+#arrival .owl-next {
+	right: 7px;
+}
+
+
+/* removing blue outline from buttons */
+button:focus, button:active {
+   outline: none;
+}
+ 

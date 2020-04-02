@@ -32,11 +32,20 @@
 				</div>
 			</div>
 		</div>
+		<div class="form-group login-options">
+			<div class="row">
+				
+				<div class="col-sm-12 ">
+					<center><a href="<?php echo vendor_url('authentication/signup'); ?>">Don't have an account?<u><?php _el('signup')?>   here!</u></a></center>
+				</div>
+			</div>
+		</div>
 		<div class="form-group">
 			<button type="submit" class="btn bg-blue btn-block"><?php _el('login')?><i class="icon-arrow-right14 position-right"></i></button>
 		</div>
 
 	</div>
+
 </form>
 <!-- /simple login form -->
 <script type="text/javascript">

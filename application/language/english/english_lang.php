@@ -46,6 +46,9 @@ $lang['profile']          = 'Profile';
 $lang['edit_profile']     = 'Edit Profile';
 $lang['login']            = 'Log In';
 $lang['logout']           = 'Log Out';
+$lang['signup']           = 'Sign Up';
+$lang['update']           = 'Update';
+$lang['profile_image']    = 'Profile Image';
 
 #Dashboard
 #---------
@@ -53,15 +56,31 @@ $lang['dashboard'] = 'Dashboard';
 
 #Users
 #-----
-$lang['firstname']  = 'Firstname';
-$lang['lastname']   = 'Lastname';
-$lang['contact_no'] = 'Contact No';
-$lang['mobile_no']  = 'Mobile No';
-$lang['last_login'] = 'Last Login';
-$lang['user']       = 'User';
-$lang['users']      = 'Users';
-$lang['add_user']   = 'Add User';
-$lang['edit_user']  = 'Edit User';
+$lang['firstname']   = 'Firstname';
+$lang['lastname']    = 'Lastname';
+$lang['address_1']   = 'Address_1';
+$lang['address_2']   = 'Address_2';
+$lang['city']        = 'City';
+$lang['state']       = 'State';
+$lang['pincode']    = 'Pin code';
+$lang['contact_no']  = 'Contact No';
+$lang['mobile']   = 'Mobile No';
+$lang['upload_file'] = 'Profile Image';
+$lang['last_login']  = 'Last Login';
+$lang['user']        = 'User';
+$lang['users']       = 'Users';
+$lang['add_user']    = 'Add User';
+$lang['edit_user']   = 'Edit User';
+
+#Vendors
+#-----
+$lang['shop_name']   = 'Shop Name';
+$lang['owner_name']   = 'Owner Name';
+$lang['shop_number']   = 'Shop Number';
+$lang['shop_details']   = 'Shop Details';
+$lang['registration_number']   = 'Registration Number';
+$lang['address']   = 'Address';
+
 
 #Projects
 #--------
@@ -123,29 +142,30 @@ $lang['years']   = 'years';
 #=============================================
 #General
 #-------
-$lang['no_data_found']              = 'No Data Found.';
-$lang['_added_successfully']        = '%s added successfully.';
-$lang['_updated_successfully']      = '%s updated successfully.';
-$lang['_deleted_successfully']      = '%s deleted successfully.';
-$lang['_activated']                 = '%s activated.';
-$lang['_deactivated']               = '%s deactivated.';
-$lang['please_enter_']              = 'Please Enter  %s';
-$lang['please_enter_valid_']        = 'Please Enter Valid %s';
-$lang['please_select_']             = 'Please Select %s';
-$lang['single_deletion_alert']      = 'Are you sure you want to delete this record?';
-$lang['single_recovery_alert']      = 'You will not be able to recover this record after deletion.';
-$lang['multiple_deletion_alert']    = 'Are you sure you want to delete selected records?';
-$lang['multiple_recovery_alert']    = 'You will not be able to recover these records after deletion.';
-$lang['select_before_delete_alert'] = 'Please select some records to delete.';
-$lang['access_denied']              = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
+$lang['no_data_found']                   = 'No Data Found.';
+$lang['_updation_fail_please_try_again'] = '%s Upadation failed please try again..';
+$lang['_added_successfully']             = '%s added successfully.';
+$lang['_updated_successfully']           = '%s updated successfully.';
+$lang['_deleted_successfully']           = '%s deleted successfully.';
+$lang['_activated']                      = '%s activated.';
+$lang['_deactivated']                    = '%s deactivated.';
+$lang['please_enter_']                   = 'Please Enter  %s';
+$lang['please_enter_valid_']             = 'Please Enter Valid %s';
+$lang['please_select_']                  = 'Please Select %s';
+$lang['single_deletion_alert']           = 'Are you sure you want to delete this record?';
+$lang['single_recovery_alert']           = 'You will not be able to recover this record after deletion.';
+$lang['multiple_deletion_alert']         = 'Are you sure you want to delete selected records?';
+$lang['multiple_recovery_alert']         = 'You will not be able to recover these records after deletion.';
+$lang['select_before_delete_alert']      = 'Please select some records to delete.';
+$lang['access_denied']                   = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
 
 #Login/Logout/Forgot Password/Change Password/Profile
 #----------------------------------------------------
-$lang['login_to_your_account']                                  = 'Login to your account';
-$lang['enter_your_credentials_below']                           = 'Please enter your credentials below';
-$lang['incorrect_email']                                        = 'Incorrect email.';
-$lang['incorrect_password']                                     = 'Incorrect password.';
-$lang['email_exists']                                     = 'This Email has already been taken.';
+$lang['login_to_your_account']        = 'Login to your account';
+$lang['enter_your_credentials_below'] = 'Please enter your credentials below';
+$lang['incorrect_email']              = 'Incorrect email.';
+$lang['incorrect_password']           = 'Incorrect password.';
+$lang['email_exists']                 = 'This Email has already been taken.';
 
 $lang['incorrect_email_or_password']                            = 'Email and/or password is incorrect.';
 $lang['your_account_is_not_active']                             = 'Your account is not active. Please contact to your Administrator.';

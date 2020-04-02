@@ -6,6 +6,8 @@ class Authentication extends My_Controller
 	{
 		parent::__construct();
 		$this->load->model('Authentication_model');
+		$this->load->model('brand_model', 'brand');
+		$this->load->model('vendor_model', 'vendors');
 	}
 
 	/**
@@ -14,6 +16,7 @@ class Authentication extends My_Controller
 	public function index()
 	{
 		$this->vendor_login();
+		//$this->signup();
 	}
 
 	/**
@@ -73,6 +76,99 @@ class Authentication extends My_Controller
 		$data['content'] = $this->load->view('vendor/authentication/login_vendor', '', true);
 		$this->load->view('vendor/authentication/index', $data);
 	}
+
+/**==========================================code by vixuti patel===========================================*/
+/**
+ * [signup vendors]
+ * @return [type] [description]
+ */
+	public function signup()
+	{
+		if ($this->input->post())
+		{
+			$data = $this->input->post();
+			if (empty($data['firstname']))
+			{
+				redirect(site_url('vendor/authentication/signup'));
+			}
+
+			$data['password'] = md5($data['password']);
+			unset($data['confirm_password']);
+
+			$data['sign_up_key'] = app_generate_hash();
+
+			if ($this->vendors->insert($data))
+			{
+				$template = get_email_template('new-user-signup');
+				$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
+
+				$message = get_settings('email_header');
+
+				$find = [
+					'{firstname}',
+					'{lastname}',
+					'{email_verification_url}',
+					'{email_signature}',
+					'{company_name}'
+				];
+
+				$replace = [
+					$data['firstname'],
+					$data['lastname'],
+					site_url('vendor/authentication/verify_email/').$data['sign_up_key'],
+					get_settings('email_signature'),
+					get_settings('company_name')
+				];
+
+				$message .= str_replace($find, $replace, $template['message']);
+
+				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
+
+				$sent = send_email($data['email'], $subject, $message);
+
+				if ($sent)
+				{
+					set_alert('success', 'Your are registered successfully. Please check your email for account verification instructions.');
+					redirect(site_url('vendor/authentication/signup'));
+				}
+			}
+		}
+
+		$this->set_page_title('Sign Up');
+
+		// $data['content'] = $this->load->view('vendor/authentication/register', '', true);
+		$this->load->view('vendor/authentication/register');
+
+		//$this->template->load('index', 'content', 'authentication/login_signup',$data);
+	}
+
+/**
+ * [verify_email description]
+ * @param  string $sign_up_key [description]
+ * @return [type]              [description]
+ */
+	public function verify_email($sign_up_key = '')
+	{
+		if ($sign_up_key == '')
+		{
+			redirect(site_url());
+		}
+
+		$success = $this->Authentication_model->verify_vendor_email($sign_up_key);
+
+		if ($success == true)
+		{
+			set_alert('success', 'Your Email is verified. You can login now.');
+		}
+		else
+		{
+			set_alert('error', 'Some issue in verifying your email.');
+		}
+
+		redirect(site_url('vendor/authentication/signup'));
+	}
+
+/*=================================================code end by vixuti pate=====================================*/
 
 	/**
 	 * Loads forgot password form & performs forgot password
