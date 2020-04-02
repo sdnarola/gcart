@@ -29,6 +29,8 @@ class Orders extends Admin_Controller
 	 */
 	public function details($id)
 	{
+		$this->set_page_title(_l('order_details'));
+
 		if ($id)
 		{
 			$data['order']       = $this->orders->get($id);
@@ -109,6 +111,7 @@ class Orders extends Admin_Controller
 	 */
 	public function invoice($id = '')
 	{
+		$this->set_page_title(_l('invoice'));
 		$data['order']       = $this->orders->get($id);
 		$data['order_items'] = $this->orders->get_items($id);
 

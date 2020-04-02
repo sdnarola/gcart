@@ -53,7 +53,7 @@
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
-									<label><?php _el('contact_no');?>:</label>
+									<label><?php _el('mobile_no');?>:</label>
 									<input type="text" class="form-control" id="mobile" name="mobile" value="<?php echo $vendor['mobile']; ?>">
 								</div>
 								<div class="row">

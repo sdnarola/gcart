@@ -23,11 +23,10 @@
 <!-- Content area -->
 <div class="content">
 <?php
-	if ($users) 
+
+	if ($user)
 	{
-		$user = $users[0];
-		
-?>
+	?>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<!-- Panel -->
@@ -45,14 +44,20 @@
 							<!-- /Panel heading -->
 							<!-- Panel body -->
 							<div class="panel-body">
-								<form action="<?php echo base_url('admin/users/edit/') . $user['users_id']; ?>" id="profileform" name="profileform" method="POST">
-								
+								<form action="<?php echo base_url('admin/users/edit/').$user['id']; ?>" id="profileform" name="profileform" method="POST">
+
 <?php
-$file = basename($user['profile_image']);
-?>									
+
+		if ($user['profile_image'] == null)
+		{
+			$user['profile_image'] = 'assets/uploads/users/default_img.png';
+		}
+
+		$address = get_user_address($user['id']);
+	?>
 									<div>
 										<div class="form-group">
-											 <p align="center"><img src="<?php echo base_url() . 'assets/uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
+											 <p align="center"><img src="<?php echo base_url().$user['profile_image']; ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
 										</div>
 									</div>
 									<div class="row">
@@ -83,49 +88,55 @@ $file = basename($user['profile_image']);
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('address1');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('address1');?>" id="address1" name="address1" value="<?php echo ucfirst($user['address_1']); ?>">
-										</div>							
+											<input type="text" class="form-control" placeholder="<?php _el('address1');?>" id="address1" name="address1" value="<?php echo ucfirst($address['address_1']); ?>" readonly>
+										</div>
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('address2');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('address2');?>" id="address2" name="address2" value="<?php echo ucfirst($user['address_2']); ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('address2');?>" id="address2" name="address2" value="<?php echo ucfirst($address['address_2']); ?>" readonly>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('pincode');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $user['pincode']; ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $address['pincode']; ?>" readonly>
 										</div>
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('city');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo ucfirst($user['city']); ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo ucfirst($address['city']); ?>" readonly>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('state');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo ucfirst($user['state']); ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo ucfirst($address['state']); ?>" readonly>
 										</div>
 <?php
-			$readonly = '';
+	$readonly = '';
 
-			if ($user['users_id'] == get_loggedin_user_id()) 
-			{
-				$readonly = "readonly";
+		if ($user['id'] == get_loggedin_user_id())
+		{
+			$readonly = ' readonly';
+		}
 
-			}
-?>
+	?>
 										<div class="col-md-6 form-group">
 											<label><?php _el('status');?>:</label>
 
-											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['users_id']; ?>" <?php if ($user['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
+											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['id']; ?>"<?php
+
+		if ($user['is_active'] == 1)
+		{
+			echo 'checked';}
+
+	?><?php echo $readonly; ?>>
 										</div>
 <?php
-		
 	}
+
 ?>
 									</div>
 								<div class="row">
@@ -137,7 +148,7 @@ $file = basename($user['profile_image']);
 		                            </div>
 		                        </div>
                     			</form>
-                    
+
 							</div>
 					<!-- /Panel body -->
 						</div>

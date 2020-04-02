@@ -85,6 +85,6 @@ class Dashboard extends Admin_Controller
 	public function sale()
 	{
 		$data['last_30_days_sale'] = $this->orders->last_30_days_sale();
-		$this->load->view('admin/dashboard/sale_chart', $data);
+		$this->load->view('admin/dashboard/sale_data', $data);
 	}
 }

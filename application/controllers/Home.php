@@ -7,6 +7,8 @@ class Home extends Frontend_Controller
 		parent::__construct();
 		$this->load->model('vendor_model', 'vendors');
 		$this->load->model('product_model', 'products');
+		$this->load->model('deal_model', 'deals');
+		$this->load->model('brand_model', 'brand');
 	}
 
 	public function index()
@@ -28,7 +30,7 @@ class Home extends Frontend_Controller
 		$limit         = 4;
 		$total_rows    = $products_rows;
 		$config        = array();
-		$url           = base_url().'vendor/dashboard/store';
+		$url           = base_url().'home/store/'.$id.'/';
 		$uri_segment   = 4;
 		$config        = pagination($url, $total_rows, $limit, $uri_segment);
 		$page_no       = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;

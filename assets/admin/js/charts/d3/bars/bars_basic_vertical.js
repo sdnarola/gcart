@@ -40,7 +40,6 @@ $(function() {
         // Horizontal
         var x = d3.scale.ordinal()
             .rangeRoundBands([0, width], .1, .5);
-        var xAxisScale = d3.scale.linear().domain([0, 87]).range([0, 960]);
 
         // Vertical
         var y = d3.scale.linear()

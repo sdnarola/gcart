@@ -18,7 +18,6 @@ $lang['id']                = 'ID';
 $lang['name']              = 'Name';
 $lang['image']             = 'Image';
 $lang['tags']              = 'Tags';
-$lang['thumb_image']       = 'Thumbnail Image';
 $lang['status']            = 'Status';
 $lang['total']             = 'Total';
 $lang['value']             = 'Value';
@@ -87,7 +86,7 @@ $lang['dashboard'] = 'Dashboard';
 #-----#
 $lang['firstname']        = 'Firstname';
 $lang['lastname']         = 'Lastname';
-$lang['mobile_no']        = 'Mobile No';
+$lang['mobile_no']        = 'Mobile Number';
 $lang['last_login']       = 'Last Login';
 $lang['address']          = 'Address';
 $lang['address1']         = 'Address1';
@@ -159,12 +158,17 @@ $lang['manage_coupons'] = 'Manage Coupons';
 
 #Products
 #---------
+#
+$lang['product']            = 'Product';
 $lang['products']           = 'Products';
+$lang['product_name']       = 'Product Name';
+$lang['add_product']        = 'Add Product';
+$lang['edit_product']       = 'Edit Product';
+$lang['product_detail']     = 'Product Detail';
 $lang['product_details']    = 'Product Details';
 $lang['products_added']     = 'Products Added';
 $lang['recent_products']    = 'Recent Product(s)';
 $lang['popular_products']   = 'Popular Product(s)';
-$lang['product']            = 'Product';
 $lang['stock']              = 'Stock';
 $lang['price']              = 'Price';
 $lang['review']             = 'Review';
@@ -240,15 +244,6 @@ $lang['sub_category']      = 'Sub Category';
 $lang['sub_categories']    = 'Sub Categories';
 $lang['add_sub_category']  = 'Add Sub Category';
 $lang['edit_sub_category'] = 'Edit Sub Category';
-
-#Products
-#----------
-$lang['product']        = 'Product';
-$lang['products']       = 'Products';
-$lang['product_name']   = 'Product Name';
-$lang['add_product']    = 'Add Product';
-$lang['edit_product']   = 'Edit Product';
-$lang['product_detail'] = 'Product Detail';
 
 #Brands / Partners
 #----------

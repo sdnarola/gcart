@@ -6,7 +6,7 @@
 			</div>
 			<h5 class="content-group"><?php _el('login_to_your_account')?><small class="display-block"><?php _el('enter_your_credentials_below')?></small></h5>
 		</div>
-		<?php $this->load->view('admin/includes/alerts');?>
+		<?php $this->load->view('vendor/includes/alerts');?>
 		<div class="form-group has-feedback has-feedback-left">
 			<div class="form-control-feedback"><i class="icon-envelop text-muted"></i>
 			</div>

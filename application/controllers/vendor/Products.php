@@ -246,11 +246,11 @@ class Products extends Vendor_Controller
 		}
 
 		$deleted = $this->products->delete_many($where);
+		$update  = $this->vendors->update_total_product($vendor_id, 'total_products - '.$count);
 
-		if ($deleted)
+		if ($deleted && $update)
 		{
 			$ids = implode(',', $where);
-			$this->vendors->update_total_product($vendor_id, 'total_products - '.$count);
 			echo 'true';
 		}
 		else
@@ -264,9 +264,13 @@ class Products extends Vendor_Controller
 	 */
 	public function details($id = '')
 	{
+		$this->set_page_title(_l('product_details'));
+
+		$vendor_id = $this->session->userdata('vendor_id');
+
 		if ($id)
 		{
-			$data['product'] = $this->products->get($id);
+			$data['product'] = $this->products->get_by(array('id' => $id, 'vendor_id' => $vendor_id));
 
 			if (!$data['product'])
 			{

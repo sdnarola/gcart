@@ -50,6 +50,8 @@ class Orders extends Vendor_Controller
 	 */
 	public function details($id = '')
 	{
+		$this->set_page_title(_l('order_details'));
+
 		if ($id)
 		{
 			$vendor_id = $this->session->userdata('vendor_id');
@@ -73,6 +75,7 @@ class Orders extends Vendor_Controller
 	 */
 	public function invoice($id = '')
 	{
+		$this->set_page_title(_l('invoice'));
 		$vendor_id = $this->session->userdata('vendor_id');
 
 		$data['order']       = $this->orders->get_orders($vendor_id, $id);
