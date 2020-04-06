@@ -86,4 +86,33 @@ class User_model extends MY_Model
 	}
 
 // =========================== Bhavik ==================================//
+// 
+/***==================================================code by vixuti patel=====================================================***/
+
+/**
+ * [edit user address ]
+ * @param  [array] $data [user details]
+ * @param  [int] $id   [user id]
+ * @return [array]   $query    [user-address data]
+ */
+	public function edit_user_address($id, $address_1, $address_2, $city, $state, $pincode)
+	{
+		$result = "UPDATE users_address as a SET a.address_1='$address_1',a.address_2='$address_2',a.city='$city',a.state='$state',a.pincode='$pincode' WHERE a.users_id=$id";
+		$query  = $this->db->query($result);
+		
+		return $query;	
+
+	}
+/**
+ * [insert_user_address description]
+ * @param  [type] $data [description]
+ * @return [type]       [description]
+ */
+	public function insert_user_address($data)
+	{
+		return $this->db->insert('users_address',$data);
+
+	}
+/***==================================================code end by vixuti patel=====================================================***/
+
 }

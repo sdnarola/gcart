@@ -16,5 +16,11 @@ class Frontend_Controller extends MY_Controller
 		{
 			redirect(site_url('authentication/maintenance'));
 		}
+
+		$this->load->model('category_model', 'category');
+		$this->load->model('brand_model', 'brands');
+		$this->load->model('slider_model', 'sliders');
+		$this->load->model('product_model', 'products');
+
 	}
 }

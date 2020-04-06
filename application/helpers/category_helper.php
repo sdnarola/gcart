@@ -68,7 +68,7 @@ function get_sub_category($id, $info = '')
 {
 	$CI = &get_instance();
 	$CI->load->model('category_model', 'categories');
-	$sub_category = $CI->categories->get_sub_category($id);
+	$sub_category = $CI->categories->get_sub_category_info($id);
 
 	if ($info != '')
 	{

@@ -5,6 +5,7 @@ class Brand_model extends MY_Model
 {
 	/**
 	 * @var boolean
+
 	 */
 	protected $soft_delete = TRUE;
 
@@ -19,5 +20,21 @@ class Brand_model extends MY_Model
 	public function __construct()
 	{
 		parent::__construct();
+	}
+
+	/**
+	 * [get_all_brands description]
+	 * @return [type] [description]
+	 */
+	public function get_all_brands()
+	{
+		$query = $this->db->get('brands');
+
+		if ($query)
+		{
+			return $query->result_array();
+		}
+
+		return false;
 	}
 }
