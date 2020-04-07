@@ -1,3 +1,10 @@
+<?php
+	$main_categories   = $this->category->get_parent_category();
+	$sub_categories    = $this->category->get_sub_category();
+	$header_categories = $this->category->get_parent_category(1);
+	$brands            = $this->brands->get_all_brands();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +23,15 @@
 <!-- Customizable CSS -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/content.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/rateit.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
+
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 
 <!-- Icons/Glyphs -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
@@ -29,6 +40,11 @@
 <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+<script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+
+<!-- Fonts -->
 </head>
 <body class="cnt-home">
 <!-- ============================================== HEADER ============================================== -->
@@ -39,17 +55,48 @@
     <div class="container">
       <div class="header-top-inner">
         <div class="cnt-account">
-          <ul class="list-unstyled">
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-user"></i>My Account</a></li>
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-            <li><a href="<?php echo base_url('cart'); ?>"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
+
+
+            <ul class="list-unstyled">
+            <?php
+
+            	if (is_user_logged_in())
+            	{
+            	?>
+                <li><a href="#">Welcome&nbsp<?php echo get_loggedin_info('username'); ?></a></li>
+                <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
+                <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');?></a></li>
+                 <div class="dropdown" style="float: right;">
+                  <div class="btn-group btn-group-sm">
+                  <a class="btn btn-primary  dropdown-toggle" href="<?php echo base_url(); ?>#" id="dropdownMenuLink" data-toggle="dropdown"  >
+
+                 <div class="icon fa fa-user"> My Account </div> </a>
+
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" href="<?php echo site_url('profile') ?>">My profile</a></li>
+                    <li><a class="dropdown-item" href="<?php echo site_url('profile/edit') ?>"><?php _el('edit_profile');?></a></li>
+                     <li><a class="dropdown-item" href="#">My Orders</a></li>
+                  </div>
+                </div>
+                </div>
+            <?php
+            	}
+            	else
+            	{
+            	?>
+
+            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-lock"></i>Login</a></li>
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-user"></i>Sell</a></li>
+            <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i>Login</a></li>
+            <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i>Sell</a></li>
+           <?php
+           	}
+
+           ?>
           </ul>
+
         </div>
         <!-- /.cnt-account -->
-
 
         <!-- /.cnt-cart -->
         <div class="clearfix"></div>
@@ -65,30 +112,40 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
           <!-- ============================================================= LOGO ============================================================= -->
-          <div class="logo"> <a href="<?php echo base_url(); ?>home.html"> <img src="<?php echo base_url(); ?>assets/themes/default/images/logo.png" alt="logo"> </a> </div>
+
+          <div class="logo"> <a href="<?php echo base_url(); ?>"> <img src="<?php echo base_url(); ?>assets/themes/default/images/logo.png" alt="logo"> </a> </div>
+
           <!-- /.logo -->
-          <!-- ============================================================= LOGO : END ============================================================= --> </div>
+          <!-- ===================================================== LOGO : END ============================================================= --> </div>
         <!-- /.logo-holder -->
 
         <div class="col-xs-12 col-sm-12 col-md-7 top-search-holder">
           <!-- /.contact-row -->
-          <!-- ============================================================= SEARCH AREA ============================================================= -->
-          <div class="search-area">
-            <form>
+          <!-- ==================================================== SEARCH AREA ============================================================= -->
+
+            <div class="search-area">
+            <form action="<?php echo base_url('categories/search') ?>" name="search" method='post'>
+
               <div class="control-group">
-                <ul class="categories-filter animate-dropdown">
-                  <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="<?php echo base_url(); ?>category.html">Categories <b class="caret"></b></a>
-                    <ul class="dropdown-menu" role="menu" >
-                      <li class="menu-header">Computer</li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>category.html">- Clothing</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>category.html">- Electronics</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>category.html">- Shoes</a></li>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>category.html">- Watches</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <input class="search-field" placeholder="Search here..." />
-                <a class="search-button" href="<?php echo base_url(); ?>#" ></a> </div>
+
+                 <select id="Categories" name="category_id"  data-toggle="dropdown" ><b class="Caret"></b>
+                 <option value="*" class="dropdown">Categories</option>
+                  <?php
+
+                  	foreach ($main_categories as $key => $main_category)
+                  	{
+                  	?>
+                 <option class="dropdown"  value="<?php echo $main_category->id; ?>"><?php echo ucwords($main_category->name); ?></option>
+
+                 <?php
+                 	}
+
+                 ?>
+                </select>
+                <input class="search-field" name="name"  placeholder="Search here..." />
+                 <button type="submit" id='save' name="submit" class="search-button"></button>
+               <!-- <a class="search-button"  href="#" ></a>-->
+                </div>
             </form>
           </div>
           <!-- /.search-area -->
@@ -134,7 +191,7 @@
           </div>
           <!-- /.dropdown-cart -->
 
-          <!-- ============================================================= SHOPPING CART DROPDOWN : END============================================================= --> </div>
+          <!-- ===================================== SHOPPING CART DROPDOWN : END============================================================= --> </div>
         <!-- /.top-cart-row -->
       </div>
       <!-- /.row -->
@@ -157,189 +214,84 @@
           <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
             <div class="nav-outer">
               <ul class="nav navbar-nav">
-                <li class="active dropdown yamm-fw"> <a href="<?php echo base_url(); ?>Home/" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
-                <li class="dropdown yamm mega-menu"> <a href="<?php echo base_url(); ?>#" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Clothing</a>
-                  <ul class="dropdown-menu container">
+
+                 <li class="active dropdown yamm-fw"> <a href="<?php echo base_url(); ?>" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
+                <?php
+
+                	foreach ($header_categories as $key => $header_category)
+                	{
+                	?>
+
+                <li class="dropdown yamm mega-menu"><a href="<?php echo base_url().'categories/get_parent_category_products/'.$header_category->id; ?>" data-hover="dropdown" class="dropdown-toggle"  data-toggle="dropdown"><?php echo ucwords($header_category->name); ?> </a>
+                                        <!-- /.accordion-heading -->
+                  <ul class="dropdown-menu container"  id="<?php echo $header_category->id; ?>">
                     <li>
-                      <div class="yamm-content ">
-                        <div class="row">
-                          <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-                            <h2 class="title">Men</h2>
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>Categories/">Dresses</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Shoes </a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Jackets</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Sunglasses</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Sport Wear</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Blazers</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Shirts</a></li>
-                            </ul>
-                          </div>
-                          <!-- /.col -->
 
-                          <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-                            <h2 class="title">Women</h2>
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>#">Handbags</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Jwellery</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Swimwear </a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Tops</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Flats</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Shoes</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Winter Wear</a></li>
-                            </ul>
-                          </div>
-                          <!-- /.col -->
+                     <div class="yamm-content">
 
-                          <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-                            <h2 class="title">Boys</h2>
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>#">Toys & Games</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Jeans</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Shirts</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Shoes</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">School Bags</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Lunch Box</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Footwear</a></li>
-                            </ul>
-                          </div>
-                          <!-- /.col -->
+                        <div class="row customli">
 
-                          <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
-                            <h2 class="title">Girls</h2>
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>#">Sandals </a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Shorts</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Dresses</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Jwellery</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Bags</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Night Dress</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Swim Wear</a></li>
-                            </ul>
-                          </div>
-                          <!-- /.col -->
 
-                          <div class="col-xs-12 col-sm-6 col-md-4 col-menu banner-image"> <img class="img-responsive" src="assets/themes/default/images/banners/top-menu-banner.jpg" alt=""> </div>
-                          <!-- /.yamm-content -->
+                    <?php
+                    	$counter = 0;
+
+                    		foreach ($sub_categories as $key => $sub_category)
+                    		{
+                    			if ($sub_category->category_id == $header_category->id)
+                    			{
+                    				if ($counter < 4)
+                    				{
+                    				?>
+                         <div  class="col-xs-12 col-sm-6 col-md-3 col-menu " >
+                            <ul class="links">
+                              <li><a href="<?php echo base_url().'categories/get_sub_category_products/'.$sub_category->id; ?>"><?php echo ucwords($sub_category->name);
+				$counter++; ?></a></li>
+                                </ul>
+                         </div>
+                          <?php
+                          	}
+                          				elseif ($counter >= 4)
+                          				{
+                          				?>
+                           <div class="col-xs-12 col-sm-6 col-md-3 col-menu" >
+                            <ul class="links">
+                              <li><a href="<?php echo base_url().'Categories/get_sub_category_products/'.$sub_category->id; ?>"><?php echo ucwords($sub_category->name);
+				$counter++; ?>  </a></li>
+                             </ul>
+                             </div>
+                            <?php
+                            	}
+                            				else
+                            				{
+                            				?>
+                           <div class="col-xs-12 col-sm-6 col-md-3 col-menu">
+                            <ul class="links">
+                              <li><a href="<?php echo base_url().'Categories/get_sub_category_products/'.$sub_categories->id; ?>"><?php echo ucwords($sub_category->name);
+				$counter++; ?></a></li>
+                             </ul>
+                            </div>
+                             <?php
+                             	}
+
+                             			?>
+<?php
+	}
+		}
+		//sub categories foreach end
+	?>
+
+                      <!-- /.yamm-content -->
                         </div>
                       </div>
                     </li>
                   </ul>
                 </li>
-                <li class="dropdown mega-menu">
-                <a href="<?php echo base_url(); ?>category.html"  data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Electronics <span class="menu-label hot-menu hidden-xs">hot</span> </a>
-                  <ul class="dropdown-menu container">
-                    <li>
-                      <div class="yamm-content">
-                        <div class="row">
-                          <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
-                            <h2 class="title">Laptops</h2>
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>#">Gaming</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Laptop Skins</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Apple</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Dell</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Lenovo</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Microsoft</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Asus</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Adapters</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Batteries</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Cooling Pads</a></li>
-                            </ul>
-                          </div>
-                          <!-- /.col -->
+             <?php
+             	}
 
-                          <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
-                            <h2 class="title">Desktops</h2>
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>#">Routers & Modems</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">CPUs, Processors</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">PC Gaming Store</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Graphics Cards</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Components</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Webcam</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Memory (RAM)</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Motherboards</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Keyboards</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Headphones</a></li>
-                            </ul>
-                          </div>
-                          <!-- /.col -->
-
-                          <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
-                            <h2 class="title">Cameras</h2>
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>#">Accessories</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Binoculars</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Telescopes</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Camcorders</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Digital</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Film Cameras</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Flashes</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Lenses</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Surveillance</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Tripods</a></li>
-                            </ul>
-                          </div>
-                          <!-- /.col -->
-                          <div class="col-xs-12 col-sm-12 col-md-2 col-menu">
-                            <h2 class="title">Mobile Phones</h2>
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>#">Apple</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Samsung</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Lenovo</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Motorola</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">LeEco</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Asus</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Acer</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Accessories</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Headphones</a></li>
-                              <li><a href="<?php echo base_url(); ?>#">Memory Cards</a></li>
-                            </ul>
-                          </div>
-                          <div class="col-xs-12 col-sm-12 col-md-4 col-menu custom-banner"> <a href="<?php echo base_url(); ?>#"><img alt="" src="assets/themes/default/images/banners/banner-side.png"></a> </div>
-                        </div>
-                        <!-- /.row -->
-                      </div>
-                      <!-- /.yamm-content --> </li>
-                  </ul>
-                </li>
-                <li class="dropdown hidden-sm"> <a href="<?php echo base_url(); ?>category.html">Health & Beauty <span class="menu-label new-menu hidden-xs">new</span> </a> </li>
-                <li class="dropdown hidden-sm"> <a href="<?php echo base_url(); ?>category.html">Watches</a> </li>
-                <li class="dropdown"> <a href="<?php echo base_url(); ?>contact.html">Jewellery</a> </li>
-                <li class="dropdown"> <a href="<?php echo base_url(); ?>contact.html">Shoes</a> </li>
-                <li class="dropdown"> <a href="<?php echo base_url(); ?>contact.html">Kids & Girls</a> </li>
-                <li class="dropdown"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown">Pages</a>
-                  <ul class="dropdown-menu pages">
-                    <li>
-                      <div class="yamm-content">
-                        <div class="row">
-                          <div class="col-xs-12 col-menu">
-                            <ul class="links">
-                              <li><a href="<?php echo base_url(); ?>home.html">Home</a></li>
-                              <li><a href="<?php echo base_url(); ?>category.html">Category</a></li>
-                              <li><a href="<?php echo base_url(); ?>detail.html">Detail</a></li>
-                              <li><a href="<?php echo base_url(); ?>shopping-cart.html">Shopping Cart Summary</a></li>
-                              <li><a href="<?php echo base_url(); ?>checkout.html">Checkout</a></li>
-                              <li><a href="<?php echo base_url(); ?>blog.html">Blog</a></li>
-                              <li><a href="<?php echo base_url(); ?>blog-details.html">Blog Detail</a></li>
-                              <li><a href="<?php echo base_url(); ?>contact.html">Contact</a></li>
-                              <li><a href="<?php echo base_url(); ?>sign-in.html">Sign In</a></li>
-                              <li><a href="<?php echo base_url(); ?>my-wishlist.html">Wishlist</a></li>
-                              <li><a href="<?php echo base_url(); ?>terms-conditions.html">Terms and Condition</a></li>
-                              <li><a href="<?php echo base_url(); ?>track-orders.html">Track Orders</a></li>
-                              <li><a href="<?php echo base_url(); ?>product-comparison.html">Product-Comparison</a></li>
-                              <li><a href="<?php echo base_url(); ?>faq.html">FAQ</a></li>
-                              <li><a href="<?php echo base_url(); ?>404.html">404</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-
+             ?>
               </ul>
+
               <!-- /.navbar-nav -->
               <div class="clearfix"></div>
             </div>
@@ -367,48 +319,40 @@
     <!-- ============================================== CONTAINER  : END============================================== -->
 
  <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+
+     <!--/.owl-carousel #logo-slider -->
+
     <div id="brands-carousel" class="logo-slider wow fadeInUp">
       <div class="logo-slider-inner">
         <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
-          <div class="item m-t-15"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand1.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
+           <?php
 
-          <div class="item m-t-10"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand2.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
+           	foreach ($brands as $brand)
+           	{
+           	?>
+          <div class="item m-t-15"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url() ?><?php echo $brand['logo']; ?>" src="<?php echo base_url() ?><?php echo $brand['logo']; ?>" alt="brand" style="max-height:110px;max-width:166px;height:auto;width:auto;"> </a> </div>
+          <?php
+          	}
 
-          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand3.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
-
-          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand4.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
-
-          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand5.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
-
-          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand6.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
-
-          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand2.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
-
-          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand4.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
-
-          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand1.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
-
-          <div class="item"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url(); ?>assets/themes/default/images/brands/brand5.png" src="<?php echo base_url(); ?>assets/themes/default/images/blank.gif" alt=""> </a> </div>
-          <!--/.item-->
+          ?>
         </div>
-        <!-- /.owl-carousel #logo-slider -->
+        <div class="customNavigation">
+              <a class="btn play"></a>
+        </div>
+         <!--/.owl-carousel #logo-slider -->
       </div>
       <!-- /.logo-slider-inner -->
-
     </div>
     <!-- /.logo-slider -->
     <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
+<<<<<<< HEAD
 
 
+=======
+  </div>
+  <!-- /.container -->
+</div>
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 <!-- /#top-banner-and-menu -->
 <!-- ============================================================= FOOTER ============================================================= -->
 <footer id="footer" class="footer color-bg">
@@ -542,6 +486,7 @@
 <!-- JavaScripts placed at the end of the document so the pages load faster -->
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-hover-dropdown.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/owl.carousel.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/echo.min.js"></script>
@@ -551,6 +496,21 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/themes/default/js/lightbox.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-select.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/wow.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
+
+<script>
+          var temp = document.querySelectorAll('.customli');
+          console.log(temp);
+          var t = document.querySelector('.yamm-content');
+         temp.forEach((e)=>{
+          if(e.children.length === 0)
+          {
+          e.style.display='none';
+          e.parentNode.style.display='none'
+          var p = e.parentNode;
+          p.parentNode.style.display='none'
+          }
+         })
+        </script>
 </body>
 </html>

@@ -163,23 +163,6 @@ jQuery('.home-owl-carousel').each(function(){
     });
 });
 
-jQuery('.homepage-owl-carousel').each(function(){
-
-    var owl = $(this);
-    var  itemPerLine = owl.data('item');
-    if(!itemPerLine){
-        itemPerLine = 4;
-    }
-    owl.owlCarousel({
-        items : itemPerLine,
-        itemsTablet:[768,2],
-        itemsDesktop : [1199,2],
-        navigation : true,
-        pagination : false,
-
-        navigationText: ["", ""]
-    });
-});
 
 jQuery(".blog-slider").owlCarousel({
     items : 2,
@@ -214,14 +197,22 @@ jQuery(".sidebar-carousel").owlCarousel({
     navigationText: ["", ""]
 });
 
-jQuery(".brand-slider").owlCarousel({
-    items : 6,
-    navigation : true,
-    slideSpeed : 300,
-    pagination: false,
-    paginationSpeed : 400,
-    navigationText: ["", ""]
-});    
+$(document).ready(function() {
+
+      var owl = $("#brand-slider");
+
+      owl.owlCarousel({
+         navigation : true,
+          slideSpeed : 300,
+          items : 6, 
+          itemsDesktop : [1000,5], 
+          itemsDesktopSmall : [900,3], 
+          itemsTablet: [600,2],
+          itemsMobile : false 
+      });
+       owl.trigger('owl.play',1000);  
+});
+
 jQuery("#advertisement").owlCarousel({
     items : 1,
     itemsDesktopSmall :[979,2],
@@ -231,7 +222,7 @@ jQuery("#advertisement").owlCarousel({
     pagination: true,
     paginationSpeed : 400,
     navigationText: ["", ""]
-});    
+});
 
 
 
@@ -311,7 +302,7 @@ jQuery(function(){
         pagination: true
     });
 
-  
+
 });
 
 
@@ -319,7 +310,7 @@ jQuery(function(){
 
 
 /*===================================================================================*/
-/*  WOW 
+/*  WOW
 /*===================================================================================*/
 
 jQuery(function () {
@@ -328,9 +319,9 @@ jQuery(function () {
 
 
 /*===================================================================================*/
-/*  TOOLTIP 
+/*  TOOLTIP
 /*===================================================================================*/
-jQuery("[data-toggle='tooltip']").tooltip(); 
+jQuery("[data-toggle='tooltip']").tooltip();
 
 
 

@@ -80,23 +80,24 @@
                             </div>
 <?php
 	$category = get_category($sub_category['category_id']);
-	$readonly = '';
-
-	if ($category['is_active'] == 0)
-	{
-		$readonly = 'readonly';
-	}
+	$status = '';
+        if ($category['is_active'] == 0)
+        {
+            $result= "readonly";
+        }
+        else
+        {
+            $result = '';
+        }
 
 ?>
                             <div  class=" form-group">
                                 <label><?php _el('status');?>:</label>
                                 <input type="checkbox" onchange="change_status(this);" class="switchery" name="is_active" id="<?php echo $sub_category['id']; ?>"<?php
-
-	if ($sub_category['is_active'] == 1)
-	{
-		echo 'checked';}
-
-?><?php echo $readonly; ?>>
+                        if ($sub_category['is_active'] == 1)
+                            {
+                            echo 'checked';}
+                        ?><?php echo $status; ?> <?php echo $result?>>
                             </div>
 
                         </div>
