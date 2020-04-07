@@ -1694,7 +1694,7 @@ header{background:#157ed2}
 }
 .sidebar .side-menu nav .nav > li > a:after {
   color: #bababa;
-  content: "\f105";
+  content: " ";
   float: right;
   font-size: 12px;
   height: 20px;
@@ -3527,6 +3527,7 @@ age-container #owl-main .owl-next {
   font-size: 12px;
   line-height: 24px;
   font-weight: 500;
+  white-space: nowrap;
 }
 .category-carousel {
   text-align: center;
@@ -5862,3 +5863,8 @@ z-index:10000
     margin-top: 30px;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.08);
 	}
+
+ .sidebar .sidebar-module-container .sidebar-widget .sidebar-widget-body .accordion .accordion-group .accordion-body .accordion-inner ul li a.sub-categoriesname:before {
+    content: " ";
+
+  
