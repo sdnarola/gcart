@@ -63,7 +63,7 @@ class Category_model extends MY_Model
 	 *
 	 * @return mixed 	sub category
 	 */
-	function get_sub_category($id)
+	function get_sub_category_info($id)
 	{
 		$this->db->where('id', $id);
 		$result = $this->db->get('sub_categories')->row_array();

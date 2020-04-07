@@ -16,10 +16,10 @@ class Settings extends Admin_Controller
 	 */
 	public function index()
 	{
-			$this->set_page_title(_l('settings'));
-			$data['settings'] = get_settings();
-			$data['content']  = $this->load->view('admin/settings/index', $data, TRUE);
-			$this->load->view('admin/layouts/index', $data);
+		$this->set_page_title(_l('settings'));
+		$data['settings'] = get_settings();
+		$data['content']  = $this->load->view('admin/settings/index', $data, TRUE);
+		$this->load->view('admin/layouts/index', $data);
 	}
 
 	/**
@@ -28,7 +28,7 @@ class Settings extends Admin_Controller
 	public function add()
 	{
 		$this->set_page_title(_l('settings').' | '._l('add'));
-	
+
 		if ($this->input->post())
 		{
 			foreach ($this->input->post() as $key => $value)
@@ -84,14 +84,21 @@ class Settings extends Admin_Controller
 			$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
 			$sent = send_email($this->input->post('test_email'), $subject, $message);
 
-			if ($sent)
-			{
-				echo 'true';
-			}
-			else
-			{
-				echo 'false';
-			}
+// if ($sent)
+
+// {
+
+// 	echo 'true';
+
+// }
+
+// else
+
+// {
+
+// 	echo 'false';
+			// }
+			print_r($sent);
 		}
 	}
 }

@@ -12,12 +12,13 @@
  */
 function counter(end_date,id)
 {
-  var result = '';
+
   // Set the date we're counting down to
   var countDownDate = new Date(end_date).getTime();
 
   // Update the count down every 1 second
   var x = setInterval(function() {
+    var result = '';
 
     // Get today's date and time
     var now = new Date().getTime();
@@ -51,7 +52,6 @@ function counter(end_date,id)
     }
 
     $('#time_counter_'+id).html(result);
-    result='';
   }, 1000);
 }
 </script>
@@ -412,12 +412,6 @@ function counter(end_date,id)
           <h3 class="section-title">hot deals</h3>
           <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
 <?php
-	$disabled = '';
-
-	if (!is_user_logged_in())
-	{
-		$disabled = ' disabled ';
-	}
 
 	if ($deals)
 	{
@@ -633,7 +627,6 @@ function counter(end_date,id)
                       <!-- /.product-micro-row -->
                     </div>
                     <!-- /.product-micro -->
-
                   </div>
                   <div class="product">
                     <div class="product-micro">
@@ -642,7 +635,6 @@ function counter(end_date,id)
                           <div class="product-image">
                             <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p25.jpg" alt=""> </a> </div>
                             <!-- /.image -->
-
                           </div>
                           <!-- /.product-image -->
                         </div>
@@ -653,7 +645,6 @@ function counter(end_date,id)
                             <div class="rating rateit-small"></div>
                             <div class="product-price"> <span class="price"> $450.99 </span> </div>
                             <!-- /.product-price -->
-
                           </div>
                         </div>
                         <!-- /.col -->

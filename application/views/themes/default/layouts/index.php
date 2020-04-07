@@ -42,7 +42,7 @@
           <ul class="list-unstyled">
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-user"></i>My Account</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
+            <li><a href="<?php echo base_url('cart'); ?>"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-lock"></i>Login</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-user"></i>Sell</a></li>
@@ -407,7 +407,7 @@
     </div>
     <!-- /.logo-slider -->
     <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
-  </div>
+
 
 <!-- /#top-banner-and-menu -->
 <!-- ============================================================= FOOTER ============================================================= -->
@@ -532,6 +532,7 @@
     </div>
   </div>
 </footer>
+
 <!-- ============================================================= FOOTER : END============================================================= -->
 
 <!-- For demo purposes – can be removed on production -->

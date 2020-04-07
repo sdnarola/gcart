@@ -1,4 +1,4 @@
- select-search<!-- Page header -->
+<!-- Page header -->
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">

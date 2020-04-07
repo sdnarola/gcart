@@ -12,6 +12,11 @@ class Cart extends Frontend_Controller
 	public function index()
 	{
 		$this->set_page_title('Cart');
+		$user_id            = get_loggedin_user_id();
+		$data['cart_items'] = $this->cart->get_many_by(array('user_id' => $user_id));
+
+		$data['content'] = $this->load->view('themes/default/cart', $data, TRUE);
+		$this->load->view('themes/default/layouts/index', $data);
 	}
 
 	/**
