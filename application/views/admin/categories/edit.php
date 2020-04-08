@@ -41,8 +41,6 @@
                 <div class="panel-body">
                      <form action="<?php echo base_url('admin/categories/edit/').$category['id']; ?>" id="categories_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
-
-
                             <div class="form-group">
                               <small class="req text-danger">* </small>
                               <label>banner name</label>
@@ -52,19 +50,16 @@
 
 	foreach ($banners as $banner)
 	{
-	?>
+?>
                                     <option id="$banner['id']" name="banner" value="<?php echo $banner['id'] ?>"
                                         <?php
-
                                         		if ($banner['id'] == $category['banner_id'])
                                         		{
                                         			echo 'selected';
                                         		}
-
                                         	?>><?php echo ucfirst($banner['title']) ?></option>
 <?php
 	}
-
 ?>
                                 </select>
                             </div>
@@ -79,27 +74,26 @@
                                 <input type="text" class="form-control" placeholder="<?php _el('slug');?>" id="slug" name="slug" value="<?php echo $category['slug'] ?>">
                             </div>
 <?php
-	$file = basename($category['icon']);
+	$icon = basename($category['icon']);
 ?>
 
                             <div class="form-group">
                                 <label><?php _el('icon');?>:</label>
-                                <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/main_categories/').$file ?>" width="400" height="200">
+                                <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/main_categories/').$icon ?>" width="400" height="200">
                             </div>
                             <div class="form-group">
                                 <input type="file"  class="file-input"  name="icon" id='icon' data-show-caption="false" data-show-upload="false">
                             </div>
 <?php
 	$readonly = '';
-
 ?>
                             <div class="form-group">
                                 <label><?php _el('status');?>:</label>
                                 <input type="checkbox" class="switchery" name="is_active" id="<?php echo $category['id']; ?>"<?php
-	if ($category['is_active'] == 1)
-	{
-	echo 'checked';}
-?><?php echo $readonly; ?>>
+                                	if ($category['is_active'] == 1)
+                                	{
+                                	echo 'checked';}
+                                ?><?php echo $readonly; ?>>
                             </div>
                         </div>
                         <div class="row">
@@ -161,6 +155,9 @@ $('.file-input').fileinput({
         initialCaption: "choose file",
     });
 
+/**
+ *  generate a slug from category_name
+ */
 function generate_slug()
 {
     var str = document.getElementById('name').value;
@@ -174,5 +171,4 @@ function generate_slug()
     var slug = slug.toLowerCase();
     document.getElementById("slug").value = slug;
 }
-
 </script>

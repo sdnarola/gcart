@@ -30,15 +30,19 @@
                 <!-- Panel body -->
                 <div class="panel-body">
                     <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="pull-right">
+                                <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                            </div>
+                        </div>
                         <div class="col-md-2">
 <?php
-    $file = basename($path);
+    $image_name = basename($path);
 ?>
-                    <div class="user-image">
-                    <img src="<?php echo base_url() . 'assets/uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="280" width="208" border="10"></img>
-                    </div>
+                            <div class="user-image">
+                            <img src="<?php echo base_url() . 'assets/uploads/users/' . $image_name; ?>" alt="<?php _el('img_alt_msg')?>" height="280" width="208" border="10"></img>
+                            </div>
                         </div>
-
                         <div class="col-md-5">
                             <table class="table table-hover table-framed table-sm table-striped rounded">
                               <thead>
@@ -120,7 +124,7 @@
                                     {
 ?>
                                     <tr>
-                                       <td>
+                                        <td>
                                             <?php echo $record['order_number'] ?>
                                         </td>
                                         <td>
@@ -129,13 +133,13 @@
                                         <td><?php echo $record['grand_total'] ?></td>
                                         <td class="text-center">
 <?php
-                                        if ($record['order_status'] == 0) 
+                                        if($record['order_status'] == 0) 
                                         {
                                                   echo '<span class="label label-warning label-rounded">'. _l('pending') .'</span>';
-                                        } elseif ($record['order_status'] == 1) 
+                                        } elseif($record['order_status'] == 1) 
                                         {
                                                 echo '<span class="label label-info label-rounded">'. _l('processing') .'</span>';
-                                        } elseif ($record['order_status'] == 2) 
+                                        } elseif($record['order_status'] == 2) 
                                         {
                                                   echo '<span class="label label-success label-rounded">'. _l('completed') .'</span>';
                                         } elseif($record['order_status'] == 3)
@@ -157,7 +161,6 @@
                                             <td colspan=5 class='text-center'>". _l('no_data_found'). "</td>
                                         </tr>";
                                 }
-
 ?>
                                 </tbody>
                             </table>
@@ -170,56 +173,4 @@
         </div>
     </div>
 </div>
-<!-- /Content area
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-$(function() {
-
-    $('#info_table').DataTable({
-      
-        'columnDefs': [ {
-        'targets': [4], /* column index */
-        'orderable': false, /* disable sorting */
-        }],
-
-    });
-
-    //add class to style style datatable select box
-    $('div.dataTables_length select').addClass('datatable-select');
- });
-
-</script>
+<!-- /Content area -->

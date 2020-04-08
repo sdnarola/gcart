@@ -12,7 +12,9 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
             </li>
-            <li class="active"><?php _el('settings'); ?></li>
+            <li>
+                <a href="<?php echo base_url('admin/settings'); ?>"><?php _el('settings'); ?></a>
+            </li>
             <li class="active"><?php _el('home_page'); ?></li>
              <li>
                 <a href="<?php echo base_url('admin/sliders'); ?>"><?php _el('sliders');?></a>
@@ -62,10 +64,10 @@
                             </div>                     
                             <div class="form-group">
                                 <label><?php _el('image'); ?>:</label>
-                                <input type="file" class="file-input form-control"  name="image" id='image'>
+                                <input type="file" class="file-input form-control"  name="image" id='image'data-show-upload="false">
                             </div>
                         </div> 
-                          <div class="row">
+                        <div class="row">
                             <div class="form-group col-md-12">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
@@ -112,7 +114,6 @@ $("#sliders_form").validate({
 $('.file-input').fileinput({
         browseLabel: 'Browse',
         browseIcon: '<i class="icon-file-plus"></i>',
-        uploadIcon: '<i class="icon-file-upload2"></i>',
         removeIcon: '<i class="icon-cross3"></i>',
         layoutTemplates: {
             icon: '<i class="icon-file-check"></i>',

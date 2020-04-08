@@ -21,17 +21,17 @@ class Subscriptions_model extends MY_Model {
 	}
 
 /**
- * Gets all the subscriptions either is_delete=0 ot 1.
+ * Gets all the subscriptions either is_delete=0 or 1.
  *
  * @param      <int>  $id     The identifier
  *
- * @return     <array>  ( returns all the subscriptions either is_delete=0 ot 1)
+ * @return     <array>  ( returns all the subscriptions either is_delete=0 or 1)
  */
 	public function get_($id)
 	{
 		$this->soft_delete = FALSE;
+		$subscription = $this->get($id);
 
-		$subs = $this->get($id);
-		return $subs;
+		return $subscription;
 	}
 }

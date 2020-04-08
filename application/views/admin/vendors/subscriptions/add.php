@@ -25,7 +25,6 @@
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
-
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
             <!-- Panel -->
@@ -74,10 +73,8 @@
                                     <label><?php _el('description');?>:</label>
                                 </div>
                                 <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"></textarea>
-
                             </div>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
@@ -134,5 +131,4 @@ $("#subscription_form").validate({
         },
     },
 });
-
 </script>

@@ -9,6 +9,7 @@ class Sub_categories extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->load->model('sub_category_model', 'sub_categories');
 	}
 
@@ -20,7 +21,6 @@ class Sub_categories extends Admin_Controller
 		$this->set_page_title(_l('sub_categories'));
 
 		$data['sub_categories'] = $this->sub_categories->get_all();
-
 		$data['content'] = $this->load->view('admin/categories/sub_categories/index',$data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
@@ -108,8 +108,8 @@ class Sub_categories extends Admin_Controller
 
 			if ($insert)
 			{
-							set_alert('success', _l('_added_successfully', _l('sub_category')));
-							redirect('admin/sub_categories/');
+				set_alert('success', _l('_added_successfully', _l('sub_category')));
+				redirect('admin/sub_categories/');
 			}
 
 		}
@@ -139,37 +139,17 @@ class Sub_categories extends Admin_Controller
 
 				 if($update)
 				 {
-
 				 	set_alert('success', _l('_updated_successfully', _l('sub_category')));
-						redirect('admin/sub_categories');
+					redirect('admin/sub_categories');
 				}
 				
 			} 
 			else 
 			 {
 				$data['sub_category'] = $this->sub_categories->get($id);
-
 				$data['content'] = $this->load->view('admin/categories/sub_categories/edit',$data, TRUE);
 				$this->load->view('admin/layouts/index', $data);
 			}	
 
 		}
 }
-
-	
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-	

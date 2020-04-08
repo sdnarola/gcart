@@ -95,13 +95,12 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<?php
-
 										if (null != $user['last_password_change'])
 										{
-										?>
+									?>
 									<small><?php _el('last_password_change_msg', time_to_words($user['last_password_change']))?></small>
-									<?php }
-
+									<?php 
+										}
 									?>
 								</div>
 								<div class="form-group">

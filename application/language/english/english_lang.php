@@ -107,6 +107,7 @@ $lang['total_users']      = 'Total Users';
 $lang['total_customers']  = 'Total Customers';
 $lang['recent_customers'] = 'Recent Customer(s)';
 $lang['img_alt_msg']      = "profile image can't loaded";
+$lang['contact_no']       = "Contact No";
 
 #vendors
 #-------
@@ -180,6 +181,11 @@ $lang['product_discussion'] = 'Product Discussion';
 $lang['sale']               = 'Sale';
 $lang['hot']                = 'Hot';
 $lang['new']                = 'New';
+$lang['product']        = 'Product';
+$lang['product_name']   = 'Product Name';
+$lang['add_product']    = 'Add Product';
+$lang['edit_product']   = 'Edit Product';
+$lang['product_detail'] = 'Product Detail';
 
 #Orders
 #--------
@@ -240,15 +246,6 @@ $lang['sub_category']      = 'Sub Category';
 $lang['sub_categories']    = 'Sub Categories';
 $lang['add_sub_category']  = 'Add Sub Category';
 $lang['edit_sub_category'] = 'Edit Sub Category';
-
-#Products
-#----------
-$lang['product']        = 'Product';
-$lang['products']       = 'Products';
-$lang['product_name']   = 'Product Name';
-$lang['add_product']    = 'Add Product';
-$lang['edit_product']   = 'Edit Product';
-$lang['product_detail'] = 'Product Detail';
 
 #Brands / Partners
 #----------

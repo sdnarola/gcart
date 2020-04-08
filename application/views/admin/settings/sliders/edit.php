@@ -12,7 +12,9 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
             </li>
-            <li class="active"><?php _el('settings'); ?></li>
+            <li>
+                <a href="<?php echo base_url('admin/settings'); ?>"><?php _el('settings'); ?></a>
+            </li>
             <li class="active"><?php _el('home_page'); ?></li>
             <li>
                 <a href="<?php echo base_url('admin/sliders'); ?>"><?php _el('sliders');?></a>
@@ -61,13 +63,13 @@
                                 <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"><?php echo ucfirst($slider['description'])?></textarea>
                             </div>
 <?php 
-$file = basename($slider['image']);
+$slider_image = basename($slider['image']);
 ?>
 
                             <div class="form-group">
                                 <label><?php _el('image'); ?>:</label>
                                 <div>
-                                <image name="image1" id='image1' src="<?php echo base_url('assets/uploads/sliders/').$file ?>" width="400" height="200">
+                                <image name="image1" id='image1' src="<?php echo base_url('assets/uploads/sliders/').$slider_image ?>" width="400" height="200">
                                 </div>
                             </div>
                             <div class="form-group">

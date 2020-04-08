@@ -25,7 +25,6 @@
         <div class="panel-heading mt-20">
             <div class="heading-elements">
                 <a href="<?php echo base_url('admin/faqs/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new'); ?><i class="icon-plus-circle2 position-right"></i></a>
-
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected'); ?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
@@ -194,5 +193,4 @@ function delete_selected()
         });
     });
 }
-
 </script>

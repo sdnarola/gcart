@@ -25,8 +25,7 @@
 <?php
 	if ($users) 
 	{
-		$user = $users[0];
-		
+		$user = $users[0];		
 ?>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
@@ -45,14 +44,13 @@
 							<!-- /Panel heading -->
 							<!-- Panel body -->
 							<div class="panel-body">
-								<form action="<?php echo base_url('admin/users/edit/') . $user['users_id']; ?>" id="profileform" name="profileform" method="POST">
-								
+								<form action="<?php echo base_url('admin/users/edit/') . $user['users_id']; ?>" id="profileform" name="profileform" method="POST">							
 <?php
-$file = basename($user['profile_image']);
+$image_name = basename($user['profile_image']);
 ?>									
 									<div>
 										<div class="form-group">
-											 <p align="center"><img src="<?php echo base_url() . 'assets/uploads/users/' . $file; ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
+											 <p align="center"><img src="<?php echo base_url() . 'assets/uploads/users/' . $image_name; ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
 										</div>
 									</div>
 									<div class="row">
@@ -110,34 +108,25 @@ $file = basename($user['profile_image']);
 											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo ucfirst($user['state']); ?>">
 										</div>
 <?php
-			$readonly = '';
-
-			if ($user['users_id'] == get_loggedin_user_id()) 
-			{
-				$readonly = "readonly";
-
-			}
+		$readonly = '';
 ?>
 										<div class="col-md-6 form-group">
 											<label><?php _el('status');?>:</label>
-
 											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['users_id']; ?>" <?php if ($user['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
 										</div>
 <?php
-		
 	}
 ?>
 									</div>
-								<div class="row">
-		                            <div class="form-group col-md-12">
-		                                <div class="pull-right">
-		                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
-		                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
-		                                </div>
-		                            </div>
-		                        </div>
+									<div class="row">
+			                            <div class="form-group col-md-12">
+			                                <div class="pull-right">
+			                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+			                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+			                                </div>
+			                            </div>
+			                        </div>
                     			</form>
-                    
 							</div>
 					<!-- /Panel body -->
 						</div>
@@ -165,7 +154,7 @@ $("#profileform").validate({
 		mobile: {
 			required: true,
             number: true,
-            minlength:10,
+            rangelength:[10,10],
 		},
 		address1: {
 			required: true,
@@ -197,7 +186,7 @@ $("#profileform").validate({
 		mobile: {
 			required:"<?php _el('please_enter_', _l('lastname'))?>",
 			number: "plese enter only numbers",
-			minlength:"Please enter a valid 10 digit mobile number",
+			rangelength:"Please enter a valid 10 digit mobile number",
 		},
 		address1: {
 			required:"<?php _el('please_enter_', _l('address1'))?>",

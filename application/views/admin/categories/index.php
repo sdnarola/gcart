@@ -45,10 +45,9 @@
                 </thead>
                 <tbody>
 <?php
-
 	foreach ($categories as $category)
 	{
-	?>
+?>
                     <tr>
                         <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $category['id']; ?>">
@@ -59,15 +58,14 @@
                         </td>
 <?php
 	$readonly_status = '';
-	?>
+?>
                         <td class="text-center switchery-sm">
                             <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $category['id']; ?>"<?php
-
-		if ($category['is_active'] == 1)
-		{
-			echo 'checked';}
-
-	?><?php echo $readonly_status; ?>>
+                    		if ($category['is_active'] == 1)
+                    		{
+                    			echo 'checked';
+                            }
+                    	?><?php echo $readonly_status; ?>>
                         </td>
                         <td class="text-center">
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/categories/edit/').$category['id']; ?>" id="<?php echo $category['id']; ?>" class="text-info">
@@ -80,7 +78,6 @@
                     </tr>
 <?php
 	}
-
 ?>
                 </tbody>
             </table>
@@ -244,5 +241,4 @@ function delete_selected()
         });
     });
 }
-
 </script>

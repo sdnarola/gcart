@@ -53,18 +53,15 @@
 
 	foreach ($categories as $category)
 	{
-	?>
+?>
                                     <option id="<?php echo $category['id'] ?>" name="category" value="<?php echo $category['id']; ?>"
                                     <?php
-
                                     		if ($category['id'] == $sub_category['category_id'])
-                                    		{
-                                    			echo ' selected';}
-
-                                    	?>><?php echo ucfirst($category['name']) ?></option>
+                                    		{ echo ' selected';}?>>
+                                    <?php echo ucfirst($category['name']) ?>
+                                    </option>
 <?php
 	}
-
 ?>
                                </select>
                             </div>
@@ -81,6 +78,7 @@
 <?php
 	$category = get_category($sub_category['category_id']);
 	$status = '';
+
         if ($category['is_active'] == 0)
         {
             $result= "readonly";
@@ -89,17 +87,15 @@
         {
             $result = '';
         }
-
 ?>
                             <div  class=" form-group">
                                 <label><?php _el('status');?>:</label>
                                 <input type="checkbox" onchange="change_status(this);" class="switchery" name="is_active" id="<?php echo $sub_category['id']; ?>"<?php
-                        if ($sub_category['is_active'] == 1)
-                            {
-                            echo 'checked';}
-                        ?><?php echo $status; ?> <?php echo $result?>>
+                                if ($sub_category['is_active'] == 1)
+                                    {
+                                    echo 'checked';}
+                                ?><?php echo $status; ?> <?php echo $result?>>
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">

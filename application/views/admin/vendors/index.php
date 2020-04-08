@@ -23,7 +23,7 @@
     <div class="panel panel-flat ">
         <!-- Panel heading -->
          <div class="panel-heading ">
-                <label ><?php echo _el('vendor') ?><?php echo _el('registration') ?>
+                <label ><?php echo _el('vendor') ?>&nbsp<?php echo _el('registration') ?>
                     <input  type="checkbox" class="switch" data-on-text="On" data-off-text="Off" data-size="mini"  onchange="register_status(this);"<?php
 
 	if ($registration['value'] == 1)
