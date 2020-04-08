@@ -22,10 +22,9 @@ class Emails extends Admin_Controller
 
 		$this->load_default_templates();
 
-			$data['templates'] = $this->emails->get_all();
-			$data['content']   = $this->load->view('admin/settings/emails/index', $data, TRUE);
-			$this->load->view('admin/layouts/index', $data);
-		
+		$data['templates'] = $this->emails->get_all();
+		$data['content']   = $this->load->view('admin/settings/emails/index', $data, TRUE);
+		$this->load->view('admin/layouts/index', $data);
 	}
 
 	/**

@@ -30,9 +30,7 @@ class Sub_category_model extends MY_Model
 	 */
 	public function delete_sub_categories($category_id)
 	{
-		//$this->_table = 'sub_categories';
 		$this->primary_key = 'category_id';
-
 		$delete = $this->delete($category_id);
 
 		return $delete;
@@ -47,9 +45,9 @@ class Sub_category_model extends MY_Model
 	 */
 	public function multi_delete_sub_categories($category_id)
 	{
-		//$this->_table = 'sub_categories';
 		$this->primary_key = 'category_id';
 		$delete = $this->delete_many($category_id);
+
 		return $delete;
 	}
 
@@ -63,9 +61,9 @@ class Sub_category_model extends MY_Model
 	 */
 	public function update_subcategories_status($category_id,$data)
 	{
-		//$this->_table = 'sub_categories';
 		$this->primary_key = 'category_id';
 		$update = $this->update($category_id,$data);
+
 		return $update;
 	}
 }

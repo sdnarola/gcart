@@ -73,7 +73,6 @@
                                     <label><?php _el('description');?>:</label>
                                 </div>
                                 <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"><?php echo $plan['description']; ?></textarea>
-
                             </div>
                         </div>
                     </div>
@@ -132,5 +131,4 @@ $("#subscription_form").validate({
         },
     },
 });
-
 </script>

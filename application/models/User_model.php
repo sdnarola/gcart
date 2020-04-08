@@ -43,7 +43,6 @@ class User_model extends MY_Model
 	 *
 	 * @return     <array>  ( The user's details like name,address etc. )
 	 */
-
 	public function show($id)
 	{
 		$this->db->select('*');

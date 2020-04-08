@@ -99,7 +99,7 @@
 								</div>
 								<!-- /tab pane for group-social-media -->
 								<!-- tab pane for group-email -->
-								<div class="tab-pane has-padding" id="group-dummy-1">									
+								<div class="tab-pane has-padding" id="group-dummy-1">			
 									<div class="form-group">
 										<label>SMTP Host:</label>
 										<input type="text" name="smtp_host" id="smtp_host" class="form-control" value="<?php echo get_settings('smtp_host'); ?>">
@@ -109,7 +109,7 @@
 										<input type="number" name="smtp_port" id="smtp_port" class="form-control" value="<?php echo get_settings('smtp_port'); ?>">
 									</div>
 									<div class="form-group">
-										<label>SMTP Encryption:</label>										
+										<label>SMTP Encryption:</label>				
 										<select class="select" name="smtp_encryption" id="smtp_encryption">
                             				<option value="ssl" <?php if(get_settings('smtp_encryption')=='ssl') echo 'selected'; ?>>SSL</option>
                             				<option value="tls" <?php if(get_settings('smtp_encryption')=='tls') echo 'selected'; ?>>TLS</option>
@@ -155,7 +155,7 @@
 									<h5>Send Test Email</h5>
 									<p class="text-muted">Send test email to make sure that your SMTP settings are set correctly.</p>
 									<div class="form-group">
-										<div class="input-group">										
+										<div class="input-group">								
 										<input type="email" id="test_email" class="form-control" placeholder="Email Address">
 										<div class="input-group-btn">
 											<button type="button" class="btn btn-default test_email">Test</button>
@@ -167,7 +167,7 @@
 								<!-- tab pane for group-general -->
 								<div class="tab-pane has-padding" id="group-dummy-2">
 									<div class="form-group">
-										<label><?php _el('maintenance'); ?> :</label>										
+										<label><?php _el('maintenance'); ?> :</label>			
 										<br>
 										<input type="hidden" name="maintenance" value="0" />
 										<input type="checkbox" name="maintenance" id="maintenance" value="1" class="switchery form-control" <?php if( get_settings('maintenance') == 1 ) echo 'checked'; ?> >
@@ -177,7 +177,7 @@
 										<br>
 										<input type="hidden" name="vendors_registration" value="0" />
 										<input type="checkbox" name="vendors_registration" id="vendors_registration" value="1" class="switchery form-control" <?php if( get_settings('vendors_registration') == 1 ) echo 'checked'; ?> >
-									</div>																	
+									</div>												
 								</div>
 								<!-- /tab pane for group-general -->
 							</div>
@@ -192,7 +192,6 @@
                      	</div>
 					</div>
 					<!-- /Panel body -->
-					
 				</div>
 				<!-- /Panel -->
 			</div>
@@ -243,5 +242,4 @@ $('.test_email').on('click', function() {
       });
     }
   });
-
 </script>

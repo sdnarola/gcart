@@ -2,7 +2,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('vendor');?><?php _el('details');?> </span>
+                <span class="text-semibold"><?php _el('vendor');?> <?php _el('details');?> </span>
             </h4>
         </div>
     </div>
@@ -30,24 +30,27 @@
                 <!-- Panel body -->
                 <div class="panel-body">
                     <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="pull-right">
+                                <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <fieldset>
                             <legend class="text-semibold"><i class="icon-reading position-left"></i><?php _el('vendor')?> </legend>
 <?php
-	$file = basename($vendor['profile_image']);
+	$image_name = basename($vendor['profile_image']);
 ?>
-                                <p style="text-align:center;"><img  src="<?php echo base_url().'assets/Uploads/vendors/profile/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="2" ></p>
-
+                                <p style="text-align:center;"><img  src="<?php echo base_url().'assets/Uploads/vendors/profile/'.$image_name; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="2" ></p>
                             </fieldset>
                         </div>
                         <div class="col-md-6">
                             <fieldset>
                             <legend class="text-semibold"><i class="icon-store position-left"></i><?php _el('shop')?> </legend>
-
 <?php
-	$file = basename($vendor['logo']);
+	$image_name = basename($vendor['logo']);
 ?>
-                                    <p style="text-align:center;"><image class="center" src="<?php echo base_url().'assets/Uploads/vendors/logo/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="2"></image></p>
+                                    <p style="text-align:center;"><image class="center" src="<?php echo base_url().'assets/Uploads/vendors/logo/'.$image_name; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="2"></image></p>
                             </fieldset>
                          </div>
                     </div>
@@ -106,9 +109,7 @@
 	{
 		echo ' '.'<span class="label label-danger label-rounded">'._l('expired').'</span>';
 	}
-
 ?>
-
                                     </td>
                                 </tr>
                                 <tr>
@@ -122,27 +123,24 @@
                                     <td width="40%" class="text-semibold"><?php _el('email_varified');?></td><td width="10%">:</td>
                                     <td width="40%">
 <?php
-
 	if ($vendor['is_email_verified'] == 1)
 	{
-	?>
+?>
                                                     <span class="label label-success label-rounded"><?php _el('varified')?></span>
 <?php
 	}
 	else
 	{
-	?>
+?>
                                                    <span  class="label label-danger label-rounded"><?php _el('not_varified');?></span>
 <?php
 	}
-
 ?>
                                     </td>
                                 </tr>
                               </tbody>
                             </table>
                         </div>
-
                          <div class="col-md-6">
                             <table class="table table-hover table-framed table-sm table-striped rounded">
                               <thead>
@@ -158,7 +156,6 @@
                                 <tr>
                                     <td width="40%" class="text-semibold"><?php _el('shop');?><?php _el('number');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($vendor['shop_number']); ?></td>
                                 </tr>
-
                                 <tr>
                                     <td width="40%" class="text-semibold"><?php _el('shop');?><?php _el('details');?></td><td width="10%">:</td>
                                     <td width="40%"><?php echo ucfirst($vendor['shop_details']); ?></td>
@@ -190,12 +187,11 @@
                                 </thead>
                                 <tbody>
 <?php
-
 	if ($records)
 	{
 		foreach ($records as $record)
 		{
-		?>
+?>
         <tr>
             <td><?php echo $record['name'] ?></td>
             <td><?php echo $record['category_name'] ?></td>
@@ -232,11 +228,9 @@
                     <td colspan=7 class='text-center'>"._l('no_data_found').'</td>
                 </tr>';
 	}
-
 ?>
                                   </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
@@ -247,50 +241,3 @@
     </div>
 </div>
 <!-- /Content area-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
