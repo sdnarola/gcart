@@ -16,6 +16,7 @@
 <link href="<?php echo base_url('assets/admin/css/bootstrap.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/core.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/components.css'); ?>" rel="stylesheet" type="text/css">
+<link href="<?php echo base_url('assets/admin/css/colors.css'); ?>" rel="stylesheet" type="text/css">
 <!-- /global stylesheets -->
 
 <style type="text/css">
@@ -83,11 +84,38 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js'); ?>"></script>
 
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/uploaders/fileinput.min.js'); ?>"></script>
 
+
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
 
+
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/bootstrap_multiselect.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_multiselect.js'); ?>"></script>
+
+<!-- to load boots strap switch on/off -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.js" data-turbolinks-track="true"></script>
+<!-- for dropdown list with search -->
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/select2.min.js'); ?>"></script>
+<!-- for add the wysihtml5 editor  -->
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/wysihtml5.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/toolbar.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/editors/wysihtml5/parsers.js'); ?>"></script>
+
+<!-- chart.js -->
+
+
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/media/fancybox.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/gallery.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_select2.js'); ?>"></script>
+	<!-- /theme JS files -->
+
+
+
 <script type="text/javascript">
+
+
 
 // Default Settings for jQuery Validator
 $.validator.setDefaults({
@@ -100,7 +128,6 @@ $.validator.setDefaults({
         unhighlight: function(element, errorClass) {
             $(element).removeClass(errorClass);
         },
-
         // Different components require proper error label placement
         errorPlacement: function(error, element) {
 
@@ -169,13 +196,11 @@ $.extend($.fn.dataTable.defaults, {
 	            }
             },
             buttons: [
-            'copyHtml5',
-            'csvHtml5',
             'pdfHtml5'
             ]
         },
-        "pageLength": 25,
-        "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ]
+        "pageLength": 10,
+        "lengthMenu": [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
     });
 
 
@@ -230,6 +255,7 @@ switches.forEach(function(html) {
 });
 
 </script>
+
 </head>
 
 <body>
@@ -254,6 +280,7 @@ switches.forEach(function(html) {
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li><a href="<?php echo base_url('admin/profile/edit'); ?>" ><?php _el('edit_profile');?></a></li>
+						<li><a href="<?php echo base_url('admin/authentication/login_as_vendor'); ?>" ><?php _el('login_as_vendor');?></a></li>
 						<li><a href="<?php echo admin_url('authentication/logout'); ?>" ><?php _el('logout');?></a></li>
 					</ul>
 				</li>
@@ -296,7 +323,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home4"></i> <span>Dashboard</span></a>
+									<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home4"></i> <span><?php _el('dashboard')?></span></a>
 								</li>
 								<!-- product -->
 								<li
@@ -308,9 +335,10 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/products'); ?>"><i class="icon-cart5"></i> <span>Products</span></a>
+									<a href="<?php echo base_url('admin/products'); ?>"><i class="icon-cart5"></i> <span><?php _el('products')?></span></a>
 								</li>
 								<!-- orders -->
+
 								<li
 									<?php
 
@@ -318,9 +346,9 @@ switches.forEach(function(html) {
 										{
 											echo 'class="active"';}
 
-									?>
-									>
-									<a href="<?php echo base_url('admin/orders'); ?>"><i class="icon-list-ordered"></i> <span>Orders</span></a>
+									?>>
+									<a href="<?php echo base_url('admin/orders'); ?>"><i class="icon-list-ordered"></i><span><?php _el('orders')?></span></a>
+
 								</li>
 								<!-- users -->
 								<li
@@ -332,11 +360,11 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/users'); ?>"><i class="icon-user-check"></i> <span>Users</span></a>
+									<a href="<?php echo base_url('admin/users'); ?>"><i class="icon-users"></i> <span><?php _el('users')?></span></a>
 								</li>
 								<!-- vendors -->
 								<li>
-									<a href="#"><i class="icon-users"></i><span>Vendors</span></a>
+									<a href="#"><i class="icon-user-tie"></i><span><?php _el('vendors')?></span></a>
 									<ul>
 										<li
 										<?php
@@ -348,59 +376,89 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/vendors'); ?>">
-												<span>Subscriptions</span>
+												<span><?php _el('list')?></span>
 											</a>
 										</li>
 										<li
 										<?php
 
-											if (is_active_controller('vendors'))
+											if (is_active_controller('subscriptions'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/vendors'); ?>">
-												<span>List</span>
+											<a href="<?php echo base_url('admin/subscriptions'); ?>">
+												<span><?php _el('subscriptions')?></span>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<!-- product deals & sales -->
+								<li>
+									<a href="#"><i class="icon-cash3"></i><span><?php _el('product_deals_sales')?></span></a>
+									<ul>
+										<li
+										<?php
+
+											if (is_active_controller('deals'))
+											{
+												echo 'class="active"';}
+
+										?>>
+											<a href="<?php echo base_url('admin/deals'); ?>">
+												<span><?php _el('deals')?></span>
+											</a>
+										</li>
+										<li
+										<?php
+
+											if (is_active_controller('sales'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('admin/sales'); ?>">
+												<span><?php _el('sales')?></span>
 											</a>
 										</li>
 									</ul>
 								</li>
 								<!-- product discussion -->
 								<li>
-									<a href="#"><i class="icon-bubbles9"></i><span>Product Discussion</span></a>
+									<a href="#"><i class="icon-bubbles9"></i><span><?php _el('product_discussion')?></span></a>
 									<ul>
 										<li
 										<?php
 
-											if (is_active_controller('products'))
+											if (is_active_controller('reviews'))
 											{
 												echo 'class="active"';}
 
-										?>
-										 >
-											<a href="<?php echo base_url('admin/products/reviews'); ?>">
-												<span>Reviews</span>
+										?>>
+											<a href="<?php echo base_url('admin/reviews'); ?>">
+												<span><?php _el('reviews')?></span>
 											</a>
 										</li>
 										<li
 										<?php
 
-											if (is_active_controller('products'))
+											if (is_active_controller('comments'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/products/comments'); ?>">
-												<span>Comments</span>
+											<a href="<?php echo base_url('admin/comments'); ?>">
+												<span><?php _el('comments')?></span>
 											</a>
 										</li>
 									</ul>
 								</li>
 								<!-- categories -->
 								<li>
-									<a href="#"><i class="icon-tree7"></i><span>Manage Categories</span></a>
+									<a href="#"><i class="icon-tree7"></i><span><?php _el('manage_categories')?></span></a>
 									<ul>
 										<li
 										<?php
@@ -412,20 +470,20 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/categories'); ?>">
-												<span>Main Category</span>
+												<span><?php _el('main_category')?></span>
 											</a>
 										</li>
 										<li
 										<?php
 
-											if (is_active_controller('categories'))
+											if (is_active_controller('sub_categories'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/categories'); ?>">
-												<span>Sub Category</span>
+											<a href="<?php echo base_url('admin/sub_categories'); ?>">
+												<span><?php _el('sub_category')?></span>
 											</a>
 										</li>
 									</ul>
@@ -440,7 +498,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/coupons'); ?>"><i class="icon-ticket"></i> <span>Manage Coupons</span></a>
+									<a href="<?php echo base_url('admin/coupons'); ?>"><i class="icon-ticket"></i> <span><?php _el('manage_coupons')?></span></a>
 								</li>
 								<!-- brands -->
 								<li
@@ -452,7 +510,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/brands'); ?>"><i class="icon-people"></i> <span>Partners</span></a>
+									<a href="<?php echo base_url('admin/brands'); ?>"><i class="icon-people"></i> <span><?php _el('partners')?></span></a>
 								</li>
 								<!-- FAQs -->
 								<li
@@ -464,38 +522,84 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('admin/faqs'); ?>"><i class="icon-question3"></i> <span>FAQs</span></a>
+									<a href="<?php echo base_url('admin/faqs'); ?>"><i class="icon-question3"></i> <span>FAQ</span></a>
+								</li>
+									<!-- news_letters subscribers -->
+								<li
+									<?php
+
+										if (is_active_controller('subscribers'))
+										{
+											echo 'class="active"';}
+
+									?>
+									>
+									<a href="<?php echo base_url('admin/subscribers'); ?>"><i class=" icon-users4"></i> <span><?php _el('subscribers')?></span></a>
 								</li>
 								<!-- settings -->
 								<li>
-									<a href="#"><i class="icon-cog3"></i><span>Settings</span></a>
+									<a href="#"><i class="icon-cog3"></i><span><?php _el('settings')?></span></a>
 									<ul>
 										<li
 										<?php
 
-											if (is_active_controller('settings'))
+											if (is_active_controller('menu_setup'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('admin/menu'); ?>">
+											<a href="<?php echo base_url('admin/menu_setup'); ?>">
 												<span>Menu Setup</span>
 											</a>
+										</li>
+										<li>
+											<a href="#"><span>Home Page</span></a>
+												<ul>
+													<li
+													<?php
+
+														if (is_active_controller('sliders'))
+														{
+															echo 'class="active"';}
+
+													?>
+													 >
+														<a href="<?php echo base_url('admin/sliders'); ?>">
+															<span>Sliders</span>
+														</a>
+													</li>
+													<li
+													<?php
+
+														if (is_active_controller('banners'))
+														{
+															echo 'class="active"';}
+
+													?>
+													 >
+														<a href="<?php echo base_url('admin/banners'); ?>">
+															<span>Banners</span>
+														</a>
+													</li>
+												</ul>
 										</li>
 										<li
 										<?php
 
-											if (is_active_controller('settings'))
+											if (is_active_controller('emails'))
 											{
 												echo 'class="active"';}
 
 										?>
-										 >
-											<a href="<?php echo base_url('admin/home_settings'); ?>">
-												<span>Home Page Setup</span>
-											</a>
+												>
+												<a href="<?php echo base_url('admin/emails'); ?>">
+												<span>Email Templates</span>
+												</a>
 										</li>
+
+
+
 										<li
 										<?php
 
@@ -506,7 +610,7 @@ switches.forEach(function(html) {
 										?>
 										 >
 											<a href="<?php echo base_url('admin/settings'); ?>">
-												<span>Website Setup</span>
+												<span><?php _el('website_setup')?></span>
 											</a>
 										</li>
 
@@ -525,9 +629,8 @@ switches.forEach(function(html) {
 				<?php echo $content; ?>
 				<!-- Footer -->
 				<div class="footer text-muted text-center pl-20">
-					&copy;
 					<?php echo date('Y') ?>. <a href="#">Admin Panel</a> by <a target="_blank">
-					<?php echo "get_settings('company_name')"; ?></a>
+					<?php echo get_settings('company_name'); ?></a>
 				</div>
 				<!-- /Footer -->
 			</div>
@@ -538,3 +641,6 @@ switches.forEach(function(html) {
 	<!-- /Page container -->
 </body>
 </html>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/visualization/d3/d3.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/visualization/d3/d3_tooltip.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/charts/d3/bars/bars_basic_vertical.js'); ?>"></script>

@@ -32,9 +32,9 @@ a.active {
   <div class="container">
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
-        <li><a href="<?= base_url() ."Home"; ?>">Home</a></li>
+        <li><a href="<?= site_url() ."Home"; ?>">Home</a></li>
         <li class='active'>Category</li>
-        <li ><a class="category-title" ><?= ucwords($category_title); ?></a></li>
+        <li ><a class="category-title" href="<?= site_url('categories/'.$category_slug); ?>" ><?= ucwords($category_title); ?></a></li>
 <?php 
           if(!empty($subcategory_title))
           {
@@ -61,15 +61,15 @@ a.active {
           <nav class="yamm megamenu-horizontal">
             <ul class="nav">
 <?php
-     	        foreach ($main_category as $key => $data)
-            	{ 
+              foreach ($main_category as $key => $category_data)
+              { 
 ?>
-              <li class="dropdown menu-item menu-item-with-more-category" > <a href="<?= site_url('categories/'.$data->slug); ?>" class="parent_category" id="parent_category" value="<?= $data->id ?>"  ><i class="icon fa <?= $data->icon; ?>" aria-hidden="true"></i><?= ucwords($data->name); ?></a>
+              <li class="dropdown menu-item menu-item-with-more-category" > <a href="<?= site_url('categories/'.$category_data['slug']); ?>" class="parent_category" id="parent_category" value="<?= $category_data['id'] ?>"  ><i class="icon fa <?=$category_data['icon']; ?>" aria-hidden="true"></i><?= ucwords($category_data['name']); ?></a>
 <?php 
-                if(!empty($data->category_id))  
+                if(!empty($category_data['category_id']))  
                 {
 ?>
-                <span value="<?= $data->id ?>" id="parent" class="dropdown menu-item menu-item-with-more-category right-arrow-custom dropdown-toggle customspan" data-toggle="dropdown"> </span>
+                <span value="<?= $category_data['id'] ?>" id="parent" class="dropdown menu-item menu-item-with-more-category right-arrow-custom dropdown-toggle customspan" data-toggle="dropdown"> </span>
 <?php
                }
 ?>
@@ -80,14 +80,14 @@ a.active {
                        <ul class="links list-unstyled">
                                          
 <?php 
-                    foreach ($sub_category as $key => $sub_categories) 
+                    foreach ($sub_category as $key => $sub_category_data) 
                     {
 
-                      if ($sub_categories->category_id == $data->id)
+                      if ($sub_category_data['category_id'] == $category_data['id'])
                       { 
 ?>           
                               <div class="col-xs-12 col-sm-12 col-lg-3"> 
-                              <li  class="subcategory-name"><a class="sub_category" id="sub_category" value="<?= $sub_categories->id; ?>" href="<?= site_url('categories/'.$data->slug."/".$sub_categories->slug); ?>" ><?= ucwords($sub_categories->name);?></a></li>
+                              <li  class="subcategory-name"><a class="sub_category" id="sub_category" value="<?= $sub_category_data['id']; ?>" href="<?= site_url('categories/'.$category_data['slug']."/".$sub_category_data['slug']); ?>" ><?= ucwords($sub_category_data['name']);?></a></li>
                              </div>                    
 <?php
                         }
@@ -146,9 +146,9 @@ a.active {
             <!-- /.sidebar-widget -->
       <!-- ============================================== MANUFACTURES: END ============================================== -->
 <?php 
-        if(!empty($categoriesfilters)) 
-        {
-?>  
+            if(!empty($categoriesfilters)) 
+            {
+?>   
               <div class="sidebar-widget wow fadeInUp shop-category" >
                 <h3 class="section-title">shop by</h3>
                 <div class="widget-header">
@@ -161,7 +161,7 @@ a.active {
                       <div class="accordion-body" id="one" >
                         <div class="accordion-inner">
                           <ul class="accordion-inner-ul">
-                              
+                             
 <?php 
                                   foreach($categoriesfilters as $key => $item) 
                                   { 
@@ -194,9 +194,9 @@ a.active {
                 </div>
                 <!-- /.sidebar-widget-body -->
               </div>
- <?php 
+<?php 
                             }
-?>        
+?>       
 <!-- ============================================== SIDEBAR CATEGORY : END ============================================== -->
 
             <!-- ============================================== PRICE SILDER============================================== -->
@@ -235,7 +235,7 @@ a.active {
                         foreach($products_tags as $tags) 
                         { 
 ?>
-                         <a class="item" data-tags="<?= $tags; ?>" href="#"><?= ucwords( $tags); ?></a>
+                         <a class="<?php if($tags_data == $tags){ echo "item active" ; }else { echo "item";}  ?>" data-tags="<?= $tags; ?>" href="#"><?= ucwords( $tags); ?></a>
 <?php
                          } 
 ?>
@@ -299,7 +299,7 @@ a.active {
 ?>
         <div id="category" class="category-carousel hidden-xs">
           <div class="item">
-           <div class="image"> <img src="<?php echo base_url(); ?>/<?php echo $category['banner_image']; ?>" alt="" class="img-responsive"> </div>
+           <div class="image"> <img src="<?php echo base_url(); ?>/<?php echo $category['banner']; ?>" alt="" class="img-responsive"> </div>
             <div class="container-fluid">
               <div class="caption vertical-top text-left">
                 <div class="big-text"><?php echo $category['title']; ?></div>
@@ -405,7 +405,7 @@ a.active {
                   if(empty($products)) 
                   { 
 ?>
-                    <p>No Products</p>
+                    <p class="text-center">No Products</p>
 <?php 
                   } 
                   else 
@@ -419,18 +419,31 @@ a.active {
                     <div class="products">
                       <div class="product">
                         <div class="product-image">
-                          <div class="image"> <a href="<?= site_url('Products/'.$category_title.'/'.$product['slug']); ?>"><img  src="<?php echo base_url(); ?>/<?php echo $product['thumb_image']; ?>" alt=""></a> </div>
+                          <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url(); ?>/<?php echo $product['thumb_image']; ?>" alt=""></a> </div>
                           <!-- /.image -->
                           
-                          <div class="tag new"><span><?php echo $product['tags']; ?></span></div>
+<?php
+                      if($product['is_sale'] == 1)
+                      {
+?>
+                      <div class="tag sale"><span>sale</span></div>
+<?php
+                    }
+                    elseif($product['is_hot'] == 1)
+                    {
+?>
+                       <div class="tag hot"><span>hot</span></div>
+<?php
+                    }
+?>
                         </div>
                         <!-- /.product-image -->
                         
                         <div class="product-info text-left">
-                          <h3 class="name"><a href="<?= site_url('Products/'.$category_title.'/'.$product['slug']); ?>"><?php echo $product['name']; ?></a></h3>
+                          <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo $product['name']; ?></a></h3>
                           <div class="rating rateit-small"></div>
                           <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $<?php echo $product['new_price']; ?> </span> <span class="price-before-discount">$ <?php echo $product['old_price']; ?></span> </div>
+                          <div class="product-price"> <span class="price"> $<?php echo $product['price']; ?> </span> <span class="price-before-discount">$ <?php echo $product['old_price']; ?></span> </div>
                           <!-- /.product-price --> 
                           
                         </div>
@@ -446,7 +459,7 @@ a.active {
                               if(is_user_logged_in())
                               {
 ?>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?= site_url('Products/'.$category_title.'/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?= site_url('Products/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
 <?php
                             }
 ?>
@@ -503,9 +516,9 @@ a.active {
                         <!-- /.col -->
                         <div class="col col-sm-8 col-lg-8">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?= site_url('Products/'.$category_title.'/'.$product['slug']); ?>"><?php echo $product['name']; ?></a></h3>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo $product['name']; ?></a></h3>
                             <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $<?php echo $product['new_price']; ?> </span> <span class="price-before-discount">$ <?php echo $product['old_price']; ?></span> </div>
+                            <div class="product-price"> <span class="price"> $<?php echo $product['price']; ?> </span> <span class="price-before-discount">$ <?php echo $product['old_price']; ?></span> </div>
                             <!-- /.product-price -->
                             <div class="description m-t-10"><?php echo $product['short_description']; ?></div>
                             <div class="cart clearfix animate-effect">
@@ -516,14 +529,13 @@ a.active {
                                     <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
                                   </li>
 <?php
-                              if(is_user_logged_in())
-                              {
+                                  if(is_user_logged_in())
+                                  {
 ?>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?= site_url('Products/'.$category_title.'/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                  <li class="lnk wishlist"> <a class="add-to-cart" href="<?= site_url('Products/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
 <?php
-                            }
+                                  }
 ?>
-                                  
                                 </ul>
                               </div>
                               <!-- /.action --> 
@@ -536,7 +548,20 @@ a.active {
                         <!-- /.col --> 
                       </div>
                       <!-- /.product-list-row -->
-                      <div class="tag new"><span><?php echo $product['tags']; ?></span></div>
+<?php
+                      if($product['is_sale'] == 1)
+                      {
+?>
+                      <div class="tag sale"><span>sale</span></div>
+<?php
+                    }
+                    elseif($product['is_hot'] == 1)
+                    {
+?>
+                       <div class="tag hot"><span>hot</span></div>
+<?php
+                    }
+?>
                     </div>
                     <!-- /.product-list --> 
                   </div>
@@ -648,6 +673,7 @@ $(document).ready(function(){
     $("#pricerange").val(pricerange);
     $("#frmCategoryfilter").submit();
   });
+
   $('.price-slider').slider({
         min: <?php echo $default_min_max['min']; ?>,
         max: <?php echo $default_min_max['max']; ?>,

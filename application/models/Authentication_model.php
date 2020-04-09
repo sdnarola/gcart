@@ -21,6 +21,7 @@ class Authentication_model extends MY_Model
 	{
 		parent::__construct();
 		$this->load->model('user_autologin');
+
 		$this->autologin();
 	}
 
@@ -57,7 +58,7 @@ class Authentication_model extends MY_Model
 				return ['user_inactive' => true, 'id' => $user->id];
 			}
 
-			if ($user->is_admin != 1 && $user->is_email_verified == 0)
+			if ($user->is_email_verified == 0)
 			{
 				return ['email_unverified' => true, 'id' => $user->id];
 			}
@@ -118,7 +119,7 @@ class Authentication_model extends MY_Model
 				return ['vendor_inactive' => true, 'id' => $vendor->id];
 			}
 
-			if ($vendor->is_admin != 1 && $vendor->is_email_verified == 0)
+			if ($vendor->is_email_verified == 0 && $vendor->is_admin == 0)
 			{
 				return ['email_unverified' => true, 'id' => $vendor->id];
 			}
@@ -126,7 +127,7 @@ class Authentication_model extends MY_Model
 			$vendor_data = [
 				'vendor_id'        => $vendor->id,
 				'email'            => $vendor->email,
-				'vendorname'       => ucwords($vendor->firstname.' '.$vendor->lastname),
+				'vendor_name'      => ucwords($vendor->firstname.' '.$vendor->lastname),
 				'is_admin'         => $vendor->is_admin,
 				'vendor_logged_in' => true
 			];
@@ -264,7 +265,7 @@ class Authentication_model extends MY_Model
 				return ['user_inactive' => true];
 			}
 
-			if ($user->is_admin != 1 && $user->is_email_verified == 0)
+			if ($user->is_admin != 0 && $user->is_email_verified == 0)
 			{
 				return ['email_unverified' => true];
 			}
@@ -286,7 +287,7 @@ class Authentication_model extends MY_Model
 				$this->db->where('email', $email);
 				$user = $this->db->get('users')->row_array();
 
-				if ($user->is_admin)
+				if ($user->is_admin == 1)
 				{
 					$reset_password_link = admin_url('authentication/reset_password/').$user['id'].'/'.$user['new_pass_key'];
 				}
@@ -316,7 +317,7 @@ class Authentication_model extends MY_Model
 				$message .= str_replace($find, $replace, $template['message']);
 
 				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
-
+     			
 				$sent = send_email($email, $subject, $message);
 
 				if ($sent)
@@ -332,16 +333,21 @@ class Authentication_model extends MY_Model
 
 		return ['invalid_user' => true];
 	}
-
-	public function verify_email($signup_key)
+/**===================================code by vixuti patel=======================================*/
+/**
+ * [verify_email  verify users email]
+ * @param  [type] $sign_up_key [description]
+ * @return [type]              [description]
+ */
+	public function verify_email($sign_up_key)
 	{
-		$this->db->where('signup_key', $signup_key);
+		$this->db->where('sign_up_key', $sign_up_key);
 
 		if ($this->db->get('users')->num_rows() == 1)
 		{
 			$this->db->set('is_email_verified', 1);
 			$this->db->set('is_active', 1);
-			$this->db->where('signup_key', $signup_key);
+			$this->db->where('sign_up_key', $sign_up_key);
 			$this->db->update('users');
 
 			return true;
@@ -349,7 +355,28 @@ class Authentication_model extends MY_Model
 
 		return null;
 	}
+	/**
+	 * [verify_vendor_email  (on registraion) ]
+	 * @param  [type] $sign_up_key [description]
+	 * @return [type]              [description]
+	 */
+	public function verify_vendor_email($sign_up_key)
+	{
+		$this->db->where('sign_up_key', $sign_up_key);
 
+		if ($this->db->get('vendors')->num_rows() == 1)
+		{
+			$this->db->set('is_email_verified', 1);
+			$this->db->set('is_active', 1);
+			$this->db->where('sign_up_key', $sign_up_key);
+			$this->db->update('vendors');
+
+			return true;
+		}
+
+		return null;
+	}
+	/*===========================code end by vixuti patel===========================================*/
 	/**
 	 * Resets user password after successful validation of the key
 	 *

@@ -249,7 +249,7 @@ class Roles extends Admin_Controller
 			'view'   => _l('view'),
 			'create' => _l('create'),
 			'edit'   => _l('edit'),
-			'delete' => _l('delete'),
+			'delete' => _l('delete')
 		];
 
 		$permissions = [
@@ -283,7 +283,7 @@ class Roles extends Admin_Controller
 					'view'   => _l('view'),
 					'create' => _l('create')
 				]
-			],			
+			]
 		];
 
 		return $permissions;

@@ -1,9 +1,10 @@
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="<?= base_url() ."Home"; ?>">Home</a></li>
-				<li><a href="<?= base_url() ."Categories/get_parent_category_products/".$category_id; ?>"><?= ucwords($category_name); ?></a></li>
+				<li><a href="<?= site_url() ."Home"; ?>">Home</a></li>
+				<li><a href="<?= site_url('categories/'.$category_slug); ?>"><?= ucwords($category_name); ?></a></li>
 				<li class='active'><?= ucwords($products_name); ?></li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
@@ -25,19 +26,20 @@
 						<h3 class="section-title">hot deals</h3>
 						<div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-xs">
 <?php
-						foreach ($hot_deals_products as $key => $hot_deals) 
+						foreach ($hot_deals_products as $hot_deals) 
 						{			
 ?>
 							<div class="item">
 								<div class="products">
 									<div class="hot-deal-wrapper">
 										<div class="image">
-											<img src="<?= base_url().$hot_deals->thumb_image; ?>" alt="">
+											<img src="<?= base_url().$hot_deals['thumb_image']; ?>" alt="">
 										</div>
-										<div class="sale-offer-tag"><span><?= $hot_deals->off_percentage ."%";?><br>off</span></div>
-										<div class="timing-wrapper">
+										<div class="sale-offer-tag"><span><?= $hot_deals['off_percentage'] ."%";?><br>off</span></div>
+										<div class="timing-wrapper" data-fron-date="" >
 											<div class="box-wrapper">
 												<div class="date box">
+													<!-- <span><?= $hot_deals['from_date_time']?></span> -->
 													<span class="key" id="day"></span>
 													<span class="value">Days</span>
 												</div>
@@ -66,12 +68,12 @@
 										</div>
 									</div><!-- /.hot-deal-wrapper -->
 									<div class="product-info text-left m-t-20">
-										<h3 class="name"><a href="<?= base_url() ."Products/show_detail/". $hot_deals->id; ?>"><?= $hot_deals->name ;?></a></h3>
+										<h3 class="name"><a href="<?= site_url('Products/'. $hot_deals['slug']); ?>"><?= $hot_deals['name'] ;?></a></h3>
 										<div class="rating rateit-small"></div>
 
 										<div class="product-price">
-											<span class="price"><?= $hot_deals->new_price ;?></span>
-										    <span class="price-before-discount"><?= $hot_deals->old_price ;?></span>
+											<span class="price"><?= $hot_deals['price'] ;?></span>
+										    <span class="price-before-discount"><?= $hot_deals['old_price'] ;?></span>
 										</div><!-- /.product-price -->
 									</div><!-- /.product-info -->
 
@@ -81,7 +83,7 @@
 												<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
 													<i class="fa fa-shopping-cart"></i>
 												</button>
-												<button class="btn btn-primary cart-btn" onclick="add_to_cart(<?= $hot_deals->id ?>)" type="button">Add to cart</button>
+												<button class="btn btn-primary cart-btn" onclick="add_to_cart(<?= $hot_deals['id'] ?>)" type="button">Add to cart</button>
 											</div>
 									    </div><!-- /.action -->
 								    </div><!-- /.cart -->
@@ -92,6 +94,18 @@
 ?>  
 		    			</div><!-- /.owl-carousel -->
 					</div><!-- /sidebar-widget -->
+ 
+			<form id="fromproductsdetail">
+                  <input type="hidden" name="price" value="<?php echo $price; ?>" id="page"/>
+                 <!--  <input type="hidden" name="list-container"  id="list-container"/> -->
+                 <!--  <input type="hidden" name="sort" value="<?php echo $sort; ?>" id="sort"/>
+                  <input type="hidden" name="order" value="<?php echo $order; ?>" id="order"/>
+                  <input type="hidden" name="tags" value="<?php echo $tags_data; ?>" id="tags"/>
+                  <input type="hidden" name="manufacture" value="<?php echo $manufacture; ?>" id="manufacture"/>
+                  <input type="hidden" name="subcategory" value="<?php echo $subcategory; ?>"  id="subcategory"/>
+                  <input type="hidden" name="pricerange" value="<?php echo $pricerange; ?>" id="pricerange"/> -->
+            </form>
+				
 					
 <!-- ============================================== HOT DEALS: END ============================================== -->
 
@@ -148,13 +162,8 @@
 						                <a data-lightbox="image-1" data-title="Gallery" href="<?php echo base_url().$products_detail['thumb_image']; ?>">
 						                    <img class="img-responsive" alt="" src="<?php echo base_url().$products_detail['thumb_image']; ?>" data-echo="<?php echo base_url().$products_detail['thumb_image']; ?>" />
 						                </a>
-						            </div><!-- /.single-product-gallery-item -->
-<?php
-										// $products_images = implode(',', array_unique(explode(',', $products_detail['images'])));
-
-										// $products_images = explode(',', $products_images);
-									
-										// echo serialize($products_images);										
+						            </div>
+<?php							
 										$products_images =unserialize($products_detail['images']);
 										if(!empty($products_images))
 										{
@@ -275,7 +284,7 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="price-box">
-												<span class="price"><?php echo $products_detail['new_price'];?></span>
+												<span class="price"><?php echo $products_detail['price'];?></span>
 												<span class="price-strike"><?php echo $products_detail['old_price'];?></span>
 											</div>
 										</div>
@@ -598,16 +607,16 @@
 								<div class="product">
 									<div class="product-image">
 										<div class="image">
-												<a href="<?= base_url() ."Products/show_detail/". $upsell->id; ?>"><img  src="<?php echo base_url(). $upsell->thumb_image; ?> " alt=""></a>
+												<a href="<?= site_url('Products/'. $upsell->slug); ?>"><img  src="<?php echo base_url(). $upsell->thumb_image; ?> " alt=""></a>
 						    			</div><!-- /.image -->
 										<div class="tag sale"><span>sale</span></div>
 									</div><!-- /.product-image -->
 									<div class="product-info text-left">
-										<h3 class="name"><a href="<?= base_url() ."Products/show_detail/". $upsell->id; ?>"><?= $upsell->name; ?></a></h3>
+										<h3 class="name"><a href="<?= site_url('Products/'. $upsell->slug); ?>"><?= $upsell->name; ?></a></h3>
 										<div class="rating rateit-small"></div>
 										<div class="description"></div>
 										<div class="product-price">
-											<span class="price"><?= $upsell->new_price; ?></span>
+											<span class="price"><?= $upsell->price; ?></span>
 											<span class="price-before-discount"><?= $upsell->old_price; ?></span>
 										</div><!-- /.product-price -->
 									</div><!-- /.product-info -->
@@ -625,7 +634,7 @@
 						        			{
 ?>
 				                				<li class="lnk wishlist">
-													<a class="add-to-cart" href="<?= base_url() ."Products/show_detail/". $upsell->id; ?>" title="Wishlist">
+													<a class="add-to-cart" href="<?= site_url('Products/'. $upsell->slug); ?>" title="Wishlist">
 														 <i class="icon fa fa-heart"></i>
 													</a>
 												</li>
@@ -652,8 +661,17 @@
 <!-- ================================== BODY Content : END ========================================================= -->
 
 <script>
+$("#fromproductsdetail").submit();
+	$(document).ready(function(){
+
+		$("#fromproductsdetail").submit();
+	});
+
 	var to_date=new Date("2020-04-17 00:00:00").getTime();
 	var from_date=new Date("2020-03-17 00:00:00").getTime();
+
+	var a =$(".timing-wrapper").attr("data-fron-date");
+	console.log(a);
 
 	var today_date= new Date().getTime();
 
