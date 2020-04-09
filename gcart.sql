@@ -1,11 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
+<<<<<<< HEAD
+-- Generation Time: Apr 06, 2020 at 10:05 AM
+-- Server version: 10.4.10-MariaDB
+-- PHP Version: 7.3.12
+=======
 -- Generation Time: Mar 20, 2020 at 11:35 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -34,17 +40,29 @@ CREATE TABLE IF NOT EXISTS `banners` (
   `title` varchar(50) NOT NULL,
   `sub_title` text NOT NULL,
   `description` mediumtext NOT NULL,
-  `banner` text NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL,
+  `banner_image` mediumtext NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
+<<<<<<< HEAD
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+=======
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 --
 -- Dumping data for table `banners`
 --
 
+<<<<<<< HEAD
+INSERT INTO `banners` (`id`, `title`, `sub_title`, `description`, `banner_image`, `is_deleted`) VALUES
+(1, 'test', 'Save up to 49% off', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 'assets/upload/banner/3.jpg', 0),
+(2, 'sale', 'sale 80% off', 'cdsfdssgg', 'assets/upload/banner/2.jpg', 0),
+(3, 'sale', 'Save up to 49% off', 'adads', 'assets/upload/banner/1.jpg', 0),
+(4, 'sale', 'sale 80% off', 'aaSAsASa', 'assets/upload/banner/watch.jpg', 0);
+=======
 INSERT INTO `banners` (`id`, `title`, `sub_title`, `description`, `banner`, `is_deleted`) VALUES
 (1, 'cat', 'cattt', 'trtrt', 'fd', 0);
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 -- --------------------------------------------------------
 
@@ -57,19 +75,33 @@ CREATE TABLE IF NOT EXISTS `brands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `logo` mediumtext NOT NULL,
+<<<<<<< HEAD
+  `is_deleted` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+=======
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 --
 -- Dumping data for table `brands`
 --
 
 INSERT INTO `brands` (`id`, `name`, `logo`, `is_deleted`) VALUES
+<<<<<<< HEAD
+(1, 'hot foil', 'assets/upload/brands/brand1.png', 0),
+(2, 'nike', 'assets/upload/brands/brand1.png', 0),
+(3, 'chanel', 'assets/upload/brands/brand1.png', 0),
+(4, 'dolce & gabbana', 'assets/upload/brands/brand1.png', 0),
+(5, 'forever 18', 'assets/upload/brands/brand1.png', 0);
+=======
 (1, 'nike', '-', 0),
 (2, 'puma', '-', 0),
 (3, 'lg', '-', 0),
 (4, 'samsung', '-', 0);
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 -- --------------------------------------------------------
 
@@ -85,19 +117,27 @@ CREATE TABLE IF NOT EXISTS `cart` (
   `quantity` int(11) NOT NULL,
   `total_amount` decimal(7,2) NOT NULL,
   `date` datetime NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`)
+<<<<<<< HEAD
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+=======
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 --
 -- Dumping data for table `cart`
 --
 
 INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `total_amount`, `date`, `is_deleted`) VALUES
+<<<<<<< HEAD
+(1, 1, 9, 1, '1200.00', '2020-03-17 00:00:00', 0);
+=======
 (1, 1, 2, 2, '9120.24', '2020-03-20 10:54:29', 0),
 (2, 1, 3, 2, '30800.00', '2020-03-20 10:54:41', 0);
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 -- --------------------------------------------------------
 
@@ -112,6 +152,15 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(50) NOT NULL,
   `slug` varchar(50) NOT NULL,
   `icon` mediumtext NOT NULL,
+<<<<<<< HEAD
+  `is_header` tinyint(1) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `banner_id` (`banner_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+=======
   `is_header` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
@@ -119,15 +168,25 @@ CREATE TABLE IF NOT EXISTS `categories` (
   UNIQUE KEY `slug` (`slug`),
   KEY `banner_id` (`banner_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 --
 -- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`id`, `banner_id`, `name`, `slug`, `icon`, `is_header`, `is_active`, `is_deleted`) VALUES
+<<<<<<< HEAD
+(1, 1, 'clothing', 'clothing', 'fa-shopping-bag', 1, 1, 0),
+(2, 2, 'electronics', 'electronics-shope', 'fa-laptop', 1, 1, 0),
+(3, 1, 'jewellery', 'jewellery', 'fa-diamond', 1, 1, 0),
+(4, 4, 'watches', 'watches', 'fa-clock-o', 1, 1, 0),
+(5, 3, 'home and garden', 'homeandgarden', 'fa-envira', 1, 1, 0),
+(6, 2, 'sport', 'sport', 'fa-futbol-o', 0, 1, 0);
+=======
 (1, 1, 'sports', 'sports-item', '-', 1, 1, 0),
 (2, 1, 'pants', 'pant', '-', 1, 1, 0),
 (3, 1, 'electronics', 'ele-item', '-', 1, 1, 0);
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 -- --------------------------------------------------------
 
@@ -173,8 +232,12 @@ CREATE TABLE IF NOT EXISTS `coupons` (
   `used` int(11) NOT NULL DEFAULT '0',
   `start_date` datetime DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
+<<<<<<< HEAD
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+=======
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -222,6 +285,14 @@ DROP TABLE IF EXISTS `hot_deals`;
 CREATE TABLE IF NOT EXISTS `hot_deals` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
+<<<<<<< HEAD
+  `from_date_time` datetime NOT NULL,
+  `to_date_time` datetime NOT NULL,
+  `off_percentage` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+=======
   `type` tinyint(1) NOT NULL,
   `value` bigint(20) NOT NULL,
   `start_date` datetime NOT NULL,
@@ -230,14 +301,20 @@ CREATE TABLE IF NOT EXISTS `hot_deals` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 --
 -- Dumping data for table `hot_deals`
 --
 
+<<<<<<< HEAD
+INSERT INTO `hot_deals` (`id`, `product_id`, `from_date_time`, `to_date_time`, `off_percentage`) VALUES
+(1, 3, '2020-03-17 00:00:00', '2020-04-17 00:00:00', '35');
+=======
 INSERT INTO `hot_deals` (`id`, `product_id`, `type`, `value`, `start_date`, `end_date`, `is_deleted`) VALUES
 (1, 1, 0, 500, '2020-03-21 00:00:00', '2020-03-29 00:00:00', 0),
 (2, 2, 1, 50, '2020-03-21 00:00:00', '2020-03-28 00:00:00', 0);
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 -- --------------------------------------------------------
 
@@ -271,9 +348,15 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `grand_total` decimal(7,2) NOT NULL,
   `order_date` datetime NOT NULL,
   `order_status` tinyint(1) NOT NULL,
+<<<<<<< HEAD
+  `payment_method` varchar(20) NOT NULL DEFAULT 'CASH ON DELIVERY',
+  `payment_status` tinyint(1) NOT NULL DEFAULT 0,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+=======
   `payment_method` varchar(20) NOT NULL DEFAULT 'cash on delivery',
   `payment_status` tinyint(1) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_number` (`order_number`),
   KEY `coupon_id` (`coupon_id`),
@@ -333,12 +416,27 @@ CREATE TABLE IF NOT EXISTS `products` (
   `category_id` int(11) NOT NULL,
   `sub_category_id` int(11) DEFAULT '0',
   `name` varchar(50) NOT NULL,
+<<<<<<< HEAD
+  `slug` varchar(50) NOT NULL,
+  `sku` int(11) NOT NULL,
+=======
   `sku` varchar(20) NOT NULL,
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
   `short_description` mediumtext NOT NULL,
   `long_description` longtext NOT NULL,
   `thumb_image` mediumtext NOT NULL,
   `images` mediumtext NOT NULL,
   `quantity` int(11) NOT NULL,
+<<<<<<< HEAD
+  `old_price` decimal(8,2) NOT NULL,
+  `new_price` decimal(8,2) NOT NULL,
+  `related_products` text NOT NULL,
+  `tags` text NOT NULL,
+  `is_sale` tinyint(1) NOT NULL DEFAULT 0,
+  `is_hot` tinyint(1) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+=======
   `price` decimal(7,2) NOT NULL,
   `old_price` decimal(7,2) NOT NULL,
   `related_products` text,
@@ -348,21 +446,64 @@ CREATE TABLE IF NOT EXISTS `products` (
   `is_hot` tinyint(1) NOT NULL DEFAULT '0',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
   PRIMARY KEY (`id`),
   KEY `vendor_id` (`vendor_id`),
   KEY `brand_id` (`brand_id`),
   KEY `category_id` (`category_id`),
   KEY `sub_category_id` (`sub_category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+<<<<<<< HEAD
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products`
 --
 
+INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `slug`, `sku`, `short_description`, `long_description`, `thumb_image`, `images`, `quantity`, `old_price`, `new_price`, `related_products`, `tags`, `is_sale`, `is_hot`, `is_active`, `is_deleted`) VALUES
+(1, 1, 1, 2, 4, 'smart tv 108cm', 'smart-tv-108cm', 458964, 'dsfdsfdfadsafsfsdf\r\nfdsfdgdfg\r\nsdgdfgdf\r\nfgdfg', 'ffsdfsfdagdfhfghfg\r\ndfgdhfgshfgh\r\nsgdfhfghfgfg\r\nsgdfghghfghfg\r\nsdgg', 'assets/upload/products/tv1.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 0, '20000.00', '18000.00', '', 'tv,led-tv', 1, 0, 1, 0),
+(2, 1, 4, 4, 3, 'smart watch', 'smart-watch', 4589769, 'dwfd', 'dsfdsf', 'assets/upload/products/watch_1.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 0, '15000.00', '10000.00', '', 'watch', 0, 1, 1, 0),
+(3, 1, 1, 2, 4, 'Android TV', 'Android-TV', 7856948, 'dsfdsggg\r\ndfg\r\nddg', 'dsgdfgd\r\ndfgdfg\r\ndfgdfg\r\ndfag\r\n', 'assets/upload/products/tv2.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 10, '50000.00', '45000.00', '', 'led-tv', 0, 0, 1, 0),
+(4, 1, 1, 2, 4, 'android LED 108 cm', 'android-LED-108-cm', 456985, 'qwdwddsdf', 'sffgdgdfgf\r\ndsgdfgdf\r\ndfgdfg\r\ndfag\r\nd', 'assets/upload/products/tv1.jpg', '', 11, '38000.00', '30000.00', '', 'tv', 1, 0, 1, 0),
+(5, 1, 3, 4, 3, 'watch 3', 'watch-3', 789587, 'dfdsfdsfsf', 'sdfsdfdsfdsfdsf', 'assets/upload/products/watch_2.jpg', '', 4, '15000.00', '12000.00', '', 'watch', 1, 0, 1, 0),
+(6, 1, 1, 4, 3, 'watch 4', 'watc-4', 789658, 'dgdfgdfg', 'dfgdhfhs', 'assets/upload/products/watch_3.jpg', '', 5, '1500.00', '1200.00', '', 'smart-watch', 0, 1, 1, 0),
+(7, 1, 4, 2, 4, 'LED TV', 'LED-TV', 789654, 'dsad', 'adad', 'assets/upload/products/tv1.jpg', '', 10, '20000.00', '15000.00', '', 'tv', 0, 0, 1, 0),
+(8, 1, 1, 2, 5, 'android mobile', 'android-mobile', 879589, 'dsfsdf', 'fsfsdf', 'assets/upload/products/tv1.jpg', '', 5, '20000.00', '12000.00', '', 'mobile', 0, 0, 1, 0),
+(9, 1, 1, 2, 4, 'tv', 'tv', 7895647, 'sdsf', 'adadasd', 'assets/upload/products/tv1.jpg', '', 5, '20000.00', '10000.00', '', 'tv', 0, 0, 1, 0),
+(10, 1, 1, 2, 4, 'LED TV 108 cm ', 'LED-TV-108-cm ', 789658, 'acacascas', 'saADSADSAD', 'assets/upload/products/tv1.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 10, '45000.00', '32000.00', '', 'tv', 0, 0, 1, 0),
+(11, 1, 2, 1, 2, 'shirt', 'shirt', 799658, 'axcxzc', 'zxczxczxczxcsdfsd', 'assets/upload/products/shirt3.jpg', '', 10, '1500.00', '1250.00', '', 'shirt', 0, 0, 1, 0),
+(12, 1, 3, 2, 5, 'mi mobile phone', 'mi-mobile-phone', 789456, 'sdfdg', 'dsfgsdg', 'assets/upload/products/tv1.jpg', '', 5, '18000.00', '15000.00', '', 'mi-mobile', 0, 0, 1, 0),
+(13, 1, 5, 2, 10, 'earphone', 'earphone', 799658, 'cfddfc', 'nkjhkfd', 'assets/upload/products/watch_1.jpg', '', 10, '1800.00', '1250.00', '', 'ear-phone', 0, 0, 1, 0);
+
+-- --------------------------------------------------------
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
+
+--
+-- Dumping data for table `products`
+--
+
+<<<<<<< HEAD
+DROP TABLE IF EXISTS `product_images`;
+CREATE TABLE IF NOT EXISTS `product_images` (
+  `product_id` int(11) NOT NULL,
+  `image` mediumtext NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+=======
 INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `sku`, `short_description`, `long_description`, `thumb_image`, `images`, `quantity`, `price`, `old_price`, `related_products`, `tags`, `add_date`, `is_sale`, `is_hot`, `is_active`, `is_deleted`) VALUES
 (1, 1, 1, 1, 1, 'Nike Rn6', '8311-8a40', 'running shoes', 'nike brand, shoes for men, sports shoes', 'assets/uploads/products/1584331676-nike1.jpg', 'a:3:{i:0;s:45:\"assets/uploads/products/1584168342--nike4.jpg\";i:1;s:45:\"assets/uploads/products/1584168342--nike3.jpg\";i:2;s:45:\"assets/uploads/products/1584168342--nike2.jpg\";}', 7, '7350.35', '7850.35', 'N;', 'nike, shoes, running', '2020-03-09 07:20:19', 0, 1, 1, 0),
 (2, 2, 2, 1, 1, 'Puma Tr-7', '222-2044', 'sports shoes', 'puma brand, shoes for men.', 'assets/uploads/products/1584331763-puma.png', 'a:4:{i:0;s:45:\"assets/uploads/products/1584332286--puma1.jpg\";i:1;s:45:\"assets/uploads/products/1584332286--puma3.png\";i:2;s:45:\"assets/uploads/products/1584332286--puma2.png\";i:3;s:45:\"assets/uploads/products/1584332286--puma4.png\";}', 9, '2280.06', '4560.12', 'a:1:{i:0;s:1:\"1\";}', 'puma, men shoes', '2020-03-01 10:12:43', 1, 1, 1, 0),
 (3, 2, 4, 3, 5, 'Samsung-32', '2764-cb26', 'led tv', 'samsung brand, 32 led tv, samrt tv', 'assets/uploads/products/1584163197-tv1.jpg', 'a:4:{i:0;s:43:\"assets/uploads/products/1584163197--tv3.jpg\";i:1;s:43:\"assets/uploads/products/1584163197--tv2.jpg\";i:2;s:43:\"assets/uploads/products/1584163197--tv4.jpg\";i:3;s:43:\"assets/uploads/products/1584163197--tv6.jpg\";}', 23, '15400.00', '0.00', 'N;', 'tv, samsung, smart tv', '2020-03-04 17:18:10', 1, 0, 1, 0);
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
+
+--
+-- Dumping data for table `product_images`
+--
+
+INSERT INTO `product_images` (`product_id`, `image`, `is_deleted`) VALUES
+(1, 'assets/upload/products/tv1.jpg,assets/upload/products/tv5.jpg,assets/upload/products/tv3.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -449,7 +590,7 @@ CREATE TABLE IF NOT EXISTS `slider_settings` (
   `sub_title` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `image` mediumtext NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -490,23 +631,46 @@ CREATE TABLE IF NOT EXISTS `sub_categories` (
   `category_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `slug` varchar(50) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `is_deleted` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `category_id` (`category_id`)
+<<<<<<< HEAD
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+=======
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 --
 -- Dumping data for table `sub_categories`
 --
 
 INSERT INTO `sub_categories` (`id`, `category_id`, `name`, `slug`, `is_active`, `is_deleted`) VALUES
+<<<<<<< HEAD
+(1, 1, 'tops', 'tops', 1, 0),
+(2, 1, 'shirts', 'shirts', 1, 0),
+(3, 4, 'sport wear', 'sport_wear', 1, 0),
+(4, 2, 'tv', 'tv', 1, 0),
+(5, 2, 'mobile', 'mobile', 1, 0),
+(6, 2, 'keyboards', 'keyboards', 1, 0),
+(7, 3, 'ring', 'ring', 1, 0),
+(8, 2, 'ac', 'ac', 1, 0),
+(9, 2, 'laptop', 'laptop', 1, 0),
+(10, 2, 'earphone', 'earphone', 1, 0),
+(11, 2, 'data cable', 'data_cable', 1, 0),
+(12, 2, 'fen', 'fen', 1, 0),
+(13, 2, 'table fen', 'table_fen', 0, 0),
+(14, 2, 'mouse', 'mouse', 1, 0),
+(15, 2, 'monitor', 'monitor', 1, 0),
+(16, 5, 'table carpate', 'table_carpate', 1, 0);
+=======
 (1, 1, 'shoes', 's-sh', 1, 0),
 (2, 1, 'tracks', 'sp-track', 1, 0),
 (3, 2, 'tracks', 'sp-tr', 1, 0),
 (4, 3, 'mobile', 'mb-ele', 1, 0),
 (5, 3, 'tv', 'ele-tv', 1, 0);
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 -- --------------------------------------------------------
 
@@ -533,8 +697,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `sign_up_key` varchar(32) NOT NULL,
   `is_email_verified` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
+<<<<<<< HEAD
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `is_deleted` tinyint(1) NOT NULL,
+=======
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -664,8 +833,13 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
 
 INSERT INTO `wishlist` (`id`, `user_id`, `product_id`, `is_deleted`) VALUES
 (1, 1, 3, 0),
+<<<<<<< HEAD
+(2, 1, 4, 0),
+(3, 1, 1, 0);
+=======
 (2, 1, 3, 0),
 (3, 1, 2, 0);
+>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 
 --
 -- Constraints for dumped tables

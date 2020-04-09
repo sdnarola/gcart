@@ -7,7 +7,7 @@ class Authentication extends My_Controller
 		parent::__construct();
 		$this->load->model('Authentication_model');
 		$this->load->model('User_model', 'users');
-
+		$this->load->model('category_model', 'category');
 
 		if (get_settings('maintenance') == 1)
 		{

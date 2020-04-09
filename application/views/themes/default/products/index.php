@@ -1,5 +1,4 @@
-
-<!-- ============================================== HEADER : END ============================================== -->
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 <style>
   .right-arrow-custom:after{
     color: #bababa;
@@ -14,7 +13,7 @@
     transition: all 0.3s ease 0s;
     width: 10px;
     font-family: "FontAwesome";
-        top: 50%;
+    top: 50%;
     position: absolute;
     right: 15px;
     margin-top: -10px;
@@ -22,15 +21,28 @@
   span.right-arrow-custom {
     cursor: pointer;
 }
-  
+a.active {
+    font-weight: bold;
+}
+  .pagination-data .pagination{
+    margin: 0;
+  }
 </style>
-
 <div class="breadcrumb">
   <div class="container">
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
-        <li><a href="#">Home</a></li>
-        <li class='active'><?php echo $set_page_title ;?></li>
+        <li><a href="<?= site_url() ."Home"; ?>">Home</a></li>
+        <li class='active'>Category</li>
+        <li ><a class="category-title" href="<?= site_url('categories/'.$category_slug); ?>" ><?= ucwords($category_title); ?></a></li>
+<?php 
+          if(!empty($subcategory_title))
+          {
+?>
+             <li ><a><?= ucwords($subcategory_title); ?></a></li>
+<?php
+          }
+?>
       </ul>
     </div>
     <!-- /.breadcrumb-inner -->
@@ -49,15 +61,15 @@
           <nav class="yamm megamenu-horizontal">
             <ul class="nav">
 <?php
-     	        foreach ($main_category as $key => $data)
-            	{ 
+              foreach ($main_category as $key => $category_data)
+              { 
 ?>
-              <li class="dropdown menu-item menu-item-with-more-category" id="parent" value="<?= $data->id ?>"> <a href="<?= base_url() ."Categories/get_parent_category_products/".$data->id; ?>"  ><i class="icon fa <?= $data->icon; ?>" aria-hidden="true"></i><?= ucwords($data->name); ?></a>
+              <li class="dropdown menu-item menu-item-with-more-category" > <a href="<?= site_url('categories/'.$category_data['slug']); ?>" class="parent_category" id="parent_category" value="<?= $category_data['id'] ?>"  ><i class="icon fa <?=$category_data['icon']; ?>" aria-hidden="true"></i><?= ucwords($category_data['name']); ?></a>
 <?php 
-                if(!empty($data->category_id))
+                if(!empty($category_data['category_id']))  
                 {
 ?>
-                <span value="<?= $data->id ?>" id="parent" class="dropdown menu-item menu-item-with-more-category right-arrow-custom dropdown-toggle customspan" data-toggle="dropdown"> </span>
+                <span value="<?= $category_data['id'] ?>" id="parent" class="dropdown menu-item menu-item-with-more-category right-arrow-custom dropdown-toggle customspan" data-toggle="dropdown"> </span>
 <?php
                }
 ?>
@@ -68,14 +80,14 @@
                        <ul class="links list-unstyled">
                                          
 <?php 
-                    foreach ($sub_category as $key => $sub_categories) 
+                    foreach ($sub_category as $key => $sub_category_data) 
                     {
 
-                      if ($sub_categories->category_id == $data->id)
+                      if ($sub_category_data['category_id'] == $category_data['id'])
                       { 
 ?>           
                               <div class="col-xs-12 col-sm-12 col-lg-3"> 
-                              <li value="<?= $sub_categories->category_id; ?>" class="subcategory-name"><a href="<?= base_url() ."Categories/get_sub_category_products/".$sub_categories->id; ?>" ><?= ucwords($sub_categories->name);?></a></li>
+                              <li  class="subcategory-name"><a class="sub_category" id="sub_category" value="<?= $sub_category_data['id']; ?>" href="<?= site_url('categories/'.$category_data['slug']."/".$sub_category_data['slug']); ?>" ><?= ucwords($sub_category_data['name']);?></a></li>
                              </div>                    
 <?php
                         }
@@ -100,36 +112,31 @@
         <div class="sidebar-module-container">
           <div class="sidebar-filter">
             <!-- ============================================== MANUFACTURES============================================== -->
-<?php
-        if(!empty($all_products))
-        {
-?>
-           <div class="sidebar-widget wow fadeInUp">
+<?php 
+            if(!empty($products))
+            {
+?>  
+           <div class="sidebar-widget wow fadeInUp manufactures">
               <div class="widget-header">
                 <h4 class="widget-title">Manufactures</h4>
               </div>
               <div class="sidebar-widget-body">
                 <ul class="list">
-<?php
-                foreach ($brands as $key => $brands_data) 
-                {   
-                  if(!empty($parent_id))
-                  {                    
+                  <?php 
+                  if(!empty($brands)) 
+                  { 
 ?>
-                  <li><a href="<?= base_url() ."Categories/get_parent_categories_brands_products/".$brands_data->id ."/" . $parent_id  ?>" onclick="get_brands_products($brands_data->id)" ><?= ucwords($brands_data->name); 
-                  ?></a></li>
-                 <!--  <li><a href="javascript:void(0);" onclick="get_brands_products(<?php echo $brands_data->id ?>)" ><?= ucwords($brands_data->name); 
-                  ?></a></li> -->
-<?php
-                  }
-                  elseif (!empty($sub_category_id))
-                  {
+<?php 
+                    foreach($brands as $brand) 
+                    { 
 ?>
-                      <li><a href="<?= base_url() ."Categories/get_sub_categories_brands_products/".$brands_data->id ."/" . $sub_category_id  ?>" onclick="get_brands_products($brands_data->id)" ><?= ucwords($brands_data->name); ?></a></li>
+                      <li><a href="#" class="<?php echo ($brand->id==$manufacture) ? 'active' : 'manufacture';?>" data-manufacture="<?php echo $brand->id; ?>"><?php echo ucwords($brand->name); ?></a></li>
+<?php 
+                    } 
+?>
 <?php
-                  }
-                }
- ?>
+                  } 
+?>
                 </ul>
                 <!--<a href="#" class="lnk btn btn-primary">Show Now</a>-->
               </div>
@@ -137,156 +144,116 @@
             </div>
 
             <!-- /.sidebar-widget -->
-            <!-- ============================================== MANUFACTURES: END ============================================== -->
-            <!-- ============================================== SIDEBAR CATEGORY ============================================== -->
-<?php
-          if(!empty($parent_id))
-          {
-?>
-           <form method="POST" action="<?= base_url() ."Categories/get_sub_categories_price_filter_products/".$parent_id ?>">
-            <div class="sidebar-widget wow fadeInUp">
-              <h3 class="section-title">shop by</h3>
-
-              <div class="widget-header">
-               
-                <h4 class="widget-title">Category</h4>
-              </div>
-              <div class="sidebar-widget-body">
-                <div class="accordion">
-                  <div class="accordion-group">
-<?php
-                   foreach ($shop_by_main_category as $key => $shop_by_data)
-                   {     
-?>
-                    <div class="accordion-heading"> <a href="#<?php if(empty($sub_categories->categroy_id)) echo 'one'.$shop_by_data->id; ?>" data-toggle="collapse" class="accordion-toggle collapsed"><?= ucwords($shop_by_data->name);?> </a> </div>         
-                    <div class="accordion-body collapse" id="one<?= $shop_by_data->id;?>" style="height: 0px;">
-                      <div class="accordion-inner">
- <?php
-                         foreach ($shop_by_sub_category as $key => $sub_categories) 
-                         {
-                            if($sub_categories->category_id == $shop_by_data->id)
-                            {
+      <!-- ============================================== MANUFACTURES: END ============================================== -->
+<?php 
+            if(!empty($categoriesfilters)) 
+            {
 ?>   
-                       <ul>
-                          <li ><input type="checkbox" name="sub_category[]" class="sub_category_checkbox" id="sub_category" value ="<?= $sub_categories->id; ?>" onclick="shope_sub_category(this)" >
-                            <a  class="sub-categoriesname" > <?= ucwords($sub_categories->name); ?></a></li>
-                        </ul>
-<?php                  
-                            } 
-                          }
-?>
-                         </div>
-                    </div>
-<?php                  
-                  }
-                   
-?>
-                  </div>
-                  <!-- /.accordion-group -->
+              <div class="sidebar-widget wow fadeInUp shop-category" >
+                <h3 class="section-title">shop by</h3>
+                <div class="widget-header">
+                  <h4 class="widget-title">Category</h4>
                 </div>
-                <!-- /.accordion -->
-              </div>
-              <!-- /.sidebar-widget-body -->
-            </div>
-<?php
-          }
+                <div class="sidebar-widget-body">
+                  <div class="accordion">
+                    <div class="accordion-group">
+                      <div class="accordion-heading"> </div> 
+                      <div class="accordion-body" id="one" >
+                        <div class="accordion-inner">
+                          <ul class="accordion-inner-ul">
+                             
+<?php 
+                                  foreach($categoriesfilters as $key => $item) 
+                                  { 
 ?>
-         
-            <!-- /.sidebar-widget -->
-            <!-- ============================================== SIDEBAR CATEGORY : END ============================================== -->
+                                    <li><input  
+<?php 
+
+                                    if(!empty($subcategory))
+                                    {
+                                      
+                                      if(strstr($subcategory,$item->id))
+                                      {
+                                        echo "checked";
+                                      }
+                                     
+                                    }
+?>
+                                     type="checkbox" name="multiple_sub_category[]" value="<?= $item->id; ?>" id="multiple_sub_category" class="multiple_sub_category" data-subcategory="<?php echo $item->id; ?>" ><a href="#" class="<?php echo ($item->id==$subcategory) ? 'active' : 'subcategory'; ?> sub-categoriesname" data-subcategory="<?php echo $item->id; ?>"><?php echo ucwords($item->name); ?></a></li>
+<?php 
+                                } 
+?>
+
+                            </ul>
+                           </div>
+                      </div>
+                    </div>
+                    <!-- /.accordion-group -->
+                  </div>
+                  <!-- /.accordion -->
+                </div>
+                <!-- /.sidebar-widget-body -->
+              </div>
+<?php 
+                            }
+?>       
+<!-- ============================================== SIDEBAR CATEGORY : END ============================================== -->
 
             <!-- ============================================== PRICE SILDER============================================== -->
-<?php
-            foreach ($max_min_price as $key => $slider_price) 
-            {
-?>
-            <div class="sidebar-widget wow fadeInUp">
-              <div class="widget-header">
-                <h4 class="widget-title">Price Slider</h4>
-              </div>
-              <div class="sidebar-widget-body m-t-10">
-                <div class="price-range-holder"> <span class="min-max"> <span class="pull-left" id="pull-left" value="<?= (int)$slider_price->min_price; ?>"><?= (int)$slider_price->min_price;?> </span> <span class="pull-right" id="pull_right" value="<?= (int)$slider_price->max_price; ?>"><?= (int)$slider_price->max_price; ?></span> </span>
-                  <input type="text" id="amount" style="border:0; color:#666666; font-weight:bold;text-align:center;">
-                  <input type="text" class="price-slider" name="price_slider" value=""  >
+            
+              <div class="sidebar-widget wow fadeInUp price_slider_block">
+                <div class="widget-header">
+                  <h4 class="widget-title">Price Slider</h4>
                 </div>
-                <!-- /.price-range-holder -->
-                
-                <button  class="lnk btn btn-primary" type="submit" name="submit" > Show Now </button>
-               <!--  <button  class="lnk btn btn-primary" type="submit" name="submit" id ="show_button" style="display: none"> Show Now </button> -->
-               <!--  <a href="#" class="lnk btn btn-primary">Show Now</a>  --></div>
-              <!-- /.sidebar-widget-body -->
-            </div>
-<?php
-          }
-?>
-          </form>
-<?php
-        }
-?>
+                <div class="sidebar-widget-body m-t-10">
+                  <div class="price-range-holder"> <span class="min-max"> <span class="pull-left price-min" data-value="200.00">$<?php echo $default_min_max['min']; ?></span> <span class="pull-right price-max" data-value="800.00">$<?php echo $default_min_max['max']; ?></span> </span>
+                    <input type="text" id="amount" style="border:0; color:#666666; font-weight:bold;text-align:center;">
+                    <input type="text" id="price-slider-val" class="price-slider" name="price_slider" value=""  >
+                  </div>
+                  <!-- /.price-range-holder -->
+                  <button  class="lnk btn btn-primary" id="btnprice" type="button" name="submit" > Show Now </button>
+                </div>
+                <!-- /.sidebar-widget-body -->
+              </div>
+         
+
             <!-- /.sidebar-widget -->
             <!-- ============================================== PRICE SILDER : END ============================================== -->
 
-            <!-- ============================================== COLOR============================================== -->
-            <div class="sidebar-widget wow fadeInUp">
-              <div class="widget-header">
-                <h4 class="widget-title">Colors</h4>
-              </div>
-              <div class="sidebar-widget-body">
-                <ul class="list">
-                  <li><a href="#">Red</a></li>
-                  <li><a href="#">Blue</a></li>
-                  <li><a href="#">Yellow</a></li>
-                  <li><a href="#">Pink</a></li>
-                  <li><a href="#">Brown</a></li>
-                  <li><a href="#">Teal</a></li>
-                </ul>
-              </div>
-              <!-- /.sidebar-widget-body -->
-            </div>
-            <!-- /.sidebar-widget -->
-            <!-- ============================================== COLOR: END ============================================== -->
-
             <!-- ============================================== PRODUCT TAGS ============================================== -->
-<?php
-          if(!empty($all_products))
-          {
-?>
+
             <div class="sidebar-widget product-tag wow fadeInUp outer-top-vs">
               <h3 class="section-title">Product tags</h3>
               <div class="sidebar-widget-body outer-top-xs">
                 <div class="tag-list"> 
-<?php
-              foreach ($products_tags as $key => $tags) 
-              { 
-                if(!empty($parent_id))
-                {  
+                  <ul class="list">
+<?php 
+                      if(!empty($products_tags)) 
+                      { 
 ?>
-                  <a class="item" title="<?= $tags;?>" href="<?= base_url() ."Categories/get_patent_category_tags_products/".$tags.'/'.$parent_id; ?>"><?= ucwords($tags); ?></a>
-<?php
-                } 
-              }              
-              if (!empty($sub_category_id))
-              {
-                 foreach ($products_tags as $tags) 
-                {
+<?php 
+                        foreach($products_tags as $tags) 
+                        { 
 ?>
-                   <a class="item" title="<?= $tags;?>" href="<?= base_url() ."Categories/get_sub_category_tags_products/".$tags.'/'.$sub_category_id; ?>"><?= ucwords($tags) ;?></a>      
+                         <a class="<?php if($tags_data == $tags){ echo "item active" ; }else { echo "item";}  ?>" data-tags="<?= $tags; ?>" href="#"><?= ucwords( $tags); ?></a>
 <?php
-                  }
-              }
-             
+                         } 
 ?>
+<?php
+                         } 
+?>
+                    </ul>
                 </div>
                 <!-- /.tag-list -->
               </div>
               <!-- /.sidebar-widget-body -->
             </div>
 <?php
-        }
+              } 
 ?>
             <!-- /.sidebar-widget -->
           <!----------- Testimonials------------->
-            <div class="sidebar-widget  wow fadeInUp outer-top-vs ">
+            <div class="sidebar-widget  wow fadeInUp outer-top-vs">
               <div id="advertisement" class="advertisement">
                 <div class="item">
                   <div class="avatar"><img src="<?= base_url(); ?>assets/themes/default/images/testimonials/member1.png ?>" alt="Image"></div>
@@ -317,7 +284,7 @@
 
             <!-- ============================================== Testimonials: END ============================================== -->
 
-            <div class="home-banner"> <img src="<?= base_url(); ?>assets/themes/default/images/banners/LHS-banner.jpg ?>" alt="Image"> </div>
+            <div class="home-banner"> <img src="<?= base_url(); ?>assets/themes/default/images/banners/LHS-banner.jpg" alt="Image"> </div>
           </div>
           <!-- /.sidebar-filter -->
         </div>
@@ -326,60 +293,54 @@
       <!-- /.sidebar -->
       <div class='col-md-9'>
         <!-- ========================================== SECTION – HERO ========================================= -->
-
+<?php 
+        if(!empty($category)) 
+        { 
+?>
         <div id="category" class="category-carousel hidden-xs">
           <div class="item">
-<?php 
-            if(!empty($banner_detail))
-            {
-?>
-           <div class="image"> <img src="<?= base_url().$banner_detail->banner_image; ?>" alt="" class="img-responsive"> </div>
+           <div class="image"> <img src="<?php echo base_url(); ?>/<?php echo $category['banner']; ?>" alt="" class="img-responsive"> </div>
             <div class="container-fluid">
               <div class="caption vertical-top text-left">
-                <div class="big-text">  <?= $banner_detail->title;?> </div>
-                <div class="excerpt hidden-sm hidden-md"> <?= $banner_detail->sub_title;?> </div>
-                <div class="excerpt-normal hidden-sm hidden-md"> <?= $banner_detail->description;?> </div>
+                <div class="big-text"><?php echo $category['title']; ?></div>
+                <div class="excerpt hidden-sm hidden-md"><?php echo $category['sub_title']; ?></div>
+                <div class="excerpt-normal hidden-sm hidden-md"><?php echo $category['description']; ?></div>
               </div>
-              <!-- /.caption -->
             </div>
-            <!-- /.container-fluid -->
-<?php
-          }
-?>
-          </div>
         </div>
+      </div>
 <?php
-         if(!empty($all_products))
+         } 
+?>
+<?php 
+        if(!empty($products))
         {
 ?>
-        <div class="clearfix filters-container m-t-10">
+        <div class="clearfix filters-container m-t-10" style="">
           <div class="row">
-            <div class="col col-sm-6 col-md-2">
+            <div class="col col-sm-2 col-md-2">
               <div class="filter-tabs">
                 <ul id="filter-tabs" class="nav nav-tabs nav-tab-box nav-tab-fa-icon">
                   <li class="active"> <a data-toggle="tab" href="#grid-container"><i class="icon fa fa-th-large"></i>Grid</a> </li>
-                  <li><a data-toggle="tab" href="#list-container"><i class="icon fa fa-th-list"></i>List</a></li>
+                  <li><a data-toggle="tab" href="#list-container" class="list-container" data-list="list-container"><i class="icon fa fa-th-list"></i>List</a></li>
                 </ul>
               </div>
               <!-- /.filter-tabs -->
             </div>
             <!-- /.col -->
-<?php
-          
-            if(!empty($parent_id) && !empty($tags_name))
-            {
-?>
-            <div class="col col-sm-12 col-md-6">
+            <div class="col col-sm-6 col-md-6">
               <div class="col col-sm-6 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
+                <div class="lbl-cnt" style=""> <span class="lbl">Sort by</span>
                   <div class="fld inline">
                     <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
+                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> 
+                     
+                        Position<span class="caret"></span>  </button>
                       <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_asc_price_tags_products/".$parent_id.'/'.$tags_name;?>" >Price:Low to High</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_desc_price_tags_products/".$parent_id.'/'.$tags_name ?>" >Price:High to Low</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_asc_name_tags_products/".$parent_id.'/'.$tags_name?>">Product Name:A to Z</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_desc_name_tags_products/".$parent_id.'/'.$tags_name;?>">Product Name:Z to A</a></li>
+                        <li role="presentation"><a href="#" class="sort" data-sort="price" data-order="asc">Price:Low to High</a></li>
+                        <li role="presentation"><a href="#" class="sort" data-sort="price" data-order="desc">Price:High to Low</a></li>
+                        <li role="presentation"><a href="#" class="sort" data-sort="name" data-order="asc">Product Name:A to Z</a></li>
+                        <li role="presentation"><a href="#" class="sort" data-sort="name" data-order="desc">Product Name:Z to A</a></li>
                       </ul>
                     </div>
                   </div>
@@ -387,314 +348,179 @@
                 </div>
                 <!-- /.lbl-cnt -->
               </div>
-
             </div>
-<?php
-            }
-            elseif (!empty($sub_category_id) && !empty($tags_name)) 
-            {
-?>
-              <div class="col col-sm-12 col-md-6">
-              <div class="col col-sm-6 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_asc_price_tags_products/".$sub_category_id.'/'.$tags_name;?>" >Price:Low to High</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_desc_price_tags_products/".$sub_category_id.'/'.$tags_name ?>" >Price:High to Low</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_asc_name_tags_products/".$sub_category_id.'/'.$tags_name?>">Product Name:A to Z</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_desc_name_tags_products/".$sub_category_id.'/'.$tags_name;?>">Product Name:Z to A</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- /.fld -->
-                </div>
-                <!-- /.lbl-cnt -->
-              </div>
-
-            </div>
-<?php
-            }
-            elseif(!empty($brand_id) && !empty($parent_id))
-            {
-?>
-            <div class="col col-sm-12 col-md-6">
-              <div class="col col-sm-6 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_asc_price_brands_products/".$parent_id.'/'.$brand_id;?>" >Price:Low to High</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_desc_price_brands_products/".$parent_id.'/'.$brand_id ?>" >Price:High to Low</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_asc_name_brands_products/".$parent_id.'/'.$brand_id?>">Product Name:A to Z</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_desc_nam_brands_products/".$parent_id.'/'.$brand_id;?>">Product Name:Z to A</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- /.fld -->
-                </div>
-                <!-- /.lbl-cnt -->
-              </div>
-
-            </div>
-<?php
-            }
-            elseif (!empty($brand_id) && !empty($sub_category_id)) 
-            {
-?>
-            <div class="col col-sm-12 col-md-6">
-              <div class="col col-sm-6 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_asc_price_brands_products/".$sub_category_id.'/'.$brand_id;?>" >Price:Low to High</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_desc_price_brands_products/".$sub_category_id.'/'.$brand_id;?>" >Price:High to Low</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_asc_name_brands_products/".$sub_category_id.'/'.$brand_id;?>">Product Name:A to Z</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_desc_name_brands_products/".$sub_category_id.'/'.$brand_id;?>">Product Name:Z to A</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- /.fld -->
-                </div>
-                <!-- /.lbl-cnt -->
-              </div>
-
-            </div>
-<?php
-            }
-            elseif(!empty($filter_sub_category_id))
-            { 
-?>
-            <div class="col col-sm-12 col-md-6">
-              <div class="col col-sm-6 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_asc_price_brands_products/"?>" >Price:Low to High</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_desc_price_brands_products/"?>" >Price:High to Low</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_asc_name_brands_products/"?>">Product Name:A to Z</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_desc_name_brands_products/"?>">Product Name:Z to A</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- /.fld -->
-                </div>
-                <!-- /.lbl-cnt -->
-              </div>
-
-            </div>
-<?php
-            }
-            elseif(!empty($parent_id))
-            {
-?>
-              <div class="col col-sm-12 col-md-6">
-              <div class="col col-sm-6 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_asc_price_products/".$parent_id;?>" >Price:Low to High</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_desc_price_products/".$parent_id ?>" >Price:High to Low</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_asc_name_products/".$parent_id?>">Product Name:A to Z</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_parent_category_desc_name_products/".$parent_id;?>">Product Name:Z to A</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- /.fld -->
-                </div>
-                <!-- /.lbl-cnt -->
-              </div>
-
-            </div>
-<?php 
-            }
-
-            elseif(!empty($sub_category_id))
-            {        
-?>
-            <div class="col col-sm-12 col-md-6">
-              <div class="col col-sm-6 col-md-6 no-padding">
-                <div class="lbl-cnt"> <span class="lbl">Sort by</span>
-                  <div class="fld inline">
-                    <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
-                      <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> Position <span class="caret"></span> </button>
-                      <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_asc_price_products/".$sub_category_id;?>" >Price:Low to High</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_desc_price_products/".$sub_category_id;?>" >Price:High to Low</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_asc_name_products/".$sub_category_id;?>">Product Name:A to Z</a></li>
-                        <li role="presentation"><a href="<?= base_url()."Categories/get_sub_category_desc_name_products/".$sub_category_id;?>">Product Name:Z to A</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <!-- /.fld -->
-                </div>
-                <!-- /.lbl-cnt -->
-              </div>
-
-            </div>
-<?php
-          }
-?>
             <!-- /.col -->
+            <form id="frmCategoryfilter">
+                  <input type="hidden" name="page" value="<?php echo $page; ?>" id="page"/>
+                 <!--  <input type="hidden" name="list-container"  id="list-container"/> -->
+                  <input type="hidden" name="sort" value="<?php echo $sort; ?>" id="sort"/>
+                  <input type="hidden" name="order" value="<?php echo $order; ?>" id="order"/>
+                  <input type="hidden" name="tags" value="<?php echo $tags_data; ?>" id="tags"/>
+                  <input type="hidden" name="manufacture" value="<?php echo $manufacture; ?>" id="manufacture"/>
+                  <input type="hidden" name="subcategory" value="<?php echo $subcategory; ?>"  id="subcategory"/>
+                  <input type="hidden" name="pricerange" value="<?php echo $pricerange; ?>" id="pricerange"/>
+            </form>
 <?php
-            if(count($all_products) > 1)
-            {
-?>
-            <div class="col col-sm-4 col-md-4 text-right">
-<?php
-            }
-            else
-            {
-?>
-               <div class="col col-sm-12 col-md-12 text-right">
-<?php              
-            }
-?>
-<?php
-              if(isset($link))
+              if($total > 4)
               {
-                echo $link;
-              }
 ?>
-          
-            <!-- /.col -->
+            <div class="col col-sm-6 col-md-4 text-right">
+              <div class="pagination-container">
+                <ul class="list-inline list-unstyled">
+                  <li class="prev"><a href="#" class="pagination_link" data-pageno="<?php if($page > 1){ echo $page-1;}else{ echo $page;}?>"><i class="fa fa-angle-left"></i></a></li>
+<?php 
+                  $totalpages=floor($total/$limit);
+                   if($total%$limit!=0) 
+                    { $totalpages++; }
+?>
+<?php 
+                  for($i=1;$i<=$totalpages;$i++)
+                  {
+?>
+                    <li><a href="#" class="<?php echo ($i==$page)? 'active' : 'pagination_link'; ?>" data-pageno="<?php echo $i; ?>"><?php echo $i; ?></a></li>
+<?php 
+                  } 
+?>
+                  <li class="next"><a href="#" class="pagination_link" data-pageno="<?php if($page < $totalpages){ echo $page + 1;}else{ echo $totalpages;}?>"><i class="fa fa-angle-right"></i></a></li>
+                </ul>
+                <!-- /.list-inline --> 
+              </div>
+              <!-- /.pagination-container --> </div>
+<?php
+            }
+?>
+            <!-- /.col --> 
+            <!-- /.row -->
           </div>
-          <!-- /.row -->
-        </div>
-        <div class="search-result-container ">
-          <div id="myTabContent" class="tab-content category-list">
-            <div class="tab-pane active " id="grid-container">
-              <div class="category-product">
-                <div class="row">
-<?php    
-                foreach ($all_products as $key => $products) 
-                {                    
+          </div>
+<?php
+       } 
 ?>
+          <div class="search-result-container ">
+            <div id="myTabContent" class="tab-content category-list" style="">
+              <div class="tab-pane active " id="grid-container">
+                <div class="category-product">
+                  <div class="row products-data">
+<?php 
+                  if(empty($products)) 
+                  { 
+?>
+                    <p class="text-center">No Products</p>
+<?php 
+                  } 
+                  else 
+                  {
+?>
+<?php 
+                  foreach($products as $product)
+                  { 
+?>      
                   <div class="col-sm-6 col-md-4 wow fadeInUp">
                     <div class="products">
                       <div class="product">
                         <div class="product-image">
-                          <div class="image"> <a href="<?= base_url() ."Products/show_detail/". $products->id; ?>"><img  src="<?= base_url().$products->thumb_image; ?>" alt=""></a> </div>
+                          <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url(); ?>/<?php echo $product['thumb_image']; ?>" alt=""></a> </div>
                           <!-- /.image -->
-<?php 
-                        if($products->is_sale== 1)
-                        {
-?>
-                          <div class="tag sale">
-                            <?= 'Sale' ;?>
-                            <span>
-                          </span></div>
-<?php 
-                        }
-                        elseif ($products->is_hot == 1) 
-                        {
-?>
-                          <div class="tag hot"><span><?= 'Hot'; ?></span></div>
+                          
 <?php
-                        }
-
+                      if($product['is_sale'] == 1)
+                      {
+?>
+                      <div class="tag sale"><span>sale</span></div>
+<?php
+                    }
+                    elseif($product['is_hot'] == 1)
+                    {
+?>
+                       <div class="tag hot"><span>hot</span></div>
+<?php
+                    }
 ?>
                         </div>
                         <!-- /.product-image -->
+                        
                         <div class="product-info text-left">
-                          <h3 class="name"><a href="<?= base_url() ."Products/show_detail/". $products->id; ?>"><?= $products->name;?></a></h3>
+                          <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo $product['name']; ?></a></h3>
                           <div class="rating rateit-small"></div>
                           <div class="description"></div>
-                          <div class="product-price"> <span class="price"> <?= number_format($products->new_price);?></span> <span class="price-before-discount"><?= number_format($products->old_price);?></span> </div>
-                          <!-- /.product-price -->
+                          <div class="product-price"> <span class="price"> $<?php echo $product['price']; ?> </span> <span class="price-before-discount">$ <?php echo $product['old_price']; ?></span> </div>
+                          <!-- /.product-price --> 
+                          
                         </div>
                         <!-- /.product-info -->
                         <div class="cart clearfix animate-effect">
                           <div class="action">
                             <ul class="list-unstyled">
                               <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon"  type="button" onclick="<?= base_url() ."Products/show_detail/". $products->id; ?>"> <i class="fa fa-shopping-cart" ></i> </button>
+                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
                                 <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
                               </li>
-<?php 
+<?php
                               if(is_user_logged_in())
                               {
 ?>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?= base_url() ."Products/show_detail/". $products->id; ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?= site_url('Products/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
 <?php
-                              }
-?>   
+                            }
+?>
                             </ul>
                           </div>
-                          <!-- /.action -->
+                          <!-- /.action --> 
                         </div>
-                        <!-- /.cart -->
+                        <!-- /.cart --> 
                       </div>
-                      <!-- /.product -->
-
+                      <!-- /.product --> 
+                      
                     </div>
-                    <!-- /.products -->
+                    <!-- /.products --> 
                   </div>
-<?php               
-                    }
-                  }
-                
-                  else
-                  {
-                    ?>
-                     <div class=" filters-container ">
-                        <div class="row">
-                          <div class="col col-sm-12 col-md-12">
-                             <div class="text-center">
-                                  No Any Prodcuts
-                             </div>
-                         </div>
-                       </div>
-                  </div>
-                    
-                    <?php
-                  }
-                
+                  <!-- /.item -->
+<?php 
+                }
 ?>
-                </div>
+<?php 
+             } 
+?>
+                  </div>
                 <!-- /.row -->
-              </div>
+                </div>
               <!-- /.category-product -->
-
-            </div>
+              </div>
             <!-- /.tab-pane -->
-
-            <div class="tab-pane "  id="list-container">
-              <div class="category-product">
-<?php
-          
-            if(count($all_products) > 0)
-            {
-              foreach ($all_products as $key => $products) 
-              {  
-
+              <div class="tab-pane "  id="list-container">
+                <div class="category-product products-list-data">  
+<?php 
+                if(empty($products)) 
+                { 
 ?>
-                <div class="category-product-inner wow fadeInUp">
+                    <p>No Products</p>
+<?php 
+                }
+                else 
+                { 
+?>
+<?php 
+                foreach($products as $product)
+                { 
+?>  
+                <div class="category-product-inner">
                   <div class="products">
                     <div class="product-list product">
                       <div class="row product-list-row">
                         <div class="col col-sm-4 col-lg-4">
                           <div class="product-image">
-                            <div class="image"> <a href="<?= base_url() ."Products/show_detail/". $products->id; ?>"> <img src="<?= base_url().$products->thumb_image; ?>" alt=""> </a></div>
+                            <div class="image"> <img src="<?php echo base_url(); ?>/<?php echo $product['thumb_image']; ?>" alt=""> </div>
                           </div>
-                          <!-- /.product-image -->
+                          <!-- /.product-image --> 
                         </div>
                         <!-- /.col -->
                         <div class="col col-sm-8 col-lg-8">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?= base_url() ."Products/show_detail/". $products->id; ?>"><?= $products->name;?></a></h3>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo $product['name']; ?></a></h3>
                             <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"><?= number_format($products->new_price);?></span> <span class="price-before-discount"><?= number_format($products->old_price);?></span> </div>
+                            <div class="product-price"> <span class="price"> $<?php echo $product['price']; ?> </span> <span class="price-before-discount">$ <?php echo $product['old_price']; ?></span> </div>
                             <!-- /.product-price -->
-                            <div class="description m-t-10"><?= $products->long_description;?></div>
+                            <div class="description m-t-10"><?php echo $product['short_description']; ?></div>
                             <div class="cart clearfix animate-effect">
                               <div class="action">
                                 <ul class="list-unstyled">
@@ -706,199 +532,159 @@
                                   if(is_user_logged_in())
                                   {
 ?>
-                                  <li class="lnk wishlist"> <a class="add-to-cart" href="<?= base_url() ."Products/show_detail/". $products->id; ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                  <li class="lnk wishlist"> <a class="add-to-cart" href="<?= site_url('Products/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
 <?php
                                   }
- ?>
+?>
                                 </ul>
                               </div>
-                              <!-- /.action -->
+                              <!-- /.action --> 
                             </div>
-                            <!-- /.cart -->
+                            <!-- /.cart --> 
+                            
                           </div>
-                          <!-- /.product-info -->
+                          <!-- /.product-info --> 
                         </div>
-                        <!-- /.col -->
+                        <!-- /.col --> 
                       </div>
                       <!-- /.product-list-row -->
-<?php 
-                        if($products->is_sale == 1)
-                        {
-?>
-                          <div class="tag sale">
-                            <?= 'Sale' ;?>
-                            <span>
-                          </span></div>
-<?php 
-                        }
-                        elseif ($products->is_hot ==1) 
-                        {
-?>
-                          <div class="tag hot"><span><?= 'Hot'; ?></span></div>
 <?php
-                        }
+                      if($product['is_sale'] == 1)
+                      {
+?>
+                      <div class="tag sale"><span>sale</span></div>
+<?php
+                    }
+                    elseif($product['is_hot'] == 1)
+                    {
+?>
+                       <div class="tag hot"><span>hot</span></div>
+<?php
+                    }
 ?>
                     </div>
-                    <!-- /.product-list -->
+                    <!-- /.product-list --> 
                   </div>
-                  <!-- /.products -->
+                  <!-- /.products --> 
                 </div>
                 <!-- /.category-product-inner -->
 <?php 
               } 
-            }
-           
 ?>
-              </div>
-              <!-- /.category-product -->
-            </div>
-            <!-- /.tab-pane #list-container -->
-<?php
-            if(isset($link))
-            {
-?>
-         <!--  <div class="clearfix filters-container"> -->
-            <div class="text-right">
 <?php 
-             
-                  echo $link;
+            } 
 ?>
-             </div>
-            <!-- /.text-right -->
+                </div>
+              <!-- /.category-product -->
+              </div>
+            <!-- /.tab-pane #list-container -->
+              <div class="text-right pagination-data">
 
-         <!--  </div> -->
-<?php
-            }
-?>
+              </div>
+            
+            </div>    
           </div>
-          <!-- /.tab-content -->
-         
-          <!-- /.filters-container -->
-
-        </div>
         <!-- /.search-result-container -->
-
-      </div>
       <!-- /.col -->
-    </div>
+      </div>
     <!-- /.row -->
   <!-- /container -->
-  </div>
+    </div>
 <!-- /body-content -->
 </div>
+<script>
+$(document).ready(function(){
 
+  // $("a.list-container").click(function(){
+  //   var list=$(this).attr('data-list');
+  //   $("#page").val(1);
+  //   $('#list-container').val(list);
+  //   $("#frmCategoryfilter").submit();
+  //   return false;
+  // });
+  $("a.pagination_link").click(function(){
+    var page=$(this).attr('data-pageno');
+    $("#page").val(page);
+    $("#frmCategoryfilter").submit();
+    return false;
+  });
+  $("a.sort").click(function(){
+    var sort=$(this).attr('data-sort');
+    var order=$(this).attr('data-order');
+    $("#page").val(1);
+    $("#sort").val(sort);
+    $("#order").val(order);
+    $("#frmCategoryfilter").submit();
+    return false;
+  });
+  $("a.manufacture").click(function(){
+    var manufacture=$(this).attr('data-manufacture');
+    $("#page").val(1);
+    $("#manufacture").val(manufacture);
+    $("#frmCategoryfilter").submit();
+    return false;
+  });
+  // $("a.subcategory").click(function(){
+  //   var subcategory=$(this).attr('data-subcategory');
+  //   $("#page").val(1);
+  //   $("#subcategory").val(subcategory);
+  //   $("#frmCategoryfilter").submit();
+  //   return false;
+  // });
+  // 
+  // $("input.multiple_sub_category").change(function(){
+  //   if ($(this).is(":checked")) 
+  //   {
+  //   $('.multiple_sub_category').prop("checked", true);
 
-<script type="text/javascript">
+  //   } 
+  //   else 
+  //   {
+  //     $('.multiple_sub_category').prop("checked", false);
+  //   }
+  // })
+  $("input.multiple_sub_category").click(function(){
+     var id= [];
 
-  function shope_sub_category()
-  {
-    var id=[];
-    $(".sub_category_checkbox:checked").each(function(e){
+     $('#multiple_sub_category:checked').each(function(i){
 
-      id.push($(this).val());
+        id.push($(this).val());
+
+    }); 
+    $("#page").val(1);
+    $("#subcategory").val(id);
+    $("#frmCategoryfilter").submit();
+    
+    return false;
+    
+  });
+  // $("#multiple_sub_category:checked").each(function(e){
+  //   alert('hello');
+  // });
+  $("a.item").click(function(){
+    var tags=$(this).attr('data-tags');
+    $("#page").val(1);
+    $("#tags").val(tags);
+    $("#frmCategoryfilter").submit();
+  });
+  $("#btnprice").click(function(){
+    var pricerange=$("#price-slider-val").val();
+    $("#page").val(1);
+    $("#pricerange").val(pricerange);
+    $("#frmCategoryfilter").submit();
+  });
+
+  $('.price-slider').slider({
+        min: <?php echo $default_min_max['min']; ?>,
+        max: <?php echo $default_min_max['max']; ?>,
+        step: 10,
+        <?php if(!empty($pricerange)) { $min_max=explode(',',$pricerange); ?>
+        value: [<?php echo $min_max[0]; ?>, <?php echo $min_max[1]; ?>],
+        <?php } else { ?>
+        value: [<?php echo $default_min_max['min']; ?>, <?php echo $default_min_max['max']; ?>],
+        <?php } ?>
+        handle: "square"
 
     });
-
-    if(id.length >0)
-    {
-      $.ajax({
-
-            type:"POST",
-            url:"<?php echo base_url(); ?>"+"Categories/shope_category/",
-            dataType:'JSON',
-            data:{ sub_category_id:id },
-            success:function(data)
-            {
-              
-            }
-
-      });
-    }
-
-  }
-
-// $(document).ready(function(){
-
-//   $("span").click(function(){
-
-//   });
-//   // var parent_id=$("#parent").attr("value");
-//   // var sub_category_id=document.getElementsByClassName("subcategory-name").value;
-
-//   // console.log(parent_id);
-// });
-
-
-
-
-function get_brands_products(id) {
- 
- $.ajax({
-
-        url:"Categories/get_brands_products/",
-        type:"POST",
-        data:{ brands_id:id },
-        success: function(data){
-          alert('hello');
-        }
- });
-}
-
-function display_show_now_button()
-{
-  var checkBox = document.getElementById("sub_category");
-  var show_button=document.getElementById("show_button");
-
-  if (checkBox.checked == true)
-  {
-    show_button.style.display = "block";
-  } 
-  else
-  {
-     show_button.style.display = "none";
-  }
-}
-
-
-
-// $(function(){
-//   $( ".price-slider" ).slider({
-
-//       range: true,
-//       min: 0,
-//       max: 500,
-//       values: [ 100, 300 ],
-//       slide: function( event, ui ) {
-
-//           $( "#amount" ).html( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-//           $( ".pull-left" ).val(ui.values[ 0 ]);
-//           $( ".pull-right" ).val(ui.values[ 1 ]);
-//       }
-//     });
-//     $( "#amount" ).html( "$" + $( ".price-slider" ).slider( "values", 0 ) +
-//      " - $" + $( ".price-slider" ).slider( "values", 1 ) );
-
-// });
-
-
-
-  // function filter_price_product(id)
-  // {
-  //   alert('hello');
-  //   // document.write("hello");
-  //   $.ajax({
-  //           url: 'Categories/get_asc_parent_category_price_products',
-  //           type: 'POST',
-  //           dataType:'JSON',
-  //           data: { category_id : id },
-  //           success: function(response) { 
-  //               alert(response);
-  //               console.log(response.all_products);
-  //               console.log(response.parent_id);
-               
-  //           },
-  //       });
-   
-  // }
-
- </script>
+});
+</script>
