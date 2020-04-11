@@ -43,7 +43,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label>banner name</label>
+                              <label><?php _el('banner_name') ?></label>
                               <select class="select-search" name="banner_id" id="banner_id">
 <?php
 	$banners = get_banners();
@@ -66,7 +66,7 @@
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name');?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" value="<?php echo ucfirst($category['name']) ?>" oninput="generate_slug()">
+                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" value="<?php echo $category['name'] ?>" oninput="generate_slug()">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>

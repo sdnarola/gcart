@@ -43,7 +43,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label>banner name</label>
+                              <label><?php _el('banner_name') ?></label>
                               <select class="select-search" name="banner_id" id="banner_id">
 <?php
 	$banners = get_banners();

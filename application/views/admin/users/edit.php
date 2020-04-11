@@ -57,12 +57,12 @@ $image_name = basename($user['profile_image']);
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('firstname');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('firstname');?>" id="firstname" name="firstname" value="<?php echo ucfirst($user['firstname']); ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('firstname');?>" id="firstname" name="firstname" value="<?php echo $user['firstname']; ?>">
 										</div>
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('lastname');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('lastname');?>" id="lastname" name="lastname" value="<?php echo ucfirst($user['lastname']); ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('lastname');?>" id="lastname" name="lastname" value="<?php echo $user['lastname']; ?>">
 										</div>
 									</div>
 									<div class="row">
@@ -81,12 +81,12 @@ $image_name = basename($user['profile_image']);
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('address1');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('address1');?>" id="address1" name="address1" value="<?php echo ucfirst($user['address_1']); ?>" readonly>
+											<input type="text" class="form-control" placeholder="<?php _el('address1');?>" id="address1" name="address1" value="<?php echo $user['address_1']; ?>" readonly>
 										</div>							
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('address2');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('address2');?>" id="address2" name="address2" value="<?php echo ucfirst($user['address_2']); ?>" readonly>
+											<input type="text" class="form-control" placeholder="<?php _el('address2');?>" id="address2" name="address2" value="<?php echo $user['address_2']; ?>" readonly>
 										</div>
 									</div>
 									<div class="row">
@@ -98,14 +98,14 @@ $image_name = basename($user['profile_image']);
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('city');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo ucfirst($user['city']); ?>" readonly>
+											<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo $user['city']; ?>" readonly>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('state');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo ucfirst($user['state']); ?>" readonly>
+											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo $user['state']; ?>" readonly>
 										</div>
 <?php
 		$readonly = '';
@@ -185,8 +185,8 @@ $("#profileform").validate({
 		},
 		mobile: {
 			required:"<?php _el('please_enter_', _l('mobile_no'))?>",
-			number: "plese enter only numbers",
-			rangelength:"Please enter a valid 10 digit mobile number",
+			number: "<?php _el('only_digits')?>",
+			rangelength:"<?php _el('only_10_digits')?>",
 		},
 		address1: {
 			required:"<?php _el('please_enter_', _l('address1'))?>",

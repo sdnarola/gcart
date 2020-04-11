@@ -2,7 +2,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('vendor');?> <?php _el('details');?> </span>
+                <span class="text-semibold"><?php _el('vendor_details');?></span>
             </h4>
         </div>
     </div>
@@ -58,7 +58,7 @@
                         <div class="col-md-6">
                             <table class="table table-hover table-framed table-sm table-striped rounded">
                               <thead>
-                                <tr class="alpha-slate"><th colspan="3"><h3 class="panel-title"><strong><?php _el('vendor')?><?php _el('details')?></strong></h3></th></tr>
+                                <tr class="alpha-slate"><th colspan="3"><h3 class="panel-title"><strong><?php _el('vendor_details')?></strong></h3></th></tr>
                               </thead>
                               <tbody>
                                 <tr>
@@ -116,7 +116,7 @@
                                     <td width="40%" class="text-semibold"><?php _el('join_date');?></td><td width="10%">:</td>
                                     <td width="40%">
                                        <?php $time = time_to_words($vendor['subscribe_date']);
-                                       echo $time;?><?php _el('ago');?>
+                                       echo $time;?>&nbsp<?php _el('ago');?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -144,20 +144,20 @@
                          <div class="col-md-6">
                             <table class="table table-hover table-framed table-sm table-striped rounded">
                               <thead>
-                                <tr class="alpha-slate"><th colspan="3"><h3 class="panel-title"><strong><?php _el('shop')?><?php _el('details')?></strong></h3></th></tr>
+                                <tr class="alpha-slate"><th colspan="3"><h3 class="panel-title"><strong><?php _el('shop_details')?></strong></h3></th></tr>
                               </thead>
                               <tbody>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('owner');?><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($vendor['owner_name']); ?></td>
+                                    <td width="40%" class="text-semibold"><?php _el('owner_name');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($vendor['owner_name']); ?></td>
                                 </tr>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('shop');?><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($vendor['shop_name']); ?></td>
+                                    <td width="40%" class="text-semibold"><?php _el('shop_name');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($vendor['shop_name']); ?></td>
                                 </tr>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('shop');?><?php _el('number');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($vendor['shop_number']); ?></td>
+                                    <td width="40%" class="text-semibold"><?php _el('shop_number');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($vendor['shop_number']); ?></td>
                                 </tr>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('shop');?><?php _el('details');?></td><td width="10%">:</td>
+                                    <td width="40%" class="text-semibold"><?php _el('shop_details');?></td><td width="10%">:</td>
                                     <td width="40%"><?php echo ucfirst($vendor['shop_details']); ?></td>
                                 </tr>
                                 <tr> <td width="40%" class="text-semibold"><?php _el('total');?>&nbsp<?php _el('products');?>
@@ -176,12 +176,12 @@
                                 </thead>
                                 <thead>
                                     <tr>
-                                        <th width="20%"><?php _el('product')?><?php _el('name')?></th>
+                                        <th width="20%"><?php _el('product_name')?></th>
                                         <th width="20%" ><?php _el('category')?></th>
                                         <th width="10%" ><?php _el('price')?></th>
                                         <th width="10%" ><?php _el('stock')?></th>
-                                        <th width="10%" class="text-center"><?php _el('product')?><?php _el('status')?></th>
-                                        <th width="10%" class="text-center"><?php _el('category')?><?php _el('status')?></th>
+                                        <th width="10%" class="text-center"><?php _el('product')?>&nbsp<?php _el('status')?></th>
+                                        <th width="10%" class="text-center"><?php _el('category')?>&nbsp<?php _el('status')?></th>
                                         <th width="8%" class="text-center"><?php _el('actions')?></th>
                                     </tr>
                                 </thead>

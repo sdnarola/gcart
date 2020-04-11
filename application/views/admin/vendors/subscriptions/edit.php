@@ -3,7 +3,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('edit');?><?php _el('subscription')?></span>
+                <span class="text-semibold"><?php _el('edit');?>&nbsp<?php _el('subscription')?></span>
             </h4>
         </div>
     </div>
@@ -63,7 +63,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('product');?><?php _el('limitations');?>:</label>
+                                    <label><?php _el('product');?>&nbsp<?php _el('limitations');?>:</label>
                                     <input type="number" class="form-control" placeholder="<?php _el('limitations');?>" id="product_limit" name="product_limit" value="<?php echo $plan['product_limit']; ?>">
                                 </div>
                             </div>
