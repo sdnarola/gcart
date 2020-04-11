@@ -43,7 +43,7 @@
                         <th width="40%" ><?php _el('title');?></th>
                         <th width="15%" ><?php _el('cost');?></th>
                         <th width="15%" ><?php _el('duration');?>(<?php _el('days');?>)</th>
-                        <th width="20%" ><?php _el('product');?><?php _el('allowed');?></th>
+                        <th width="20%" ><?php _el('product');?>&nbsp<?php _el('allowed');?></th>
                         <th width="8%" class="text-center"><?php _el('actions');?></th>
                     </tr>
                 </thead>

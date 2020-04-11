@@ -5,7 +5,6 @@
 #=============================================
 #General
 #-------
-
 $lang['welcome']           = 'Welcome';
 $lang['add']               = 'Add';
 $lang['add_new']           = 'Add New';
@@ -23,7 +22,6 @@ $lang['total']             = 'Total';
 $lang['value']             = 'Value';
 $lang['view_all']          = 'View All';
 $lang['thumb_image']       = 'Thumbnail Image';
-$lang['status']            = 'Status';
 $lang['price']             = 'Price';
 $lang['old_price']         = 'Old Price';
 $lang['new_price']         = 'New Price';
@@ -48,7 +46,6 @@ $lang['no_cancel_it']      = 'No, Cancel It';
 $lang['yes_i_am_sure']     = 'Yes, I am sure';
 $lang['click_to_sort']     = 'Click to sort';
 $lang['number']            = 'Number';
-$lang['total']             = 'Total';
 $lang['view']              = 'View';
 $lang['create']            = 'Create';
 $lang['edit']              = 'Edit';
@@ -78,7 +75,6 @@ $lang['logout']           = 'Log Out';
 $lang['signup']           = 'Sign Up';
 $lang['registration']     = 'Registration';
 $lang['update']           = 'Update';
-$lang['profile_image']    = 'Profile Image';
 
 #Dashboard
 #---------
@@ -108,7 +104,9 @@ $lang['total_users']      = 'Total Users';
 $lang['total_customers']  = 'Total Customers';
 $lang['recent_customers'] = 'Recent Customer(s)';
 $lang['img_alt_msg']      = "profile image can't loaded";
-$lang['contact_no']       = "Contact No";
+$lang['address_1']   = 'Address_1';
+$lang['address_2']   = 'Address_2';
+$lang['contact_no']  = 'Contact No';
 
 #vendors
 #-------
@@ -161,7 +159,6 @@ $lang['manage_coupons'] = 'Manage Coupons';
 
 #Products
 #---------
-#
 $lang['product']            = 'Product';
 $lang['products']           = 'Products';
 $lang['product_name']       = 'Product Name';
@@ -184,14 +181,8 @@ $lang['comments']           = 'Comments';
 $lang['commenter']          = 'Commenter';
 $lang['commenter_email']    = 'Commenter\'s Email';
 $lang['product_discussion'] = 'Product Discussion';
-$lang['sale']               = 'Sale';
 $lang['hot']                = 'Hot';
 $lang['new']                = 'New';
-$lang['product']        = 'Product';
-$lang['product_name']   = 'Product Name';
-$lang['add_product']    = 'Add Product';
-$lang['edit_product']   = 'Edit Product';
-$lang['product_detail'] = 'Product Detail';
 
 #Orders
 #--------
@@ -222,31 +213,6 @@ $lang['products_ordered'] = 'Products Ordered';
 $lang['payment_method']   = 'Payment Method';
 $lang['payment_status']   = 'Payment Status';
 $lang['billing_details']  = 'Billing Details';
-#-----
-$lang['firstname']   = 'Firstname';
-$lang['lastname']    = 'Lastname';
-$lang['address_1']   = 'Address_1';
-$lang['address_2']   = 'Address_2';
-$lang['city']        = 'City';
-$lang['state']       = 'State';
-$lang['pincode']    = 'Pin code';
-$lang['contact_no']  = 'Contact No';
-$lang['mobile']   = 'Mobile No';
-$lang['upload_file'] = 'Profile Image';
-$lang['last_login']  = 'Last Login';
-$lang['user']        = 'User';
-$lang['users']       = 'Users';
-$lang['add_user']    = 'Add User';
-$lang['edit_user']   = 'Edit User';
-
-#Vendors
-#-----
-$lang['shop_name']   = 'Shop Name';
-$lang['owner_name']   = 'Owner Name';
-$lang['shop_number']   = 'Shop Number';
-$lang['shop_details']   = 'Shop Details';
-$lang['registration_number']   = 'Registration Number';
-$lang['address']   = 'Address';
 
 #Projects
 #--------
@@ -264,10 +230,9 @@ $lang['category_name']     = 'Category Name';
 $lang['add_category']      = 'Add Category';
 $lang['edit_category']     = 'Edit Category';
 $lang['slug']              = 'Slug';
-$lang['main_categories']   = 'Main Category';
+$lang['main_categories']   = 'Main Categories';
 $lang['icon']              = 'Icon';
 $lang['display']           = 'Display';
-$lang['display_header']    = 'Display Header';
 $lang['manage_categories'] = 'Manage Categories';
 $lang['main_category']     = 'Main Category';
 
@@ -280,23 +245,17 @@ $lang['edit_sub_category'] = 'Edit Sub Category';
 
 #Brands / Partners
 #----------
-$lang['brand']        = 'Brand';
-$lang['brands']       = 'Brands';
-$lang['brand_name']   = 'Brand Name';
-$lang['add_brand']    = 'Add Brand';
-$lang['edit_brand']   = 'Edit Brand';
-$lang['partners']     = 'Partners';
+$lang['brand']     = 'Brand';
+$lang['brands']     = 'Brands';
+$lang['partners']    = 'Partners';
 $lang['partner']      = 'Partner';
 $lang['add_partner']  = 'Add Partner';
 $lang['edit_partner'] = 'Edit Partner';
-$lang['partners']     = 'Partners';
 
 #Faq
 #-------
 $lang['faq']         = 'Faq';
 $lang['faqs']        = 'Faqs';
-$lang['faq_title']   = 'Faq Title';
-$lang['faq_details'] = 'Faq Details';
 $lang['add_faq']     = 'Add Faq';
 $lang['edit_faq']    = 'Edit Faq';
 
@@ -354,9 +313,10 @@ $lang['sub_title']   = 'Sub Title';
 #Banners
 #--------
 $lang['banner']      = 'Banner';
+$lang['banner_name'] = 'Banner Name';
 $lang['banners']     = 'Banners';
-$lang['add_banner']  = 'ADD Banners';
-$lang['edit_banner'] = 'EDIT Banners';
+$lang['add_banner']  = 'Add Banners';
+$lang['edit_banner'] = 'Edit Banners';
 $lang['no_select']   = 'No Select';
 
 #Time related
@@ -368,8 +328,8 @@ $lang['minute']  = 'minute';
 $lang['minutes'] = 'minutes';
 $lang['hour']    = 'hour';
 $lang['hours']   = 'hours';
-$lang['day']     = 'day';
-$lang['days']    = 'days';
+$lang['day']     = 'Day';
+$lang['days']    = 'Days';
 $lang['week']    = 'week';
 $lang['weeks']   = 'weeks';
 $lang['month']   = 'month';
@@ -403,22 +363,8 @@ $lang['discount_percentage']        = 'Discount By Percentage';
 $lang['greater_than_start_date']    = 'End Date Must Be Greater Than Start Date.';
 $lang['only_digits']                = 'Only Digits Are Allowed.';
 $lang['last_30_day_sale']           = 'Total Sales in Last 30 Days';
-$lang['no_data_found']                   = 'No Data Found.';
 $lang['_updation_fail_please_try_again'] = '%s Upadation failed please try again..';
-$lang['_added_successfully']             = '%s added successfully.';
-$lang['_updated_successfully']           = '%s updated successfully.';
-$lang['_deleted_successfully']           = '%s deleted successfully.';
-$lang['_activated']                      = '%s activated.';
-$lang['_deactivated']                    = '%s deactivated.';
-$lang['please_enter_']                   = 'Please Enter  %s';
-$lang['please_enter_valid_']             = 'Please Enter Valid %s';
-$lang['please_select_']                  = 'Please Select %s';
-$lang['single_deletion_alert']           = 'Are you sure you want to delete this record?';
-$lang['single_recovery_alert']           = 'You will not be able to recover this record after deletion.';
-$lang['multiple_deletion_alert']         = 'Are you sure you want to delete selected records?';
-$lang['multiple_recovery_alert']         = 'You will not be able to recover these records after deletion.';
-$lang['select_before_delete_alert']      = 'Please select some records to delete.';
-$lang['access_denied']                   = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
+$lang['only_10_digits']	= "Please Enter 10 Digits Only";
 
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------
@@ -430,11 +376,6 @@ $lang['enter_your_credentials_below']                           = 'Please enter 
 $lang['incorrect_email']                                        = 'Incorrect email.';
 $lang['incorrect_password']                                     = 'Incorrect password.';
 $lang['email_exists']                                           = 'This Email has already been taken.';
-$lang['login_to_your_account']        = 'Login to your account';
-$lang['enter_your_credentials_below'] = 'Please enter your credentials below';
-$lang['incorrect_email']              = 'Incorrect email.';
-$lang['incorrect_password']           = 'Incorrect password.';
-$lang['email_exists']                 = 'This Email has already been taken.';
 $lang['incorrect_email_or_password']                            = 'Email and/or password is incorrect.';
 $lang['your_account_is_not_active']                             = 'Your account is not active. Please contact to your Administrator.';
 $lang['forgot_password_instructions']                           = 'Please enter your email address below. <br/>We will send you instructions in email to reset your password.';

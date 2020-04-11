@@ -44,13 +44,13 @@
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('title');?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('title');?>" id="title" name="title" value="<?php echo ucfirst($faq['question']) ?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('title');?>" id="title" name="title" value="<?php echo $faq['question'] ?>">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('description');?>:</label>
                                <textarea name="details"  id="details" cols="18" rows="18" class="wysihtml5 wysihtml5-min form-control" placeholder="<?php _el('description')?>">
-                                <?php echo ucfirst($faq['answer']); ?>
+                                <?php echo $faq['answer']; ?>
                                 </textarea>
                                <label id="details-error" class="validation-error-label" for="details"></label>
                             </div>

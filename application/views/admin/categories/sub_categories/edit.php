@@ -46,7 +46,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label>category name</label>
+                              <label><?php _el('category_name') ?></label>
                               <select class="select-search" name="category_id" id="category_id">
 <?php
 	$categories = get_all_categories();
@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name');?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" oninput="generate_slug();" value="<?php echo ucfirst($sub_category['name']); ?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" oninput="generate_slug();" value="<?php echo $sub_category['name']; ?>">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>

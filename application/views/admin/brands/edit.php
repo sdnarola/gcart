@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" value="<?php echo ucfirst($brand['name'])?>" oninput="generate_slug()">
+                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" value="<?php echo $brand['name']?>" oninput="generate_slug()">
                             </div>
 <?php 
 $logo_name = basename($brand['logo']);

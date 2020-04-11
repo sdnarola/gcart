@@ -46,7 +46,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label>category name</label>
+                              <label><?php _el('category_name') ?></label>
                               <select class="select-search" name="category_name" id="category_name">
 <?php
 	$categories = get_all_categories();

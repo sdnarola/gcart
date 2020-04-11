@@ -48,19 +48,19 @@
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('title'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('title'); ?>" id="title" name="title" value="<?php echo ucfirst($slider['title'])?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('title'); ?>" id="title" name="title" value="<?php echo $slider['title'] ?>">
                             </div>
                              <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('sub_title'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('sub_title'); ?>" id="sub_title" name="sub_title" value="<?php echo ucfirst($slider['sub_title'])?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('sub_title'); ?>" id="sub_title" name="sub_title" value="<?php echo $slider['sub_title'] ?>">
                             </div>  
                             <div class="form-group">                             
                                <div>
                                     <small class="req text-danger">* </small>
                                     <label><?php _el('description'); ?>:</label>
                                 </div>
-                                <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"><?php echo ucfirst($slider['description'])?></textarea>
+                                <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"><?php echo $slider['description']?></textarea>
                             </div>
 <?php 
 $slider_image = basename($slider['image']);
