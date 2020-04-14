@@ -47,30 +47,12 @@
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name');?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" value="<?php echo $product['name']; ?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" value="<?php echo $product['name']; ?>" oninput="generate_slug()">
                             </div>
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('brand');?>:</label>
-                                <select class="form-control select-search" name="brand_id" id="brand_id" >
-                                    <option value="0" selected readonly disabled >----- Select Brand -----</option>
-<?php
-
-	foreach ($brands as $key => $brand)
-	{
-	?>
-    <option value="<?php echo $brand['id']; ?>" name="brand"<?php
-
-		if ($brand['id'] == $product['brand_id'])
-		{
-			echo ' selected';}
-
-	?>><?php echo ucwords($brand['name']); ?></option>
-<?php
-	}
-
-?>
-                                </select>
+                                <label><?php _el('slug');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('slug');?>" id="slug" name="slug" value="<?php echo $product['slug'] ?>">
                             </div>
                         </div>
                         <div class="row">
@@ -128,6 +110,32 @@
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('quantity');?>:</label>
                                 <input type="number" class="form-control" placeholder="<?php _el('quantity');?>" id="quantity" name="quantity" value="<?php echo $product['quantity']; ?>">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <small class="req text-danger">* </small>
+                                <label><?php _el('brand');?>:</label>
+                                <select class="form-control select-search" name="brand_id" id="brand_id" >
+                                    <option value="0" selected readonly disabled >----- Select Brand -----</option>
+<?php
+
+    foreach ($brands as $key => $brand)
+    {
+    ?>
+    <option value="<?php echo $brand['id']; ?>" name="brand"<?php
+
+        if ($brand['id'] == $product['brand_id'])
+        {
+            echo ' selected';}
+
+    ?>><?php echo ucwords($brand['name']); ?></option>
+<?php
+    }
+
+?>
+                                </select>
                             </div>
                         </div>
 
@@ -222,6 +230,9 @@ $("#product_form").validate({
         name: {
             required: true,
         },
+        slug: {
+            required: true,
+        },
         brand_id: {
             required: true,
         },
@@ -248,6 +259,9 @@ $("#product_form").validate({
     messages: {
         name: {
             required:"<?php _el('please_enter_', _l('name'))?>",
+        },
+        slug: {
+            required:"<?php _el('please_enter_', _l('slug'))?>",
         },
         brand_id: {
             required:"<?php _el('please_select_', _l('brand'))?>",
@@ -344,6 +358,23 @@ function get_sub_categories()
 
         }
     });
+}
+
+/**
+ *  generate a slug from category_name
+ */
+function generate_slug()
+{
+    var str = document.getElementById('name').value;
+    var slug = '';
+    var trimmed = $.trim(str);
+    slug = trimmed.replace(/[^a-z0-9&-]/gi, '-').
+    replace(/[&]/g,'and').
+    replace(/-+/g, '-').
+    replace(/^-|-$/g, '');
+
+    var slug = slug.toLowerCase();
+    document.getElementById("slug").value = slug;
 }
 
 //to get selected sub category of parent category

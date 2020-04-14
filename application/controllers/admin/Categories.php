@@ -84,7 +84,7 @@ class Categories extends Admin_Controller
 			$data['is_active'] = ($this->input->post('is_active')) ? 1 : 0;
 			//for deactive subcategories status
 			$status = array('is_active' => $data['is_active']);
-			$sub_categories_update = $this->sub_categories->update_subcategories_status($id, $status);
+			//$sub_categories_update = $this->sub_categories->update_subcategories_status($id, $status);
 
 			if ($_FILES['icon']['name'] != NULL) 
 			{
@@ -220,7 +220,7 @@ class Categories extends Admin_Controller
 	*/
 	public function get_sub_categories($id) 
 	{
-		$data = $this->categories->get_sub_categories($id);
+		$data = $this->categories->get_sub_category($id);
 		echo json_encode($data);
 	}
 
