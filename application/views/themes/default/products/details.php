@@ -402,7 +402,7 @@
                                                         <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc" onclick="decrement_quntity()"></i></span></div>
                                                     </div>
 
-                                                    <input type="text" id="quantity" value="1">
+                                                    <input type="text" id="quantity" value="1" onchange="check_quntity('<?php echo $product_details['quantity']; ?>')">
                                                     <?php
                                                     	}
                                                     	else
@@ -526,18 +526,14 @@
                                                     <form role="form" class="cnt-form">
 
                                                         <div class="row">
-                                                            <div class="col-sm-6">
+                                                            <div class="col-sm-12">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputName">Your Name <span class="astk">*</span></label>
                                                                     <input type="text" class="form-control txt" id="exampleInputName" placeholder="">
                                                                 </div><!-- /.form-group -->
-                                                                <div class="form-group">
-                                                                    <label for="exampleInputSummary">Email <span class="astk">*</span></label>
-                                                                    <input type="email" class="form-control txt" id="exampleInputSummary" placeholder="">
-                                                                </div><!-- /.form-group -->
                                                             </div>
 
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-12">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputReview">Review <span class="astk">*</span></label>
                                                                     <textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
@@ -699,6 +695,15 @@
 		    i--;
 		    document.getElementById('quantity').value = i;
 	    }
+    }
+
+    function check_quntity(limit)
+    {
+        var quality = $('#quantity').val();
+        if(quantity > limit)
+        {
+            alert(quantity+limit);
+        }
     }
 
 </script>
