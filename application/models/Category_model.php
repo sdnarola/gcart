@@ -30,17 +30,17 @@ class Category_model extends MY_Model
 	 *
 	 * @return mixed 	sub categories
 	 */
-	public function get_sub_categories_of_parent_category($id = '')
+	function get_sub_categories($id = '')
 	{
 		$this->_table = 'sub_categories';
-		$this->order_by('name');
+
 		if ($id == null)
 		{
 			$result = $this->get_all();
 
 			if (!$result)
 			{
-				return null;
+				return false;
 			}
 
 			return $result;
@@ -50,7 +50,7 @@ class Category_model extends MY_Model
 
 		if (!$result)
 		{
-			return null;
+			return false;
 		}
 
 		return $result;
@@ -63,7 +63,7 @@ class Category_model extends MY_Model
 	 *
 	 * @return mixed 	sub category
 	 */
-	public function get_sub_category_info($id)
+	function get_sub_category_info($id)
 	{
 		$this->db->where('id', $id);
 		$result = $this->db->get('sub_categories')->row_array();
@@ -79,10 +79,10 @@ class Category_model extends MY_Model
 // =========================== Bhavik ==================================//
 
 	/***======================================================code by vixuti patel===========================================================***
-		/**
-		 * [get_parent_category description]k
-		 * @return [boolean] Query true return sub catgories or return false
-	*/
+	/**
+	 * [get_parent_category description]k
+	 * @return [boolean] Query true return sub catgories or return false
+	 */
 	public function get_parent_category($is_header = '')
 	{
 		if (empty($is_header))
@@ -119,7 +119,7 @@ class Category_model extends MY_Model
 		{
 			$this->db->where(array('category_id' => $id));
 			$query = $this->db->get('sub_categories');
-
+			
 			if ($query == TRUE)
 			{
 				return $query->result();
@@ -139,6 +139,8 @@ class Category_model extends MY_Model
 			return false;
 		}
 	}
+
+	
 
 	/**
 	 * [get_parent_category_products description]
@@ -216,6 +218,6 @@ class Category_model extends MY_Model
 
 		return $query->result_array();
 	}
+		/***==================================================code end by vixuti patel=====================================================***/
 
-	/***==================================================code end by vixuti patel=====================================================***/
 }

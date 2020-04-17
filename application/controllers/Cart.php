@@ -7,14 +7,13 @@ class Cart extends Frontend_Controller
 		parent::__construct();
 		$this->load->model('cart_model', 'cart');
 		$this->load->model('category_model', 'category');
-		$this->load->model('coupon_model', 'coupons');
 	}
 
 	public function index()
 	{
 		$this->set_page_title('Cart');
-		$user_ip            = $this->input->ip_address();
-		$data['cart_items'] = $this->cart->get_many_by(array('user_ip' => $user_ip));
+		$user_id            = get_loggedin_user_id();
+		$data['cart_items'] = $this->cart->get_many_by(array('user_id' => $user_id));
 
 		$data['content'] = $this->load->view('themes/default/cart', $data, TRUE);
 		$this->load->view('themes/default/layouts/index', $data);
@@ -29,16 +28,23 @@ class Cart extends Frontend_Controller
 	{
 		if ($id)
 		{
-			$data['user_ip']      = $this->input->ip_address();
+			$data['user_id']      = $this->session->userdata('user_id');
 			$data['product_id']   = $id;
 			$data['quantity']     = 1;
 			$data['total_amount'] = $data['quantity'] * (get_product($id, 'price'));
 			$data['date']         = date('Y-m-d h:i:s', time());
 
-			$cart = $this->cart->get_by(array('user_ip' => $data['user_ip'], 'product_id' => $id));
+			$cart = $this->cart->get_by(array('user_id' => $data['user_id'], 'product_id' => $id));
 
-			if ($cart['product_id'] == $id && $cart['user_ip'] == $data['user_ip'])
+			if ($cart['product_id'] == $id && $cart['user_id'] == $data['user_id'])
 			{
+				$update_data['quantity']     = $cart['quantity'] + 1;
+				$update_data['total_amount'] = $update_data['quantity'] * (get_product($id, 'price'));
+
+				if ($this->cart->update($cart['id'], $update_data, FALSE))
+				{
+					redirect(site_url('home'));
+				}
 			}
 			else
 			{
@@ -46,52 +52,9 @@ class Cart extends Frontend_Controller
 
 				if ($insert)
 				{
-					redirect(site_url('cart'));
+					redirect(site_url('home'));
 				}
 			}
 		}
-	}
-
-	/**
-	 * Update cart details
-	 */
-	public function edit()
-	{
-		$data   = $this->input->post();
-		$update = $this->cart->update($data['id'], $data);
-
-		if ($update)
-		{
-			echo 'true';
-		}
-		else
-		{
-			echo 'false';
-		}
-	}
-
-	/**
-	 * Delete the single cart record
-	 */
-	public function delete()
-	{
-		$cart_id = $this->input->post('cart_id');
-		$deleted = $this->cart->delete($cart_id);
-
-		if ($deleted)
-		{
-			echo 'true';
-		}
-		else
-		{
-			echo 'false';
-		}
-	}
-
-	public function apply_coupon()
-	{
-		$code = $this->input->post('coupon');
-
-		echo json_encode($this->coupons->get_by(array('code' => $code)));
 	}
 }

@@ -2,15 +2,15 @@
 <div class="page-header page-header-default">
 	<div class="page-header-content">
 		<div class="page-title">
-			<h4></i> <span class="text-semibold"><?php _el('settings');?></span></h4>
+			<h4></i> <span class="text-semibold"><?php _el('settings'); ?></span></h4>
 		</div>
 	</div>
 	<div class="breadcrumb-line">
 		<ul class="breadcrumb">
 			<li>
-				<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
+				<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
 			</li>
-			<li class="active"><?php _el('settings');?></li>
+			<li class="active"><?php _el('settings'); ?></li>
 		</ul>
 	</div>
 </div>
@@ -27,32 +27,32 @@
 						<div class="tabbable nav-tabs-vertical nav-tabs-left">
 							<ul class="nav nav-tabs nav-tabs-highlight">
 								<li class="active">
-									<a href="#group-general" data-toggle="tab"><?php _el('company_info');?></a>
+									<a href="#group-general" data-toggle="tab"><?php _el('company_info'); ?></a>
 								</li>
 								<li>
-									<a href="#group-date-time" data-toggle="tab"><?php _el('date_time');?></a>
+									<a href="#group-date-time" data-toggle="tab"><?php _el('date_time'); ?></a>
 								</li>
 								<li>
-									<a href="#group-social-media" data-toggle="tab"><?php _el('social_media');?></a>
+									<a href="#group-social-media" data-toggle="tab"><?php _el('social_media'); ?></a>
 								</li>
 								<li>
-									<a href="#group-dummy-1" data-toggle="tab"><?php _el('email');?></a>
+									<a href="#group-dummy-1" data-toggle="tab"><?php _el('email'); ?></a>
 								</li>
 								<li>
-									<a href="#group-dummy-2" data-toggle="tab"><?php _el('general');?></a>
+									<a href="#group-dummy-2" data-toggle="tab"><?php _el('general'); ?></a>
 								</li>
 							</ul>
 							<div class="tab-content">
 								<!-- tab pane for group-company-info -->
 								<div class="tab-pane active has-padding" id="group-general">
-									<div class="form-group ">
-										<label><?php _el('company_name');?>:</label>
+									<div class="form-group ">										
+										<label><?php _el('company_name'); ?>:</label>
 										<input type="text" name="company_name" id="company_name" class="form-control" value="<?php echo get_settings('company_name'); ?>" >
 									</div>
-									<div class="form-group ">
-										<label><?php _el('company_email');?>:</label>
+									<div class="form-group ">										
+										<label><?php _el('company_email'); ?>:</label>
 										<input type="email" name="company_email" id="company_email" class="form-control" value="<?php echo get_settings('company_email'); ?>" >
-									</div>
+									</div>									
 								</div>
 								<!-- /tab pane for group-company-info -->
 								<!-- tab pane for group-date-time -->
@@ -60,22 +60,22 @@
 									<div class="form-group ">
 										<label>Date Format:</label>
 										<select class="select" name="date_format" id="role">
-											<option value="j-M-Y"<?php echo (get_settings('date_format') == 'j-M-Y') ? 'selected' : ' '; ?>>
-												<?php echo date('j-M-Y'); ?>
+											<option value="j-M-Y" <?php echo (get_settings('date_format')=="j-M-Y")? "selected" : " "; ?>>
+												<?php echo date("j-M-Y"); ?>
 											</option>
-											<option value="j-m-Y"<?php echo (get_settings('date_format') == 'j-m-Y') ? 'selected' : ' '; ?>>
-												<?php echo date('j-m-Y'); ?>
+											<option value="j-m-Y" <?php echo (get_settings('date_format')=="j-m-Y")? "selected" : " "; ?>>
+												<?php echo date("j-m-Y"); ?>
 											</option>
-											<option value="jS F, Y"<?php echo (get_settings('date_format') == 'jS F, Y') ? 'selected' : ' '; ?>>
-												<?php echo date('jS F, Y'); ?>
+											<option value="jS F, Y" <?php echo (get_settings('date_format')=="jS F, Y")? "selected" : " "; ?>>
+												<?php echo date("jS F, Y"); ?>
 											</option>
 										</select>
 									</div>
 									<div class="form-group">
 										<label>Time Format:</label>
 										<select class="select" name="time_format" >
-											<option value="h:i A"<?php echo (get_settings('time_format') == 'h:i A') ? 'selected' : ' '; ?>>02:30 PM (12 hours)</option>
-											<option value="H:i"<?php echo (get_settings('time_format') == 'H:i') ? 'selected' : ' '; ?>>14:30 (24 hours)</option>
+											<option value="h:i A" <?php echo (get_settings('time_format')=="h:i A")? "selected" : " "; ?>>02:30 PM (12 hours)</option>
+											<option value="H:i" <?php echo (get_settings('time_format')=="H:i")? "selected" : " "; ?>>14:30 (24 hours)</option>
 										</select>
 									</div>
 								</div>
@@ -99,7 +99,7 @@
 								</div>
 								<!-- /tab pane for group-social-media -->
 								<!-- tab pane for group-email -->
-								<div class="tab-pane has-padding" id="group-dummy-1">
+								<div class="tab-pane has-padding" id="group-dummy-1">									
 									<div class="form-group">
 										<label>SMTP Host:</label>
 										<input type="text" name="smtp_host" id="smtp_host" class="form-control" value="<?php echo get_settings('smtp_host'); ?>">
@@ -109,26 +109,10 @@
 										<input type="number" name="smtp_port" id="smtp_port" class="form-control" value="<?php echo get_settings('smtp_port'); ?>">
 									</div>
 									<div class="form-group">
-										<label>SMTP Encryption:</label>
+										<label>SMTP Encryption:</label>										
 										<select class="select" name="smtp_encryption" id="smtp_encryption">
-                            				<option value="ssl"
-                            				<?php
-
-                            					if (get_settings('smtp_encryption') == 'ssl')
-                            					{
-                            						echo 'selected';
-                            					}
-
-                            				?>>SSL</option>
-                            				<option value="tls"
-                            				<?php
-
-                            					if (get_settings('smtp_encryption') == 'tls')
-                            					{
-                            						echo 'selected';
-                            					}
-
-                            				?>>TLS</option>
+                            				<option value="ssl" <?php if(get_settings('smtp_encryption')=='ssl') echo 'selected'; ?>>SSL</option>
+                            				<option value="tls" <?php if(get_settings('smtp_encryption')=='tls') echo 'selected'; ?>>TLS</option>
                             			</select>
 									</div>
 									<div class="form-group">
@@ -138,7 +122,7 @@
 									<div class="form-group">
 										<label>SMTP Password:</label>
 										<input type="text" name="smtp_password" id="smtp_password" class="form-control" value="<?php echo get_settings('smtp_password'); ?>">
-									</div>
+									</div>									
 									<div class="form-group">
 										<label>From Name:</label>
 										<input type="text" name="from_name" id="from_name" class="form-control" value="<?php echo get_settings('from_name'); ?>">
@@ -166,50 +150,34 @@
 									<div class="form-group">
 										<label>Email Footer:</label>
 										<textarea name="email_footer" id="email_footer" rows="8" class="form-control" placeholder="Common Email Footer in HTML format"><?php echo get_settings('email_footer'); ?></textarea>
-									</div>
+									</div>	
 									<hr/>
 									<h5>Send Test Email</h5>
 									<p class="text-muted">Send test email to make sure that your SMTP settings are set correctly.</p>
 									<div class="form-group">
-										<div class="input-group">
+										<div class="input-group">										
 										<input type="email" id="test_email" class="form-control" placeholder="Email Address">
 										<div class="input-group-btn">
 											<button type="button" class="btn btn-default test_email">Test</button>
 										</div>
-										</div>
-									</div>
+										</div>	
+									</div>									
 								</div>
 								<!-- /tab pane for group-email -->
 								<!-- tab pane for group-general -->
 								<div class="tab-pane has-padding" id="group-dummy-2">
 									<div class="form-group">
-										<label><?php _el('maintenance');?> :</label>
+										<label><?php _el('maintenance'); ?> :</label>										
 										<br>
 										<input type="hidden" name="maintenance" value="0" />
-										<input type="checkbox" name="maintenance" id="maintenance" value="1" class="switchery form-control"
-<?php
-
-	if (get_settings('maintenance') == 1)
-	{
-		echo 'checked';
-	}
-
-?> >
-									</div>
+										<input type="checkbox" name="maintenance" id="maintenance" value="1" class="switchery form-control" <?php if( get_settings('maintenance') == 1 ) echo 'checked'; ?> >
+									</div>		
 									<div class="form-group">
-										<label><?php _el('vendors');?><?php _el('registration');?> :</label>
+										<label><?php _el('vendors');?> <?php _el('registration');?> :</label>										
 										<br>
 										<input type="hidden" name="vendors_registration" value="0" />
-										<input type="checkbox" name="vendors_registration" id="vendors_registration" value="1" class="switchery form-control"
-<?php
-
-	if (get_settings('vendors_registration') == 1)
-	{
-		echo 'checked';
-	}
-
-?> >
-									</div>
+										<input type="checkbox" name="vendors_registration" id="vendors_registration" value="1" class="switchery form-control" <?php if( get_settings('vendors_registration') == 1 ) echo 'checked'; ?> >
+									</div>																	
 								</div>
 								<!-- /tab pane for group-general -->
 							</div>
@@ -224,10 +192,11 @@
                      	</div>
 					</div>
 					<!-- /Panel body -->
+					
 				</div>
 				<!-- /Panel -->
 			</div>
-		</div>
+		</div>			
 	</form>
 </div>
 <!-- /Content area -->
@@ -245,10 +214,10 @@ $( "#settings_form" ).on( "submit", function( event ) {
 		type: 'POST',
 		data: $(this).serialize(),
 		success: function(msg)
-		{
+		{ 
 			if (msg=='true')
-            {
-                jGrowlAlert("<?php _el('_updated_successfully', _l('settings'));?>", 'success');
+            {                           
+                jGrowlAlert("<?php _el('_updated_successfully', _l('settings')); ?>", 'success');
             }
 		}
 	});
@@ -262,7 +231,7 @@ $('.test_email').on('click', function() {
         test_email: email
       }).done(function(msg) {
         	if (msg=='true')
-            {
+            {                           
                 jGrowlAlert('Seems like your SMTP settings are set correctly. Check your email now.', 'success');
             }
             else

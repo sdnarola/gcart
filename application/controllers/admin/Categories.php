@@ -216,7 +216,7 @@ class Categories extends Admin_Controller
 	*/
 	public function get_sub_categories($id)
 	{
-		$data = $this->categories->get_sub_categories_of_parent_category($id);
+		$data = $this->categories->get_sub_categories($id);
 		echo json_encode($data);
 	}
 

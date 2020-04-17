@@ -7,7 +7,15 @@ class Authentication extends My_Controller
 		parent::__construct();
 		$this->load->model('Authentication_model');
 		$this->load->model('User_model', 'users');
+
+
+		if (get_settings('maintenance') == 1)
+		{
+			redirect(site_url());
+		}
+
 		$this->load->model('brand_model', 'brands');
+
 	}
 
 	/**
@@ -19,9 +27,24 @@ class Authentication extends My_Controller
 		$this->login();
 	}
 
+
+	/**
+	 * Loads Maintenance page.
+	 */
+	public function maintenance()
+	{
+		$this->set_page_title(_l('maintenance'));
+		$this->load->view('themes/default/maintenance');
+	}
+
 	/**
 	 * Loads user login form & performs login
 	 */
+
+/**
+ * [login user]
+ * @return [type] [description]
+ */
 
 	public function login()
 	{
@@ -130,10 +153,11 @@ class Authentication extends My_Controller
 				];
 
 				$message .= str_replace($find, $replace, $template['message']);
+
 				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
+
 				$sent = send_email($data['email'], $subject, $message);
 				echo $send;
-
 				if ($sent)
 				{
 					set_alert('success', 'Your are registered successfully. Please check your email for account verification instructions.');
@@ -280,16 +304,8 @@ class Authentication extends My_Controller
 	 */
 	public function logout()
 	{
+		log_activity('User Logged Out [Email: '.get_loggedin_info('email').']', get_loggedin_user_id());
 		$this->Authentication_model->logout();
 		redirect(site_url());
-	}
-
-	/**
-	 * Loads Maintenance page.
-	 */
-	public function maintenance()
-	{
-		$this->set_page_title(_l('maintenance'));
-		$this->load->view('themes/default/maintenance');
 	}
 }
