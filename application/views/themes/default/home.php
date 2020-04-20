@@ -42,7 +42,7 @@ function counter(end_date,id)
     }
     else
     {
-      result += '<div class="box-wrapper">';
+    result += '<div class="box-wrapper">';
     result += '<div class="date box"> <span class="key" id="days">'+days+'</span> <span class="value">DAYS</span> </div>';
     result += '</div>';
     result += '<div class="box-wrapper">';

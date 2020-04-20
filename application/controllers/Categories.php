@@ -21,6 +21,8 @@ class Categories extends Frontend_Controller
 		$this->data['main_category'] = $this->category->get_parent_categories();
 		$this->data['sub_category']  = $this->category->get_sub_categories();
 		//check if category slug is there
+		//
+		
 		$category                = array();
 		$sub_category            = array();
 		$products                = array();
@@ -61,7 +63,7 @@ class Categories extends Frontend_Controller
 			$this->data['subcategory_title'] = $sub_category['name'];
 			$this->data['category_slug']     = $category_slug;
 			//get the brands
-			$this->data['brands'] = $this->category->get_brands($category['id'], $sub_category['id'], $multiple_subcategory_id, $tags);
+			$this->data['brands'] = $this->product->get_products_brands($category['id'], $sub_category['id'], $multiple_subcategory_id, $tags);
 
 			//get the products now
 			$where['category_id']      = $category['id'];
@@ -91,7 +93,7 @@ class Categories extends Frontend_Controller
 
 			//tags
 
-			$products_tags = $this->category->get_products_tags($where, $multiple_subcategory_id);
+			$products_tags = $this->product->get_products_tags($where, $multiple_subcategory_id);
 
 			if (!empty($products_tags))
 			{
@@ -104,9 +106,9 @@ class Categories extends Frontend_Controller
 			}
 
 			$this->data['products_tags'] = $products_tags;
-			$default_min_max             = $this->category->get_all_products_min_max($where, $tags, $multiple_subcategory_id);
-			$total                       = $this->category->get_all_products_count($where, $tags, $multiple_subcategory_id);
-			$products                    = $this->category->get_all_products($where, $page, $limit, $sort, $order, $tags, $multiple_subcategory_id);
+			$default_min_max             = $this->product->get_all_products_min_max($where, $tags, $multiple_subcategory_id);
+			$total                       = $this->product->get_all_products_count($where, $tags, $multiple_subcategory_id);
+			$products                    = $this->product->get_all_products($where, $page, $limit, $sort, $order, $tags, $multiple_subcategory_id);
 		}
 
 		$pricerange                    = (empty($pricerange)) ? $default_min_max['min'].','.$default_min_max['max'] : $pricerange;

@@ -40,4 +40,19 @@ class Comment_model extends MY_Model
 
 		return $result;
 	}
+
+	public function get_products_by_comment($products_id)
+	{
+		$query  = $this->db->get_where('comments', array('is_deleted' => 0, 'product_id' => $products_id));
+		$result = $query->result_array();
+
+		if (empty($result))
+		{
+			return false;
+		}
+		else
+		{
+			return $result;
+		}
+	}
 }

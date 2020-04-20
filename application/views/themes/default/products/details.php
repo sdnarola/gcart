@@ -1,9 +1,13 @@
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+<!-- <?php
+		$ipaddress = $_SERVER['REMOTE_ADDR'] ; 
+		echo $ipaddress;
+?> -->
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="<?= site_url() ."Home"; ?>">Home</a></li>
+				<li><a href="<?= site_url() ."Home"; ?>"><?php _el('home'); ?></a></li>
 				<li><a href="<?= site_url('categories/'.$category_slug); ?>"><?= ucwords($category_name); ?></a></li>
 				<li class='active'><?= ucwords($products_name); ?></li>
 			</ul>
@@ -17,17 +21,24 @@
 			<div class='col-md-3 sidebar'>
 				<div class="sidebar-module-container">
 					<div class="home-banner outer-top-n">
-						<img src="<?php echo base_url(); ?>assets/themes/default/images/banners/LHS-banner.jpg" alt="Image">
+						<img src="<?php echo base_url().$category_banner['banner']; ?>" alt="Image" height="265" width="262" >
 					</div>
 
 <!-- ============================================== HOT DEALS ============================================== -->
 					<form method="POST">
+<?php
+				if(!empty($hot_deals_products))
+				{
+					// echo $this->input->ip_address();
+?>
 					<div class="sidebar-widget hot-deals wow fadeInUp outer-top-vs">
-						<h3 class="section-title">hot deals</h3>
+						<h3 class="section-title"><?php _el('hot_deals');?></h3>
 						<div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-xs">
 <?php
 						foreach ($hot_deals_products as $hot_deals) 
-						{			
+						{
+
+						 $end_date = date('M d, Y  h:i:s', strtotime($hot_deals['end_date']));		
 ?>
 							<div class="item">
 								<div class="products">
@@ -35,41 +46,37 @@
 										<div class="image">
 											<img src="<?= base_url().$hot_deals['thumb_image']; ?>" alt="">
 										</div>
+<?php
+									if(!empty($hot_deals['off_percentage']))
+									{
+?>
 										<div class="sale-offer-tag"><span><?= $hot_deals['off_percentage'] ."%";?><br>off</span></div>
-										<div class="timing-wrapper" data-fron-date="" >
-											<div class="box-wrapper">
-												<div class="date box">
-													<!-- <span><?= $hot_deals['from_date_time']?></span> -->
-													<span class="key" id="day"></span>
-													<span class="value">Days</span>
-												</div>
-											</div>
-
-							                <div class="box-wrapper">
-												<div class="hour box">
-													<span class="key" id="hour"></span>
-													<span class="value">HRS</span>
-												</div>
-											</div>
-
-							                <div class="box-wrapper">
-												<div class="minutes box">
-													<span class="key" id="minutes"></span>
-													<span class="value">MINS</span>
-												</div>
-											</div>
-
-							                <div class="box-wrapper hidden-md">
-												<div class="seconds box">
-													<span class="key" id="seconds"></span>
-													<span class="value">SEC</span>
-												</div>
-											</div>
+<?php
+									}
+?>
+<!--------------------------------------------------------------------- Timer counter ------------------------------------------------------------------------------------>
+									<script type="text/javascript">
+										time_counter("<?= $end_date;?>",<?= $hot_deals['id']?>);
+									</script>
+										<div class="timing-wrapper" id="time_counter_<?= $hot_deals['id'] ?>" data-end-date="<?= $end_date;?>">
+											
 										</div>
 									</div><!-- /.hot-deal-wrapper -->
+<!--------------------------------------------------------------------- END Timer counter -------------------------------------------------------------------------------------->
 									<div class="product-info text-left m-t-20">
 										<h3 class="name"><a href="<?= site_url('Products/'. $hot_deals['slug']); ?>"><?= $hot_deals['name'] ;?></a></h3>
-										<div class="rating rateit-small"></div>
+<?php 
+											if(!empty(get_star_rating( $hot_deals['id']) ))
+											{
+												$width =(get_star_rating( $hot_deals['id']) *70 ) / 5;
+
+?>
+											<div class="rating-star rateit-small">
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+											</div>
+<?php
+										    }
+?>
 
 										<div class="product-price">
 											<span class="price"><?= $hot_deals['price'] ;?></span>
@@ -81,9 +88,9 @@
 										<div class="action">
 											<div class="add-cart-button btn-group">
 												<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-													<i class="fa fa-shopping-cart"></i>
+													<i class="fa fa-shopping-cart" onclick="add_to_cart(<?= $hot_deals['product_id']; ?>)"></i>
 												</button>
-												<button class="btn btn-primary cart-btn" onclick="add_to_cart(<?= $hot_deals['id'] ?>)" type="button">Add to cart</button>
+												<button class="btn btn-primary cart-btn" onclick="add_to_cart(<?= $hot_deals['product_id']; ?>)" type="button"><?php _el('add_to_cart');?></button>
 											</div>
 									    </div><!-- /.action -->
 								    </div><!-- /.cart -->
@@ -94,9 +101,12 @@
 ?>  
 		    			</div><!-- /.owl-carousel -->
 					</div><!-- /sidebar-widget -->
+<?php
+						}
+?> 					
  
 			<form id="fromproductsdetail">
-                  <input type="hidden" name="price" value="<?php echo $price; ?>" id="page"/>
+                  <input type="hidden" name="newletter_email" value="" id="newletter_email"/>
                  <!--  <input type="hidden" name="list-container"  id="list-container"/> -->
                  <!--  <input type="hidden" name="sort" value="<?php echo $sort; ?>" id="sort"/>
                   <input type="hidden" name="order" value="<?php echo $order; ?>" id="order"/>
@@ -111,17 +121,25 @@
 
 <!-- ============================================== NEWSLETTER ============================================== -->
 					<div class="sidebar-widget newsletter wow fadeInUp outer-bottom-small outer-top-vs">
-						<h3 class="section-title">Newsletters</h3>
+						<h3 class="section-title"><?php _el('newsletters');?></h3>
 						<div class="sidebar-widget-body outer-top-xs">
-							<p>Sign Up for Our Newsletter!</p>
-					        <form>
+							<p><?php _el('sign_up_for_our_newsletter');?></p>
+					        <form id="newsletter-subscribe">
+					        	
+					           <div class="newletter-span-sucess"> 
+					           
+					           </div>
 					        	 <div class="form-group">
-								    <label class="sr-only" for="exampleInputEmail1">Email address</label>
-								    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Subscribe to our newsletter">
+								    <label class="sr-only" for="exampleInputEmail1"><?php _el('email_address'); ?></label>
+								    <input type="email" name="news_letter" class="form-control txt" id="exampleInputEmail1" placeholder="Subscribe to our newsletter" required="required">
+								     <div class="newletter-span-exits" style="color: red; font-weight: bold;">
+					          		 </div>
+								    
 								  </div>
-								<button class="btn btn-primary">Subscribe</button>
+								 
+								<button class="btn btn-primary newsletter-subscribe"><?php _el('subscribe');?></button>
 							</form>
-						</div><!-- /.sidebar-widget-body -->
+						</div><!-- /.sidebar-widget-body -->`
 					</div><!-- /.sidebar-widget -->
 		<!-- ============================================== NEWSLETTER: END ============================================== -->
 
@@ -227,7 +245,17 @@
 								<div class="rating-reviews m-t-20">
 									<div class="row">
 										<div class="col-sm-3">
-											<div class="rating rateit-small"></div>
+<?php 
+											if(!empty(get_star_rating($products_detail['id']) ))
+											{
+												$width =(get_star_rating($products_detail['id']) *70 ) / 5;
+?>
+											<div class="rating-star rateit-small">
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+											</div>
+<?php
+										}
+?>
 										</div>
 <?php
 									if($reviews > 0)
@@ -248,7 +276,7 @@
 									<div class="row">
 										<div class="col-sm-2">
 											<div class="stock-box">
-												<span class="label">Availability :</span>
+												<span class="label"><?php _el('availability'); ?></span>
 											</div>
 										</div>
 <?php 
@@ -257,7 +285,7 @@
 ?>
 										<div class="col-sm-9">
 											<div class="stock-box">
-												<span class="value">In Stock</span>
+												<span class="value"><?php _el('in_stock'); ?></span>
 											</div>
 										</div>
 <?php
@@ -267,7 +295,7 @@
 ?>
 										<div class="col-sm-9">
 											<div class="stock-box">
-												<span class="value">Out of Stock</span>
+												<span class="value"><?php _el('out_of_stock');?></span>
 											</div>
 										</div>
 <?php
@@ -292,14 +320,14 @@
 										<div class="col-sm-6">
 											<div class="favorite-button m-t-10">
 <?php 
-												// if(is_user_logged_in() == TRUE)
-												// {
+												if(is_user_logged_in() == TRUE)
+												{
 ?>
 												<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" onclick="add_wishlist_products(<?= $products_detail['id']; ?>)" href="javascript:void(0);">
 												    <i class="fa fa-heart"></i>
 												</a>
 <?php
-												// }
+												}
 ?>
 												<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="E-mail" href="#">
 												    <i class="fa fa-envelope"></i>
@@ -312,7 +340,7 @@
 								<div class="quantity-container info-container">
 									<div class="row">
 										<div class="col-sm-2">
-											<span class="label">Qty :</span>
+											<span class="label"><?php _el('qty');?></span>
 										</div>
 
 										<div class="col-sm-2">
@@ -328,7 +356,7 @@
 									                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc" onclick="decrement_quntity()"></i></span></div> 
 									                </div>
 									               
-									                <input type="text" id="quantity" value="1">
+									                <input type="text" id="procuct-quantity" value="1">
 <?php
 								                }
 								                else
@@ -346,7 +374,7 @@
 								    { 
 ?>
 										<div class="col-sm-7">
-											<a href="#" class="btn btn-primary" ><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+											<a href="javascript:void(0);" id="add_cart" onclick="add_to_cart(<?= $products_detail['id'];?> )" class="btn btn-primary" ><i class="fa fa-shopping-cart inner-right-vs"></i> <?php _el('add_to_cart'); ?></a>
 										</div>
 <?php
 									}
@@ -354,7 +382,7 @@
 									{
 ?>
 										<div class="col-sm-7">
-											<a href="#" class="btn btn-primary" disabled="disabled"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
+											<a href="#" class="btn btn-primary" disabled="disabled"><i class="fa fa-shopping-cart inner-right-vs"></i><?php _el('add_to_cart'); ?></a>
 										</div>
 <?php
 									}
@@ -370,19 +398,19 @@
 					<div class="row">
 						<div class="col-sm-3">
 							<ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
-								<li class="active"><a data-toggle="tab" href="#description">DESCRIPTION</a></li>
+								<li class="active"><a data-toggle="tab" href="#description"><?php _el('description'); ?></a></li>
 <?php
 
-								// if (is_user_logged_in())
-								// {
+								if (is_user_logged_in())
+								{
 ?>
-									<li><a data-toggle="tab" href="#review">REVIEW</a></li>
+									<li><a data-toggle="tab" href="#review"><?php _el('review'); ?></a></li>
 <?php
-							//	}
+								}
 
 ?>
-								<li><a data-toggle="tab" href="#tags">TAGS</a></li>
-								<li><a data-toggle="tab" href="#comments">COMMENTS</a></li>
+								<li><a data-toggle="tab" href="#tags"><?php _el('tags'); ?></a></li>
+								<li><a data-toggle="tab" href="#comments"><?php _el('comments'); ?></a></li>
 							</ul><!-- /.nav-tabs #product-tabs -->
 						</div>
 						<div class="col-sm-9">
@@ -394,157 +422,229 @@
 										<p class="text"><?php echo $products_detail['long_description'];?> </p>
 									</div>
 								</div><!-- /.tab-pane -->
-<?php
-
-								// if (is_user_logged_in())
-								// {
-?>
 								<div id="review" class="tab-pane">
+<?php
+								if (is_user_logged_in())
+								{
+?>
 									<div class="product-tab">
 
 										<div class="product-reviews">
-											<h4 class="title">Customer Reviews</h4>
+											<h4 class="title"><?php _el('customer_reviews'); ?></h4>
 
 											<div class="reviews">
+<?php
+												$user_id='';
+												$review_product_id='';
+												if(!empty($reviews_data))
+												{
+													foreach ($reviews_data as $reviews_msg) 
+													{
+														$user_id=$reviews_msg['user_id'];
+														$review_product_id=$reviews_msg['product_id'];
+														$to_date     = strtotime(date("Y-m-d h:i:sa"));
+														$date        = $reviews_msg['add_date'];
+														$review_date = strtotime($date);
+														$distance    = $to_date - $review_date;
+														
+														$years  = floor($distance/(365*60*60*24));
+														$months = floor(($distance - $years * 365*60*60*24) / (30*60*60*24));
+														$days   = floor(($distance - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+?>
 												<div class="review">
-													<div class="review-title"><span class="summary">We love this product</span><span class="date"><i class="fa fa-calendar"></i><span>1 days ago</span></span></div>
-													<div class="text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit.Aliquam suscipit."</div>
+													<div class="review-title"><span class="summary"><?= $reviews_msg['review'];?></span>
+<?php
+													if($days >0)
+													{
+?>
+														<span class="date"><i class="fa fa-calendar"></i><span><?= $days ?> <?php _el('days_ago');?></span>
+<?php
+													}
+?>
+													</span></div>
+													<!-- <div class="text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit.Aliquam suscipit."</div> -->
 												</div>
+<?php	# code...
+													}
+												}
+?>
 
 											</div><!-- /.reviews -->
 										</div><!-- /.product-reviews -->
 
-
-
+								<?php
+									
+									if(!in_array($user_id,$user_review_use_id ) && ! in_array($products_id, $user_review_products_id))
+									{
+									
+								?>
+									<form  id="frm_review">
 										<div class="product-add-review">
-											<h4 class="title">Write your own review</h4>
+											<h4 class="title"><?php _el('write_your_own_review'); ?></h4>
 											<div class="review-table">
 												<div class="table-responsive">
 													<table class="table">
+														<span class="reviewstar"></span>
 														<thead>
 															<tr>
 																<th class="cell-label">&nbsp;</th>
-																<th>1 star</th>
-																<th>2 stars</th>
-																<th>3 stars</th>
-																<th>4 stars</th>
-																<th>5 stars</th>
+																<th><?php _el('1_star');?></th>
+																<th><?php _el('2_stars');?></th>
+																<th><?php _el('3_stars');?></th>
+																<th><?php _el('4_stars');?></th>
+																<th><?php _el('5_stars');?></th>
 															</tr>
 														</thead>
 														<tbody>
 															<tr>
-																<td class="cell-label">Quality</td>
+																<td class="cell-label"><?php _el('quality'); ?></td>
 																<td><input type="radio" name="quality" class="radio" value="1"></td>
 																<td><input type="radio" name="quality" class="radio" value="2"></td>
 																<td><input type="radio" name="quality" class="radio" value="3"></td>
 																<td><input type="radio" name="quality" class="radio" value="4"></td>
 																<td><input type="radio" name="quality" class="radio" value="5"></td>
 															</tr>
-															<tr>
-																<td class="cell-label">Price</td>
-																<td><input type="radio" name="Price" class="radio" value="1"></td>
-																<td><input type="radio" name="Price" class="radio" value="2"></td>
-																<td><input type="radio" name="Price" class="radio" value="3"></td>
-																<td><input type="radio" name="Price" class="radio" value="4"></td>
-																<td><input type="radio" name="Price" class="radio" value="5"></td>
-															</tr>
-															<tr>
-																<td class="cell-label">Value</td>
-																<td><input type="radio" name="Value" class="radio" value="1"></td>
-																<td><input type="radio" name="Value" class="radio" value="2"></td>
-																<td><input type="radio" name="Value" class="radio" value="3"></td>
-																<td><input type="radio" name="Value" class="radio" value="4"></td>
-																<td><input type="radio" name="Value" class="radio" value="5"></td>
-															</tr>
 														</tbody>
-													</table><!-- /.table .table-bordered -->
+													</table>
+													<!-- /.table .table-bordered -->
 												</div><!-- /.table-responsive -->
 											</div><!-- /.review-table -->
 
 											<div class="review-form">
 												<div class="form-container">
-													<form role="form" class="cnt-form">
+												
 
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="exampleInputName">Your Name <span class="astk">*</span></label>
-																	<input type="text" class="form-control txt" id="exampleInputName" placeholder="">
+																	<label for="exampleInputName"><?php  _el('your_name');?> <span class="astk">*</span></label>
+																	<input type="text" class="form-control txt" id="name" name="name" placeholder="enter name">
+																	
 																</div><!-- /.form-group -->
-																<div class="form-group">
-																	<label for="exampleInputSummary">Summary <span class="astk">*</span></label>
-																	<input type="text" class="form-control txt" id="exampleInputSummary" placeholder="">
-																</div><!-- /.form-group -->
+																<!-- <div class="form-group">
+																	<label for="exampleInputSummary"><?php _el('summary');?><span class="astk">*</span></label>
+																	<input type="text" class="form-control txt" id="summary" name="summary" placeholder="enter summary">
+																	
+																</div> --><!-- /.form-group -->
 															</div>
 
 															<div class="col-md-6">
 																<div class="form-group">
-																	<label for="exampleInputReview">Review <span class="astk">*</span></label>
-																	<textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
+																	<label for="exampleInputReview"><?php _el('review');?> <span class="astk">*</span></label>
+																	<textarea class="form-control txt txt-review" id="reviews" name="reviews" rows="4" placeholder="enter review"></textarea>
 																</div><!-- /.form-group -->
 															</div>
 														</div><!-- /.row -->
 
 														<div class="action text-right">
-															<button class="btn btn-primary btn-upper">SUBMIT REVIEW</button>
+															<button class="btn btn-primary btn-upper"><?php _el('submit_review');?></button>
 														</div><!-- /.action -->
 
-													</form><!-- /.cnt-form -->
+													<!-- </form> --><!-- /.cnt-form -->
 												</div><!-- /.form-container -->
 											</div><!-- /.review-form -->
 
 										</div><!-- /.product-add-review -->
-
+									</form>
+									<div class="product-add-review-success" style="display: none;">
+										<div class="alert alert-success alert-block fade in"><span class="add-review-success"><?php _el('review_submit_successfully');?></span></div>
+									</div>
+<?php
+								}
+								else
+								{
+?>
+									<div class="product-add-review">
+										
+										<div  class="alert alert-success alert-block fade in"><?php _el('review_submit_successfully');?></div>
+									
+									</div>
+<?php
+								}
+?>
 							        </div><!-- /.product-tab -->
+<?php
+							}
+?>
 								</div><!-- /.tab-pane -->
 								<!-- =================================================================================== -->
 								<div id="comments" class="tab-pane">
 									<div class="product-tab">
 
 										<div class="product-reviews">
-											<h4 class="title">Customer Comments</h4>
+											<h4 class="title"><?php _el('customer_comments');?></h4>
 
 											<div class="reviews">
+												<?php
+													if(!empty($comments_data))
+													{
+														foreach ($comments_data as $key => $comments) 
+														{
+															$to_date     = strtotime(date("Y-m-d h:i:sa"));
+															$date        = $comments['add_date'];
+															$review_date = strtotime($date);
+															$distance    = $to_date - $review_date;
+															
+															$years  = floor($distance/(365*60*60*24));
+															$months = floor(($distance - $years * 365*60*60*24) / (30*60*60*24));
+															$days   = floor(($distance - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+													?>
+
 												<div class="review">
-													<div class="review-title"><span class="summary">We love this product</span><span class="date"><i class="fa fa-calendar"></i><span>1 days ago</span></span></div>
-													<div class="text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit.Aliquam suscipit."</div>
+													<div class="review-title"><!-- <span class="summary"><?= $comments['comment'];?></span> -->
+														<div class="text summary">"<?= $comments['comment'];?>"
+<?php
+													if($days >0)
+													{
+?>
+														<span class="date"><i class="fa fa-calendar"></i><span><?= $days;?> <?php _el('days_ago');?></span>
+<?php
+													}
+?>
+													</span></div>
+													</div>	
 												</div>
+												<?php
+															# code...
+														}
+													}
+												?>
 
 											</div><!-- /.reviews -->
 										</div><!-- /.product-reviews -->
 
 
-
-										<div class="product-add-review">
-											<h4 class="title">Write your own review</h4>
-											
-
+										<form id="frm_comments">
+											<div class="comment-success-msg"></div>
+										<div class="product-add-comment">
 											<div class="review-form">
 												<div class="form-container">
+
 													<form role="form" class="cnt-form">
 
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="exampleInputName">Your Name <span class="astk">*</span></label>
-																	<input type="text" class="form-control txt" id="exampleInputName" placeholder="">
+																	<label for="name"><?php _el('your_name'); ?><span class="astk">*</span></label>
+																	<input type="text" name="name" class="form-control txt" id="name" placeholder="">
 																</div><!-- /.form-group -->
 																<div class="form-group">
-																	<label for="exampleInputSummary">Email<span class="astk">*</span></label>
-																	<input type="email" class="form-control txt" id="exampleInputSummary" placeholder="">
+																	<label for="email"><?php _el('email');?><span class="astk">*</span></label>
+																	<input type="email" name="email" class="form-control txt" id="email" placeholder="">
 																</div><!-- /.form-group -->
 															</div>
 
 															<div class="col-md-6">
 																<div class="form-group">
-																	<label for="exampleInputReview">Comments <span class="astk">*</span></label>
-																	<textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder=""></textarea>
+																	<label for="idcomments"><?php _el('comments');?> <span class="astk">*</span></label>
+																	<textarea class="form-control txt txt-review" name="comments" id="idcomments" rows="4" placeholder=""></textarea>
 																</div><!-- /.form-group -->
 															</div>
 														</div><!-- /.row -->
 
 														<div class="action text-right">
-															<button class="btn btn-primary btn-upper">SUBMIT Comments</button>
+															<button class="btn btn-primary btn-upper"><?php _el('submit_comments');?></button>
 														</div><!-- /.action -->
 
 													</form><!-- /.cnt-form -->
@@ -552,39 +652,36 @@
 											</div><!-- /.review-form -->
 
 										</div><!-- /.product-add-review -->
+										</form>
 
 							        </div><!-- /.product-tab -->
 								</div><!-- /.tab-pane -->
-<?php
-								// }
-
-?>
-
 								<div id="tags" class="tab-pane">
 									<div class="product-tag">
-
-										<h4 class="title">Product Tags</h4>
-										<form role="form" class="form-inline form-cnt">
+									
+										<h4 class="title"><?php _el('product_tags'); ?></h4>
+										<form id="frm_tags" role="form" class="form-inline form-cnt">
 											<div class="form-container">
-
+												<div class="tags-success-msg"></div>
 												<div class="form-group">
-													<label for="exampleInputTag">Add Your Tags: </label>
-													<input type="email" id="exampleInputTag" class="form-control txt">
-
-
+													<label for="exampleInputTag"><?php _el('add_your_tags');?></label>
+													<input type="text" name="tags_name" id="exampleInputTag" class="form-control txt">
+													
 												</div>
 
-												<button class="btn btn-upper btn-primary" type="submit">ADD TAGS</button>
+												<button class="btn btn-upper btn-primary" type="submit"><?php _el('add_tags');?></button>
+
 											</div><!-- /.form-container -->
+											<div class="errorTxt text col-md-offset-2" style="display: none;"></div>
 										</form><!-- /.form-cnt -->
 
 										<form role="form" class="form-inline form-cnt">
 											<div class="form-group">
 												<label>&nbsp;</label>
-												<span class="text col-md-offset-3">Use spaces to separate tags. Use single quotes (') for phrases.</span>
+												<span class="text col-md-offset-3"><?php _el('tags_msg');?></span>
 											</div>
 										</form><!-- /.form-cnt -->
-
+									
 									</div><!-- /.product-tab -->
 								</div><!-- /.tab-pane -->
 
@@ -595,7 +692,7 @@
 
 <!-- ============================================== UPSELL PRODUCTS ============================================== -->
 				<section class="section featured-product wow fadeInUp">
-					<h3 class="section-title">upsell products</h3>
+					<h3 class="section-title"><?php _el('upsell_products');?></h3>
 					<div class="owl-carousel home-owl-carousel upsell-product custom-carousel owl-theme outer-top-xs">
 
 <?php
@@ -613,7 +710,17 @@
 									</div><!-- /.product-image -->
 									<div class="product-info text-left">
 										<h3 class="name"><a href="<?= site_url('Products/'. $upsell->slug); ?>"><?= $upsell->name; ?></a></h3>
-										<div class="rating rateit-small"></div>
+<?php 
+											if(!empty(get_star_rating( $upsell->id) ))
+											{
+												$width =(get_star_rating( $upsell->id) *70 ) / 5;
+?>
+											<div class="rating-star rateit-small">
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+											</div>
+<?php
+											}
+?>
 										<div class="description"></div>
 										<div class="product-price">
 											<span class="price"><?= $upsell->price; ?></span>
@@ -625,9 +732,9 @@
 											<ul class="list-unstyled">
 												<li class="add-cart-button btn-group">
 													<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-														<i class="fa fa-shopping-cart"></i>
+														<i class="fa fa-shopping-cart" onclick="add_to_cart(<?= $upsell->id ?>);"></i>
 													</button>
-													<button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+													<button class="btn btn-primary cart-btn" type="button" onclick="add_to_cart(<?= $upsell->id ?>)"><?php _el('add_to_cart'); ?></button>
 								        		</li>
 <?php
 						        			if(is_user_logged_in())
@@ -660,54 +767,302 @@
 </div> <!-- /body-content -->
 <!-- ================================== BODY Content : END ========================================================= -->
 
-<script>
-$("#fromproductsdetail").submit();
+<script type="text/javascript">
+		
+	
+	let products_id="<?= $products_id;?>";
+	
 	$(document).ready(function(){
 
-		$("#fromproductsdetail").submit();
-	});
+	$.validator.addMethod("alphabetsnspace", function(value, element) {
+					return this.optional(element) || /^[a-zA-Z][\sa-zA-Z]*/.test(value);
+				});
 
-	var to_date=new Date("2020-04-17 00:00:00").getTime();
-	var from_date=new Date("2020-03-17 00:00:00").getTime();
+	$.validator.addMethod("notspace", function(value, element) {
+					return this.optional(element) || /^[a-zA-Z][a-zA-Z]$/.test(value);
+				});
 
-	var a =$(".timing-wrapper").attr("data-fron-date");
-	console.log(a);
+	// $("#add_cart").click(function(){
+	// 	alert('hello');
+	// });
 
-	var today_date= new Date().getTime();
+	$("#newsletter-subscribe").validate
+    ({
+        rules: {
+            email: {
+                required: true,
+                email: true,
+                emailExists: true
 
-	if(from_date >= today_date || to_date <= to_date)
-	{
-		var x = setInterval(function() {
+            },
+           
+        },
+        messages: {
+            email: {
+                required:"<?php _el('please_enter_', _l('email'))?>",
+                email:"<?php _el('please_enter_valid_', _l('email'))?>"
+            },
+           
+        }
+    });
 
-		// Get today's date and time
-		var now = new Date().getTime();
+    $('#newsletter-subscribe').on('submit',function(e){
+    	e.preventDefault();
+    	var email=$('#exampleInputEmail1').val();
+    	$("#newsletter-subscribe span").html(" ");
+    	$('.newletter-span-exits').html("");
 
-		// Find the distance between now and the count down date
-		var distance = to_date - now;
+    	if(email != "")
+    	{
+    		$.ajax({
+    			type:'POST',
+    			url: SITE_URL+'News_letters/news_letters_subscribe',
+    			data:{ email:email },
+    			success:function(msg)
+    			{
+    				if(msg == 'exit')
+    				{	
+    					var msg="<?php _el('email_exists');?>";
+    					$('.newletter-span-exits').html(msg);
+    					$("#exampleInputEmail1").val("");
+    				}
+    				else if(msg == 'success')
+    				{
+    					
+    					var msg="<?php _el('email_subscribe_successfully');?>";
+    					var div="<div class='alert alert-success alert-block fade in ' style='color: green'> <button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div>";
+    					
+    					$('.newletter-span-sucess').html(div);
+    					$("#exampleInputEmail1").val("");
+    				}
+    				
+    			}
 
-		// Time calculations for days, hours, minutes and seconds
-		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-		document.getElementById("day").innerHTML = days; 
-		document.getElementById("hour").innerHTML = hours;
-		document.getElementById("minutes").innerHTML = minutes;
-		document.getElementById("seconds").innerHTML = seconds;
-
-		}, 1000);
-	}
+    		});
+    	}
 
 
+    });
+
+	$("#frm_review").validate
+    ({
+        rules: {
+            name: {
+            	required:true,
+            	alphabetsnspace:true,
+            },
+            
+            reviews:{
+            	  required: true,
+            	  alphabetsnspace:true,
+		          minlength: 10,
+            },
+           
+        },
+        messages: {
+            name: {
+            	required:"<?php _el('please_enter_', _l('name'))?>",
+            	alphabetsnspace:"<?php _el('only_letter_enter')?>",
+            },
+            
+            reviews:{
+            	required:"<?php _el('please_enter_', _l('review'))?>",
+            	alphabetsnspace:"<?php _el('only_letter_enter')?>",
+            	minlength: "<?php _el('min_length_required')?>",
+
+            },
+           
+        },
+       
+    });
+
+    $("#frm_review").on('submit',function(e){
+    	e.preventDefault();
+
+    	var star='';
+    	if(!$("input[name='quality']:checked").val())
+    	{
+    		var php_msg="<?php _el('please_select_star');?>";
+    		$(".reviewstar").html("<p style='color:red'>"+php_msg+"</p>");
+    	}
+    	else
+    	{
+    		$(".reviewstar").html("");
+    		star=$("input[name='quality']:checked").val();
+    		var name=$("#name").val();
+	    	// var summary=$("#summary").val();
+	    	var review=$.trim($("#reviews").val());
+	    	
+	    	$.ajax({
+	    			type:'POST',
+	    			url: SITE_URL+'Review/add_products_review',
+	    			data:{ star:star,name:name,review:review,products_id:products_id },
+	    			success:function(msg)
+	    			{
+	    				if(msg)
+	    				{
+
+	    					$('.product-add-review').html("");
+	    					$('.product-add-review-success').css('display','block');
+	    				
+	    				}	
+	    				
+	    			}
+
+	    		});
+    		// alert(star);
+    	}
+
+
+    	
+    	
+    });
+
+    $("#frm_comments").validate
+    ({
+        rules: {
+           name: {
+            	required:true,
+            	alphabetsnspace:true,
+            },
+           
+            email:{
+            	required: true,
+                email: true,
+            },
+            comments:{
+            	required: true,
+            	alphabetsnspace:true,
+            	minlength: 10,
+            },
+           
+        },
+        messages: {
+            name: {
+            	required:"<?php _el('please_enter_', _l('name'))?>",
+            	alphabetsnspace:"<?php _el('only_letter_enter');?>",
+            },
+            email: {
+                required:"<?php _el('please_enter_', _l('email'))?>",
+                email:"<?php _el('please_enter_valid_', _l('email'))?>"
+            },
+            comments:{
+            	required:"<?php _el('please_enter_', _l('comments'))?>",
+            	alphabetsnspace:"<?php _el('not_start_space');?>",
+            	minlength:"<?php _el('min_length_required')?>",
+            },
+           
+        },
+       
+    });
+
+    $("#frm_comments").on('submit',function(e){
+    	e.preventDefault();
+    	var name=$("#name").val();
+    	var email=$("#email").val();
+    	var comments=$.trim($("#idcomments").val());
+    	// alert(name + email +comments);
+    	if(comments != "" && email != "" && name != "")
+    	{
+    		$.ajax({
+			type:'POST',
+			url: SITE_URL+'Comments/add_products_comments',
+			data:{ name:name,email:email,comments:comments,products_id:products_id },
+			success:function(msg)
+			{
+				$("#name").val("");
+				$("#email").val("");
+				$("#idcomments").val("");
+				var msg="<?php _el('comments_success_msg')?>";
+				var div="<div class='alert alert-success alert-block fade in'><button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div>"
+				$(".comment-success-msg").html(div);
+			}
+
+		});
+    	}
+    	
+    	
+
+    });
+
+
+    $("#frm_tags").validate
+    ({
+    	rules:{
+    		tags_name:{
+    			required: true,
+    			notspace: true,
+      			minlength: 3
+ 				 },
+    	},
+    	messages:{
+    		tags_name:{
+    			required:"<?php _el('please_enter_tags')?>",
+    			notspace:"<?php _el('no_space_allowed')?>",
+      			minlength:"<?php _el('tags_min_lenght')?>",
+
+    		},
+    	},
+    	errorElement : 'div',
+    	errorLabelContainer: '.errorTxt',
+    });
+
+
+    $("#frm_tags").on('submit',function(e){
+    	e.preventDefault();
+    	var tags=$("#exampleInputTag").val();
+    	var spaceCount = (tags.split(" ").length - 1);
+
+
+    	var len= tags.length;
+    	if(len >= 3 && spaceCount == 0)
+    	{
+    		$.ajax({
+			type:'POST',
+			url: SITE_URL+'Products/',
+			data:{ tags:tags,products_id:products_id },
+			success:function(msg)
+			{
+				
+				if(msg == 'exits')
+				{
+					$(".errorTxt").html(" ");
+					var msg="<?php _el('tags-exits'); ?>";
+					var div = "<div class='tags-success-msg'><div class='alert alert-danger alert-block fade in'><button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div></div>";
+					$("#exampleInputTag").val("");
+					$(".tags-success-msg").html(div);
+				}
+				else if(msg == 'success')
+				{
+					$(".errorTxt").html("");
+					var msg="<?php _el('tags-sucess'); ?>";
+					var div = "<div class='tags-success-msg'><div class='alert alert-success alert-block fade in'><button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div></div>";
+					$("#exampleInputTag").val("");
+					$(".tags-success-msg").html(div);
+					// alert("success");
+				}
+				// alert('hello');
+				// $("#name").val("");
+				// $("#email").val("");
+				// $("#idcomments").val("");
+				// $(".comment-success-msg").css('display','block');
+			}
+			});
+    	}
+
+    	
+
+    });
+   
+});
 	var i = 1;
     function increment_quntity(limit) 
     {
     	if(i < limit)
     	{
     		 i++;
-       		document.getElementById('quantity').value = i;
-       		document.getElementById("quantity").setAttribute("value", i);
+       		document.getElementById('procuct-quantity').value = i;
+       		document.getElementById("procuct-quantity").setAttribute("value", i);
     	}
       
     }
@@ -717,33 +1072,21 @@ $("#fromproductsdetail").submit();
     	if(i > 1 )
     	{
     		i--;
-    		document.getElementById('quantity').value = i;
-    		document.getElementById("quantity").setAttribute("value", i);
+    		document.getElementById('procuct-quantity').value = i;
+    		document.getElementById("procuct-quantity").setAttribute("value", i);
     	}
     }
-
-	function add_to_cart(id)
-	{
-		$.ajax({
-
-			type:'POSt',
-			url:"<?php echo base_url(); ?>"+"Products/add_cart_products/",
-			data:{products_id:id},
-			success:function(){}
-		});
-	}
-    
     function add_wishlist_products(id)
-    {    
-
+    { 
 		$.ajax({
 			type:'POST',
-			url:"<?php echo base_url(); ?>"+"Products/add_wishlist_products/",
+			url:SITE_URL+"Wishlist/add_wishlist_products",
 			data:{ products_id:id },
-			success:function(data){
-				
+			success:function(data){	
 			}
 
 		});
     }
+
+   
 </script>

@@ -1,8 +1,10 @@
-<?php
+  <?php
   $main_categories   = $this->category->get_header_parent_category();
   $sub_categories    = $this->category->get_sub_categories();
   $header_categories = $this->category->get_header_parent_category(1);
   $brands            = $this->brands->get_all_brands(); 
+  $where['user_id']=$this->session->userdata('user_id');
+  // $total_row=$this->cart->count_cart_row($where);
   
 ?>
 <!DOCTYPE html>
@@ -23,7 +25,8 @@
 <!-- Customizable CSS -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/content.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/lightbox.css">
+<!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/content.css"> -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
@@ -32,6 +35,10 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
 
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript"> 
+  let SITE_URL="<?= site_url(); ?>";
+  let BASE_URL="<?= base_url(); ?>";
+</script>
 
 <!-- Icons/Glyphs -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
@@ -41,7 +48,12 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
+<!-- ---------------------------------time counter ---------------------------->
+<script src="<?php echo base_url(); ?>assets/themes/default/js/timer-counter-hot-deals.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/add-to-cart.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/delete-add-to-cart.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/pagination-2.1.5.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 
 <!-- Fonts -->
@@ -63,7 +75,7 @@
               {
               ?>
                 <li><a href="#">Welcome&nbsp<?php echo get_loggedin_info('username'); ?></a></li>
-                <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
+                <li><a href="<?= site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i>Wishlist</a></li>
                 <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');?></a></li>
                  <div class="dropdown" style="float: right;">
                   <div class="btn-group btn-group-sm">
@@ -122,7 +134,7 @@
           <!-- ==================================================== SEARCH AREA ============================================================= -->
 
             <div class="search-area">
-            <form action="<?php echo base_url('categories/search') ?>" name="search" method='post'>
+            <form action="<?php echo site_url('categories/search') ?>" name="search" method='post'>
 
               <div class="control-group">
 
@@ -152,7 +164,7 @@
         <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
           <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
-          <div class="dropdown dropdown-cart"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
+          <div class="dropdown dropdown-cart"> <a href="#" class="dropdown-toggle lnk-cart" id="cart-dropdown" data-toggle="dropdown">
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
               <div class="basket-item-count"><span class="count">2</span></div>
@@ -164,20 +176,20 @@
                 <div class="cart-item product-summary">
                   <div class="row">
                     <div class="col-xs-4">
-                      <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img src="assets/themes/default/images/cart.jpg" alt=""></a> </div>
+                      <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img src="<?php echo base_url(); ?>assets/themes/default/images/cart.jpg" alt=""></a> </div>
                     </div>
                     <div class="col-xs-7">
                       <h3 class="name"><a href="<?php echo base_url(); ?>index.php?page-detail">Simple Product</a></h3>
                       <div class="price">$600.00</div>
                     </div>
-                    <div class="col-xs-1 action"> <a href="<?php echo base_url(); ?>#"><i class="fa fa-trash"></i></a> </div>
+                    <div class="col-xs-1 action"> <a href="<?php echo base_url(); ?>#"><i class="fa fa-trash" id="delete_cart_product"></i></a> </div>
                   </div>
                 </div>
                 <!-- /.cart-item -->
                 <div class="clearfix"></div>
                 <hr>
                 <div class="clearfix cart-total">
-                  <div class="pull-right"> <span class="text">Sub Total :</span><span class='price'>$600.00</span> </div>
+                  <div class="pull-right sub-total"> <span class="text">Sub Total :</span><span class='price'>$600.00</span> </div>
                   <div class="clearfix"></div>
                   <a href="<?php echo base_url(); ?>checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a> </div>
                 <!-- /.cart-total-->
@@ -482,6 +494,8 @@
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-select.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/wow.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
+
+
 
 <script>
           var temp = document.querySelectorAll('.customli');

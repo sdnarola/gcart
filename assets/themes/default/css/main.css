@@ -4274,11 +4274,15 @@ age-container #owl-main .owl-next {
   float: none;
   margin: auto;
 }
-.product-tabs .tab-content .tab-pane .product-add-review .review-form label {
+.product-tabs .tab-content .tab-pane .product-add-review .review-form label,.product-tabs .tab-content .tab-pane .product-add-comment .review-form label {
   font-weight: normal;
   font-size: 13px;
 }
 .product-tabs .tab-content .tab-pane .product-add-review .review-form label .astk {
+  color: #FF0000;
+  font-size: 12px;
+}
+.product-tabs .tab-content .tab-pane .product-add-comment .review-form label .astk {
   color: #FF0000;
   font-size: 12px;
 }

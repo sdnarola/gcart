@@ -21,6 +21,7 @@ class Frontend_Controller extends MY_Controller
 		$this->load->model('brand_model', 'brands');
 		$this->load->model('slider_model', 'sliders');
 		$this->load->model('product_model', 'products');
+		$this->load->model('cart_model', 'cart');
 
 	}
 }

@@ -32,10 +32,18 @@ a.active {
   <div class="container">
     <div class="breadcrumb-inner">
       <ul class="list-inline list-unstyled">
-        <li><a href="<?= site_url() ."Home"; ?>">Home</a></li>
-        <li class='active'>Category</li>
-        <li ><a class="category-title" href="<?= site_url('categories/'.$category_slug); ?>" ><?= ucwords($category_title); ?></a></li>
+        <li><a href="<?= site_url() ."Home"; ?>"><?php _el('home');?></a></li>
+        <li class='active'><?php _el('category');?></li>
+<?php
+
+         if(!empty($category_slug))
+          {
+  ?>
+   <li ><a class="category-title" href="<?= site_url('categories/'.$category_slug); ?>" ><?= ucwords($category_title); ?></a></li>
 <?php 
+           }
+?>
+<?php
           if(!empty($subcategory_title))
           {
 ?>
@@ -66,7 +74,7 @@ a.active {
 ?>
               <li class="dropdown menu-item menu-item-with-more-category" > <a href="<?= site_url('categories/'.$category_data['slug']); ?>" class="parent_category" id="parent_category" value="<?= $category_data['id'] ?>"  ><i class="icon fa <?=$category_data['icon']; ?>" aria-hidden="true"></i><?= ucwords($category_data['name']); ?></a>
 <?php 
-                if(!empty($category_data['category_id']))  
+                if(!empty($category_data['category_id']) ) 
                 {
 ?>
                 <span value="<?= $category_data['id'] ?>" id="parent" class="dropdown menu-item menu-item-with-more-category right-arrow-custom dropdown-toggle customspan" data-toggle="dropdown"> </span>
@@ -118,7 +126,7 @@ a.active {
 ?>  
            <div class="sidebar-widget wow fadeInUp manufactures">
               <div class="widget-header">
-                <h4 class="widget-title">Manufactures</h4>
+                <h4 class="widget-title"><?php _el('manufactures');?></h4>
               </div>
               <div class="sidebar-widget-body">
                 <ul class="list">
@@ -150,9 +158,9 @@ a.active {
             {
 ?>   
               <div class="sidebar-widget wow fadeInUp shop-category" >
-                <h3 class="section-title">shop by</h3>
+                <h3 class="section-title"><?php _el('shop_by');?></h3>
                 <div class="widget-header">
-                  <h4 class="widget-title">Category</h4>
+                  <h4 class="widget-title"><?php _el('category');?></h4>
                 </div>
                 <div class="sidebar-widget-body">
                   <div class="accordion">
@@ -203,7 +211,7 @@ a.active {
             
               <div class="sidebar-widget wow fadeInUp price_slider_block">
                 <div class="widget-header">
-                  <h4 class="widget-title">Price Slider</h4>
+                  <h4 class="widget-title"><?php _el('price_slider');?></h4>
                 </div>
                 <div class="sidebar-widget-body m-t-10">
                   <div class="price-range-holder"> <span class="min-max"> <span class="pull-left price-min" data-value="200.00">$<?php echo $default_min_max['min']; ?></span> <span class="pull-right price-max" data-value="800.00">$<?php echo $default_min_max['max']; ?></span> </span>
@@ -223,7 +231,7 @@ a.active {
             <!-- ============================================== PRODUCT TAGS ============================================== -->
 
             <div class="sidebar-widget product-tag wow fadeInUp outer-top-vs">
-              <h3 class="section-title">Product tags</h3>
+              <h3 class="section-title"><?php _el('product_tags');?></h3>
               <div class="sidebar-widget-body outer-top-xs">
                 <div class="tag-list"> 
                   <ul class="list">
@@ -283,8 +291,14 @@ a.active {
             </div>
 
             <!-- ============================================== Testimonials: END ============================================== -->
-
-            <div class="home-banner"> <img src="<?= base_url(); ?>assets/themes/default/images/banners/LHS-banner.jpg" alt="Image"> </div>
+<?php 
+        if(!empty($category)) 
+        { 
+?>
+            <div class="home-banner"> <img src="<?php echo base_url(); ?>/<?php echo $category['banner']; ?>" alt="Image" height="265px" width="262px"> </div>
+<?php
+         } 
+?>
           </div>
           <!-- /.sidebar-filter -->
         </div>
@@ -321,8 +335,8 @@ a.active {
             <div class="col col-sm-2 col-md-2">
               <div class="filter-tabs">
                 <ul id="filter-tabs" class="nav nav-tabs nav-tab-box nav-tab-fa-icon">
-                  <li class="active"> <a data-toggle="tab" href="#grid-container"><i class="icon fa fa-th-large"></i>Grid</a> </li>
-                  <li><a data-toggle="tab" href="#list-container" class="list-container" data-list="list-container"><i class="icon fa fa-th-list"></i>List</a></li>
+                  <li class="active"> <a data-toggle="tab" class="grid-container" href="#grid-container"><i class="icon fa fa-th-large"></i><?php _el('grid');?></a> </li>
+                  <li><a data-toggle="tab" href="#list-container" class="list-container" data-list="list-container"><i class="icon fa fa-th-list"></i><?php _el('list');?></a></li>
                 </ul>
               </div>
               <!-- /.filter-tabs -->
@@ -330,17 +344,17 @@ a.active {
             <!-- /.col -->
             <div class="col col-sm-6 col-md-6">
               <div class="col col-sm-6 col-md-6 no-padding">
-                <div class="lbl-cnt" style=""> <span class="lbl">Sort by</span>
+                <div class="lbl-cnt" style=""> <span class="lbl"><?php _el('sort_by');?></span>
                   <div class="fld inline">
                     <div class="dropdown dropdown-small dropdown-med dropdown-white inline">
                       <button data-toggle="dropdown" type="button" class="btn dropdown-toggle"> 
                      
-                        Position<span class="caret"></span>  </button>
+                        <?php _el('position');?><span class="caret"></span>  </button>
                       <ul role="menu" class="dropdown-menu">
-                        <li role="presentation"><a href="#" class="sort" data-sort="price" data-order="asc">Price:Low to High</a></li>
-                        <li role="presentation"><a href="#" class="sort" data-sort="price" data-order="desc">Price:High to Low</a></li>
-                        <li role="presentation"><a href="#" class="sort" data-sort="name" data-order="asc">Product Name:A to Z</a></li>
-                        <li role="presentation"><a href="#" class="sort" data-sort="name" data-order="desc">Product Name:Z to A</a></li>
+                        <li role="presentation"><a href="#" class="sort" data-sort="price" data-order="asc"><?php _el('price_low_to_high'); ?></a></li>
+                        <li role="presentation"><a href="#" class="sort" data-sort="price" data-order="desc"><?php _el('price_high_to_low');?></a></li>
+                        <li role="presentation"><a href="#" class="sort" data-sort="name" data-order="asc"><?php _el('product_name_a_to_z'); ?></a></li>
+                        <li role="presentation"><a href="#" class="sort" data-sort="name" data-order="desc"><?php _el('product_name_z_to_a'); ?></a></li>
                       </ul>
                     </div>
                   </div>
@@ -352,7 +366,7 @@ a.active {
             <!-- /.col -->
             <form id="frmCategoryfilter">
                   <input type="hidden" name="page" value="<?php echo $page; ?>" id="page"/>
-                 <!--  <input type="hidden" name="list-container"  id="list-container"/> -->
+                  <!-- <input type="hidden" name="list_container" value="<?= $list_container; ?>" id="list"/> -->
                   <input type="hidden" name="sort" value="<?php echo $sort; ?>" id="sort"/>
                   <input type="hidden" name="order" value="<?php echo $order; ?>" id="order"/>
                   <input type="hidden" name="tags" value="<?php echo $tags_data; ?>" id="tags"/>
@@ -376,6 +390,7 @@ a.active {
 <?php 
                   for($i=1;$i<=$totalpages;$i++)
                   {
+                    
 ?>
                     <li><a href="#" class="<?php echo ($i==$page)? 'active' : 'pagination_link'; ?>" data-pageno="<?php echo $i; ?>"><?php echo $i; ?></a></li>
 <?php 
@@ -405,7 +420,7 @@ a.active {
                   if(empty($products)) 
                   { 
 ?>
-                    <p class="text-center">No Products</p>
+                    <p class="text-center"><?php _el('no_products');?></p>
 <?php 
                   } 
                   else 
@@ -419,7 +434,7 @@ a.active {
                     <div class="products">
                       <div class="product">
                         <div class="product-image">
-                          <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url(); ?>/<?php echo $product['thumb_image']; ?>" alt=""></a> </div>
+                          <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url(); ?><?php echo $product['thumb_image']; ?>" alt=""></a> </div>
                           <!-- /.image -->
                           
 <?php
@@ -441,7 +456,19 @@ a.active {
                         
                         <div class="product-info text-left">
                           <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo $product['name']; ?></a></h3>
-                          <div class="rating rateit-small"></div>
+
+<?php 
+                      if(!empty(get_star_rating( $product['id']) ))
+                      {
+                        $width =( get_star_rating( $product['id']) *70 ) / 5;
+
+?>
+                      <div class="rating-star rateit-small">
+                        <button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+                      </div>
+<?php
+                    }
+?>
                           <div class="description"></div>
                           <div class="product-price"> <span class="price"> $<?php echo $product['price']; ?> </span> <span class="price-before-discount">$ <?php echo $product['old_price']; ?></span> </div>
                           <!-- /.product-price --> 
@@ -452,8 +479,8 @@ a.active {
                           <div class="action">
                             <ul class="list-unstyled">
                               <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart" onclick="add_to_cart(<?= $product['id']; ?>)"></i> </button>
+                                <button class="btn btn-primary cart-btn" type="button"><?php _el('add_to_cart');?></button>
                               </li>
 <?php
                               if(is_user_logged_in())
@@ -517,7 +544,19 @@ a.active {
                         <div class="col col-sm-8 col-lg-8">
                           <div class="product-info">
                             <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo $product['name']; ?></a></h3>
-                            <div class="rating rateit-small"></div>
+
+<?php 
+                      if(!empty(get_star_rating( $product['id']) ))
+                      {
+                        $width =(get_star_rating( $product['id']) *70 ) / 5;
+
+?>
+                      <div class="rating-star rateit-small">
+                        <button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+                      </div>
+<?php
+                    }
+?>
                             <div class="product-price"> <span class="price"> $<?php echo $product['price']; ?> </span> <span class="price-before-discount">$ <?php echo $product['old_price']; ?></span> </div>
                             <!-- /.product-price -->
                             <div class="description m-t-10"><?php echo $product['short_description']; ?></div>
@@ -525,8 +564,8 @@ a.active {
                               <div class="action">
                                 <ul class="list-unstyled">
                                   <li class="add-cart-button btn-group">
-                                    <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                    <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                    <button class="btn btn-primary icon" data-toggle="dropdown" type="button" > <i class="fa fa-shopping-cart" onclick="add_to_cart(<?= $product['id']; ?>)"></i> </button>
+                                    <button class="btn btn-primary cart-btn" type="button" onclick="add_to_cart(<?= $product['id']; ?>);"><?php _el('add_to_cart');?></button>
                                   </li>
 <?php
                                   if(is_user_logged_in())
@@ -552,13 +591,13 @@ a.active {
                       if($product['is_sale'] == 1)
                       {
 ?>
-                      <div class="tag sale"><span>sale</span></div>
+                      <div class="tag sale"><span><?php _el('sale'); ?></span></div>
 <?php
                     }
                     elseif($product['is_hot'] == 1)
                     {
 ?>
-                       <div class="tag hot"><span>hot</span></div>
+                       <div class="tag hot"><span><?php _el('hot'); ?></span></div>
 <?php
                     }
 ?>
@@ -592,15 +631,18 @@ a.active {
     </div>
 <!-- /body-content -->
 </div>
+
 <script>
+ 
 $(document).ready(function(){
 
+  
   // $("a.list-container").click(function(){
-  //   var list=$(this).attr('data-list');
-  //   $("#page").val(1);
-  //   $('#list-container').val(list);
-  //   $("#frmCategoryfilter").submit();
-  //   return false;
+  //     var list= $(this).attr('href');
+  //     $("#page").val();
+  //     $("#list").val(list);
+  //     $("#frmCategoryfilter").submit();
+  //     return false;
   // });
   $("a.pagination_link").click(function(){
     var page=$(this).attr('data-pageno');
@@ -608,7 +650,7 @@ $(document).ready(function(){
     $("#frmCategoryfilter").submit();
     return false;
   });
-  $("a.sort").click(function(){
+  $("a.sort").click(function(){frmCategoryfilter
     var sort=$(this).attr('data-sort');
     var order=$(this).attr('data-order');
     $("#page").val(1);
@@ -624,25 +666,7 @@ $(document).ready(function(){
     $("#frmCategoryfilter").submit();
     return false;
   });
-  // $("a.subcategory").click(function(){
-  //   var subcategory=$(this).attr('data-subcategory');
-  //   $("#page").val(1);
-  //   $("#subcategory").val(subcategory);
-  //   $("#frmCategoryfilter").submit();
-  //   return false;
-  // });
-  // 
-  // $("input.multiple_sub_category").change(function(){
-  //   if ($(this).is(":checked")) 
-  //   {
-  //   $('.multiple_sub_category').prop("checked", true);
-
-  //   } 
-  //   else 
-  //   {
-  //     $('.multiple_sub_category').prop("checked", false);
-  //   }
-  // })
+  
   $("input.multiple_sub_category").click(function(){
      var id= [];
 
@@ -673,6 +697,15 @@ $(document).ready(function(){
     $("#pricerange").val(pricerange);
     $("#frmCategoryfilter").submit();
   });
+
+// $('#btnprice').pagination({
+//     dataSource: [1, 2, 3, 4, 5, 6, 7, ... , 195],
+//     callback: function(data, pagination) {
+//         // template method of yourself
+//         // var html = template(data);
+//         // dataContainer.html(html);
+//     }
+// });
 
   $('.price-slider').slider({
         min: <?php echo $default_min_max['min']; ?>,
