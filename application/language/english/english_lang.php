@@ -214,7 +214,6 @@ $lang['payment_method']   = 'Payment Method';
 $lang['payment_status']   = 'Payment Status';
 $lang['billing_details']  = 'Billing Details';
 
-=======
 #-----
 $lang['firstname']   = 'Firstname';
 $lang['lastname']    = 'Lastname';

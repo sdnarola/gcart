@@ -70,8 +70,6 @@ class Product_model extends MY_Model
 		return $this->db->get('products')->num_rows();
 	}
 
-<<<<<<< HEAD
-=======
 	/**
 
 	 * [get_products_tags description]
@@ -414,7 +412,6 @@ class Product_model extends MY_Model
 // 	$this->db->get_where('reviews',array(''))
 
 // }
->>>>>>> feature/category-page
 	/**
 	 * 	===================================================vixuti patel's code================================================================
 	 * [get_hot_deals products]
@@ -490,17 +487,10 @@ class Product_model extends MY_Model
 	 */
 	public function get_hot_deals_products()
 	{
-<<<<<<< HEAD
-		$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.off_percentage');
-		$this->db->from('products');
-		$this->db->join('hot_deals', 'products.id=hot_deals.product_id', 'inner');
-		$this->db->where(array('products.is_deleted' => 0, 'products.is_active' => 1, 'hot_deals.is_deleted' => 0));
-=======
 		$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.off_percentage,hot_deals.product_id');
 		$this->db->from('products');
 		$this->db->join('hot_deals', 'products.id=hot_deals.product_id', 'inner');
 		$this->db->where(array('products.is_deleted' => 0, 'products.is_active' => 1, 'hot_deals.is_deleted' => 0, 'hot_deals.end_date >' => date('Y-m-d h:i:s'), 'hot_deals.start_date <' => date('Y-m-d h:i:s')));
->>>>>>> feature/category-page
 		$query  = $this->db->get();
 		$result = $query->result_array();
 
@@ -577,15 +567,12 @@ class Product_model extends MY_Model
 		$this->db->insert('cart', $data);
 	}
 
-<<<<<<< HEAD
-=======
 	public function add_product_by_tags($product_id, $data)
 	{
 		$this->db->where('id', $product_id);
 		$this->db->update('products', $data);
 	}
 
->>>>>>> feature/category-page
 	/**
 	 * [count_products_review description]
 	 * @param  [int] $product_id  reviews products table forgein key
@@ -595,34 +582,10 @@ class Product_model extends MY_Model
 	public function count_products_review($product_id)
 	{
 		$query = $this->db->get_where('reviews', array('product_id' => $product_id, 'is_deleted' => 0));
-<<<<<<< HEAD
 
 		if ($query == TRUE)
 		{
 			return $query->num_rows();
-		}
-
-		return false;
-	}
-
-	/**
-	 * [get_wishlist_data description]
-	 * @return [boolean] query is true return wish List data in array
-	 */
-	public function get_wishlist_data($user_id)
-	{
-		$this->db->select('product_id');
-		$query = $this->db->get_where('wishlist', array('is_deleted' => 0, 'user_id' => $user_id));
-
-		if ($query == TRUE)
-		{
-			return $query->result();
-=======
-
-		if ($query == TRUE)
-		{
-			return $query->num_rows();
->>>>>>> feature/category-page
 		}
 
 		return false;
