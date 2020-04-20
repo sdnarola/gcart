@@ -14,6 +14,8 @@ function is_admin_logged_in()
 	return false;
 }
 
+// =========================== Bhavik ==================================//
+
 /**
  * Checks if vendor is logged in or not
  * @return boolean
@@ -22,11 +24,13 @@ function is_vendor_logged_in()
 {
 	if (get_instance()->session->has_userdata('vendor_logged_in'))
 	{
-		return get_user_info(get_instance()->session->userdata('vendor_id'), 'is_active');
+		return get_vendor_info(get_instance()->session->userdata('vendor_id'), 'is_active');
 	}
 
 	return false;
 }
+
+// =========================== Bhavik ==================================//
 
 /**
  * Checks if user is logged in or not
@@ -216,6 +220,25 @@ function is_active_controller($controller)
 }
 
 /**
+ * Determines if active controller->method.
+ *
+ * @param  str  $method  The controller->method
+ *
+ * @return bool True if active controller->method, False otherwise.
+ */
+function is_active_method($method)
+{
+	$CI = &get_instance();
+
+	if ($CI->router->fetch_method() == $method)
+	{
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+/**
  * Sets the notification alert on different evets performed.
  *
  * @param str  $type     The type
@@ -280,3 +303,130 @@ function log_activity($description, $user_id = '')
 		$CI->activity_log->insert($data);
 	}
 }
+
+// =========================== Bhavik ==================================//
+
+/**
+ * Gets the requested info of product.
+ *
+ * @param  int  $id    The id of the product.
+ * @param  str  $info  The key of the information required.
+ *
+ * @return mixed The information required.
+ */
+function get_product($id, $info = '')
+{
+	$CI = &get_instance();
+	$CI->load->model('product_model', 'products');
+	$product = $CI->products->get($id);
+
+	if ($info != '')
+	{
+		return $product[$info];
+	}
+	else
+	{
+		return $product;
+	}
+}
+
+/**
+ * Gets the requested info of deal.
+ *
+ * @param  int  $id    The id of the deal.
+ * @param  str  $info  The key of the information required.
+ *
+ * @return mixed The information required.
+ */
+function get_deal($id, $info = '')
+{
+	$CI = &get_instance();
+	$CI->load->model('deal_model', 'deals');
+	$deal = $CI->deals->get($id);
+
+	if ($info != '')
+	{
+		return $deal[$info];
+	}
+	else
+	{
+		return $deal;
+	}
+}
+
+/**
+ * configuration for creating Pagination Links.
+ *
+ * @param  string  		$url         	URL for the pagination.
+ * @param  int  		$total_rows  	Total number of records.
+ * @param  int 			$per_page    	Number of records per page.
+ * @param  int 			$uri_segment  	Segment of URL.
+ *
+ * @return mixed 		$config 		Configuration for Pagination.
+ */
+function pagination($url, $total_rows, $per_page, $uri_segment)
+{
+	$CI                         = &get_instance();
+	$config                     = array();
+	$config['base_url']         = $url;
+	$config['total_rows']       = $total_rows;
+	$config['per_page']         = $per_page;
+	$config['uri_segment']      = $uri_segment;
+	$config['use_page_numbers'] = TRUE;
+	$config['full_tag_open']    = '<ul class="list-inline list-unstyled">';
+	$config['full_tag_close']   = '</ul>';
+	$config['first_link']       = '&lt;&lt';
+	$config['first_tag_open']   = '<li class="page-item">';
+	$config['first_tag_close']  = '</li>';
+	$config['last_link']        = '&gt;&gt';
+	$config['last_tag_open']    = '<li class="page-item">';
+	$config['last_tag_close']   = '</li>';
+	$config['next_link']        = '<li class="next"><i class="fa fa-angle-right"></i></li>';
+	$config['next_tag_open']    = '<li class="page-item">';
+	$config['next_tag_close']   = '</li>';
+	$config['prev_link']        = '<li class="prev"><i class="fa fa-angle-left"></i></li>';
+	$config['prev_tag_open']    = '<li class="page-item">';
+	$config['prev_tag_close']   = '</li>';
+	$config['cur_tag_open']     = '<li class="active"><a href="">';
+	$config['cur_tag_close']    = '</a></li>';
+	$config['num_tag_open']     = '<li class="page-item">';
+	$config['num_tag_close']    = '</li>';
+
+	$CI->pagination->initialize($config);
+
+	return $config;
+}
+
+// =========================== Bhavik ==================================//
+
+/**
+ * Uploads a logo.
+ *
+ * @return     array  ( returns uploaded data path else return error )
+ */
+function upload_logo($path, $fieldname)
+{
+	$CI = &get_instance();
+
+	$config['upload_path']   = $path;
+	$config['allowed_types'] = 'gif|jpg|png|jpeg';
+	$config['max_size']      = 1000;
+	$config['file_name']     = time().'-'.$_FILES[$fieldname]['name'];
+
+	$CI->upload->initialize($config);
+
+	if (!$CI->upload->do_upload($fieldname))
+	{
+		$error = array('error' => $CI->upload->display_errors());
+		set_alert('danger', ucwords($error['error']));
+
+		return false;
+	}
+
+	$uploadData = $CI->upload->data();
+
+	$data = $config['upload_path'].$uploadData['file_name'];
+
+	return $data;
+}
+

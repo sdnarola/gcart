@@ -16,6 +16,7 @@
 <link href="<?php echo base_url('assets/admin/css/bootstrap.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/core.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/components.css'); ?>" rel="stylesheet" type="text/css">
+<link href="<?php echo base_url('assets/admin/css/colors.css'); ?>" rel="stylesheet" type="text/css">
 <!-- /global stylesheets -->
 
 <style type="text/css">
@@ -84,8 +85,16 @@ border-radius: 3px;
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js'); ?>"></script>
 
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/app.js'); ?>"></script>
-
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/common.js'); ?>"></script>
+
+
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/media/fancybox.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/gallery.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/selects/bootstrap_multiselect.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_multiselect.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/pages/form_select2.js'); ?>"></script>
+	<!-- /theme JS files -->
+
 
 <script type="text/javascript">
 // Default Settings for jQuery Validator
@@ -169,14 +178,10 @@ $.extend($.fn.dataTable.defaults, {
 	                className: 'btn btn-default'
 	            }
             },
-            buttons: [
-            'copyHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-            ]
+            buttons: ['pdfHtml5']
         },
-        "pageLength": 25,
-        "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ]
+        "pageLength": 10,
+        "lengthMenu": [ [10, 20, 50, -1], [10, 20, 50, "All"] ]
     });
 
 
@@ -232,6 +237,8 @@ switches.forEach(function(html) {
 
 </script>
 
+
+
 </head>
 
 <body>
@@ -251,7 +258,7 @@ switches.forEach(function(html) {
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown dropdown-user">
 					<a class="dropdown-toggle" data-toggle="dropdown">
-						<span><?php echo get_loggedin_info('username'); ?></span>
+						<span><?php echo get_loggedin_info('vendor_name'); ?></span>
 						<i class="caret"></i>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-right">
@@ -276,7 +283,7 @@ switches.forEach(function(html) {
 							<div class="media">
 								<div class="media-body">
 									<span class="media-heading text-semibold">
-										<?php echo _l('welcome').'&nbsp;'.get_loggedin_info('username').'&nbsp;'; ?>
+										<?php echo _l('welcome').'&nbsp;'.get_loggedin_info('vendor_name').'&nbsp;'; ?>
 										<a style="color: white;" href="<?php echo vendor_url('authentication/logout'); ?>" align="padding-right"><i class="icon-switch2" data-popup="tooltip" data-placement="top"  title="<?php _el('logout')?>"></i></a>
 									</span>
 								</div>
@@ -288,29 +295,47 @@ switches.forEach(function(html) {
 					<div class="sidebar-category sidebar-category-visible">
 						<div class="category-content no-padding">
 							<ul class="navigation navigation-main navigation-accordion">
-								<!-- store link -->
-								<li
-									<?php
-
-										if (is_active_controller('store'))
-										{
-											echo 'class="active"';}
-
-									?>
-									>
-									<a href="<?php echo base_url('vendor/store'); ?>"><i class="icon-eye4"></i> <span>Visit Your Store</span></a>
-								</li>
 								<!-- home link -->
 								<li
 									<?php
 
-										if (is_active_controller('dashboard'))
+										if (is_active_controller('dashboard') && is_active_method('index'))
 										{
 											echo 'class="active"';}
 
 									?>
 									>
-									<a href="<?php echo base_url('vendor/dashboard'); ?>"><i class="icon-home4"></i> <span>Dashboard</span></a>
+									<a href="<?php echo base_url('vendor/dashboard'); ?>"><i class="icon-home4"></i> <span><?php _el('dashboard')?></span></a>
+								</li>
+								<!-- store link -->
+								<li>
+									<a href="#"><i class="icon-eye4"></i> </i><span><?php _el('store')?></span></a>
+									<ul>
+										<li
+										<?php
+
+											if (is_active_controller('dashboard') && is_active_method('store'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('home/store/').$this->session->userdata('vendor_id'); ?>"><span><?php _el('visit_store')?></span></a>
+										</li>
+										<li
+										<?php
+
+											if (is_active_controller('dashboard') && is_active_method('edit_store'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('vendor/dashboard/edit_store'); ?>">
+												<span><?php _el('edit_store')?></span>
+											</a>
+										</li>
+									</ul>
 								</li>
 								<!-- product -->
 								<li
@@ -322,7 +347,7 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('vendor/products'); ?>"><i class="icon-cart5"></i> <span>Products</span></a>
+									<a href="<?php echo base_url('vendor/products'); ?>"><i class="icon-cart5"></i> <span><?php _el('products')?></span></a>
 								</li>
 								<!-- orders -->
 								<li
@@ -334,36 +359,36 @@ switches.forEach(function(html) {
 
 									?>
 									>
-									<a href="<?php echo base_url('vendor/orders'); ?>"><i class="icon-list-ordered"></i> <span>Orders</span></a>
+									<a href="<?php echo base_url('vendor/orders'); ?>"><i class="icon-list-ordered"></i> <span><?php _el('orders')?></span></a>
 								</li>
 								<!-- product discussion -->
 								<li>
-									<a href="#"><i class="icon-bubbles9"></i><span>Product Discussion</span></a>
+									<a href="#"><i class="icon-bubbles9"></i><span><?php _el('product_discussion')?></span></a>
 									<ul>
 										<li
 										<?php
 
-											if (is_active_controller('products'))
+											if (is_active_controller('reviews'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('vendor/products/reviews'); ?>">
-												<span>Reviews</span>
+											<a href="<?php echo base_url('vendor/reviews'); ?>">
+												<span><?php _el('reviews')?></span>
 											</a>
 										</li>
 										<li
 										<?php
 
-											if (is_active_controller('products'))
+											if (is_active_controller('comments'))
 											{
 												echo 'class="active"';}
 
 										?>
 										 >
-											<a href="<?php echo base_url('vendor/products/comments'); ?>">
-												<span>Comments</span>
+											<a href="<?php echo base_url('vendor/comments'); ?>">
+												<span><?php _el('comments')?></span>
 											</a>
 										</li>
 									</ul>
@@ -383,9 +408,8 @@ switches.forEach(function(html) {
 					&copy;
 					<?php echo date('Y') ?><a href="">Vendor Panel</a> by <a target="_blank">
 						<?php
-							echo 'GCart';
-						// echo get_settings('company_name');
-						 ?></a>
+						echo get_settings('company_name');
+						?></a>
 				</div>
 				<!-- /Footer -->
 			</div>

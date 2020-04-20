@@ -1,5 +1,86 @@
+<!--<div class="container" style="margin-top:30px;">-->
+<?php
+  $this->load->view('themes/default/includes/alerts');
+  $deals = $this->deals->get_all();
+?>
 
-<!-- ============================================== HEADER : END ============================================== -->
+<script>
+/**
+ * Set timer for hot_deal.
+ *
+ * @param  string      end_date   enddate of the deal.
+ * @param  int         id         id of the deal.
+ */
+function counter(end_date,id)
+{
+  var result = '';
+  // Set the date we're counting down to
+  var countDownDate = new Date(end_date).getTime();
+
+  // Update the count down every 1 second
+  var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    
+
+    // If the count down is over, write some text
+    if (distance < 0)
+    {
+      clearInterval(x);
+      result += "EXPIRED";
+    }
+    else
+    {
+    result += '<div class="box-wrapper">';
+    result += '<div class="date box"> <span class="key" id="days">'+days+'</span> <span class="value">DAYS</span> </div>';
+    result += '</div>';
+    result += '<div class="box-wrapper">';
+    result += '<div class="hour box"> <span class="key" id="hours">'+hours+'</span> <span class="value">HRS</span> </div>';
+    result += '</div>';
+    result += '<div class="box-wrapper">';
+    result += '<div class="minutes box"> <span class="key" id="minutes">'+minutes+'</span> <span class="value">MINS</span> </div>';
+    result += '</div>';
+    result += '<div class="box-wrapper hidden-md">';
+    result += '<div class="seconds box"> <span class="key" id="seconds">'+seconds+'</span> <span class="value">SEC</span> </div>';
+    result += '</div>';
+    }
+
+    $('#time_counter_'+id).html(result);
+    result='';
+  }, 1000);
+}
+</script>
+
+<?php 
+  $main_categories = $this->category->get_header_parent_category(); //returns array of obj
+  $sub_categories  = $this->category->get_sub_categories();
+  $slider          = $this->sliders->get_slider();
+  $banners         = $this->sliders->get_home_banners();
+  $hot_deals       = $this->products->get_hot_deals();
+  $reviews         = $this->products->get_all_reviews();
+  $all_new_products = $this->products->get_new_products(); //all new arrival products
+  $offer_products  = $this->products->get_special_offers(); //special offer  products  
+  $tags            = $this->products->get_tags();  //to get all tags
+  $sellers_products = $this->products->get_best_sellers();  
+  $featured_products = $this->products->get_featured_products();  
+  $special_deal      =  $this->products->get_special_deal();
+  //var_dump($main_categories);
+  
+?>
+
+<!-- ========================== ==================== HEADER : END ============================================== -->
+
 <div class="body-content outer-top-xs" id="top-banner-and-menu">
   <div class="container">
     <div class="row">
@@ -8,380 +89,153 @@
 
         <!-- ================================== TOP NAVIGATION ================================== -->
         <div class="side-menu animate-dropdown outer-bottom-xs">
+
           <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Categories</div>
           <nav class="yamm megamenu-horizontal">
             <ul class="nav">
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-shopping-bag" aria-hidden="true"></i>Clothing</a>
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Dresses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jackets</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Sunglasses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Sport Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Blazers</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shirts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shorts</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Handbags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jwellery</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Swimwear </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Tops</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Flats</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Winter Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Night Suits</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Toys &amp; Games</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jeans</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shirts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">School Bags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Lunch Box</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Footwear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Wipes</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Sandals </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shorts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Dresses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jwellery</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Bags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Night Dress</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Swim Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Toys</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                  </li>
+
+              <?php
+                foreach ($main_categories as  $main_category)
+                {
+                ?>
+              <li class="dropdown menu-item "> <a href="<?= site_url('categories/'. $main_category['slug']); ?>" class="dropdown-toggle" data-toggle="dropdown" id="<?php echo ($main_category['id']); ?>"><i class="fa fa"></i><?php echo ucwords($main_category['name']); ?></a>
+                <ul class="dropdown-menu mega-menu" >
+                  <li class="yamm-content ">
+                    <div class="row customli">
+                      <?php
+                        $counter = 0;
+
+                       foreach ($sub_categories as  $sub_category)
+                       {
+                      //  var_dump($sub_categories);
+                        if ($sub_category['category_id']== $main_category['id'])
+                        {
+                              ?>
+                              <?php
+                             if ($counter < 4)
+                             {
+                            ?>
+                            <div class="col-sm-12 col-md-3">
+                              <ul class="links list-unstyled">
+                                <li><a href="<?= site_url('categories/'.$main_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']); $counter++; ?></a></li>
+                              </ul>
+                            </div>
+                            <!-- /.col -->
+                            <?php
+                              }
+                              elseif ($counter >= 4)
+                              {
+                              ?>
+                            <div class="col-sm-12 col-md-3">
+                              <ul class="links list-unstyled">
+                               <li><a href="<?= site_url('categories/'.$main_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']); $counter++; ?></a></li>
+                              </ul>
+                            </div>
+                            <!-- /.col -->
+                             <?php
+                              }
+                              else
+                              {
+                              ?>
+                            <div class="col-sm-12 col-md-3">
+                              <ul class="links list-unstyled">
+                               <li><a href="<?= site_url('categories/'.$main_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']); $counter++; ?></a></li>
+                              </ul>
+                            </div>
+                             <?php
+                              }
+                              ?>
+                         <?php
+                         }
+                        
+                        }
+                          ?>
+                  </div>
+                   </li>
                   <!-- /.yamm-content -->
                 </ul>
-                <!-- /.dropdown-menu --> </li>
+                <!-- /.dropdown-menu --> 
+              </li>
               <!-- /.menu-item -->
-
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-laptop" aria-hidden="true"></i>Electronics</a>
-                <!-- ================================== MEGAMENU VERTICAL ================================== -->
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-                      <div class="col-xs-12 col-sm-12 col-lg-4">
-                        <ul>
-                          <li><a href="<?php echo base_url(); ?>#">Gaming</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Laptop Skins</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Apple</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Dell</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Lenovo</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Microsoft</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Asus</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Adapters</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Batteries</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Cooling Pads</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-lg-4">
-                        <ul>
-                          <li><a href="<?php echo base_url(); ?>#">Routers &amp; Modems</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">CPUs, Processors</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">PC Gaming Store</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Graphics Cards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Components</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Webcam</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Memory (RAM)</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Motherboards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Keyboards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Headphones</a></li>
-                        </ul>
-                      </div>
-                      <div class="dropdown-banner-holder"> <a href="<?php echo base_url(); ?>#"><img alt="" src="assets/themes/default/images/banners/banner-side.png" /></a> </div>
-                    </div>
-                    <!-- /.row -->
-                  </li>
-                  <!-- /.yamm-content -->
-                </ul>
-                <!-- /.dropdown-menu -->
-                <!-- ================================== MEGAMENU VERTICAL ================================== --> </li>
-              <!-- /.menu-item -->
-
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-paw" aria-hidden="true"></i>Shoes</a>
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Dresses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jackets</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Sunglasses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Sport Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Blazers</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shirts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shorts</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Handbags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jwellery</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Swimwear </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Tops</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Flats</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Winter Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Night Suits</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Toys &amp; Games</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jeans</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shirts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">School Bags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Lunch Box</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Footwear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Wipes</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Sandals </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shorts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Dresses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jwellery</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Bags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Night Dress</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Swim Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Toys</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                  </li>
-                  <!-- /.yamm-content -->
-                </ul>
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-clock-o"></i>Watches</a>
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-                      <div class="col-xs-12 col-sm-12 col-lg-4">
-                        <ul>
-                          <li><a href="<?php echo base_url(); ?>#">Gaming</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Laptop Skins</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Apple</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Dell</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Lenovo</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Microsoft</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Asus</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Adapters</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Batteries</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Cooling Pads</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-lg-4">
-                        <ul>
-                          <li><a href="<?php echo base_url(); ?>#">Routers &amp; Modems</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">CPUs, Processors</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">PC Gaming Store</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Graphics Cards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Components</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Webcam</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Memory (RAM)</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Motherboards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Keyboards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Headphones</a></li>
-                        </ul>
-                      </div>
-                      <div class="dropdown-banner-holder"> <a href="<?php echo base_url(); ?>#"><img alt="" src="assets/themes/default/images/banners/banner-side.png" /></a> </div>
-                    </div>
-                    <!-- /.row -->
-                  </li>
-                  <!-- /.yamm-content -->
-                </ul>
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-diamond"></i>Jewellery</a>
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Dresses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jackets</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Sunglasses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Sport Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Blazers</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shirts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shorts</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Handbags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jwellery</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Swimwear </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Tops</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Flats</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Winter Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Night Suits</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Toys &amp; Games</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jeans</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shirts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shoes</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">School Bags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Lunch Box</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Footwear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Wipes</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                      <div class="col-sm-12 col-md-3">
-                        <ul class="links list-unstyled">
-                          <li><a href="<?php echo base_url(); ?>#">Sandals </a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Shorts</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Dresses</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Jwellery</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Bags</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Night Dress</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Swim Wear</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Toys</a></li>
-                        </ul>
-                      </div>
-                      <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                  </li>
-                  <!-- /.yamm-content -->
-                </ul>
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-heartbeat"></i>Health and Beauty</a>
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-                      <div class="col-xs-12 col-sm-12 col-lg-4">
-                        <ul>
-                          <li><a href="<?php echo base_url(); ?>#">Gaming</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Laptop Skins</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Apple</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Dell</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Lenovo</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Microsoft</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Asus</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Adapters</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Batteries</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Cooling Pads</a></li>
-                        </ul>
-                      </div>
-                      <div class="col-xs-12 col-sm-12 col-lg-4">
-                        <ul>
-                          <li><a href="<?php echo base_url(); ?>#">Routers &amp; Modems</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">CPUs, Processors</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">PC Gaming Store</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Graphics Cards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Components</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Webcam</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Memory (RAM)</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Motherboards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Keyboards</a></li>
-                          <li><a href="<?php echo base_url(); ?>#">Headphones</a></li>
-                        </ul>
-                      </div>
-                      <div class="dropdown-banner-holder"> <a href="<?php echo base_url(); ?>#"><img alt="" src="assets/themes/default/images/banners/banner-side.png" /></a> </div>
-                    </div>
-                    <!-- /.row -->
-                  </li>
-                  <!-- /.yamm-content -->
-                </ul>
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-paper-plane"></i>Kids and Babies</a>
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-futbol-o"></i>Sports</a>
-                <!-- ================================== MEGAMENU VERTICAL ================================== -->
-                <!-- /.dropdown-menu -->
-                <!-- ================================== MEGAMENU VERTICAL ================================== --> </li>
-              <!-- /.menu-item -->
-
-              <li class="dropdown menu-item"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-envira"></i>Home and Garden</a>
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-
+                <?php
+                 }
+                ?>
             </ul>
             <!-- /.nav -->
           </nav>
           <!-- /.megamenu-horizontal -->
+
         </div>
         <!-- /.side-menu -->
+
         <!-- ================================== TOP NAVIGATION : END ================================== -->
 
         <!-- ============================================== HOT DEALS ============================================== -->
         <div class="sidebar-widget hot-deals wow fadeInUp outer-bottom-xs">
           <h3 class="section-title">hot deals</h3>
           <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
+<?php
+  
+  if ($deals)
+  {
+    foreach ($deals as $deal)
+    {
+      $end_date = date('M d, Y  h:i:s', strtotime($deal['end_date']));
+    ?>
             <div class="item">
               <div class="products">
                 <div class="hot-deal-wrapper">
-                  <div class="image"> <img src="assets/themes/default/images/hot-deals/p25.jpg" alt=""> </div>
-                  <div class="sale-offer-tag"><span>69%<br>
+                  <div class="image"> <img src="<?php echo base_url().get_product($deal['product_id'], 'thumb_image'); ?>" alt="image" style="max-width: 223px;max-height:190px"> </div>
+                  <div class="sale-offer-tag"><span>
+                    <?php
+
+                          if ($deal['type'] == 0)
+                          {
+                            echo '&#8377;'.'. '.$deal['value'];
+                          }
+                          else
+                          {
+                            echo $deal['value'].' &#37;';
+                          }
+
+                        ?><br>
                     off</span></div>
-                  <div class="timing-wrapper">
-                    <div class="box-wrapper">
-                      <div class="date box"> <span class="key">120</span> <span class="value">DAYS</span> </div>
-                    </div>
-                    <div class="box-wrapper">
-                      <div class="hour box"> <span class="key">20</span> <span class="value">HRS</span> </div>
-                    </div>
-                    <div class="box-wrapper">
-                      <div class="minutes box"> <span class="key">36</span> <span class="value">MINS</span> </div>
-                    </div>
-                    <div class="box-wrapper hidden-md">
-                      <div class="seconds box"> <span class="key">60</span> <span class="value">SEC</span> </div>
-                    </div>
+                    <script type="text/javascript">
+                      counter("<?php echo $end_date; ?>",<?php echo $deal['id']; ?>);
+                    </script>
+                  <div class="timing-wrapper" id="time_counter_<?php echo $deal['id']; ?>">
+
                   </div>
                 </div>
                 <!-- /.hot-deal-wrapper -->
 
                 <div class="product-info text-left m-t-20">
-                  <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                  <div class="rating rateit-small"></div>
-                  <div class="product-price"> <span class="price"> $600.00 </span> <span class="price-before-discount">$800.00</span> </div>
+                  <h3 class="name"><a href="<?= site_url('Products/'.get_product($deal['product_id'], 'slug')); ?>"><?php echo ucwords(get_product($deal['product_id'], 'name')); ?></a></h3>
+                  
+                  <div class="product-price"> <span class="price"><?php echo get_product($deal['product_id'], 'price'); ?></span> <span class="price-before-discount"><?php echo get_product($deal['product_id'], 'old_price'); ?></span> </div>
                   <!-- /.product-price -->
+                    <?php
+                      foreach ($reviews as $review)
+                      {
+                        if ($review['product_id'] == $deal['id'])
+                        {
+                          $i = 1;
+
+                          for ($i; $i <= $review['star_ratings']; $i++)
+                          {
+                          ?>
+                            <div class="fa fa-star" style="color: orange"></div>
+                          <?php
+                            }
+                           for ($i = $i; $i <= 5; $i++)
+                           {
+                            ?>
+                           <div class="fa fa-star-o"></div>
+                            <?php
+                              }
+                            }
+                          }
+                        ?> 
 
                 </div>
                 <!-- /.product-info -->
@@ -389,8 +243,8 @@
                 <div class="cart clearfix animate-effect">
                   <div class="action">
                     <div class="add-cart-button btn-group">
-                      <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                      <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                      <a href="<?php echo base_url('cart/add/').$deal['product_id']; ?>">
+                      <button  type="button" class="btn btn-primary cart-btn" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Add to cart</button></a>
                     </div>
                   </div>
                   <!-- /.action -->
@@ -398,94 +252,11 @@
                 <!-- /.cart -->
               </div>
             </div>
-            <div class="item">
-              <div class="products">
-                <div class="hot-deal-wrapper">
-                  <div class="image"> <img src="assets/themes/default/images/hot-deals/p5.jpg" alt=""> </div>
-                  <div class="sale-offer-tag"><span>35%<br>
-                    off</span></div>
-                  <div class="timing-wrapper">
-                    <div class="box-wrapper">
-                      <div class="date box"> <span class="key">120</span> <span class="value">Days</span> </div>
-                    </div>
-                    <div class="box-wrapper">
-                      <div class="hour box"> <span class="key">20</span> <span class="value">HRS</span> </div>
-                    </div>
-                    <div class="box-wrapper">
-                      <div class="minutes box"> <span class="key">36</span> <span class="value">MINS</span> </div>
-                    </div>
-                    <div class="box-wrapper hidden-md">
-                      <div class="seconds box"> <span class="key">60</span> <span class="value">SEC</span> </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.hot-deal-wrapper -->
+<?php
+  }
+  }
 
-                <div class="product-info text-left m-t-20">
-                  <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                  <div class="rating rateit-small"></div>
-                  <div class="product-price"> <span class="price"> $600.00 </span> <span class="price-before-discount">$800.00</span> </div>
-                  <!-- /.product-price -->
-
-                </div>
-                <!-- /.product-info -->
-
-                <div class="cart clearfix animate-effect">
-                  <div class="action">
-                    <div class="add-cart-button btn-group">
-                      <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                      <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                    </div>
-                  </div>
-                  <!-- /.action -->
-                </div>
-                <!-- /.cart -->
-              </div>
-            </div>
-            <div class="item">
-              <div class="products">
-                <div class="hot-deal-wrapper">
-                  <div class="image"> <img src="assets/themes/default/images/hot-deals/p10.jpg" alt=""> </div>
-                  <div class="sale-offer-tag"><span>35%<br>
-                    off</span></div>
-                  <div class="timing-wrapper">
-                    <div class="box-wrapper">
-                      <div class="date box"> <span class="key">120</span> <span class="value">Days</span> </div>
-                    </div>
-                    <div class="box-wrapper">
-                      <div class="hour box"> <span class="key">20</span> <span class="value">HRS</span> </div>
-                    </div>
-                    <div class="box-wrapper">
-                      <div class="minutes box"> <span class="key">36</span> <span class="value">MINS</span> </div>
-                    </div>
-                    <div class="box-wrapper hidden-md">
-                      <div class="seconds box"> <span class="key">60</span> <span class="value">SEC</span> </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- /.hot-deal-wrapper -->
-
-                <div class="product-info text-left m-t-20">
-                  <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                  <div class="rating rateit-small"></div>
-                  <div class="product-price"> <span class="price"> $600.00 </span> <span class="price-before-discount">$800.00</span> </div>
-                  <!-- /.product-price -->
-
-                </div>
-                <!-- /.product-info -->
-
-                <div class="cart clearfix animate-effect">
-                  <div class="action">
-                    <div class="add-cart-button btn-group">
-                      <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                      <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                    </div>
-                  </div>
-                  <!-- /.action -->
-                </div>
-                <!-- /.cart -->
-              </div>
-            </div>
+?>
           </div>
           <!-- /.sidebar-widget -->
         </div>
@@ -497,26 +268,55 @@
           <h3 class="section-title">Special Offer</h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
+               <?php
+               $offer_products = array_chunk($offer_products, 2); 
+               foreach ($offer_products as $offer_products)
+               { 
+               ?>
               <div class="item">
                 <div class="products special-product">
+                <?php
+               foreach ($offer_products as $offer_product)
+               {
+                ?>
                   <div class="product">
                     <div class="product-micro">
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
                           <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p30.jpg" alt=""> </a> </div>
+                            <div class="image"> <a href="<?= site_url('Products/'.$offer_product['slug']); ?>"> <img src="<?php echo base_url().$offer_product['thumb_image']?>" alt="image"style="max-width: 90px;max-height: 90px"> </a> </div>
                             <!-- /.image -->
-
                           </div>
                           <!-- /.product-image -->
                         </div>
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$offer_product['slug']); ?>>"><?php echo ucwords($offer_product['name']);?></a></h3>
+                            <div class="product-price"> <span class="price"><?php echo $offer_product['price'];?></span> </div>
                             <!-- /.product-price -->
+                       <?php
+                      foreach ($reviews as $review)
+                      {
+                        if ($review['product_id'] == $offer_product['id'])
+                        {
+                          $i = 1;
+
+                          for ($i; $i <= $review['star_ratings']; $i++)
+                          {
+                          ?>
+                            <div class="fa fa-star" style="color: orange"></div>
+                          <?php
+                            }
+                           for ($i = $i; $i <= 5; $i++)
+                           {
+                            ?>
+                           <div class="fa fa-star-o"></div>
+                            <?php
+                              }
+                            }
+                          }
+                            ?>                            
 
                           </div>
                         </div>
@@ -527,239 +327,14 @@
                     <!-- /.product-micro -->
 
                   </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p29.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p28.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
+                  <?php
+                  }
+                  ?>                 
                 </div>
               </div>
-              <div class="item">
-                <div class="products special-product">
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p27.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p26.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p25.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="products special-product">
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p24.jpg"  alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p23.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p22.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                </div>
-              </div>
+            <?php
+             }
+             ?>             
             </div>
           </div>
           <!-- /.sidebar-widget-body -->
@@ -770,8 +345,27 @@
         <div class="sidebar-widget product-tag wow fadeInUp">
           <h3 class="section-title">Product tags</h3>
           <div class="sidebar-widget-body outer-top-xs">
-            <div class="tag-list"> <a class="item" title="Phone" href="<?php echo base_url(); ?>category.html">Phone</a> <a class="item active" title="Vest" href="<?php echo base_url(); ?>category.html">Vest</a> <a class="item" title="Smartphone" href="<?php echo base_url(); ?>category.html">Smartphone</a> <a class="item" title="Furniture" href="<?php echo base_url(); ?>category.html">Furniture</a> <a class="item" title="T-shirt" href="<?php echo base_url(); ?>category.html">T-shirt</a> <a class="item" title="Sweatpants" href="<?php echo base_url(); ?>category.html">Sweatpants</a> <a class="item" title="Sneaker" href="<?php echo base_url(); ?>category.html">Sneaker</a> <a class="item" title="Toys" href="<?php echo base_url(); ?>category.html">Toys</a> <a class="item" title="Rose" href="<?php echo base_url(); ?>category.html">Rose</a> </div>
-            <!-- /.tag-list -->
+            <div class="tag-list"> 
+              <?php 
+               $product_tags = implode(',', array_map(function ($entry)
+                {
+                  return $entry['tags'];
+                }, $tags));
+
+               $product_tags = implode(',', array_unique(explode(',', $product_tags)));
+               $product_tags = explode(',', $product_tags);
+               $count=0;
+               foreach ($product_tags as $tag) { 
+
+               if($count<11)  {         
+                  ?>
+                   <a class="<?php echo ($count==2) ? "item active" : "item"; ?>"  title="Phone" href="<?php echo base_url().'products/show_detail/'.'1'?>"><?php echo '#'.ucfirst($tag);$count++?></a>
+                  <?php
+                }              
+              }
+              ?>                    
+           </div>
+            <!-- /.tag-list -->            
           </div>
           <!-- /.sidebar-widget-body -->
         </div>
@@ -783,27 +377,72 @@
           <h3 class="section-title">Special Deals</h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
-              <div class="item">
+            
+            <?php
+            $special_deal = array_chunk($special_deal, 3); 
+            foreach ($special_deal as $deal_product)
+             {           
+            ?>  
+            <div class="item">
                 <div class="products special-product">
+                <?php
+
+                foreach ($deal_product as $deal_product) 
+                { 
+                 if($deal_product['old_price']>$deal_product['price'])
+                   {
+                     $percentage = ceil((($deal_product['old_price'] - $deal_product['price']) / $deal_product['price']) * 100);
+                   }
+                   else
+                   {
+                    $percentage=0;
+                   }
+               ?>
                   <div class="product">
                     <div class="product-micro">
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
+
                           <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p28.jpg"  alt=""> </a> </div>
+                            <div class="image"> <a href="<?= site_url('Products/'.$deal_product['slug']); ?>"> <img src="<?php echo base_url().$deal_product['thumb_image']?>" style="max-width: 90px;max-height: 90px"  alt="product-image"> </a> </div>
                             <!-- /.image -->
 
+                            <div class="tag hot" style="height: 35px; width:40px;"><span>
+                            <?php echo round($percentage); ?>%OFF
+                              </span></div>                              
                           </div>
+
                           <!-- /.product-image -->
                         </div>
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$deal_product['slug']); ?>>"><?php echo ucwords($deal_product['name']);?></a></h3>
+                            <div class="product-price"> <span class="price"><?php echo $deal_product['price'];?></span> </div>
                             <!-- /.product-price -->
+                      <?php
+                      foreach ($reviews as $review)
+                      {
+                        if ($review['product_id'] == $deal_product['id'])
+                        {
+                          $i = 1;
 
+                          for ($i; $i <= $review['star_ratings']; $i++)
+                          {
+                          ?>
+                            <div class="fa fa-star" style="color: orange"></div>
+                          <?php
+                            }
+                           for ($i = $i; $i <= 5; $i++)
+                           {
+                            ?>
+                           <div class="fa fa-star-o"></div>
+                         <?php
+                              }
+                            }
+                          }
+                         ?>                          
+        
                           </div>
                         </div>
                         <!-- /.col -->
@@ -811,245 +450,18 @@
                       <!-- /.product-micro-row -->
                     </div>
                     <!-- /.product-micro -->
-
+                  
                   </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p15.jpg"  alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p26.jpg"  alt="image"> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                </div>
+               <?php
+               }               
+               ?>
               </div>
-              <div class="item">
-                <div class="products special-product">
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p18.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p17.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p16.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                </div>
               </div>
-              <div class="item">
-                <div class="products special-product">
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p15.jpg" alt="images">
-                              <div class="zoom-overlay"></div>
-                              </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p14.jpg"  alt="">
-                              <div class="zoom-overlay"></div>
-                              </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p13.jpg" alt="image"> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Shirt</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                </div>
-              </div>
+             
+            <?php
+            
+            }
+            ?>
             </div>
           </div>
           <!-- /.sidebar-widget-body -->
@@ -1061,53 +473,58 @@
           <h3 class="section-title">Newsletters</h3>
           <div class="sidebar-widget-body outer-top-xs">
             <p>Sign Up for Our Newsletter!</p>
-            <form>
+            <form action="<?php echo base_url('news_letters'); ?>" id="login_form" method="POST">
               <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Subscribe to our newsletter">
+                <label class="sr-only" for="Subscribe_id">Email address</label>
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Subscribe to our newsletter"  required>
               </div>
-              <button class="btn btn-primary">Subscribe</button>
+              <button type="submit" id="newsletter"  class="btn btn-primary">Subscribe</button>
+
             </form>
           </div>
+          
           <!-- /.sidebar-widget-body -->
         </div>
         <!-- /.sidebar-widget -->
         <!-- ============================================== NEWSLETTER: END ============================================== -->
 
         <!-- ============================================== Testimonials============================================== -->
+        <!--
         <div class="sidebar-widget  wow fadeInUp outer-top-vs ">
           <div id="advertisement" class="advertisement">
             <div class="item">
               <div class="avatar"><img src="assets/themes/default/images/testimonials/member1.png" alt="Image"></div>
               <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
               <div class="clients_author">John Doe <span>Abc Company</span> </div>
-              <!-- /.container-fluid -->
+      /.container-fluid
             </div>
-            <!-- /.item -->
+      /.item
 
             <div class="item">
               <div class="avatar"><img src="assets/themes/default/images/testimonials/member3.png" alt="Image"></div>
               <div class="testimonials"><em>"</em>Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
               <div class="clients_author">Stephen Doe <span>Xperia Designs</span> </div>
             </div>
-            <!-- /.item -->
+    /.item
 
             <div class="item">
               <div class="avatar"><img src="assets/themes/default/images/testimonials/member2.png" alt="Image"></div>
               <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
               <div class="clients_author">Saraha Smith <span>Datsun &amp; Co</span> </div>
-              <!-- /.container-fluid -->
+    /.container-fluid
             </div>
-            <!-- /.item -->
+    /.item
 
           </div>
-          <!-- /.owl-carousel -->
+/.owl-carousel
         </div>
-
+-->
         <!-- ============================================== Testimonials: END ============================================== -->
-
+<!--
         <div class="home-banner"> <img src="assets/themes/default/images/banners/LHS-banner.jpg" alt="Image"> </div>
+      -->
       </div>
+
       <!-- /.sidemenu-holder -->
       <!-- ============================================== SIDEBAR : END ============================================== -->
 
@@ -1117,36 +534,28 @@
 
         <div id="hero">
           <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
-            <div class="item" style="background-image: url(assets/themes/default/images/sliders/01.jpg);">
+          <?php
+
+            foreach ($slider as $slider)
+            {
+            ?>
+              <div class="item" style="background-image: url(<?php echo base_url(); echo $slider['image']; ?>)">
               <div class="container-fluid">
                 <div class="caption bg-color vertical-center text-left">
-                  <div class="slider-header fadeInDown-1">Top Brands</div>
-                  <div class="big-text fadeInDown-1"> New Collections </div>
-                  <div class="excerpt fadeInDown-2 hidden-xs"> <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span> </div>
-                  <div class="button-holder fadeInDown-3"> <a href="<?php echo base_url(); ?>index.php?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop Now</a> </div>
+                  <div class="slider-header fadeInDown-1"><?php echo ucwords($slider['title']); ?></div>
+                  <div class="big-text fadeInDown-1"><?php echo ucwords($slider['sub_title']); ?></div>
+                  <div class="excerpt fadeInDown-2 hidden-xs"> <span><?php echo ucwords($slider['description']); ?></span> </div>
+                  <div class="button-holder fadeInDown-3"> <a href="#<?php echo base_url(); ?>index.php?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop Now</a> </div>
                 </div>
                 <!-- /.caption -->
               </div>
               <!-- /.container-fluid -->
             </div>
-            <!-- /.item -->
-
-            <div class="item" style="background-image: url(assets/themes/default/images/sliders/02.jpg);">
-              <div class="container-fluid">
-                <div class="caption bg-color vertical-center text-left">
-                  <div class="slider-header fadeInDown-1">Spring 2016</div>
-                  <div class="big-text fadeInDown-1"> Women <span class="highlight">Fashion</span> </div>
-                  <div class="excerpt fadeInDown-2 hidden-xs"> <span>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit</span> </div>
-                  <div class="button-holder fadeInDown-3"> <a href="<?php echo base_url(); ?>index.php?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop Now</a> </div>
-                </div>
-                <!-- /.caption -->
-              </div>
-              <!-- /.container-fluid -->
-            </div>
-            <!-- /.item -->
-
-          </div>
-          <!-- /.owl-carousel -->
+           <!-- /.owl-carousel -->
+        <?php
+          }
+        ?>
+       </div>
         </div>
 
         <!-- ========================================= SECTION – HERO : END ========================================= -->
@@ -1199,40 +608,109 @@
         <!-- /.info-boxes -->
         <!-- ============================================== INFO BOXES : END ============================================== -->
         <!-- ============================================== SCROLL TABS ============================================== -->
-        <div id="product-tabs-slider" class="scroll-tabs outer-top-vs wow fadeInUp">
+
+         <div id="product-tabs-slider" class="scroll-tabs outer-top-vs wow fadeInUp">
           <div class="more-info-tab clearfix ">
+            <form method="post" action="<?php  echo base_url('home'); ?>">
             <h3 class="new-product-title pull-left">New Products</h3>
+            <div><?php echo "</br>";?></div>
+            <div><?php echo "</br>";?></div>
+            <div><?php echo "</br>";?></div>
+
+            <div class="owl-carousel home-owl-carousel custom-carousel owl-theme" data-item="6" id="new-products-1"> 
+       
             <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
-              <li class="active"><a data-transition-type="backSlide" href="<?php echo base_url(); ?>#all" data-toggle="tab">All</a></li>
-              <li><a data-transition-type="backSlide" href="<?php echo base_url(); ?>#smartphone" data-toggle="tab">Clothing</a></li>
-              <li><a data-transition-type="backSlide" href="<?php echo base_url(); ?>#laptop" data-toggle="tab">Electronics</a></li>
-              <li><a data-transition-type="backSlide" href="<?php echo base_url(); ?>#apple" data-toggle="tab">Shoes</a></li>
+            <li class="active"><a data-transition-type="backSlide" data-id="" name=""  data-toggle="tab">All</a></li>
             </ul>
-            <!-- /.nav-tabs -->
+               <?php
+                foreach ($main_categories as $main_category)
+                {
+                ?> 
+                <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
+                <li class="item"><a  id="cat_id" data-transition-type="backSlide"  data-id="<?php echo $main_category['id']; ?>" name="<?php echo $main_category['id']; ?>" data-toggle="tab"><?php echo ucwords($main_category['name']); ?></a></li>
+                </ul>    
+                <?php                    
+                }
+                ?>
+          </div>           
+            
+          </form>
+            <!-- /.nav-tabs --> 
           </div>
+         
           <div class="tab-content outer-top-xs">
-            <div class="tab-pane in active" id="all">
-              <div class="product-slider">
-                <div class="owl-carousel home-owl-carousel custom-carousel owl-theme" data-item="4">
-                  <div class="item item-carousel">
-                    <div class="products">
+              <div class="tab-pane in active" id="all">
+              <div  class="product-slider">  
+              <div id="newone"></div>   
+            <div class="owl-carousel home-owl-carousel custom-carousel owl-theme " data-item="4"  id='arrival_products'>              
+           <?php
+          foreach ($all_new_products as $product)
+           {
+            $created      = date_create($product['add_date']);
+            $today        = date_create(date("Y-m-d h:i:sa"));
+            $daydiff      = date_diff($today, $created);
+
+            $days= $daydiff->format(' %a ') ;  
+            //if(sizeof($all_new_products)>7)
+            //{ 
+               // if($days<30)
+               // {                   
+          ?>
+                  
+              <div class="item item-carousel" >
+                    <div class="products" >
                       <div class="product">
                         <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p1.jpg" alt=""></a> </div>
+                         
+                          <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url().$product['thumb_image'];?>" alt="product-image" style="max-width: 189px;max-height: 170px"></a> </div>
                           <!-- /.image -->
-
-                          <div class="tag new"><span>new</span></div>
+                         <?php if($product['is_hot']==1){?> 
+                          <div class="tag hot"><span>
+                            HOT
+                              </span></div>
+                            <?php }
+                            elseif ($product['is_hot']==1 || $product['is_sale']==1){?> 
+                          <div class="tag sale"><span>
+                            SALE
+                              </span></div>
+                            <?php }
+                            else{?>
+                             <div class="tag new"><span>
+                            NEW
+                              </span></div>
+                            <?php }
+                            ?>
                         </div>
                         <!-- /.product-image -->
-
+                        
                         <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
+                          <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']);?></a></h3>
+                           <div class="description"></div>
+                          <div class="product-price"> <span class="price"> <?php echo ucwords($product['price']);?></span> <span class="price-before-discount"><?php echo ucwords($product['old_price']);?></span> </div>
+                          <!-- /.product-price -->                           
                         </div>
+                    <?php
+                      foreach ($reviews as $review)
+                      {     
+
+                        if ($review['product_id'] == $product['id'])
+                        {
+                          $i = 1;
+                          for ($i; $i <= $review['star_ratings']; $i++)
+                          {
+                          ?>
+                          <div class="fa fa-star" style="color: orange"></div>
+                          <?php
+                           }
+                          for ($i; $i <=5; $i++)
+                          {
+                          ?>                 
+                         <div class="fa fa-star-o"></div>
+                          <?php
+                          }
+                        }
+                      }                   
+                      ?>                      
                         <!-- /.product-info -->
                         <div class="cart clearfix animate-effect">
                           <div class="action">
@@ -1241,1038 +719,52 @@
                                 <button data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Add Cart"> <i class="fa fa-shopping-cart"></i> </button>
                                 <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
                               </li>
-                              <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
+                              <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                              <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
                             </ul>
                           </div>
-                          <!-- /.action -->
+                          <!-- /.action --> 
                         </div>
-                        <!-- /.cart -->
+                        <!-- /.cart --> 
                       </div>
-                      <!-- /.product -->
-
+                      <!-- /.product -->                      
                     </div>
-                    <!-- /.products -->
-                  </div>
+                    <!-- /.products --> 
+                  </div>                    
                   <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p2.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag hot"><span>hot</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p4.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag sale"><span>sale</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p3.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag sale"><span>sale</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p30.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag hot"><span>hot</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p29.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag new"><span>new</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
+                  <?php
+                  // }
+                 //}
+               }
+                 ?>               
                 </div>
-                <!-- /.home-owl-carousel -->
+                <!-- /.home-owl-carousel --> 
               </div>
-              <!-- /.product-slider -->
+              <!-- /.product-slider --> 
             </div>
             <!-- /.tab-pane -->
-
-            <div class="tab-pane" id="smartphone">
-              <div class="product-slider">
-                <div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p5.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag sale"><span>sale</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p6.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag new"><span>new</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p7.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag sale"><span>sale</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p8.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag new"><span>new</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p9.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag hot"><span>hot</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p10.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag hot"><span>hot</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-                </div>
-                <!-- /.home-owl-carousel -->
-              </div>
-              <!-- /.product-slider -->
-            </div>
-            <!-- /.tab-pane -->
-
-            <div class="tab-pane" id="laptop">
-              <div class="product-slider">
-                <div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p11.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag new"><span>new</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p12.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag new"><span>new</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p13.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag sale"><span>sale</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img src="assets/themes/default/images/products/p14.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag hot"><span>hot</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p15.jpg" alt="image"></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag hot"><span>hot</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img src="assets/themes/default/images/products/p16.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag sale"><span>sale</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Apple Iphone 5s 32GB</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-                </div>
-                <!-- /.home-owl-carousel -->
-              </div>
-              <!-- /.product-slider -->
-            </div>
-            <!-- /.tab-pane -->
-
-            <div class="tab-pane" id="apple">
-              <div class="product-slider">
-                <div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img src="assets/themes/default/images/products/p18.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag sale"><span>sale</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p18.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag hot"><span>hot</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p17.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag sale"><span>sale</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p16.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag new"><span>new</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p13.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag new"><span>new</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-
-                  <div class="item item-carousel">
-                    <div class="products">
-                      <div class="product">
-                        <div class="product-image">
-                          <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p14.jpg" alt=""></a> </div>
-                          <!-- /.image -->
-
-                          <div class="tag hot"><span>hot</span></div>
-                        </div>
-                        <!-- /.product-image -->
-
-                        <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Samsung Galaxy S4</a></h3>
-                          <div class="rating rateit-small"></div>
-                          <div class="description"></div>
-                          <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                          <!-- /.product-price -->
-
-                        </div>
-                        <!-- /.product-info -->
-                        <div class="cart clearfix animate-effect">
-                          <div class="action">
-                            <ul class="list-unstyled">
-                              <li class="add-cart-button btn-group">
-                                <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                              </li>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
-                          </div>
-                          <!-- /.action -->
-                        </div>
-                        <!-- /.cart -->
-                      </div>
-                      <!-- /.product -->
-
-                    </div>
-                    <!-- /.products -->
-                  </div>
-                  <!-- /.item -->
-                </div>
-                <!-- /.home-owl-carousel -->
-              </div>
-              <!-- /.product-slider -->
-            </div>
-            <!-- /.tab-pane -->
-
-          </div>
-          <!-- /.tab-content -->
-        </div>
-        <!-- /.scroll-tabs -->
+           </div>         
+        </div>              
         <!-- ============================================== SCROLL TABS : END ============================================== -->
         <!-- ============================================== WIDE PRODUCTS ============================================== -->
         <div class="wide-banners wow fadeInUp outer-bottom-xs">
           <div class="row">
+
             <div class="col-md-7 col-sm-7">
               <div class="wide-banner cnt-strip">
-                <div class="image"> <img class="img-responsive" src="assets/themes/default/images/banners/home-banner1.jpg" alt=""> </div>
+
+              <div class="item" style="background-image: url(<?php echo base_url() ?><?php echo $banners[0]['banner']; ?>)">
+               </div>
+           <!-- /.owl-carousel -->
+                <div class="image"> <img class="img-responsive" src="<?php echo base_url() ?><?php echo $banners[0]['banner']; ?>"alt="banner-imae">
+                </div>
               </div>
               <!-- /.wide-banner -->
             </div>
             <!-- /.col -->
             <div class="col-md-5 col-sm-5">
               <div class="wide-banner cnt-strip">
-                <div class="image"> <img class="img-responsive" src="assets/themes/default/images/banners/home-banner2.jpg" alt=""> </div>
+                <div class="image"> <img class="img-responsive" src="<?php echo base_url() ?><?php echo $banners[1]['banner']; ?>" alt="banner-image"> </div>
               </div>
               <!-- /.wide-banner -->
             </div>
@@ -2286,24 +778,67 @@
         <!-- ============================================== FEATURED PRODUCTS ============================================== -->
         <section class="section featured-product wow fadeInUp">
           <h3 class="section-title">Featured products</h3>
+         
           <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
+       <?php
+        foreach ($featured_products as $product)
+        {               
+        ?>
             <div class="item item-carousel">
+ 
               <div class="products">
                 <div class="product">
                   <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p5.jpg" alt=""></a> </div>
+                    <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url().$product['thumb_image'];?>" style="max-height: 170px;max-width:189px;" alt="featured image"></a> </div>
                     <!-- /.image -->
 
-                    <div class="tag hot"><span>hot</span></div>
-                  </div>
+                        <?php 
+                            if($product['is_hot']==1){?>                   
+                            <div class="tag hot"><span>
+                            HOT
+                              </span></div>
+                            <?php }
+                            elseif ($product['is_hot']==1 || $product['is_sale']==1){?> 
+                            <div class="tag sale"><span>
+                            SALE
+                              </span></div>
+                            <?php }
+                            else{?>
+                            <div class="tag new"><span>
+                            NEW
+                              </span></div>
+                            <?php }
+                         ?>
+                        </div>
+                                        
                   <!-- /.product-image -->
 
                   <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
+                    <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']);?></a></h3>
+                          <div class="description"></div>
+                    <div class="product-price"> <span class="price"> <?php echo $product['price'];?> </span> <span class="price-before-discount"><?php echo $product['old_price'];?></span> </div>
                     <!-- /.product-price -->
+                    <?php
+                      foreach ($reviews as $review)
+                      {                           
+                        if ($review['product_id'] == $product['id'])
+                        {
+                          $i = 1;
+                          for ($i; $i <= $review['star_ratings']; $i++)
+                          {
+                          ?>
+                          <div class="fa fa-star" style="color: orange"></div>
+                           <?php
+                          }
+                          for ($i; $i <=5; $i++)
+                          {
+                          ?>                 
+                         <div class="fa fa-star-o"></div>
+                          <?php
+                          }
+                        }
+                      }                   
+                    ?>              
 
                   </div>
                   <!-- /.product-info -->
@@ -2323,222 +858,12 @@
                   <!-- /.cart -->
                 </div>
                 <!-- /.product -->
-
               </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
+           </div>
 
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p6.jpg" alt=""></a> </div>
-                    <!-- /.image -->
+        <?php } ?>
+       </div>
 
-                    <div class="tag new"><span>new</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/blank.gif" data-echo="assets/themes/default/images/products/p7.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag sale"><span>sale</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p8.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag hot"><span>hot</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p9.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag new"><span>new</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p10.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag sale"><span>sale</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-          </div>
           <!-- /.home-owl-carousel -->
         </section>
         <!-- /.section -->
@@ -2548,11 +873,13 @@
           <div class="row">
             <div class="col-md-12">
               <div class="wide-banner cnt-strip">
-                <div class="image"> <img class="img-responsive" src="assets/themes/default/images/banners/home-banner.jpg" alt=""> </div>
+                <div class="image"> <img class="img-responsive" src="<?php echo base_url().$banners[2]['banner']; ?>" alt="banner3"> </div>
                 <div class="strip strip-text">
                   <div class="strip-inner">
-                    <h2 class="text-right">New Mens Fashion<br>
-                      <span class="shopping-needs">Save up to 40% off</span></h2>
+                    <h2 class="text-right"><?php echo ucwords($banners[2]['title']); ?><br>
+                      <span class="shopping-needs"><?php echo ucwords($banners[2]['sub_title']); ?></span></h2>
+                      <h5 style="color: orange;font-family: 'Montserrat', sans-serif;font-weight: normal;" class="text-right">
+                      <span class="shopping-needs"><?php echo ucwords($banners[2]['description']); ?></span></h5>
                   </div>
                 </div>
                 <div class="new-label">
@@ -2563,7 +890,6 @@
               <!-- /.wide-banner -->
             </div>
             <!-- /.col -->
-
           </div>
           <!-- /.row -->
         </div>
@@ -2575,27 +901,55 @@
           <h3 class="section-title">Best seller</h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
+             <?php 
+              $sellers_products = array_chunk($sellers_products, 2); 
+
+              foreach ($sellers_products as $product)
+               {
+               ?>
               <div class="item">
                 <div class="products best-product">
+                  <?php 
+                  foreach ($product as $product)
+                   {
+                   ?>
                   <div class="product">
                     <div class="product-micro">
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
                           <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p20.jpg" alt=""> </a> </div>
+                            <div class="image"> <a href="<?php echo base_url().$product['thumb_image'];?>"> <img src="<?php echo base_url().$product['thumb_image'];?>" alt="best sellers product" style="max-width: 95px;max-height:95px"> </a> </div>
                             <!-- /.image -->
-
                           </div>
                           <!-- /.product-image -->
                         </div>
                         <!-- /.col -->
                         <div class="col2 col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Buttoned</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']); ?></a></h3>
+                            <div class="product-price"> <span class="price"><?php echo $product['price'];?> </span> </div>
                             <!-- /.product-price -->
-
+                            <?php
+                            foreach ($reviews as $review)
+                            {                          
+                              if ($review['product_id'] == $product['id'])
+                              {
+                                $i = 1;
+                                for ($i; $i <= $review['star_ratings']; $i++)
+                                {
+                                ?>
+                                <div class="fa fa-star" style="color: orange"></div>
+                               <?php
+                                 }
+                                for ($i; $i <=5; $i++)
+                                {
+                                ?>                 
+                               <div class="fa fa-star-o"></div>
+                              <?php
+                                }
+                               }
+                              }                   
+                            ?> 
                           </div>
                         </div>
                         <!-- /.col -->
@@ -2603,598 +957,180 @@
                       <!-- /.product-micro-row -->
                     </div>
                     <!-- /.product-micro -->
-
                   </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p21.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
 
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col2 col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Buttoned</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
+                    <?php 
+                    }
+                    ?>                  
 
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
                 </div>
               </div>
-              <div class="item">
-                <div class="products best-product">
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p22.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col2 col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Buttoned</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p23.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col2 col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Buttoned</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="products best-product">
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p24.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col2 col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Buttoned</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p25.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col2 col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Buttoned</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="products best-product">
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p26.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col2 col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Buttoned</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                  <div class="product">
-                    <div class="product-micro">
-                      <div class="row product-micro-row">
-                        <div class="col col-xs-5">
-                          <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url(); ?>#"> <img src="assets/themes/default/images/products/p27.jpg" alt=""> </a> </div>
-                            <!-- /.image -->
-
-                          </div>
-                          <!-- /.product-image -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col2 col-xs-7">
-                          <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url(); ?>#">Floral Print Buttoned</a></h3>
-                            <div class="rating rateit-small"></div>
-                            <div class="product-price"> <span class="price"> $450.99 </span> </div>
-                            <!-- /.product-price -->
-
-                          </div>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.product-micro-row -->
-                    </div>
-                    <!-- /.product-micro -->
-
-                  </div>
-                </div>
-              </div>
-            </div>
+               <?php             
+                }
+                ?>
+              
+          </div>
           </div>
           <!-- /.sidebar-widget-body -->
         </div>
         <!-- /.sidebar-widget -->
+
         <!-- ============================================== BEST SELLER : END ============================================== -->
-
-        <!-- ============================================== BLOG SLIDER ============================================== -->
-        <section class="section latest-blog outer-bottom-vs wow fadeInUp">
-          <h3 class="section-title">latest form blog</h3>
-          <div class="blog-slider-container outer-top-xs">
-            <div class="owl-carousel blog-slider custom-carousel">
-              <div class="item">
-                <div class="blog-post">
-                  <div class="blog-post-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>blog.html"><img src="assets/themes/default/images/blog-post/post1.jpg" alt=""></a> </div>
-                  </div>
-                  <!-- /.blog-post-image -->
-
-                  <div class="blog-post-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>#">Voluptatem accusantium doloremque laudantium</a></h3>
-                    <span class="info">By Jone Doe &nbsp;|&nbsp; 21 March 2016 </span>
-                    <p class="text">Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-                    <a href="<?php echo base_url(); ?>#" class="lnk btn btn-primary">Read more</a> </div>
-                  <!-- /.blog-post-info -->
-
-                </div>
-                <!-- /.blog-post -->
-              </div>
-              <!-- /.item -->
-
-              <div class="item">
-                <div class="blog-post">
-                  <div class="blog-post-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>blog.html"><img src="assets/themes/default/images/blog-post/post2.jpg" alt=""></a> </div>
-                  </div>
-                  <!-- /.blog-post-image -->
-
-                  <div class="blog-post-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>#">Dolorem eum fugiat quo voluptas nulla pariatur</a></h3>
-                    <span class="info">By Saraha Smith &nbsp;|&nbsp; 21 March 2016 </span>
-                    <p class="text">Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-                    <a href="<?php echo base_url(); ?>#" class="lnk btn btn-primary">Read more</a> </div>
-                  <!-- /.blog-post-info -->
-
-                </div>
-                <!-- /.blog-post -->
-              </div>
-              <!-- /.item -->
-
-              <!-- /.item -->
-
-              <div class="item">
-                <div class="blog-post">
-                  <div class="blog-post-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>blog.html"><img src="assets/themes/default/images/blog-post/post1.jpg" alt=""></a> </div>
-                  </div>
-                  <!-- /.blog-post-image -->
-
-                  <div class="blog-post-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>#">Dolorem eum fugiat quo voluptas nulla pariatur</a></h3>
-                    <span class="info">By Saraha Smith &nbsp;|&nbsp; 21 March 2016 </span>
-                    <p class="text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium</p>
-                    <a href="<?php echo base_url(); ?>#" class="lnk btn btn-primary">Read more</a> </div>
-                  <!-- /.blog-post-info -->
-
-                </div>
-                <!-- /.blog-post -->
-              </div>
-              <!-- /.item -->
-
-              <div class="item">
-                <div class="blog-post">
-                  <div class="blog-post-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>blog.html"><img src="assets/themes/default/images/blog-post/post2.jpg" alt=""></a> </div>
-                  </div>
-                  <!-- /.blog-post-image -->
-
-                  <div class="blog-post-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>#">Dolorem eum fugiat quo voluptas nulla pariatur</a></h3>
-                    <span class="info">By Saraha Smith &nbsp;|&nbsp; 21 March 2016 </span>
-                    <p class="text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium</p>
-                    <a href="<?php echo base_url(); ?>#" class="lnk btn btn-primary">Read more</a> </div>
-                  <!-- /.blog-post-info -->
-
-                </div>
-                <!-- /.blog-post -->
-              </div>
-              <!-- /.item -->
-
-              <div class="item">
-                <div class="blog-post">
-                  <div class="blog-post-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>blog.html"><img src="assets/themes/default/images/blog-post/post1.jpg" alt=""></a> </div>
-                  </div>
-                  <!-- /.blog-post-image -->
-
-                  <div class="blog-post-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>#">Dolorem eum fugiat quo voluptas nulla pariatur</a></h3>
-                    <span class="info">By Saraha Smith &nbsp;|&nbsp; 21 March 2016 </span>
-                    <p class="text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium</p>
-                    <a href="<?php echo base_url(); ?>#" class="lnk btn btn-primary">Read more</a> </div>
-                  <!-- /.blog-post-info -->
-
-                </div>
-                <!-- /.blog-post -->
-              </div>
-              <!-- /.item -->
-
-            </div>
-            <!-- /.owl-carousel -->
-          </div>
-          <!-- /.blog-slider-container -->
-        </section>
-        <!-- /.section -->
-        <!-- ============================================== BLOG SLIDER : END ============================================== -->
-
-        <!-- ============================================== FEATURED PRODUCTS ============================================== -->
-        <section class="section wow fadeInUp new-arriavls">
-          <h3 class="section-title">New Arrivals</h3>
-          <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p19.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag new"><span>new</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p28.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag new"><span>new</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p30.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag hot"><span>hot</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p1.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag hot"><span>hot</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p2.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag sale"><span>sale</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-
-            <div class="item item-carousel">
-              <div class="products">
-                <div class="product">
-                  <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img  src="assets/themes/default/images/products/p3.jpg" alt=""></a> </div>
-                    <!-- /.image -->
-
-                    <div class="tag sale"><span>sale</span></div>
-                  </div>
-                  <!-- /.product-image -->
-
-                  <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url(); ?>detail.html">Floral Print Buttoned</a></h3>
-                    <div class="rating rateit-small"></div>
-                    <div class="description"></div>
-                    <div class="product-price"> <span class="price"> $450.99 </span> <span class="price-before-discount">$ 800</span> </div>
-                    <!-- /.product-price -->
-
-                  </div>
-                  <!-- /.product-info -->
-                  <div class="cart clearfix animate-effect">
-                    <div class="action">
-                      <ul class="list-unstyled">
-                        <li class="add-cart-button btn-group">
-                          <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
-                        </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                      </ul>
-                    </div>
-                    <!-- /.action -->
-                  </div>
-                  <!-- /.cart -->
-                </div>
-                <!-- /.product -->
-
-              </div>
-              <!-- /.products -->
-            </div>
-            <!-- /.item -->
-          </div>
-          <!-- /.home-owl-carousel -->
-        </section>
-        <!-- /.section -->
-        <!-- ============================================== FEATURED PRODUCTS : END ============================================== -->
-
       </div>
       <!-- /.homebanner-holder -->
       <!-- ============================================== CONTENT : END ============================================== -->
     </div>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/libraries/jquery.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
+<script type="text/javascript">
+//news letters
+ var BASE_URL = "<?php echo base_url(); ?>";
+
+$.validator.addMethod("emailExists", function(value, element)
+{
+    var mail_id = $(element).val();
+    var ret_val = '';
+    $.ajax({
+        url:BASE_URL+'news_letters/email_exists',
+        type: 'POST',
+        data: { email: mail_id },
+        async: false,
+        success: function(msg)
+        {
+            if(msg==1)
+            {
+                ret_val = false;
+
+            }
+            else
+            {
+                ret_val = true;
+
+            }
+        }
+    });
+
+    return ret_val;
+    console.log(ret_val);
+
+}, "<?php _el('email_exists')?>");
+
+$("#login_form").validate
+    ({
+        rules: {
+            email: {
+                required: true,
+                email: true,
+                emailExists: true
+
+            },
+           
+        },
+        messages: {
+            email: {
+                required:"<?php _el('please_enter_', _l('email'))?>",
+                email:"<?php _el('please_enter_valid_', _l('email'))?>"
+            },
+           
+        }
+    });
+
+</script>
+<script type="text/javascript"> 
+
+          var temp = document.querySelectorAll('.customli');
+          var t = document.querySelector('.yamm-content');
+         temp.forEach((e)=>{
+          if(e.children.length === 0)
+          {
+          e.style.display='none';
+          e.parentNode.style.display='none'
+          var p = e.parentNode;
+          p.parentNode.style.display='none'
+          }
+         }) 
+
+//get new_arrival products
+     // $(document).ready(function()
+     // {     
+       $("#new-products-1 a").on("click", function()
+       {
+       
+         $('#newone').html('<div id="arrival" class="owl-carousel home-owl-carousel custom-carousel owl-theme"></div>');
+
+        var category_id = $(this).attr("data-id");
+        console.log(category_id);
+        $.ajax({
+          url:BASE_URL+'products/get_new_arrivals',
+            type: 'POST',
+            data: {category_id:category_id},
+            dataType: 'json',
+            success: function(response)
+            {
+            console.log(response);
+            if(response)
+            {
+              $('#arrival_products').hide();
+            }
+              var new_products = response['new_products'];
+              $('#newone').html('<div id="arrival" class="owl-carousel"></div>');
+                var p='';
+               
+                if(new_products.length === 0)
+                {
+                  p+='<center><div class="no_products" style="padding-left: 60%;">No products</br></div></center>';
+                }
+              
+                  for(var i=0; i<new_products.length; i++)
+                  {    
+                  p+='<div class="item item-carousel">';
+
+                  p+='<div class="products">';
+                  p+='<div class="product">';
+                
+                  p+='<div class="product-image">'; 
+                  if(( new_products[i].is_hot)==1)
+                  {
+                  p+='<div class="tag hot"><span>HOT</span></div>';
+                  }
+                  else if(( new_products[i].is_sale)==1 ||( new_products[i].is_hot)==1)
+                  {
+                    p+='<div class="tag sale"><span>SALE</span></div>';
+                  } 
+                  else
+                  {
+                    p+='<div class="tag new"><span> NEW</span></div>';
+                  }              
+                  
+                  p+='<div class="image" id="image"> <a href="detail.html"><img  src="'+ new_products[i].thumb_image+'" alt="new_product image" style="max-width: 189px;max-height: 142px"></a> </div>';
+                  p+='</div>';
+          
+                  p+='<div class="product-info text-left">';
+                  p+='<h3 class="name"><a id="n1" href="detail.html">'+ new_products[i].name+'</a></h3>';
+                  console.log(new_products[i].name);
+                  p+='<div class="description"></div>';
+                  p+='<div class="product-price"> <span class="price">'+ new_products[i].price+' </span> <span class="price-before-discount">'+ new_products[i].old_price+'</span> </div>';                       
+                  p+='</div>';
+                  p+="</div>";
+                  p+="</div>";
+                  p+="</div>";        
+                  p+='<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main1.css">'; 
+                  }
+               
+                  $("#arrival").append(p);
+
+                  var owl = $("#arrival");
+                  owl.owlCarousel({
+                  items: 4,
+                  itemsTablet:[768,2],
+                  navigation : true,
+                  pagination : false,
+                  navigationText: ["",""],
+                     });
+      
+            }
+        });
+      }); 
+ 
+ </script>  
     <!-- /.row -->

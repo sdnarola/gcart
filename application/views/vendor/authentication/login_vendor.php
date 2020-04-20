@@ -6,7 +6,7 @@
 			</div>
 			<h5 class="content-group"><?php _el('login_to_your_account')?><small class="display-block"><?php _el('enter_your_credentials_below')?></small></h5>
 		</div>
-		<?php $this->load->view('admin/includes/alerts');?>
+		<?php $this->load->view('vendor/includes/alerts');?>
 		<div class="form-group has-feedback has-feedback-left">
 			<div class="form-control-feedback"><i class="icon-envelop text-muted"></i>
 			</div>
@@ -32,11 +32,21 @@
 				</div>
 			</div>
 		</div>
+		
 		<div class="form-group">
 			<button type="submit" class="btn bg-blue btn-block"><?php _el('login')?><i class="icon-arrow-right14 position-right"></i></button>
 		</div>
+		<div class="form-group login-options">
+			<div class="row">
+				
+				<div class="col-sm-12 ">
+					<center><a href="<?php echo vendor_url('authentication/signup'); ?>">Don't have an account?<u><?php _el('signup')?>   here!</u></a></center>
+				</div>
+			</div>
+		</div>
 
 	</div>
+
 </form>
 <!-- /simple login form -->
 <script type="text/javascript">

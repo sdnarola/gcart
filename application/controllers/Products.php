@@ -5,97 +5,134 @@ class Products extends Frontend_Controller
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->load->model('Product_model', 'products');
 		$this->load->model('category_model', 'category');
+		$this->load->model('Review_model', 'review');
+		$this->load->model('Comment_model', 'comment');
 	}
 
-	public function index($catgory_name='', $product_id='')
+	public function index($product_slug = '')
 	{
-		$this->show_detail($product_id);
+		if (!empty($product_slug))
+		{
+			$this->show_detail($product_slug);
+		}
+		else
+		{
+			$this->add_product_by_tags();
+		}
 	}
 
 	/**
 	 * [show_detail description]
 	 * @return [type] [description]
 	 */
-	public function show_detail($product_id)
+	public function show_detail($product_slug = '')
 	{
-		$products_data = $this->products->get_products_by_slug($product_id);;
-		$category_id   = $products_data['category_id'];
+		$products_data = $this->products->get_products_by_slug($product_slug);
 
-		$category_data = $this->category->get_parent_category($category_id);
-
-		foreach ($category_data as $key => $category)
+		if (!empty($products_data))
 		{
-			$this->data['category_name'] = $category->name;
-			$this->data['category_id']   = $category->id;
-		}
+			$category_id         = $products_data['category_id'];
+			$product_id          = $products_data['id'];
+			$this->data['price'] = $products_data['price'];
 
-		$this->data['reviews']            = $this->products->count_products_review($product_id);
-		$this->data['products_name']      = $products_data['name'];
-		$this->data['upsell_products']    = $this->products->get_upsell_products();
-		$this->data['hot_deals_products'] = $this->products->get_hot_deals_products();
-		$this->data['products_detail']    = $this->products->get_products_by_slug($product_id);
+			$where['id'] = $category_id;
 
-		$this->template->load('index', 'content', 'products/details', $this->data);
-	}
+			$category_data = $this->category->get_parent_categories($where);
 
-	public function add_cart_products()
-	{
-		$product_id      = $this->input->post('products_id');
-		$products_data   = $this->products->get($product_id);
-		$products_amount = $products_data['new_price'];
-		$date            = date('Y-m-d h:i:scandir(directory)');
-
-		$data = array(
-			'product_id'   => $product_id,
-			'quantity'     => 1,
-			'total_amount' => $products_amount,
-			'date'         => $date
-		);
-
-		$this->products->add_to_cart($data);
-	}
-
-	public function add_wishlist_products()
-	{
-		$product_id      = $this->input->post('products_id');
-		$all_products_id = $this->products->get_wishlist_data(1);
-
-		if (!empty($product_id))
-		{
-			$ids = array();
-
-			foreach ($all_products_id as $product)
+			foreach ($category_data as $key => $category)
 			{
-				// if ($product->product_id != $product_id)
-				// {
-					array_push($ids, $product->product_id);
-				// }
+				$category_name = $category['name'];
+				$category_slug = $category['slug'];
 			}
-			// print_r($ids);
 
-			if (!in_array($product_id, $ids, TRUE))
+			$category_banner = $this->category->get_category_by_banner($category_slug);
+
+			$products_where['product_id'] = $product_id;
+			$user_where['user_id']        = $this->session->userdata('user_id');
+			$user_review_data             = $this->review->get_many_by($user_where);
+			$user_review_use_id           = array();
+			$user_review_products_id      = array();
+
+			foreach ($user_review_data as $key => $user_review)
 			{
-				$data = array(
-
-					'user_id'    => 1,
-
-					'product_id' => $product_id
-
-				);
-
-				$result = $this->products->add_wishlist_products($data);
-
-				// if ($result == TRUE)
-				// {
-				// 	echo 'Add successfully';
-				// }
+				$user_review_use_id[]      = $user_review['user_id'];
+				$user_review_products_id[] = $user_review['product_id'];
 			}
-			// else
-			// {
-			// 	echo 'All ready add in wish list';
-			// }
+
+			$this->data['user_review_use_id']      = $user_review_use_id;
+			$this->data['user_review_products_id'] = $user_review_products_id;
+			$this->data['user_by_review_data']     = $this->review->get_many_by($user_where);
+			$this->data['reviews_data']            = $this->review->get_products_by_review($products_where);
+			$this->data['comments_data']           = $this->comment->get_products_by_comment($product_id);
+			$this->data['products_id']             = $products_data['id'];
+			$this->data['category_banner']         = $category_banner;
+			$this->data['category_name']           = $category_name;
+			$this->data['category_slug']           = $category_slug;
+			$this->data['reviews']                 = $this->products->count_products_review($product_id);
+			$this->data['products_name']           = $products_data['name'];
+			$this->data['upsell_products']         = $this->products->get_upsell_products();
+			$this->data['hot_deals_products']      = $this->products->get_hot_deals_products();
+			$this->data['products_detail']         = $products_data;
+
+			$this->template->load('index', 'content', 'products/details', $this->data);
 		}
 	}
+
+	public function add_product_by_tags()
+	{
+		$tags          = $this->input->post('tags');
+		$product_id    = $this->input->post('products_id');
+		$where['id']   = $product_id;
+		$products_tags = $this->products->get_products_tags($where);
+
+		if (!empty($products_tags))
+		{
+			$products_tags = implode(',', array_map(function ($entry)
+			{
+				return $entry['tags'];
+			}, $products_tags));
+			$products_tags = implode(',', array_unique(explode(',', $products_tags)));
+		}
+
+		$products_tags_array = explode(',', $products_tags);
+
+		if (!in_array($tags, $products_tags_array))
+		{
+			
+			$this->data['tags'] = $products_tags.','.$tags;
+
+			// echo $products_tags;
+
+			$result = $this->products->add_product_by_tags($product_id, $this->data);
+
+			if ($result == 0)
+			{
+				echo 'success';
+			}
+		}
+		else
+		{
+			echo "exits";
+		}
+	}
+
+
+	/***==========================================================code by vixuti patel===========================================================***
+		/**
+		 * [get_new_arrivals description]
+		 * @return [json] [new_poducts and riviews of all new products]
+	*/
+	public function get_new_arrivals()
+	{
+		$category_id          = $this->input->post('category_id');
+		$data['reviews']      = $this->products->get_all_reviews();
+		$data['new_products'] = $this->products->get_new_products($category_id);
+
+		echo json_encode($data);
+	}
+
+	/***=======================================================code end by vixuti patel========================================================**/
 }
