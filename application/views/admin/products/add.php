@@ -338,6 +338,7 @@ function get_sub_categories()
         data: { id:id },
         dataType: 'json',
         success:function(response){
+            // alert(response);
             if(response != null)
             {
                 var len = response.length;
@@ -348,7 +349,7 @@ function get_sub_categories()
                 }
             }
             else{
-                $("#sub_category_id").append("<option value='0' selected>No Sub Category</option>");
+                $("#sub_category_id").append("<option value='' class='sub_category'>No Sub Category</option>");
             }
 
         }

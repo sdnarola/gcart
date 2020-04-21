@@ -145,7 +145,7 @@ class Products extends Admin_Controller
 			{
 				$data['brands']         = $this->brands->get_all();
 				$data['categories']     = $this->categories->get_all();
-				$data['sub_categories'] = $this->categories->get_sub_categories();
+				$data['sub_categories'] = $this->categories->get_sub_categories_of_parent_category();
 				$data['products']       = $this->products->get_all();
 				$data['product']        = $this->products->get($id);
 

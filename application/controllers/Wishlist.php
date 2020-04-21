@@ -6,6 +6,7 @@ class Wishlist extends Frontend_Controller
 	{
 		parent::__construct();
 		$this->load->model('wishlist_model', 'wishlist');
+
 		$this->load->model('category_model', 'category');
 		$this->load->model('Product_model', 'product');
 	}
@@ -26,11 +27,12 @@ class Wishlist extends Frontend_Controller
 			{
 				$products_id[] = $data['product_id'];
 			}
-			if(!empty($products_id))
+
+			if (!empty($products_id))
 			{
 				$this->data['whishlist_data'] = $this->product->get_whislist_products($products_id);
-			
 			}
+
 			$this->template->load('index', 'content', 'wishlist', $this->data);
 		}
 	}

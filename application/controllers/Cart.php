@@ -8,11 +8,17 @@ class Cart extends Frontend_Controller
 		$this->load->model('wishlist_model', 'wishlist');
 		$this->load->model('cart_model', 'cart');
 		$this->load->model('category_model', 'category');
+		$this->load->model('coupon_model', 'coupons');
 	}
 
 	public function index()
 	{
 		$this->set_page_title('Cart');
+		$user_ip            = $this->input->ip_address();
+		$data['cart_items'] = $this->cart->get_many_by(array('user_ip' => $user_ip));
+
+		$data['content'] = $this->load->view('themes/default/cart', $data, TRUE);
+		$this->load->view('themes/default/layouts/index', $data);
 	}
 
 	/**
@@ -24,23 +30,18 @@ class Cart extends Frontend_Controller
 	{
 		if ($id)
 		{
-			$data['user_id']      = $this->session->userdata('user_id');
+			$data['user_ip']      = $this->input->ip_address();
 			$data['product_id']   = $id;
 			$data['quantity']     = 1;
 			$data['total_amount'] = $data['quantity'] * (get_product($id, 'price'));
 			$data['date']         = date('Y-m-d h:i:s', time());
 
-			$cart = $this->cart->get_by(array('user_id' => $data['user_id'], 'product_id' => $id));
+			$cart = $this->cart->get_by(array('user_ip' => $data['user_ip'], 'product_id' => $id));
 
-			if ($cart['product_id'] == $id && $cart['user_id'] == $data['user_id'])
+			if ($cart['product_id'] == $id && $cart['user_ip'] == $data['user_ip'])
 			{
-				$update_data['quantity']     = $cart['quantity'] + 1;
-				$update_data['total_amount'] = $update_data['quantity'] * (get_product($id, 'price'));
-
-				if ($this->cart->update($cart['id'], $update_data, FALSE))
-				{
-					redirect(site_url('home'));
-				}
+				set_alert('warning', _l('_already_added', _l('product')));
+				redirect(site_url('cart'));
 			}
 			else
 			{
@@ -48,7 +49,8 @@ class Cart extends Frontend_Controller
 
 				if ($insert)
 				{
-					redirect(site_url('home'));
+					set_alert('success', _l('_added_successfully', _l('product')));
+					redirect(site_url('cart'));
 				}
 			}
 		}
@@ -139,7 +141,7 @@ class Cart extends Frontend_Controller
 				echo json_encode($cart_record);
 			}
 		}
-		elseif ($cart_product_id == $this->data['product_id'] && $cart_ip_address == $this->data['user_ip'] && empty($user_id) )
+		elseif ($cart_product_id == $this->data['product_id'] && $cart_ip_address == $this->data['user_ip'] && empty($user_id))
 		{
 			$update_data['quantity'] = $cart_quantity + $this->data['quantity'];
 
@@ -249,5 +251,50 @@ class Cart extends Frontend_Controller
 				echo json_encode($cart_record);
 			}
 		}
+	}
+
+	/**
+	 * Update cart details
+	 */
+	public function edit()
+	{
+		$data   = $this->input->post();
+		$update = $this->cart->update($data['id'], $data);
+
+		if ($update)
+		{
+			echo 'true';
+		}
+		else
+		{
+			echo 'false';
+		}
+	}
+
+	/**
+	 * Delete the single cart record
+	 */
+	public function delete()
+	{
+		$cart_id = $this->input->post('cart_id');
+		$deleted = $this->cart->delete($cart_id);
+
+		if ($deleted)
+		{
+			echo 'true';
+		}
+		else
+		{
+			echo 'false';
+		}
+	}
+
+	/**
+	 * Get coupon code details.
+	 */
+	public function apply_coupon()
+	{
+		$code = $this->input->post('coupon');
+		echo json_encode($this->coupons->get_by(array('code' => $code)));
 	}
 }

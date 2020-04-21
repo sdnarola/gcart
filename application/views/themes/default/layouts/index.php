@@ -1,11 +1,11 @@
-  <?php
-  $main_categories   = $this->category->get_header_parent_category();
-  $sub_categories    = $this->category->get_sub_categories();
-  $header_categories = $this->category->get_header_parent_category(1);
-  $brands            = $this->brands->get_all_brands(); 
-  $where['user_id']=$this->session->userdata('user_id');
-  // $total_row=$this->cart->count_cart_row($where);
-  
+<?php
+	$main_categories   = $this->category->get_header_parent_category();
+	$sub_categories    = $this->category->get_sub_categories();
+	$header_categories = $this->category->get_header_parent_category(1);
+	$brands            = $this->brands->get_all_brands();
+	$where['user_id']  = $this->session->userdata('user_id');
+	// $total_row=$this->cart->count_cart_row($where);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,35 +19,85 @@
 <meta name="robots" content="all">
 <title><?php echo $this->page_title; ?></title>
 
-<!-- Bootstrap Core CSS -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">
 
-<!-- Customizable CSS -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/lightbox.css">
-<!-- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/content.css"> -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/rateit.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-select.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
+        <!-- Customizable CSS -->
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/rateit.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-select.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jgrowl.css">
 
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript"> 
-  let SITE_URL="<?= site_url(); ?>";
-  let BASE_URL="<?= base_url(); ?>";
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/sweetalert2.css">
+
+
+        <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+
+        <!-- Icons/Glyphs -->
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
+
+        <!-- Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+        <script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/notifications/jgrowl.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/notifications/sweet_alert.min.js'); ?>"></script>
+
+        <!-- Fonts -->
+
+        <script type="text/javascript">
+
+  let SITE_URL="<?php echo site_url(); ?>";
+  let BASE_URL="<?php echo base_url(); ?>";
+
+            swal.setDefaults({
+            confirmButtonColor: "#2196F3",
+            closeOnConfirm: false,
+            });
+
+<?php
+
+	$alert_class = $alert_type = '';
+
+	if ($this->session->flashdata('success'))
+	{
+		$alert_class = $alert_type = 'success';
+	}
+	elseif ($this->session->flashdata('warning'))
+	{
+		$alert_class = $alert_type = 'warning';
+	}
+	elseif ($this->session->flashdata('error'))
+	{
+		$alert_class = 'danger';
+		$alert_type  = 'error';
+	}
+	elseif ($this->session->flashdata('info'))
+	{
+		$alert_class = $alert_type = 'info';
+	}
+
+	if ($this->session->flashdata($alert_type))
+	{
+	?>
+    $(document). ready(function() {
+    swal({
+            title:"<?php echo $this->session->flashdata($alert_type); ?>",
+            type: "<?php echo $alert_type; ?>",
+        });
+    });
+
+<?php
+	}
+
+?>
 </script>
-
-<!-- Icons/Glyphs -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
-
-<!-- Fonts -->
-<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-
 <!-- ---------------------------------time counter ---------------------------->
 <script src="<?php echo base_url(); ?>assets/themes/default/js/timer-counter-hot-deals.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/add-to-cart.js"></script>
@@ -71,11 +121,11 @@
             <ul class="list-unstyled">
             <?php
 
-              if (is_user_logged_in())
-              {
-              ?>
+            	if (is_user_logged_in())
+            	{
+            	?>
                 <li><a href="#">Welcome&nbsp<?php echo get_loggedin_info('username'); ?></a></li>
-                <li><a href="<?= site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i>Wishlist</a></li>
+                <li><a href="<?php echo site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i>Wishlist</a></li>
                 <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');?></a></li>
                  <div class="dropdown" style="float: right;">
                   <div class="btn-group btn-group-sm">
@@ -91,17 +141,18 @@
                 </div>
                 </div>
             <?php
-              }
-              else
-              {
-              ?>
+            	}
+            	else
+            	{
+            	?>
 
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
             <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i>Login</a></li>
             <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i>Sell</a></li>
-           <?php 
-             }
+           <?php
+           	}
+
            ?>
           </ul>
 
@@ -142,14 +193,15 @@
                  <option value="*" class="dropdown">Categories</option>
                   <?php
 
-                  foreach ($main_categories as  $main_category)
-                  {
-                  ?>
+                  	foreach ($main_categories as $main_category)
+                  	{
+                  	?>
                  <option class="dropdown"  value="<?php echo $main_category['id']; ?>"><?php echo ucwords($main_category['name']); ?></option>
 
-                 <?php 
-                  }
-                  ?>
+                 <?php
+                 	}
+
+                 ?>
                 </select>
                 <input class="search-field" name="name"  placeholder="Search here..." />
                  <button type="submit" id='save' name="submit" class="search-button"></button>
@@ -227,63 +279,69 @@
                  <li class="active dropdown yamm-fw"> <a href="<?php echo base_url(); ?>" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
                 <?php
 
-                  foreach ($header_categories as  $header_category)
-                  {
-                  ?>
+                	foreach ($header_categories as $header_category)
+                	{
+                	?>
 
                 <li class="dropdown yamm mega-menu"><a href="<?php echo base_url().'categories/get_parent_category_products/'.$header_category['id']; ?>" data-hover="dropdown" class="dropdown-toggle"  data-toggle="dropdown"><?php echo ucwords($header_category['name']); ?> </a>
                                         <!-- /.accordion-heading -->
                   <ul class="dropdown-menu container"  id="<?php echo $header_category['id']; ?>">
                     <li>
-                      
+
                      <div class="yamm-content">
 
                         <div class="row customli">
 
-                       
-                    <?php
-                      $counter = 0;
 
-                        foreach ($sub_categories as $sub_category)
-                        {
-                          if ($sub_category['category_id'] == $header_category['id'])
-                          {
-                            if ($counter < 4)
-                            {
-                            ?>
+                    <?php
+                    	$counter = 0;
+
+                    		foreach ($sub_categories as $sub_category)
+                    		{
+                    			if ($sub_category['category_id'] == $header_category['id'])
+                    			{
+                    				if ($counter < 4)
+                    				{
+                    				?>
                          <div  class="col-xs-12 col-sm-6 col-md-3 col-menu " >
                             <ul class="links">
-                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);  $counter++; ?></a></li>   
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
+				$counter++; ?></a></li>
                                 </ul>
                          </div>
                           <?php
-                            }
-                            elseif ($counter >= 4)
-                            {
-                            ?>
+                          	}
+                          				elseif ($counter >= 4)
+                          				{
+                          				?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu" >
                             <ul class="links">
-                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);$counter++; ?>  </a></li>                                   
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
+				$counter++; ?>  </a></li>
                              </ul>
                              </div>
                             <?php
-                              }
-                              else
-                              {
-                            ?>
+                            	}
+                            				else
+                            				{
+                            				?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu">
                             <ul class="links">
-                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);$counter++; ?></a></li>                                  
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
+				$counter++; ?></a></li>
                              </ul>
                             </div>
                              <?php
-                                }
-                              ?>
-                        <?php
-                            }
-                          } //sub categories foreach end
-                          ?>
-                            
+                             	}
+
+                             			?>
+<?php
+	}
+		}
+
+		//sub categories foreach end
+	?>
+
                       <!-- /.yamm-content -->
                         </div>
                       </div>
@@ -291,7 +349,8 @@
                   </ul>
                 </li>
              <?php
-              }
+             	}
+
              ?>
               </ul>
 
@@ -330,12 +389,12 @@
         <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
            <?php
 
-            foreach ($brands as $brand)
-            {
-            ?>
+           	foreach ($brands as $brand)
+           	{
+           	?>
           <div class="item m-t-15"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url() ?><?php echo $brand['logo']; ?>" src="<?php echo base_url() ?><?php echo $brand['logo']; ?>" alt="brand" style="max-height:110px;max-width:166px;height:auto;width:auto;"> </a> </div>
           <?php
-            }
+          	}
 
           ?>
         </div>

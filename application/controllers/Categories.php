@@ -20,9 +20,10 @@ class Categories extends Frontend_Controller
 	{
 		$this->data['main_category'] = $this->category->get_parent_categories();
 		$this->data['sub_category']  = $this->category->get_sub_categories();
-		//check if category slug is there
+
+//check if category slug is there
 		//
-		
+
 		$category                = array();
 		$sub_category            = array();
 		$products                = array();
@@ -50,7 +51,6 @@ class Categories extends Frontend_Controller
 		if (!empty($multiple_subcategory))
 		{
 			$multiple_subcategory_id = (explode(',', $multiple_subcategory));
-			
 		}
 
 		if (!empty($category_slug) || !empty($sub_category_slug))
@@ -66,7 +66,7 @@ class Categories extends Frontend_Controller
 			$this->data['brands'] = $this->product->get_products_brands($category['id'], $sub_category['id'], $multiple_subcategory_id, $tags);
 
 			//get the products now
-			$where['category_id']      = $category['id'];
+			$where['category_id'] = $category['id'];
 
 			if (!empty($sub_category_slug))
 			{
@@ -181,12 +181,5 @@ class Categories extends Frontend_Controller
 	{
 		$parent_id                     = $this->uri->segment(3);
 		$data['sub_category_products'] = $this->category->get_sub_category_products($parent_id);
-
-// var_dump($data);
-
-// //$this->data=$this->get_all();
-		// 		//$this->template->load('index', 'content', 'products/index', $data);
 	}
 }
-
-// >>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
