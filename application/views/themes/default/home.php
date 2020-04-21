@@ -43,17 +43,17 @@ function counter(end_date,id)
     else
     {
       result += '<div class="box-wrapper">';
-    result += '<div class="date box"> <span class="key" id="days">'+days+'</span> <span class="value">DAYS</span> </div>';
-    result += '</div>';
-    result += '<div class="box-wrapper">';
-    result += '<div class="hour box"> <span class="key" id="hours">'+hours+'</span> <span class="value">HRS</span> </div>';
-    result += '</div>';
-    result += '<div class="box-wrapper">';
-    result += '<div class="minutes box"> <span class="key" id="minutes">'+minutes+'</span> <span class="value">MINS</span> </div>';
-    result += '</div>';
-    result += '<div class="box-wrapper hidden-md">';
-    result += '<div class="seconds box"> <span class="key" id="seconds">'+seconds+'</span> <span class="value">SEC</span> </div>';
-    result += '</div>';
+      result += '<div class="date box"> <span class="key" id="days">'+days+'</span> <span class="value">DAYS</span> </div>';
+      result += '</div>';
+      result += '<div class="box-wrapper">';
+      result += '<div class="hour box"> <span class="key" id="hours">'+hours+'</span> <span class="value">HRS</span> </div>';
+      result += '</div>';
+      result += '<div class="box-wrapper">';
+      result += '<div class="minutes box"> <span class="key" id="minutes">'+minutes+'</span> <span class="value">MINS</span> </div>';
+      result += '</div>';
+      result += '<div class="box-wrapper hidden-md">';
+      result += '<div class="seconds box"> <span class="key" id="seconds">'+seconds+'</span> <span class="value">SEC</span> </div>';
+      result += '</div>';
     }
 
     $('#time_counter_'+id).html(result);
@@ -698,7 +698,8 @@ function counter(end_date,id)
                           <div class="image"> <a href="<?php echo base_url().'products/get_product/'.$product['name'] ?>"><img  src="<?php echo base_url().$product['thumb_image']; ?>" alt="product-image" style="max-width: 189px;max-height: 170px"></a> </div>
                           <!-- /.image -->
                          <?php
-                         	if ($product['is_hot'] == 1)
+
+                         		if ($product['is_hot'] == 1)
                          		{
                          		?>
                           <div class="tag hot"><span>
@@ -727,7 +728,7 @@ function counter(end_date,id)
                         <div class="product-info text-left">
                           <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$product['name'] ?>"><?php echo ucwords($product['name']); ?></a></h3>
                            <div class="description"></div>
-                          <div class="product-price"> <span class="price">                                                                           <?php echo ucwords($product['price']); ?></span> <span class="price-before-discount"><?php echo ucwords($product['old_price']); ?></span> </div>
+                          <div class="product-price"> <span class="price">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php echo ucwords($product['price']); ?></span> <span class="price-before-discount"><?php echo ucwords($product['old_price']); ?></span> </div>
                           <!-- /.product-price -->
                         </div>
                     <?php
@@ -870,7 +871,7 @@ function counter(end_date,id)
                   <div class="product-info text-left">
                     <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$product['name'] ?>"><?php echo ucwords($product['name']); ?></a></h3>
                           <div class="description"></div>
-                    <div class="product-price"> <span class="price">                                                                     <?php echo $product['price']; ?> </span> <span class="price-before-discount"><?php echo $product['old_price']; ?></span> </div>
+                    <div class="product-price"> <span class="price">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <?php echo $product['price']; ?> </span> <span class="price-before-discount"><?php echo $product['old_price']; ?></span> </div>
                     <!-- /.product-price -->
                     <?php
 
@@ -920,6 +921,7 @@ function counter(end_date,id)
            </div>
 
         <?php }
+
         ?>
        </div>
 
@@ -961,18 +963,13 @@ function counter(end_date,id)
           <div class="sidebar-widget-body outer-top-xs">
             <div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
              <?php
-             	$sellers_products = array_chunk($sellers_products, 2);
 
              	foreach ($sellers_products as $product)
              	{
              	?>
               <div class="item">
                 <div class="products best-product">
-                  <?php
 
-                  		foreach ($product as $product)
-                  		{
-                  		?>
                   <div class="product">
                     <div class="product-micro">
                       <div class="row product-micro-row">
@@ -984,36 +981,36 @@ function counter(end_date,id)
                           <!-- /.product-image -->
                         </div>
                         <!-- /.col -->
-                        <div class="col2 col-xs-7">
+                        <div class="col2 col-xs-">
                           <div class="product-info">
                             <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$product['name'] ?>"><?php echo ucwords($product['name']); ?></a></h3>
                             <div class="product-price"> <span class="price"><?php echo $product['price']; ?> </span> </div>
                             <!-- /.product-price -->
                             <?php
 
-                            			foreach ($reviews as $review)
+                            		foreach ($reviews as $review)
+                            		{
+                            			if ($review['product_id'] == $product['id'])
                             			{
-                            				if ($review['product_id'] == $product['id'])
-                            				{
-                            					$i = 1;
+                            				$i = 1;
 
-                            					for ($i; $i <= $review['star_ratings']; $i++)
-                            					{
-                            					?>
+                            				for ($i; $i <= $review['star_ratings']; $i++)
+                            				{
+                            				?>
                                 <div class="fa fa-star" style="color: orange"></div>
                                <?php
                                	}
 
-                               					for ($i; $i <= 5; $i++)
-                               					{
-                               					?>
+                               				for ($i; $i <= 5; $i++)
+                               				{
+                               				?>
                                <div class="fa fa-star-o"></div>
                               <?php
                               	}
-                              				}
                               			}
+                              		}
 
-                              		?>
+                              	?>
                           </div>
                         </div>
                         <!-- /.col -->
@@ -1023,10 +1020,6 @@ function counter(end_date,id)
                     <!-- /.product-micro -->
                   </div>
 
-                    <?php
-                    	}
-
-                    	?>
 
                 </div>
               </div>

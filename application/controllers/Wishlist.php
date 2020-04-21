@@ -6,7 +6,6 @@ class Wishlist extends Frontend_Controller
 	{
 		parent::__construct();
 		$this->load->model('wishlist_model', 'wishlist');
-		$this->load->model('category_model', 'category');
 	}
 
 	public function index()
