@@ -9,7 +9,6 @@ class Sliders extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->model('Slider_setting_model', 'sliders');
 	}
 
@@ -21,6 +20,7 @@ class Sliders extends Admin_Controller
 		$this->set_page_title(_l('sliders'));
 
 		$data['sliders'] = $this->sliders->get_all();
+		
 		$data['content'] = $this->load->view('admin/settings/sliders/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
@@ -101,16 +101,14 @@ class Sliders extends Admin_Controller
 				}
 
 				$result = $this->sliders->update($id,$data);
-				
-				if($result)
-				{
-					set_alert('success', _l('_updated_successfully', _l('slider')));
-					redirect('admin/sliders');		
-				}	
+			
+				set_alert('success', _l('_updated_successfully', _l('slider')));
+				redirect('admin/sliders');			
 			} 
 			else 
 			{
 				$data['slider'] = $this->sliders->get($id);
+				
 				$data['content'] = $this->load->view('admin/settings/sliders/edit',$data, TRUE);
 				$this->load->view('admin/layouts/index', $data);
 			}	
@@ -181,3 +179,7 @@ class Sliders extends Admin_Controller
 	}
 
 }
+	
+
+	
+	

@@ -3,7 +3,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('add');?>&nbsp<?php _el('subscription')?></span>
+                <span class="text-semibold"><?php _el('add');?><?php _el('subscription')?></span>
             </h4>
         </div>
     </div>
@@ -25,6 +25,7 @@
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
+
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
             <!-- Panel -->
@@ -63,7 +64,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <small class="req text-danger">* </small>
-                                    <label><?php _el('product');?>&nbsp<?php _el('limitations');?>:</label>
+                                    <label><?php _el('product');?><?php _el('limitations');?>:</label>
                                     <input type="number" class="form-control" placeholder="<?php _el('limitations');?>" id="product_limit" name="product_limit">
                                 </div>
                             </div>
@@ -73,8 +74,10 @@
                                     <label><?php _el('description');?>:</label>
                                 </div>
                                 <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"></textarea>
+
                             </div>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
@@ -131,4 +134,5 @@ $("#subscription_form").validate({
         },
     },
 });
+
 </script>

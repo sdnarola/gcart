@@ -8,17 +8,11 @@ class Cart extends Frontend_Controller
 		$this->load->model('wishlist_model', 'wishlist');
 		$this->load->model('cart_model', 'cart');
 		$this->load->model('category_model', 'category');
-		$this->load->model('coupon_model', 'coupons');
 	}
 
 	public function index()
 	{
-		$this->set_page_title('Cart');
-		$user_ip            = $this->input->ip_address();
-		$data['cart_items'] = $this->cart->get_many_by(array('user_ip' => $user_ip));
-
-		$data['content'] = $this->load->view('themes/default/cart', $data, TRUE);
-		$this->load->view('themes/default/layouts/index', $data);
+		// $this->set_page_title('Cart');
 	}
 
 	/**
@@ -30,18 +24,23 @@ class Cart extends Frontend_Controller
 	{
 		if ($id)
 		{
-			$data['user_ip']      = $this->input->ip_address();
+			$data['user_id']      = $this->session->userdata('user_id');
 			$data['product_id']   = $id;
 			$data['quantity']     = 1;
 			$data['total_amount'] = $data['quantity'] * (get_product($id, 'price'));
 			$data['date']         = date('Y-m-d h:i:s', time());
 
-			$cart = $this->cart->get_by(array('user_ip' => $data['user_ip'], 'product_id' => $id));
+			$cart = $this->cart->get_by(array('user_id' => $data['user_id'], 'product_id' => $id));
 
-			if ($cart['product_id'] == $id && $cart['user_ip'] == $data['user_ip'])
+			if ($cart['product_id'] == $id && $cart['user_id'] == $data['user_id'])
 			{
-				set_alert('warning', _l('_already_added', _l('product')));
-				redirect(site_url('cart'));
+				$update_data['quantity']     = $cart['quantity'] + 1;
+				$update_data['total_amount'] = $update_data['quantity'] * (get_product($id, 'price'));
+
+				if ($this->cart->update($cart['id'], $update_data, FALSE))
+				{
+					redirect(site_url('home'));
+				}
 			}
 			else
 			{
@@ -49,8 +48,7 @@ class Cart extends Frontend_Controller
 
 				if ($insert)
 				{
-					set_alert('success', _l('_added_successfully', _l('product')));
-					redirect(site_url('cart'));
+					redirect(site_url('home'));
 				}
 			}
 		}
@@ -86,22 +84,25 @@ class Cart extends Frontend_Controller
 		$wishlist_id         = '';
 		$whishlist_user_id   = '';
 
-		if (!empty($wishlist_data))
-		{
-			foreach ($wishlist_data as $key => $wishlist)
-			{
-				$wishlist_product_id = $wishlist['product_id'];
-				$wishlist_id         = $wishlist['id'];
-				$whishlist_user_id   = $wishlist['user_id'];
-			}
+		// if (!empty($wishlist_data))
+		// {
+		// 	foreach ($wishlist_data as $key => $wishlist)
+		// 	{
+		// 		$wishlist_product_id = $wishlist['product_id'];
+		// 		$wishlist_id         = $wishlist['id'];
+		// 		$whishlist_user_id   = $wishlist['user_id'];
+		// 	}
 
-			$wishlist_where['is_deleted'] = 1;
+		// 	$wishlist_where['is_deleted'] = 1;
 
-			if ($wishlist_product_id == $this->data['product_id'])
-			{
-				$this->wishlist->update($wishlist_id, $wishlist_where, FALSE);
-			}
-		}
+		// 	if ($wishlist_product_id == $this->data['product_id'])
+		// 	{
+		// 		$this->wishlist->update($wishlist_id, $wishlist_where, FALSE);
+		// 	}
+		// }
+		$wishlist_data_where['user_id']    = $this->data['user_id'];;
+		$cart_record['wishlist_detail'] = $this->wishlist->get_wishlist_data($wishlist_data_where);
+		// print_r($cart_record['wishlist']);
 
 		$cart_id         = '';
 		$cart_ip_address = '';
@@ -121,6 +122,10 @@ class Cart extends Frontend_Controller
 			}
 		}
 
+		
+		
+
+
 		if ($cart_product_id == $this->data['product_id'] && $cart_user_id == $user_id && !empty($user_id))
 		{
 			$update_data['quantity']     = $cart_quantity + $this->data['quantity'];
@@ -138,7 +143,7 @@ class Cart extends Frontend_Controller
 				$cart_record['row']                 = $this->cart->count_cart_row($cart_where);
 				$cart_record['total_amount']        = $this->cart->count_total_procucts_amount($cart_where);
 
-				echo json_encode($cart_record);
+				// echo json_encode($cart_record);
 			}
 		}
 		elseif ($cart_product_id == $this->data['product_id'] && $cart_ip_address == $this->data['user_ip'] && empty($user_id))
@@ -159,7 +164,7 @@ class Cart extends Frontend_Controller
 				$cart_record['row']                 = $this->cart->count_cart_row($ip_address_where);
 				$cart_record['total_amount']        = $this->cart->count_total_procucts_amount($ip_address_where);
 
-				echo json_encode($cart_record);
+				// echo json_encode($cart_record);
 			}
 		}
 		else
@@ -176,9 +181,11 @@ class Cart extends Frontend_Controller
 				$cart_record['Product_data']        = $this->cart->get_cart_products_detail($cart_product_where, $products_id);
 				$cart_record['total_amount']        = $this->cart->count_total_procucts_amount($user_where);
 
-				echo json_encode($cart_record);
+				// echo json_encode($cart_record);
 			}
 		}
+
+		echo json_encode($cart_record);
 	}
 
 	public function get_products_id_foreach($recode)
@@ -251,50 +258,5 @@ class Cart extends Frontend_Controller
 				echo json_encode($cart_record);
 			}
 		}
-	}
-
-	/**
-	 * Update cart details
-	 */
-	public function edit()
-	{
-		$data   = $this->input->post();
-		$update = $this->cart->update($data['id'], $data);
-
-		if ($update)
-		{
-			echo 'true';
-		}
-		else
-		{
-			echo 'false';
-		}
-	}
-
-	/**
-	 * Delete the single cart record
-	 */
-	public function delete()
-	{
-		$cart_id = $this->input->post('cart_id');
-		$deleted = $this->cart->delete($cart_id);
-
-		if ($deleted)
-		{
-			echo 'true';
-		}
-		else
-		{
-			echo 'false';
-		}
-	}
-
-	/**
-	 * Get coupon code details.
-	 */
-	public function apply_coupon()
-	{
-		$code = $this->input->post('coupon');
-		echo json_encode($this->coupons->get_by(array('code' => $code)));
 	}
 }

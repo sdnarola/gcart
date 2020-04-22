@@ -150,6 +150,7 @@
 </div><!-- /.body-content -->
 
 <script type="text/javascript">
+var BASE_URL = "<?php echo base_url(); ?>";
 
 /**
  * Deletes a single record when clicked on delete icon

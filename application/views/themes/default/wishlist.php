@@ -16,27 +16,36 @@
 			<div class="row">
 				<div class="col-md-12 my-wishlist">
 					<div class="table-responsive">
+						<div id="whishlist-data">
+<?php
+
+						if(!empty($wishlist_data))
+						{
+
+?>
+						
 						<table class="table">
 							<thead>
 								<tr>
-									<th colspan="4" class="heading-title">My Wishlist</th>
+									<th colspan="4" class="heading-title"><?php _el('my_wishlist');?></th>
 								</tr>
 							</thead>
 							<tbody>
 <?php
-						if(!empty($whishlist_data))
-						{
-							foreach ($whishlist_data as $key => $whishlist) 
+						
+							foreach ($wishlist_data as $key => $wishlist) 
 							{
 ?>
-								<tr id="wishlistdata-<?= $whishlist['id']?>" >
-									<td class="col-md-2"><img src="<?= base_url(); ?><?= $whishlist['thumb_image']; ?>" alt="imga"></td>
+
+								<tr id="wishlistdata-<?= $wishlist['id']?>" >
+									<td class="col-md-2"><img src="<?= base_url(); ?><?= $wishlist['thumb_image']; ?>" alt="imga"></td>
 									<td class="col-md-7">
-										<div class="product-name"><a href=""><?= $whishlist['name']; ?></a></div>
+										<!-- <input type="hidden" name="product-id" value="<?= $wishlist['id'];?>"> -->
+										<div class="product-name"><a href="<?= site_url('Products/'.$wishlist['slug']); ?>"><?= $wishlist['name']; ?></a></div>
 <?php 
-		                      if(!empty(get_star_rating( $whishlist['id']) ))
+		                      if(!empty(get_star_rating( $wishlist['id']) ))
 		                      {
-		                        $width =( get_star_rating( $whishlist['id']) *70 ) / 5;
+		                        $width =( get_star_rating( $wishlist['id']) *70 ) / 5;
 
 ?>
 			                      <div class="rating-star rateit-small">
@@ -46,37 +55,91 @@
                    			 }
 ?>
 										<div class="price">
-											<?= $whishlist['price']; ?>
-											<span><?= $whishlist['old_price']; ?></span>
+											<?= $wishlist['price']; ?>
+											<span><?= $wishlist['old_price']; ?></span>
 										</div>
 									</td>
 									<td class="col-md-2">
-										<a href="javascript:void(0);" class="btn-upper btn btn-primary" onclick="add_to_cart(<?= $whishlist['id']; ?>)"><?php _el('add_to_cart');?></a>
+										<!-- <button class="btn-upper btn btn-primary"><?php _el('add_to_cart');?></button> -->
+<?php
+									if($wishlist['quantity'] != 0 )
+									{
+?>
+										<a href="javascript:void(0);" class="btn-upper btn btn-primary" onclick="add_to_cart(<?= $wishlist['id']; ?>)"><?php _el('add_to_cart');?></a>
+<?php
+									}
+									else
+									{
+?>
+										<a href="javascript:void(0);" class="btn-upper btn btn-primary" disabled="disabled"><?php _el('add_to_cart');?></a>
+<?php
+									}
+?>
 									</td>
 									<td class="col-md-1 close-btn">
-										<a href="javascript:void(0);" class=""><i class="fa fa-times"></i></a>
+										<a href="javascript:void(0);" class="" onclick="remove_wishlist(<?= $wishlist['id']; ?>)"><i class="fa fa-times"></i></a>
 									</td>
 								</tr>
 <?php
 							}
-						}
-						else
-						{
-							?>
-								<tr>
-									<td class="col-md-7">no any data</td>
-								</tr>
-
-							<?php
-						}
+						
 ?>
 								
 							</tbody>
 						</table>
+					</div>
+						
+<?php
+						}
+						else
+						{
+							?>
+
+							<div class="text-center">
+								<div ><b><?php _el('your_wishlist_is_empty')?></b></div>
+								<div><p ><?php _el('whishlist_empty_msg')?></p></div>
+								<div ><a href="<?= site_url() ."Home"; ?>" class="btn btn-primary"><?php _el('shop_now')?></a></div>
+							</div>
+							<?php
+						}
+?>
 					</div>
 				</div>			
 			</div><!-- /.row -->
 		</div><!-- /.sigin-in-->
 	</div>
 </div>
+<script type="text/javascript">
+	
+	function remove_wishlist(id)
+	{
+		
+		$.ajax({
+				type:'POST',
+				url:SITE_URL+'Wishlist/delete_wishlist_product',
+				data:{ product_id:id },
+				dataType:"JSON",
+				success:function(data)
+				{
+					console.log(data.wishlist_detail);
+					if(data.deleted_data == 'success')
+					{
+						$('#wishlistdata-'+id).remove();
+					}
+
+					if(data.wishlist_detail == null)
+					{
+						var wishlist_empty_title = "<?php _el('your_wishlist_is_empty')?>";
+						var wishlist_empty_msg   = "<?php _el('whishlist_empty_msg')?>";
+						var url                  = "<?= site_url() ."Home"; ?>";
+						var shop_now             = "<?php _el('shop_now')?>";
+
+						var div="<div class='text-center'><div ><b>"+wishlist_empty_title+"</b></div><div><p >"+wishlist_empty_msg+"</p></div><div ><a href='"+url+"' class='btn btn-primary'>"+shop_now+"</a></div></div>"
+						$("#whishlist-data").html(div);
+					}
+				}
+
+		});
+	}
+</script>
 	

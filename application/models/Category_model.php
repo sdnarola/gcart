@@ -27,7 +27,7 @@ class Category_model extends MY_Model
 	 * [get_parent_category description]
 	 * @return [boolean] Query true return sub catgories or return false
 	 */
-	public function get_parent_categories($where = array())
+	public function get_parent_categories($where=array())
 	{
 		if (!empty($where))
 		{
@@ -75,7 +75,7 @@ class Category_model extends MY_Model
 	 *
 	 * @return [boolean]   Query is true return sub category or return false
 	 */
-	public function get_sub_categories($where = array())
+	public function get_sub_categories($where=array())
 	{
 		if (!empty($where))
 		{
@@ -111,13 +111,14 @@ class Category_model extends MY_Model
 		}
 	}
 
+
 	/**
 	 * [get_shop_by_sub_category description]
 	 * @param  int $category_id    [category id]
 	 * @param  int $brand_id       [brand id]
 	 * @param  string $tags        [products tags]
-	 *
-	 * @return [array]
+	 * 
+	 * @return [array]             
 	 */
 	public function get_shop_by_sub_category($category_id = '', $brand_id = '', $tags = '')
 	{
@@ -173,93 +174,61 @@ class Category_model extends MY_Model
 
 // =========================== Bhavik ==================================//
 
+
 /**
- * get sub categories of parent category
+ * get sub category of product
  *
- * @param  int 		$id 	parent category id
+ * @param  int 		$id 	product id
  *
- * @return mixed 	sub categories
+ * @return mixed 	sub category
  */
-	public function get_sub_categories_of_parent_category($id = '')
+function get_sub_category_info($id)
+{
+	$this->db->where('id', $id);
+	$result = $this->db->get('sub_categories')->row_array();
+
+	if (!$result)
 	{
-		$this->_table = 'sub_categories';
-		$this->order_by('name');
-		if ($id == null)
-		{
-			$result = $this->get_all();
-
-			if (!$result)
-			{
-				return null;
-			}
-
-			return $result;
-		}
-
-		$result = $this->get_many_by('category_id', $id);
-
-		if (!$result)
-		{
-			return null;
-		}
-
-		return $result;
+		return false;
 	}
 
-	/**
-	 * get sub category of product
-	 *
-	 * @param  int 		$id 	product id
-	 *
-	 * @return mixed 	sub category
-	 */
-	public function get_sub_category_info($id)
-	{
-		$this->db->where('id', $id);
-		$result = $this->db->get('sub_categories')->row_array();
-
-		if (!$result)
-		{
-			return false;
-		}
-
-		return $result;
-	}
+	return $result;
+}
 
 // =========================== Bhavik ==================================//
 
 /***======================================================code by vixuti patel===========================================================***
-/**
- * [get_parent_category description]k
- * @return [boolean] Query true return sub catgories or return false
- */
-	public function get_header_parent_category($is_header = '')
+		/**
+		 * [get_parent_category description]k
+		 * @return [boolean] Query true return sub catgories or return false
+	*/
+public function get_header_parent_category($is_header = '')
+{
+	if (empty($is_header))
 	{
-		if (empty($is_header))
+		$query = $this->db->get_where('categories', array('is_active' => 1));
+		$result=$query->result_array();
+
+		if (!empty($result))
 		{
-			$query  = $this->db->get_where('categories', array('is_active' => 1));
-			$result = $query->result_array();
-
-			if (!empty($result))
-			{
-				return $result;
-			}
-
-			return false;
+			return $result;
 		}
-		else
-		{
-			$query  = $this->db->get_where('categories', array('is_active' => 1, 'is_header' => $is_header));
-			$result = $query->result_array();
 
-			if (!empty($result))
-			{
-				return $result;
-			}
-
-			return false;
-		}
+		return false;
 	}
+	else
+	{
+		$query = $this->db->get_where('categories', array('is_active' => 1, 'is_header' => $is_header));
+		$result=$query->result_array();
+		if (!empty($result))
+		{
+			return $result;
+		}
+
+		return false;
+	}
+}
+
 
 	/**
 	 * [get_parent_category_products description]
@@ -273,27 +242,22 @@ class Category_model extends MY_Model
 		if ($query == TRUE)
 		{
 			return $query->result_array();
+
 		}
 
 		return false;
 	}
 
-// public function get_data_to_cart_products($product_id)
+	// public function get_data_to_cart_products($product_id)
+	// {
+	// 	$query = $this->db->get_where('products', array('id' => $products_id));
 
-// {
-
-// 	$query = $this->db->get_where('products', array('id' => $products_id));
-
-// 	if ($query == TRUE)
-
-// 	{
-
-// 		return $query->result();
-
-// 	}
-
-// }
-	/**
+	// 	if ($query == TRUE)
+	// 	{
+	// 		return $query->result();
+	// 	}
+	// }
+	 /**
 	 * [get_sub_category_products description]
 	 * @param  [int] $id  Sub categories Primary Key
 	 *
@@ -306,6 +270,7 @@ class Category_model extends MY_Model
 		if ($query == TRUE)
 		{
 			return $query->result_array();
+
 		}
 
 		return false;
@@ -375,9 +340,11 @@ class Category_model extends MY_Model
 		}
 	}
 
-//=========================================================== END KOMAL WORK ===========================================================================================//
+	
+	//=========================================================== END KOMAL WORK ===========================================================================================//
 
-	/**
+
+     /**
 	 * [search category or product or brand]
 	 * @param  [type] $name [description]
 	 * @return [type]       [description]
@@ -418,6 +385,10 @@ class Category_model extends MY_Model
 
 		return $query->result_array();
 	}
+		/***==================================================code end by vixuti patel=====================================================***/
 
-	/***==================================================code end by vixuti patel=====================================================***/
 }
+
+
+
+

@@ -46,29 +46,32 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label><?php _el('category_name') ?></label>
+                              <label>category name</label>
                               <select class="select-search" name="category_id" id="category_id">
 <?php
 	$categories = get_all_categories();
 
 	foreach ($categories as $category)
 	{
-?>
+	?>
                                     <option id="<?php echo $category['id'] ?>" name="category" value="<?php echo $category['id']; ?>"
                                     <?php
+
                                     		if ($category['id'] == $sub_category['category_id'])
-                                    		{ echo ' selected';}?>>
-                                    <?php echo ucfirst($category['name']) ?>
-                                    </option>
+                                    		{
+                                    			echo ' selected';}
+
+                                    	?>><?php echo ucfirst($category['name']) ?></option>
 <?php
 	}
+
 ?>
                                </select>
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name');?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" oninput="generate_slug();" value="<?php echo $sub_category['name']; ?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" oninput="generate_slug();" value="<?php echo ucfirst($sub_category['name']); ?>">
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
@@ -78,7 +81,6 @@
 <?php
 	$category = get_category($sub_category['category_id']);
 	$status = '';
-
         if ($category['is_active'] == 0)
         {
             $result= "readonly";
@@ -87,15 +89,17 @@
         {
             $result = '';
         }
+
 ?>
                             <div  class=" form-group">
                                 <label><?php _el('status');?>:</label>
                                 <input type="checkbox" onchange="change_status(this);" class="switchery" name="is_active" id="<?php echo $sub_category['id']; ?>"<?php
-                                if ($sub_category['is_active'] == 1)
-                                    {
-                                    echo 'checked';}
-                                ?><?php echo $status; ?> <?php echo $result?>>
+                        if ($sub_category['is_active'] == 1)
+                            {
+                            echo 'checked';}
+                        ?><?php echo $status; ?> <?php echo $result?>>
                             </div>
+
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">

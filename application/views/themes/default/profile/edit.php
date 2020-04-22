@@ -32,7 +32,7 @@
             <input type="text" class="form-control unicase-form-control text-input" id="lastname" name="lastname"  value="<?php echo $user['lastname']; ?>">
         </div>
         <div class="form-group">
-            <label class="info-title" for="mobile"><?php _el('mobile_no');?> <span>*</span></label>
+            <label class="info-title" for="mobile"><?php _el('mobile');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="mobile" name="mobile" value="<?php echo $user['mobile']; ?>" >
         </div>
         <div class="form-group">

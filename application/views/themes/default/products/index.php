@@ -429,6 +429,25 @@ a.active {
 <?php 
                   foreach($products as $product)
                   { 
+                    $whishlist_data = get_wishlist_data($product['id']);
+                    $product_id='';
+                    $wishlist_class='';
+                    if(!empty($whishlist_data))
+                    {
+                      foreach ($whishlist_data as $key => $value) 
+                      {
+                        $product_id=$value['product_id'];
+                      }
+
+                      if($product_id == $product['id'] )
+                      {
+                        $wishlist_class='background-color: #f80a6c; border-color: #f80a6c;';
+                      }
+                      else
+                      {
+                        $wishlist_class='';
+                      }
+                    }
 ?>      
                   <div class="col-sm-6 col-md-4 wow fadeInUp">
                     <div class="products">
@@ -486,7 +505,7 @@ a.active {
                               if(is_user_logged_in())
                               {
 ?>
-                              <li class="lnk wishlist"> <a class="add-to-cart" href="<?= site_url('Products/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                              <li class="lnk wishlist" id="lnk-wishlist-<?= $product['id']?>" style="<?= $wishlist_class ?>"> <a class="add-to-cart" href="javascript:void(0);" title="Wishlist"  onclick="add_wishlist_products(<?= $product['id']; ?>)"> <i class="icon fa fa-heart"></i> </a> </li>
 <?php
                             }
 ?>
@@ -529,6 +548,25 @@ a.active {
 <?php 
                 foreach($products as $product)
                 { 
+                  $whishlist_data = get_wishlist_data($product['id']);
+                    $product_id='';
+                    $wishlist_class='';
+                    if(!empty($whishlist_data))
+                    {
+                      foreach ($whishlist_data as $key => $value) 
+                      {
+                        $product_id=$value['product_id'];
+                      }
+
+                      if($product_id == $product['id'] )
+                      {
+                        $wishlist_class='background-color: #f80a6c; border-color: #f80a6c;';
+                      }
+                      else
+                      {
+                        $wishlist_class='';
+                      }
+                    }
 ?>  
                 <div class="category-product-inner">
                   <div class="products">
@@ -571,7 +609,7 @@ a.active {
                                   if(is_user_logged_in())
                                   {
 ?>
-                                  <li class="lnk wishlist"> <a class="add-to-cart" href="<?= site_url('Products/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                  <li class="lnk wishlist" id="lnk-wishlist-<?= $product['id']?>" style="<?= $wishlist_class ?>"> <a class="add-to-cart" href="<?= site_url('Products/'.$product['slug']); ?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
 <?php
                                   }
 ?>

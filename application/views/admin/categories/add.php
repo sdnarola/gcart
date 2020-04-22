@@ -41,21 +41,25 @@
                 <div class="panel-body">
                     <form action="<?php echo base_url('admin/categories/add'); ?>" id="categories_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
+
+
+
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label><?php _el('banner_name') ?></label>
+                              <label>banner name</label>
                               <select class="select-search" name="banner_id" id="banner_id">
 <?php
 	$banners = get_banners();
 
 	foreach ($banners as $banner)
 	{
-?>
+	?>
                                     <option id="$banner['id']" name="banner" value="<?php echo $banner['id'] ?>"><?php echo ucfirst($banner['title']) ?></option>
 <?php
 	}
+
 ?>
-                               </select>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
@@ -67,9 +71,10 @@
                                 <label><?php _el('slug');?>:</label>
                                 <input type="text" class="form-control" placeholder="<?php _el('slug');?>" id="slug" name="slug">
                             </div>
+
                             <div class="form-group">
                                 <label><?php _el('icon');?>:</label>
-                                <input type="file"  class="file-input"  name="icon" id='icon' data-show-upload="false">
+                                <input type="file"  class="file-input"  name="icon" id='icon'>
                             </div>
                         </div>
                           <div class="row">
@@ -91,7 +96,6 @@
 
 <script type="text/javascript">
 $('.select-search').select2();
-
 $("#categories_form").validate({
     rules: {
         name: {
@@ -115,6 +119,7 @@ $("#categories_form").validate({
 $('.file-input').fileinput({
         browseLabel: 'Browse',
         browseIcon: '<i class="icon-file-plus"></i>',
+        uploadIcon: '<i class="icon-file-upload2"></i>',
         removeIcon: '<i class="icon-cross3"></i>',
         layoutTemplates: {
             icon: '<i class="icon-file-check"></i>',
@@ -134,7 +139,7 @@ $('.file-input').fileinput({
     });
 
 /**
- *  generate a slug from category_name
+ *  generate a slug from caegory_name
  */
 function generate_slug()
 {

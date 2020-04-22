@@ -1,15 +1,15 @@
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
-<!--     <?php
-     	$ipaddress = $_SERVER['REMOTE_ADDR'];
-     echo $ipaddress;
-     ?> -->
+<!-- <?php
+		$ipaddress = $_SERVER['REMOTE_ADDR'] ; 
+		echo $ipaddress;
+?> -->
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="<?php echo site_url().'Home';?>"><?php _el('home');?></a></li>
-				<li><a href="<?php echo site_url('categories/'.$category_slug);?>"><?php echo ucwords($category_name);?></a></li>
-				<li class='active'><?php echo ucwords($products_name);?></li>
+				<li><a href="<?= site_url() ."Home"; ?>"><?php _el('home'); ?></a></li>
+				<li><a href="<?= site_url('categories/'.$category_slug); ?>"><?= ucwords($category_name); ?></a></li>
+				<li class='active'><?= ucwords($products_name); ?></li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -27,65 +27,72 @@
 <!-- ============================================== HOT DEALS ============================================== -->
 					<form method="POST">
 <?php
-
-	if (!empty($hot_deals_products))
-	{
-		// echo $this->input->ip_address();
-	?>
+				if(!empty($hot_deals_products))
+				{
+					// echo $this->input->ip_address();
+?>
 					<div class="sidebar-widget hot-deals wow fadeInUp outer-top-vs">
 						<h3 class="section-title"><?php _el('hot_deals');?></h3>
 						<div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-xs">
 <?php
+						foreach ($hot_deals_products as $hot_deals) 
+						{
 
-		foreach ($hot_deals_products as $hot_deals)
-		{
-			$end_date = date('M d, Y  h:i:s', strtotime($hot_deals['end_date']));
-		?>
+						 $end_date = date('M d, Y  h:i:s', strtotime($hot_deals['end_date']));		
+?>
 							<div class="item">
 								<div class="products">
 									<div class="hot-deal-wrapper">
 										<div class="image">
-											<img src="<?php echo base_url().$hot_deals['thumb_image'];?>" alt="">
+											<img src="<?= base_url().$hot_deals['thumb_image']; ?>" alt="">
 										</div>
+
+										<div class="sale-offer-tag"><span>
 <?php
 
-			if (!empty($hot_deals['off_percentage']))
-			{
-			?>
-										<div class="sale-offer-tag"><span><?php echo $hot_deals['off_percentage'].'%';?><br>off</span></div>
-<?php
-	}
+					                      if ($hot_deals['type'] == 0)
+					                      {
+					                        echo '&#8377;'.'. '.$hot_deals['value'];
 
-		?>
+					                        $price=$hot_deals['price']-$hot_deals['value'];
+					                      }
+					                      else
+					                      {
+					                        echo $hot_deals['value'].' &#37;';
+					                         $save_amount=($hot_deals['price']*$hot_deals['value'])/100;
+					                         $price=$hot_deals['price']-$save_amount;
+					                      }
+
+ ?>
+ 										<br>off</span></div>
+
 <!--------------------------------------------------------------------- Timer counter ------------------------------------------------------------------------------------>
 									<script type="text/javascript">
-										time_counter("<?php echo $end_date;?>",<?php echo $hot_deals['id']?>);
+										time_counter("<?= $end_date;?>",<?= $hot_deals['id']?>);
 									</script>
-										<div class="timing-wrapper" id="time_counter_<?php echo $hot_deals['id']?>" data-end-date="<?php echo $end_date;?>">
-
+										<div class="timing-wrapper" id="time_counter_<?= $hot_deals['id'] ?>" data-end-date="<?= $end_date;?>">
+											
 										</div>
 									</div><!-- /.hot-deal-wrapper -->
 <!--------------------------------------------------------------------- END Timer counter -------------------------------------------------------------------------------------->
 									<div class="product-info text-left m-t-20">
-										<h3 class="name"><a href="<?php echo site_url('Products/'.$hot_deals['slug']);?>"><?php echo $hot_deals['name'];?></a></h3>
-<?php
+										<h3 class="name"><a href="<?= site_url('Products/'. $hot_deals['slug']); ?>"><?= $hot_deals['name'] ;?></a></h3>
+<?php 
+											if(!empty(get_star_rating( $hot_deals['id']) ))
+											{
+												$width =(get_star_rating( $hot_deals['id']) *70 ) / 5;
 
-			if (!empty(get_star_rating($hot_deals['id'])))
-			{
-				$width = (get_star_rating($hot_deals['id']) * 70) / 5;
-
-			?>
+?>
 											<div class="rating-star rateit-small">
-												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
 											</div>
 <?php
-	}
-
-		?>
+										    }
+?>
 
 										<div class="product-price">
-											<span class="price"><?php echo $hot_deals['price'];?></span>
-										    <span class="price-before-discount"><?php echo $hot_deals['old_price'];?></span>
+											<span class="price"><?= sprintf('%0.2f',$price);?></span>
+										    <span class="price-before-discount"><?= $hot_deals['price'] ;?></span>
 										</div><!-- /.product-price -->
 									</div><!-- /.product-info -->
 
@@ -93,37 +100,23 @@
 										<div class="action">
 											<div class="add-cart-button btn-group">
 												<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-													<i class="fa fa-shopping-cart" onclick="add_to_cart(<?php echo $hot_deals['product_id'];?>)"></i>
+													<i class="fa fa-shopping-cart" onclick="add_to_cart(<?= $hot_deals['product_id']; ?>)"></i>
 												</button>
-												<button class="btn btn-primary cart-btn" onclick="add_to_cart(<?php echo $hot_deals['product_id'];?>)" type="button"><?php _el('add_to_cart');?></button>
+												<button class="btn btn-primary cart-btn" onclick="add_to_cart(<?= $hot_deals['product_id']; ?>)" type="button"><?php _el('add_to_cart');?></button>
 											</div>
 									    </div><!-- /.action -->
 								    </div><!-- /.cart -->
 							    </div><!-- /products -->
 						    </div><!-- /items -->
 <?php
-	}
-
-	?>
+						}
+?>  
 		    			</div><!-- /.owl-carousel -->
 					</div><!-- /sidebar-widget -->
 <?php
-	}
-
-?>
-
-			<form id="fromproductsdetail">
-                  <input type="hidden" name="newletter_email" value="" id="newletter_email"/>
-                 <!--  <input type="hidden" name="list-container"  id="list-container"/> -->
-                 <!--  <input type="hidden" name="sort" value="<?php echo $sort; ?>" id="sort"/>
-                  <input type="hidden" name="order" value="<?php echo $order; ?>" id="order"/>
-                  <input type="hidden" name="tags" value="<?php echo $tags_data; ?>" id="tags"/>
-                  <input type="hidden" name="manufacture" value="<?php echo $manufacture; ?>" id="manufacture"/>
-                  <input type="hidden" name="subcategory" value="<?php echo $subcategory; ?>"  id="subcategory"/>
-                  <input type="hidden" name="pricerange" value="<?php echo $pricerange; ?>" id="pricerange"/> -->
-            </form>
-
-
+						}
+?> 		
+					
 <!-- ============================================== HOT DEALS: END ============================================== -->
 
 <!-- ============================================== NEWSLETTER ============================================== -->
@@ -132,18 +125,18 @@
 						<div class="sidebar-widget-body outer-top-xs">
 							<p><?php _el('sign_up_for_our_newsletter');?></p>
 					        <form id="newsletter-subscribe">
-
-					           <div class="newletter-span-sucess">
-
+					        	
+					           <div class="newletter-span-sucess"> 
+					           
 					           </div>
 					        	 <div class="form-group">
-								    <label class="sr-only" for="exampleInputEmail1"><?php _el('email_address');?></label>
+								    <label class="sr-only" for="exampleInputEmail1"><?php _el('email_address'); ?></label>
 								    <input type="email" name="news_letter" class="form-control txt" id="exampleInputEmail1" placeholder="Subscribe to our newsletter" required="required">
 								     <div class="newletter-span-exits" style="color: red; font-weight: bold;">
 					          		 </div>
-
+								    
 								  </div>
-
+								 
 								<button class="btn btn-primary newsletter-subscribe"><?php _el('subscribe');?></button>
 							</form>
 						</div><!-- /.sidebar-widget-body -->`
@@ -154,19 +147,19 @@
 					<div class="sidebar-widget  wow fadeInUp outer-top-vs ">
 						<div id="advertisement" class="advertisement">
 					        <div class="item">
-					            <div class="avatar"><img src="<?php echo base_url(); ?>assets/themes/default/images/testimonials/member1.png" alt="Image"></div>
+					            <div class="avatar"><img src="<?php echo base_url();?>assets/themes/default/images/testimonials/member1.png" alt="Image"></div>
 								<div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
 								<div class="clients_author">John Doe<span>Abc Company</span></div><!-- /.container-fluid -->
 					        </div><!-- /.item -->
 
 		         			<div class="item">
-		         				<div class="avatar"><img src="<?php echo base_url(); ?>assets/themes/default/images/testimonials/member3.png" alt="Image"></div>
+		         				<div class="avatar"><img src="<?php echo base_url();?>assets/themes/default/images/testimonials/member3.png" alt="Image"></div>
 								<div class="testimonials"><em>"</em>Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
 								<div class="clients_author">Stephen Doe	<span>Xperia Designs</span>	</div>
 		        			</div><!-- /.item -->
 
 		        			<div class="item">
-		            			<div class="avatar"><img src="<?php echo base_url(); ?>assets/themes/default/images/testimonials/member2.png" alt="Image"></div>
+		            			<div class="avatar"><img src="<?php echo base_url();?>assets/themes/default/images/testimonials/member2.png" alt="Image"></div>
 								<div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
 								<div class="clients_author">Saraha Smith	<span>Datsun &amp; Co</span>	</div><!-- /.container-fluid -->
 		       				</div><!-- /.item -->
@@ -181,33 +174,52 @@
 					<div class="row  wow fadeInUp">
 					    <div class="col-xs-12 col-sm-6 col-md-5 gallery-holder">
    							<div class="product-item-holder size-big single-product-gallery small-gallery">
-
+   							
         						<div id="owl-single-product">
 						            <div class="single-product-gallery-item" id="slide11">
 						                <a data-lightbox="image-1" data-title="Gallery" href="<?php echo base_url().$products_detail['thumb_image']; ?>">
 						                    <img class="img-responsive" alt="" src="<?php echo base_url().$products_detail['thumb_image']; ?>" data-echo="<?php echo base_url().$products_detail['thumb_image']; ?>" />
 						                </a>
 						            </div>
-<?php
-	$products_images = unserialize($products_detail['images']);
+<?php							
+										$whishlist_data = get_wishlist_data($products_detail['id']);
+										$product_id='';
+										$wishlist_class='';
+										if(!empty($whishlist_data))
+										{
+											foreach ($whishlist_data as $key => $value) 
+											{
+												$product_id=$value['product_id'];
+											}
 
-	if (!empty($products_images))
-	{
-		foreach ($products_images as $key => $images)
-		{
-			if (!empty($images))
-			{
-			?>
-						            <div class="single-product-gallery-item" id="slide<?php echo $key?>">
-						                <a data-lightbox="image-1" data-title="Gallery" href="<?php echo base_url().$images;?>">
-						                     <img class="img-responsive" alt="" src="<?php echo base_url().$images;?>" data-echo="<?php echo base_url().$images;?>" />
+											if($product_id == $products_detail['id'] )
+											{
+												$wishlist_class='background-color: #f80a6c; border-color: #f80a6c;';
+											}
+											else
+											{
+												$wishlist_class='';
+											}
+										}
+										
+
+										$products_images =unserialize($products_detail['images']);
+										if(!empty($products_images))
+										{
+											foreach ($products_images as $key => $images) 
+											{
+												if(!empty($images))
+												{
+?>
+						            <div class="single-product-gallery-item" id="slide<?= $key ?>">
+						                <a data-lightbox="image-1" data-title="Gallery" href="<?= base_url().$images; ?>">
+						                     <img class="img-responsive" alt="" src="<?= base_url().$images; ?>" data-echo="<?= base_url().$images; ?>" />
 						                </a>
 						            </div><!-- /.single-product-gallery-item -->
 <?php
-	}
-		}
-	}
-
+												}
+								            }
+						            	}	
 ?>
         						</div><!-- /.single-product-slider -->
 
@@ -220,29 +232,28 @@
 						                    </a>
 						                </div>
 <?php
-	// $products_images = implode(',', array_unique(explode(',', $products_detail['images'])));
+										// $products_images = implode(',', array_unique(explode(',', $products_detail['images'])));
 
-	// $products_images = explode(',', $products_images);
-
-	$products_images = unserialize($products_detail['images']);
-
-	if (!empty($products_images))
-	{
-		foreach ($products_images as $key => $images)
-		{
-			if (!empty($images))
-			{
-			?>
+										// $products_images = explode(',', $products_images);
+										
+										$products_images =unserialize($products_detail['images']);
+										if(!empty($products_images))
+										{
+										foreach ($products_images as $key => $images) 
+										{
+											if(!empty($images))
+											{
+										
+?>
 						                <div class="item">
-						                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="<?php echo $key?>" href="#slide<?php echo $key?>">
-						                        <img class="img-responsive" width="85" alt="" src="<?php echo base_url().$images;?>" data-echo="<?php echo base_url().$images;?>"/>
+						                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="<?= $key ?>" href="#slide<?= $key ?>">
+						                        <img class="img-responsive" width="85" alt="" src="<?= base_url().$images; ?>" data-echo="<?= base_url().$images; ?>"/>
 						                    </a>
 						                </div>
 <?php
-	}
-		}
-	}
-
+										}
+						            	}
+						            }	
 ?>
           						</div><!-- /#owl-single-product-thumbnails -->
         						</div><!-- /.gallery-thumbs -->
@@ -250,38 +261,34 @@
 						</div><!-- /.gallery-holder -->
 						<div class='col-sm-6 col-md-7 product-info-block'>
 							<div class="product-info">
-								<h1 class="name"><?php echo $products_detail['name']; ?></h1>
+								<h1 class="name"><?php echo $products_detail['name'];?></h1>
 
 								<div class="rating-reviews m-t-20">
 									<div class="row">
 										<div class="col-sm-3">
-<?php
-
-	if (!empty(get_star_rating($products_detail['id'])))
-	{
-		$width = (get_star_rating($products_detail['id']) * 70) / 5;
-	?>
+<?php 
+											if(!empty(get_star_rating($products_detail['id']) ))
+											{
+												$width =(get_star_rating($products_detail['id']) *70 ) / 5;
+?>
 											<div class="rating-star rateit-small">
-												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
 											</div>
 <?php
-	}
-
+										}
 ?>
 										</div>
 <?php
-
-	if ($reviews > 0)
-	{
-	?>
+									if($reviews > 0)
+									{
+?>
 										<div class="col-sm-8">
 											<div class="reviews">
-												<a href="#" class="lnk"><?php echo '('.$reviews.' Reviews)'?></a>
+												<a href="#" class="lnk"><?= "(".$reviews." Reviews)"?></a>
 											</div>
 										</div>
 <?php
-	}
-
+									}
 ?>
 									</div><!-- /.row -->
 								</div><!-- /.rating-reviews -->
@@ -290,62 +297,58 @@
 									<div class="row">
 										<div class="col-sm-2">
 											<div class="stock-box">
-												<span class="label"><?php _el('availability');?></span>
+												<span class="label"><?php _el('availability'); ?></span>
 											</div>
 										</div>
-<?php
-
-	if ($products_detail['quantity'] > 0)
-	{
-	?>
+<?php 
+									if($products_detail['quantity'] > 0)
+									{
+?>
 										<div class="col-sm-9">
 											<div class="stock-box">
-												<span class="value"><?php _el('in_stock');?></span>
+												<span class="value"><?php _el('in_stock'); ?></span>
 											</div>
 										</div>
 <?php
-	}
-	else
-	{
-	?>
+									}
+									else
+									{
+?>
 										<div class="col-sm-9">
 											<div class="stock-box">
 												<span class="value"><?php _el('out_of_stock');?></span>
 											</div>
 										</div>
 <?php
-	}
-
+									}
 ?>
 									</div><!-- /.row -->
 								</div><!-- /.stock-container -->
 
 								<div class="description-container m-t-20">
-									<?php echo $products_detail['short_description']; ?>
+									<?php echo $products_detail['short_description'];?>
 								</div><!-- /.description-container -->
 
 								<div class="price-container info-container m-t-20">
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="price-box">
-												<span class="price"><?php echo $products_detail['price']; ?></span>
-												<span class="price-strike"><?php echo $products_detail['old_price']; ?></span>
+												<span class="price"><?php echo $products_detail['price'];?></span>
+												<span class="price-strike"><?php echo $products_detail['old_price'];?></span>
 											</div>
 										</div>
 
 										<div class="col-sm-6">
 											<div class="favorite-button m-t-10">
-<?php
-
-	if (is_user_logged_in() == TRUE)
-	{
-	?>
-												<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" onclick="add_wishlist_products(<?php echo $products_detail['id'];?>)" href="javascript:void(0);">
+<?php 
+												if(is_user_logged_in() == TRUE)
+												{
+?>
+												<a class="btn btn-primary" style="<?= $wishlist_class ?>" id="lnk-wishlist-<?= $products_detail['id'] ?>"data-toggle="tooltip" data-placement="right" title="Wishlist" onclick="add_wishlist_products(<?= $products_detail['id']; ?>)" href="javascript:void(0);">
 												    <i class="fa fa-heart"></i>
 												</a>
 <?php
-	}
-
+												}
 ?>
 												<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="E-mail" href="#">
 												    <i class="fa fa-envelope"></i>
@@ -365,49 +368,45 @@
 											<div class="cart-quantity">
 												<div class="quant-input">
 <?php
-
-	if ($products_detail['quantity'] > 0)
-	{
-	?>
+								                if( $products_detail['quantity'] > 0)
+								               	{
+?>
 									                <div class="arrows">
 
-									                  <div class="arrow plus gradient" ><span class="ir" ><i class="icon fa fa-sort-asc" onclick="increment_quntity('<?php echo $products_detail['quantity']; ?>')"></i></span></div>
-									                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc" onclick="decrement_quntity()"></i></span></div>
+									                  <div class="arrow plus gradient" ><span class="ir" ><i class="icon fa fa-sort-asc" onclick="increment_quntity('<?php  echo $products_detail['quantity']; ?>')"></i></span></div>
+									                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc" onclick="decrement_quntity()"></i></span></div> 
 									                </div>
-
+									               
 									                <input type="text" id="procuct-quantity" value="1">
 <?php
-	}
-	else
-	{
-	?>
+								                }
+								                else
+								                {
+?>
 									               	<input type="text" value="0" disabled="disabled">
 <?php
-	}
-
+								            	}
 ?>
 								              </div>
 								            </div>
 										</div>
 <?php
-
-	if ($products_detail['quantity'] > 0)
-	{
-	?>
+									if( $products_detail['quantity'] > 0)
+								    { 
+?>
 										<div class="col-sm-7">
-											<a href="javascript:void(0);" id="add_cart" onclick="add_to_cart(<?php echo $products_detail['id'];?> )" class="btn btn-primary" ><i class="fa fa-shopping-cart inner-right-vs"></i><?php _el('add_to_cart');?></a>
+											<a href="javascript:void(0);" id="add_cart" onclick="add_to_cart(<?= $products_detail['id'];?> )" class="btn btn-primary" ><i class="fa fa-shopping-cart inner-right-vs"></i> <?php _el('add_to_cart'); ?></a>
 										</div>
 <?php
-	}
-	else
-	{
-	?>
+									}
+									else
+									{
+?>
 										<div class="col-sm-7">
-											<a href="#" class="btn btn-primary" disabled="disabled"><i class="fa fa-shopping-cart inner-right-vs"></i><?php _el('add_to_cart');?></a>
+											<a href="#" class="btn btn-primary" disabled="disabled"><i class="fa fa-shopping-cart inner-right-vs"></i><?php _el('add_to_cart'); ?></a>
 										</div>
 <?php
-	}
-
+									}
 ?>
 									</div><!-- /.row -->
 								</div><!-- /.quantity-container -->
@@ -420,19 +419,19 @@
 					<div class="row">
 						<div class="col-sm-3">
 							<ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
-								<li class="active"><a data-toggle="tab" href="#description"><?php _el('description');?></a></li>
+								<li class="active"><a data-toggle="tab" href="#description"><?php _el('description'); ?></a></li>
 <?php
 
-	if (is_user_logged_in())
-	{
-	?>
-									<li><a data-toggle="tab" href="#review"><?php _el('review');?></a></li>
+								if (is_user_logged_in())
+								{
+?>
+									<li><a data-toggle="tab" href="#review"><?php _el('review'); ?></a></li>
 <?php
-	}
+								}
 
 ?>
-								<li><a data-toggle="tab" href="#tags"><?php _el('tags');?></a></li>
-								<li><a data-toggle="tab" href="#comments"><?php _el('comments');?></a></li>
+								<li><a data-toggle="tab" href="#tags"><?php _el('tags'); ?></a></li>
+								<li><a data-toggle="tab" href="#comments"><?php _el('comments'); ?></a></li>
 							</ul><!-- /.nav-tabs #product-tabs -->
 						</div>
 						<div class="col-sm-9">
@@ -441,73 +440,69 @@
 
 								<div id="description" class="tab-pane in active">
 									<div class="product-tab">
-										<p class="text"><?php echo $products_detail['long_description']; ?> </p>
+										<p class="text"><?php echo $products_detail['long_description'];?> </p>
 									</div>
 								</div><!-- /.tab-pane -->
 								<div id="review" class="tab-pane">
 <?php
-
-	if (is_user_logged_in())
-	{
-	?>
+								if (is_user_logged_in())
+								{
+?>
 									<div class="product-tab">
 
 										<div class="product-reviews">
-											<h4 class="title"><?php _el('customer_reviews');?></h4>
+											<h4 class="title"><?php _el('customer_reviews'); ?></h4>
 
 											<div class="reviews">
 <?php
-	$user_id           = '';
-		$review_product_id = '';
+												$user_id='';
+												$review_product_id='';
+												if(!empty($reviews_data))
+												{
+													foreach ($reviews_data as $reviews_msg) 
+													{
+														$user_id=$reviews_msg['user_id'];
+														$review_product_id=$reviews_msg['product_id'];
+														$to_date     = strtotime(date("Y-m-d h:i:sa"));
+														$date        = $reviews_msg['add_date'];
+														$review_date = strtotime($date);
+														$distance    = $to_date - $review_date;
+														
+														$years  = floor($distance/(365*60*60*24));
+														$months = floor(($distance - $years * 365*60*60*24) / (30*60*60*24));
+														$days   = floor(($distance - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
 
-		if (!empty($reviews_data))
-		{
-			foreach ($reviews_data as $reviews_msg)
-			{
-				$user_id           = $reviews_msg['user_id'];
-				$review_product_id = $reviews_msg['product_id'];
-				$to_date           = strtotime(date('Y-m-d h:i:sa'));
-				$date              = $reviews_msg['add_date'];
-				$review_date       = strtotime($date);
-				$distance          = $to_date - $review_date;
-
-				$years  = floor($distance / (365 * 60 * 60 * 24));
-				$months = floor(($distance - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-				$days   = floor(($distance - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
-
-			?>
+?>
 												<div class="review">
-													<div class="review-title"><span class="summary"><?php echo $reviews_msg['review'];?></span>
+													<div class="review-title"><span class="summary"><?= $reviews_msg['review'];?></span>
 <?php
-
-				if ($days > 0)
-				{
-				?>
-														<span class="date"><i class="fa fa-calendar"></i><span><?php echo $days?><?php _el('days_ago');?></span>
+													if($days >0)
+													{
+?>
+														<span class="date"><i class="fa fa-calendar"></i><span><?= $days ?> <?php _el('days_ago');?></span>
 <?php
-	}
-
-			?>
+													}
+?>
 													</span></div>
 													<!-- <div class="text">"Lorem ipsum dolor sit amet, consectetur adipiscing elit.Aliquam suscipit."</div> -->
 												</div>
 <?php	# code...
-			}
-		}
-
-	?>
+													}
+												}
+?>
 
 											</div><!-- /.reviews -->
 										</div><!-- /.product-reviews -->
 
 								<?php
-
-										if (!in_array($user_id, $user_review_use_id) && !in_array($products_id, $user_review_products_id))
-										{
-										?>
+									
+									if(!in_array($user_id,$user_review_use_id ) && ! in_array($products_id, $user_review_products_id))
+									{
+									
+								?>
 									<form  id="frm_review">
 										<div class="product-add-review">
-											<h4 class="title"><?php _el('write_your_own_review');?></h4>
+											<h4 class="title"><?php _el('write_your_own_review'); ?></h4>
 											<div class="review-table">
 												<div class="table-responsive">
 													<table class="table">
@@ -524,7 +519,7 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td class="cell-label"><?php _el('quality');?></td>
+																<td class="cell-label"><?php _el('quality'); ?></td>
 																<td><input type="radio" name="quality" class="radio" value="1"></td>
 																<td><input type="radio" name="quality" class="radio" value="2"></td>
 																<td><input type="radio" name="quality" class="radio" value="3"></td>
@@ -539,19 +534,19 @@
 
 											<div class="review-form">
 												<div class="form-container">
-
+												
 
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="exampleInputName"><?php _el('your_name');?> <span class="astk">*</span></label>
+																	<label for="exampleInputName"><?php  _el('your_name');?> <span class="astk">*</span></label>
 																	<input type="text" class="form-control txt" id="name" name="name" placeholder="enter name">
-
+																	
 																</div><!-- /.form-group -->
 																<!-- <div class="form-group">
 																	<label for="exampleInputSummary"><?php _el('summary');?><span class="astk">*</span></label>
 																	<input type="text" class="form-control txt" id="summary" name="summary" placeholder="enter summary">
-
+																	
 																</div> --><!-- /.form-group -->
 															</div>
 
@@ -577,23 +572,21 @@
 										<div class="alert alert-success alert-block fade in"><span class="add-review-success"><?php _el('review_submit_successfully');?></span></div>
 									</div>
 <?php
-	}
-		else
-		{
-		?>
+								}
+								else
+								{
+?>
 									<div class="product-add-review">
-
+										
 										<div  class="alert alert-success alert-block fade in"><?php _el('review_submit_successfully');?></div>
-
+									
 									</div>
 <?php
-	}
-
-	?>
+								}
+?>
 							        </div><!-- /.product-tab -->
 <?php
-	}
-
+							}
 ?>
 								</div><!-- /.tab-pane -->
 								<!-- =================================================================================== -->
@@ -605,42 +598,38 @@
 
 											<div class="reviews">
 												<?php
-
-													if (!empty($comments_data))
+													if(!empty($comments_data))
 													{
-														foreach ($comments_data as $key => $comments)
+														foreach ($comments_data as $key => $comments) 
 														{
-															$to_date     = strtotime(date('Y-m-d h:i:sa'));
+															$to_date     = strtotime(date("Y-m-d h:i:sa"));
 															$date        = $comments['add_date'];
 															$review_date = strtotime($date);
 															$distance    = $to_date - $review_date;
-
-															$years  = floor($distance / (365 * 60 * 60 * 24));
-															$months = floor(($distance - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-															$days   = floor(($distance - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
-														?>
+															
+															$years  = floor($distance/(365*60*60*24));
+															$months = floor(($distance - $years * 365*60*60*24) / (30*60*60*24));
+															$days   = floor(($distance - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+													?>
 
 												<div class="review">
-													<div class="review-title"><!-- <span class="summary"><?php echo $comments['comment'];?></span> -->
-														<div class="text summary">"<?php echo $comments['comment'];?>"
+													<div class="review-title"><!-- <span class="summary"><?= $comments['comment'];?></span> -->
+														<div class="text summary">"<?= $comments['comment'];?>"
 <?php
-
-			if ($days > 0)
-			{
-			?>
-														<span class="date"><i class="fa fa-calendar"></i><span><?php echo $days;?><?php _el('days_ago');?></span>
+													if($days >0)
+													{
+?>
+														<span class="date"><i class="fa fa-calendar"></i><span><?= $days;?> <?php _el('days_ago');?></span>
 <?php
-	}
-
-		?>
+													}
+?>
 													</span></div>
-													</div>
+													</div>	
 												</div>
 												<?php
-													# code...
+															# code...
 														}
 													}
-
 												?>
 
 											</div><!-- /.reviews -->
@@ -658,7 +647,7 @@
 														<div class="row">
 															<div class="col-sm-6">
 																<div class="form-group">
-																	<label for="name"><?php _el('your_name');?><span class="astk">*</span></label>
+																	<label for="name"><?php _el('your_name'); ?><span class="astk">*</span></label>
 																	<input type="text" name="name" class="form-control txt" id="name" placeholder="">
 																</div><!-- /.form-group -->
 																<div class="form-group">
@@ -690,15 +679,15 @@
 								</div><!-- /.tab-pane -->
 								<div id="tags" class="tab-pane">
 									<div class="product-tag">
-
-										<h4 class="title"><?php _el('product_tags');?></h4>
+									
+										<h4 class="title"><?php _el('product_tags'); ?></h4>
 										<form id="frm_tags" role="form" class="form-inline form-cnt">
 											<div class="form-container">
 												<div class="tags-success-msg"></div>
 												<div class="form-group">
 													<label for="exampleInputTag"><?php _el('add_your_tags');?></label>
 													<input type="text" name="tags_name" id="exampleInputTag" class="form-control txt">
-
+													
 												</div>
 
 												<button class="btn btn-upper btn-primary" type="submit"><?php _el('add_tags');?></button>
@@ -713,7 +702,7 @@
 												<span class="text col-md-offset-3"><?php _el('tags_msg');?></span>
 											</div>
 										</form><!-- /.form-cnt -->
-
+									
 									</div><!-- /.product-tab -->
 								</div><!-- /.tab-pane -->
 
@@ -728,38 +717,56 @@
 					<div class="owl-carousel home-owl-carousel upsell-product custom-carousel owl-theme outer-top-xs">
 
 <?php
+					foreach ($upsell_products as $key => $upsell)
+					{	
+						$whishlist_data = get_wishlist_data($upsell->id);
 
-	foreach ($upsell_products as $key => $upsell)
-	{
-	?>
+						$product_id='';
+						$wishlist_class='';
+						if(!empty($whishlist_data))
+						{
+							foreach ($whishlist_data as $key => $value) 
+							{
+								$product_id=$value['product_id'];
+							}
+
+							if($product_id == $upsell->id )
+							{
+								$wishlist_class='background-color: #f80a6c; border-color: #f80a6c;';
+							}
+							else
+							{
+								$wishlist_class='';
+							}
+						}
+										
+?>
 						<div class="item item-carousel">
 							<div class="products">
 								<div class="product">
 									<div class="product-image">
 										<div class="image">
-												<a href="<?php echo site_url('Products/'.$upsell->slug);?>"><img  src="<?php echo base_url().$upsell->thumb_image; ?> " alt=""></a>
+												<a href="<?= site_url('Products/'. $upsell->slug); ?>"><img  src="<?php echo base_url(). $upsell->thumb_image; ?> " alt=""></a>
 						    			</div><!-- /.image -->
 										<div class="tag sale"><span>sale</span></div>
 									</div><!-- /.product-image -->
 									<div class="product-info text-left">
-										<h3 class="name"><a href="<?php echo site_url('Products/'.$upsell->slug);?>"><?php echo $upsell->name;?></a></h3>
-<?php
-
-		if (!empty(get_star_rating($upsell->id)))
-		{
-			$width = (get_star_rating($upsell->id) * 70) / 5;
-		?>
+										<h3 class="name"><a href="<?= site_url('Products/'. $upsell->slug); ?>"><?= $upsell->name; ?></a></h3>
+<?php 
+											if(!empty(get_star_rating( $upsell->id) ))
+											{
+												$width =(get_star_rating( $upsell->id) *70 ) / 5;
+?>
 											<div class="rating-star rateit-small">
-												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
 											</div>
 <?php
-	}
-
-	?>
+											}
+?>
 										<div class="description"></div>
 										<div class="product-price">
-											<span class="price"><?php echo $upsell->price;?></span>
-											<span class="price-before-discount"><?php echo $upsell->old_price;?></span>
+											<span class="price"><?= $upsell->price; ?></span>
+											<span class="price-before-discount"><?= $upsell->old_price; ?></span>
 										</div><!-- /.product-price -->
 									</div><!-- /.product-info -->
 									<div class="cart clearfix animate-effect">
@@ -767,24 +774,22 @@
 											<ul class="list-unstyled">
 												<li class="add-cart-button btn-group">
 													<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-														<i class="fa fa-shopping-cart" onclick="add_to_cart(<?php echo $upsell->id?>);"></i>
+														<i class="fa fa-shopping-cart" onclick="add_to_cart(<?= $upsell->id ?>);"></i>
 													</button>
-													<button class="btn btn-primary cart-btn" type="button" onclick="add_to_cart(<?php echo $upsell->id?>)"><?php _el('add_to_cart');?></button>
+													<button class="btn btn-primary cart-btn" type="button" onclick="add_to_cart(<?= $upsell->id ?>)"><?php _el('add_to_cart'); ?></button>
 								        		</li>
 <?php
-
-		if (is_user_logged_in())
-		{
-		?>
-				                				<li class="lnk wishlist">
-													<a class="add-to-cart" href="<?php echo site_url('Products/'.$upsell->slug);?>" title="Wishlist">
+						        			if(is_user_logged_in())
+						        			{
+?>
+				                				<li class="lnk wishlist" id="lnk-wishlist-<?= $upsell->id ?>" style="<?= $wishlist_class ?>">
+													<a class="add-to-cart" href="<?= site_url('Products/'. $upsell->slug); ?>" title="Wishlist">
 														 <i class="icon fa fa-heart"></i>
 													</a>
 												</li>
 <?php
-	}
-
-	?>
+											}
+?>
 											</ul>
 										</div><!-- /.action -->
 									</div><!-- /.cart -->
@@ -792,8 +797,7 @@
 							</div><!-- /.products -->
 						</div><!-- /.item -->
 <?php
-	}
-
+					}
 ?>
 					</div><!-- /.home-owl-carousel -->
 				</section><!-- /.section -->
@@ -806,10 +810,10 @@
 <!-- ================================== BODY Content : END ========================================================= -->
 
 <script type="text/javascript">
-
-
-	let products_id="<?php echo $products_id;?>";
-
+		
+	
+	let products_id="<?= $products_id;?>";
+	
 	$(document).ready(function(){
 
 	$.validator.addMethod("alphabetsnspace", function(value, element) {
@@ -833,14 +837,14 @@
                 emailExists: true
 
             },
-
+           
         },
         messages: {
             email: {
                 required:"<?php _el('please_enter_', _l('email'))?>",
                 email:"<?php _el('please_enter_valid_', _l('email'))?>"
             },
-
+           
         }
     });
 
@@ -859,21 +863,21 @@
     			success:function(msg)
     			{
     				if(msg == 'exit')
-    				{
+    				{	
     					var msg="<?php _el('email_exists');?>";
     					$('.newletter-span-exits').html(msg);
     					$("#exampleInputEmail1").val("");
     				}
     				else if(msg == 'success')
     				{
-
+    					
     					var msg="<?php _el('email_subscribe_successfully');?>";
     					var div="<div class='alert alert-success alert-block fade in ' style='color: green'> <button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div>";
-
+    					
     					$('.newletter-span-sucess').html(div);
     					$("#exampleInputEmail1").val("");
     				}
-
+    				
     			}
 
     		});
@@ -889,29 +893,29 @@
             	required:true,
             	alphabetsnspace:true,
             },
-
+            
             reviews:{
             	  required: true,
             	  alphabetsnspace:true,
 		          minlength: 10,
             },
-
+           
         },
         messages: {
             name: {
             	required:"<?php _el('please_enter_', _l('name'))?>",
             	alphabetsnspace:"<?php _el('only_letter_enter')?>",
             },
-
+            
             reviews:{
             	required:"<?php _el('please_enter_', _l('review'))?>",
             	alphabetsnspace:"<?php _el('only_letter_enter')?>",
             	minlength: "<?php _el('min_length_required')?>",
 
             },
-
+           
         },
-
+       
     });
 
     $("#frm_review").on('submit',function(e){
@@ -930,7 +934,7 @@
     		var name=$("#name").val();
 	    	// var summary=$("#summary").val();
 	    	var review=$.trim($("#reviews").val());
-
+	    	
 	    	$.ajax({
 	    			type:'POST',
 	    			url: SITE_URL+'Review/add_products_review',
@@ -942,9 +946,9 @@
 
 	    					$('.product-add-review').html("");
 	    					$('.product-add-review-success').css('display','block');
-
-	    				}
-
+	    				
+	    				}	
+	    				
 	    			}
 
 	    		});
@@ -952,8 +956,8 @@
     	}
 
 
-
-
+    	
+    	
     });
 
     $("#frm_comments").validate
@@ -963,7 +967,7 @@
             	required:true,
             	alphabetsnspace:true,
             },
-
+           
             email:{
             	required: true,
                 email: true,
@@ -973,7 +977,7 @@
             	alphabetsnspace:true,
             	minlength: 10,
             },
-
+           
         },
         messages: {
             name: {
@@ -989,9 +993,9 @@
             	alphabetsnspace:"<?php _el('not_start_space');?>",
             	minlength:"<?php _el('min_length_required')?>",
             },
-
+           
         },
-
+       
     });
 
     $("#frm_comments").on('submit',function(e){
@@ -1018,8 +1022,8 @@
 
 		});
     	}
-
-
+    	
+    	
 
     });
 
@@ -1061,11 +1065,11 @@
 			data:{ tags:tags,products_id:products_id },
 			success:function(msg)
 			{
-
+				
 				if(msg == 'exits')
 				{
 					$(".errorTxt").html(" ");
-					var msg="<?php _el('tags-exits');?>";
+					var msg="<?php _el('tags-exits'); ?>";
 					var div = "<div class='tags-success-msg'><div class='alert alert-danger alert-block fade in'><button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div></div>";
 					$("#exampleInputTag").val("");
 					$(".tags-success-msg").html(div);
@@ -1073,7 +1077,7 @@
 				else if(msg == 'success')
 				{
 					$(".errorTxt").html("");
-					var msg="<?php _el('tags-sucess');?>";
+					var msg="<?php _el('tags-sucess'); ?>";
 					var div = "<div class='tags-success-msg'><div class='alert alert-success alert-block fade in'><button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div></div>";
 					$("#exampleInputTag").val("");
 					$(".tags-success-msg").html(div);
@@ -1088,13 +1092,13 @@
 			});
     	}
 
-
+    	
 
     });
-
+   
 });
 	var i = 1;
-    function increment_quntity(limit)
+    function increment_quntity(limit) 
     {
     	if(i < limit)
     	{
@@ -1102,7 +1106,7 @@
        		document.getElementById('procuct-quantity').value = i;
        		document.getElementById("procuct-quantity").setAttribute("value", i);
     	}
-
+      
     }
 
     function decrement_quntity()
@@ -1114,17 +1118,7 @@
     		document.getElementById("procuct-quantity").setAttribute("value", i);
     	}
     }
-    function add_wishlist_products(id)
-    {
-		$.ajax({
-			type:'POST',
-			url:SITE_URL+"Wishlist/add_wishlist_products",
-			data:{ products_id:id },
-			success:function(data){
-			}
+    
 
-		});
-    }
-
-
+   
 </script>

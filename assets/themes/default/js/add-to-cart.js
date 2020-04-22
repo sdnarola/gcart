@@ -12,11 +12,10 @@
 		$.ajax({
 
 			type:'POSt',
-			url:SITE_URL+"Cart/add_cart_product/",
+			url:SITE_URL+"Cart/add_cart_product",
 			data:{ product_id:id,quantity:quantity },
 			dataType:"JSON",
 			success:function(data){
-				console.log(data.wishlist_data);
 
 				document.getElementById("cart-dropdown").setAttribute("data-toggle", "dropdown");
 				total_row=data.row;
@@ -50,7 +49,7 @@
 
 					$("li .product-summary").html(product_data);
 				}
-				$('#wishlistdata-'+id).remove();
+				// $('#wishlistdata-'+id).remove();
 			}
 		});
 	}

@@ -3,7 +3,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('product_details');?></span>
+                <span class="text-semibold"><?php _el('product_detail');?></span>
             </h4>
         </div>
     </div>
@@ -15,7 +15,7 @@
             <li>
                 <a href="<?php echo base_url('vendor/products'); ?>"><?php _el('products');?></a>
             </li>
-            <li class="active"><?php _el('details');?></li>
+            <li class="active"><?php _el('detail');?></li>
         </ul>
     </div>
 </div>
@@ -27,15 +27,19 @@
             <!-- Panel -->
             <div class="panel panel-flat">
                 <!-- Panel heading -->
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3 class="panel-title">
+                                <strong><?php _el('product');?></strong>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
                 <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
                     <div class="row">
-                        <div class="form-group col-md-12">
-                            <div class="pull-right">
-                                <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
-                            </div>
-                        </div>
                         <div class="col-md-2">
                             <div class="thumbnail">
                                 <div class="thumb">
@@ -52,8 +56,6 @@
                             <table class="table table-hover table-framed table-sm table-striped rounded">
                                 <tbody>
                                     <tr> <td width="40%" class="text-semibold"><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($product['name']); ?></td> </tr>
-
-                                    <tr> <td width="40%" class="text-semibold"><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo $product['slug']; ?></td> </tr>
 
                                     <tr> <td width="40%" class="text-semibold"><?php _el('category');?></td><td width="10%">:</td><td width="40%" ><?php echo ucwords(get_category($product['category_id'], 'name')); ?></td> </tr>
 

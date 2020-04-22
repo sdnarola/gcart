@@ -143,7 +143,7 @@ class Products extends Vendor_Controller
 			{
 				$data['brands']         = $this->brands->get_all();
 				$data['categories']     = $this->categories->get_all();
-				$data['sub_categories'] = $this->categories->get_sub_categories_of_parent_category();
+				$data['sub_categories'] = $this->categories->get_sub_categories();
 				$data['products']       = $this->products->get_all();
 				$data['product']        = $this->products->get($id);
 
@@ -295,7 +295,7 @@ class Products extends Vendor_Controller
 	 */
 	public function get_sub_categories($id)
 	{
-		$data = $this->categories->get_sub_categories_of_parent_category($id);
+		$data = $this->categories->get_sub_categories($id);
 		echo json_encode($data);
 	}
 

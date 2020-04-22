@@ -9,12 +9,14 @@ class Home extends Frontend_Controller
 		$this->load->model('product_model', 'products');
 		$this->load->model('deal_model', 'deals');
 		$this->load->model('brand_model', 'brand');
+
 	}
 
 	public function index()
-	{
+	{		
 		$this->template->load('index', 'content', 'home');
 	}
+
 
 	/**
 	 * Loads the vendor store

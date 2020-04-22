@@ -150,7 +150,10 @@ function change_status(obj)
             }
         }
     });
+
 }
+
+
 
 /**
  * Change payment status when clicked on the status

@@ -9,7 +9,6 @@ class Faqs extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->load->model('Faq_model', 'faq');
 	}
 
@@ -21,6 +20,7 @@ class Faqs extends Admin_Controller
 		$this->set_page_title(_l('faq'));
 
 		$data['faq'] = $this->faq->get_all();
+		
 		$data['content'] = $this->load->view('admin/faqs/index',$data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
@@ -55,15 +55,16 @@ class Faqs extends Admin_Controller
 		if ($this->input->post())
 		{
 			$data = $this->input->post();
+			//print_r($data);
 			$data1 =array('question' => $data['title'],'answer' => $data['details']);
 
 			$insert = $this->faq->insert($data1);    
 
-			if ($insert)
-			{
-				set_alert('success', _l('_added_successfully', _l('faq')));
-				redirect('admin/faqs');
-			}
+						if ($insert)
+						{
+							set_alert('success', _l('_added_successfully', _l('faq')));
+							redirect('admin/faqs');
+						}
 		}
 		else
 		{
@@ -108,18 +109,22 @@ class Faqs extends Admin_Controller
 
 				$result = $this->faq->update($id,$data);
 
-				if($result)
-				{
-					set_alert('success', _l('_updated_successfully', _l('faq')));
-					redirect('admin/faqs');		
-				}	
+			
+				set_alert('success', _l('_updated_successfully', _l('faq')));
+				redirect('admin/faqs');			
 			} 
 			else 
 			{
 				$data['faq'] = $this->faq->get($id);
+				
 				$data['content'] = $this->load->view('admin/faqs/edit',$data, TRUE);
 				$this->load->view('admin/layouts/index', $data);
 			}	
 	}
 
 }
+
+	
+
+	
+	

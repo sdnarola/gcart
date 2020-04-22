@@ -25,6 +25,7 @@
         <div class="panel-heading mt-20">
             <div class="heading-elements">
                 <a href="<?php echo base_url('admin/brands/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new'); ?><i class="icon-plus-circle2 position-right"></i></a>
+
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected'); ?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
@@ -52,10 +53,10 @@
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $brand['id']; ?>">
                         </td>
 <?php 
-            $logo_name = basename($brand['logo']);
+            $file = basename($brand['logo']);
 ?>
                         <td>
-                                <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/brands/').$logo_name ?>" width="200" height="100" border=2>
+                                <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/brands/').$file ?>" width="200" height="100" border=2>
                         </td>
                         <td ><?php echo ucfirst($brand['name']); ?></td>
                         <td class="text-center">
@@ -198,4 +199,5 @@ function delete_selected()
         });
     });
 }
+
 </script>

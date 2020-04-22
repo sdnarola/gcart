@@ -12,13 +12,6 @@ class Profile extends Admin_Controller
 
 		$this->load->model('user_model', 'users');
 <<<<<<< HEAD
-		$this->load->model('vendor_model', 'vendors');
-	}
-
-	/**
-	 * Updates user's personal profile details.
-=======
-<<<<<<< HEAD
 		$this->load->model('activity_log_model', 'activity_log');
 	}
 
@@ -31,7 +24,6 @@ class Profile extends Admin_Controller
 	/**
 	 * Updates user's personal profile details.
 >>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
->>>>>>> feature/category-page
 	 */
 	public function edit()
 	{
@@ -41,11 +33,6 @@ class Profile extends Admin_Controller
 		if ($id)
 		{
 <<<<<<< HEAD
-			$data['user']      = $this->users->get($id);
-			$data['shop_name'] = get_vendor_info($id, 'shop_name');
-			$data['content']   = $this->load->view('admin/profile/edit', $data, TRUE);
-=======
-<<<<<<< HEAD
 			$data['user']    = $this->users->get($id);
 			$data['content'] = $this->load->view('admin/profile/edit', $data, TRUE);
 =======
@@ -53,14 +40,11 @@ class Profile extends Admin_Controller
 			$data['shop_name'] = get_vendor_info($id, 'shop_name');
 			$data['content']   = $this->load->view('admin/profile/edit', $data, TRUE);
 >>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
->>>>>>> feature/category-page
 			$this->load->view('admin/layouts/index', $data);
 		}
 
 		if ($this->input->post())
 		{
-<<<<<<< HEAD
-=======
 <<<<<<< HEAD
 			$data = array(
 				'firstname' => $this->input->post('firstname'),
@@ -76,7 +60,6 @@ class Profile extends Admin_Controller
 				set_alert('success', _l('_updated_successfully', _l('profile')));
 				log_activity("User Updated Profile [ID:$id]");
 =======
->>>>>>> feature/category-page
 			$data      = $this->input->post();
 			$shop_name = $data['shop_name'];
 			unset($data['shop_name']);
@@ -87,10 +70,7 @@ class Profile extends Admin_Controller
 			if ($update && $update_shop)
 			{
 				set_alert('success', _l('_updated_successfully', _l('profile')));
-<<<<<<< HEAD
-=======
 >>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
->>>>>>> feature/category-page
 				redirect('admin/profile/edit');
 			}
 		}
@@ -113,21 +93,15 @@ class Profile extends Admin_Controller
 			);
 
 <<<<<<< HEAD
-=======
-<<<<<<< HEAD
 			$update = $this->users->update($id, $data);
 
 			if ($update)
 =======
->>>>>>> feature/category-page
 			$update        = $this->users->update($id, $data);
 			$update_vendor = $this->vendors->update($id, $data);
 
 			if ($update && $update_vendor)
-<<<<<<< HEAD
-=======
 >>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
->>>>>>> feature/category-page
 			{
 				set_alert('success', _l('_updated_successfully', _l('password')));
 				redirect('admin/profile/edit');

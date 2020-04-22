@@ -61,7 +61,7 @@
                     </tr>
                      <tr>        
                         <td>
-            			<label class="info-title" for="mobile"><b><?php _el('mobile_no');?></b></label>
+            			<label class="info-title" for="mobile"><b><?php _el('mobile');?></b></label>
            			    </td>
                         <td class="form-control unicase-form-control text-input">
                             <?php echo $user['mobile']; ?>     
