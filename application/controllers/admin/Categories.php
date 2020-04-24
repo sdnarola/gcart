@@ -9,6 +9,7 @@ class Categories extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->load->model('category_model', 'categories');
 		$this->load->model('sub_category_model', 'sub_categories');
 	}
@@ -79,12 +80,12 @@ class Categories extends Admin_Controller
 		if ($this->input->post())
 		{
 			$data = $this->input->post();
-			print_r($data);
+
 			$data['is_active'] = ($this->input->post('is_active')) ? 1 : 0;
 			//for deactive subcategories status
-			$status                = array('is_active' => $data['is_active']);
-			$sub_categories_update = $this->sub_categories->update_subcategories_status($id, $status);
-			$upload_dir            = 'assets/uploads/main_categories/';
+			$status = array('is_active' => $data['is_active']);
+
+//$sub_categories_update = $this->sub_categories->update_subcategories_status($id, $status);
 
 			if ($_FILES['icon']['name'] != NULL)
 			{
@@ -107,8 +108,11 @@ class Categories extends Admin_Controller
 
 			$result = $this->categories->update($id, $data);
 
-			set_alert('success', _l('_updated_successfully', _l('category')));
-			redirect('admin/categories');
+			if ($result)
+			{
+				set_alert('success', _l('_updated_successfully', _l('category')));
+				redirect('admin/categories');
+			}
 		}
 		else
 		{
@@ -216,7 +220,7 @@ class Categories extends Admin_Controller
 	*/
 	public function get_sub_categories($id)
 	{
-		$data = $this->categories->get_sub_categories($id);
+		$data = $this->categories->get_sub_categories_of_parent_category($id);
 		echo json_encode($data);
 	}
 

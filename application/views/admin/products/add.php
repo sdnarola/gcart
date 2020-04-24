@@ -47,25 +47,12 @@
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name');?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name">
+                                <input type="text" class="form-control" placeholder="<?php _el('name');?>" id="name" name="name" oninput="generate_slug();">
                             </div>
-
                             <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
-                                <label><?php _el('brand');?>:</label>
-                                <select class="form-control select-search" name="brand_id" id="brand_id" >
-                                    <option value="0" selected readonly disabled >----- Select Brand -----</option>
-<?php
-
-	foreach ($brands as $key => $brand)
-	{
-	?>
-    <option value="<?php echo $brand['id']; ?>" name="brand"><?php echo ucwords($brand['name']); ?></option>
-<?php
-	}
-
-?>
-                                </select>
+                                <label><?php _el('slug');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('slug');?>" id="slug" name="slug">
                             </div>
                         </div>
                         <div class="row">
@@ -121,13 +108,29 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-md-12 ">
+                            <div class="form-group col-md-6">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('thumb_image');?>:</label>
                                 <input type="file" name="thumb_image" id="thumb_image" class="form-control">
                             </div>
-                        </div>
+                            <div class="form-group col-md-6">
+                                <small class="req text-danger">* </small>
+                                <label><?php _el('brand');?>:</label>
+                                <select class="form-control select-search" name="brand_id" id="brand_id" >
+                                    <option value="0" selected readonly disabled >----- Select Brand -----</option>
+<?php
 
+	foreach ($brands as $key => $brand)
+	{
+	?>
+    <option value="<?php echo $brand['id']; ?>" name="brand"><?php echo ucwords($brand['name']); ?></option>
+<?php
+	}
+
+?>
+                                </select>
+                            </div>
+                        </div>
                         <!-- for multiple images upload -->
                         <div class="row images field_wrapper" style="display: none;">
                             <div class="form-group col-md-12 ">
@@ -221,6 +224,9 @@ $("#product_form").validate({
         name: {
             required: true,
         },
+        slug: {
+            required: true,
+        },
         brand_id: {
             required: true,
         },
@@ -250,6 +256,9 @@ $("#product_form").validate({
     messages: {
         name: {
             required:"<?php _el('please_enter_', _l('name'))?>",
+        },
+        slug: {
+            required:"<?php _el('please_enter_', _l('slug'))?>",
         },
         brand_id: {
             required:"<?php _el('please_select_', _l('brand'))?>",
@@ -328,6 +337,7 @@ function get_sub_categories()
         data: { id:id },
         dataType: 'json',
         success:function(response){
+            // alert(response);
             if(response != null)
             {
                 var len = response.length;
@@ -338,10 +348,28 @@ function get_sub_categories()
                 }
             }
             else{
-                $("#sub_category_id").append("<option value='0' selected>No Sub Category</option>");
+                $("#sub_category_id").append("<option value='' class='sub_category'>No Sub Category</option>");
             }
 
         }
     });
 }
+
+/**
+ *  generate a slug from category_name
+ */
+function generate_slug()
+{
+    var str = document.getElementById('name').value;
+    var slug = '';
+    var trimmed = $.trim(str);
+    slug = trimmed.replace(/[^a-z0-9&-]/gi, '-').
+    replace(/[&]/g,'and').
+    replace(/-+/g, '-').
+    replace(/^-|-$/g, '');
+
+    var slug = slug.toLowerCase();
+    document.getElementById("slug").value = slug;
+}
+
 </script>

@@ -3,7 +3,7 @@
 	<div class="page-header-content">
 		<div class="page-title">
 			<h4>
-				<span class="text-semibold"><?php _el('edit');?><?php _el('vendor');?></span>
+				<span class="text-semibold"><?php _el('edit');?> <?php _el('vendor');?></span>
 			</h4>
 		</div>
 	</div>
@@ -23,10 +23,9 @@
 <!-- Content area -->
 <div class="content">
 <?php
-
 	if ($vendor)
 	{
-	?>
+?>
 					<div class="col-md-8 col-md-offset-2">
 						<!-- Panel -->
 						<div class="panel panel-flat">
@@ -47,26 +46,25 @@
 								<div class="row">
 									<div class="col-md-6">
 										<fieldset>
-											<legend class="text-semibold"><i class="icon-reading position-left"></i><?php _el('vendor')?><?php _el('details')?></legend>
+											<legend class="text-semibold"><i class="icon-reading position-left"></i><?php _el('vendor_details')?></legend>
 <?php
-
-		$file = basename($vendor['profile_image']);
-	?>
+		$image_name = basename($vendor['profile_image']);
+?>
 											<div class="form-group">
-												<label><?php _el('profile');?><?php _el('image');?>:</label>
+												<label><?php _el('profile');?>&nbsp<?php _el('image');?>:</label>
 										         <div>
-													<img src="<?php echo base_url().'assets/Uploads/vendors/profile/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="2"></img>
+													<img src="<?php echo base_url().'assets/Uploads/vendors/profile/'.$image_name; ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="2"></img>
 												</div>
 											</div>
 											<div class="form-group">
 												<small class="req text-danger">* </small>
 												<label><?php _el('firstname');?>:</label>
-												<input type="text" class="form-control" placeholder="<?php _el('firstname');?>" id="firstname" name="firstname" value="<?php echo ucfirst($vendor['firstname']); ?>">
+												<input type="text" class="form-control" placeholder="<?php _el('firstname');?>" id="firstname" name="firstname" value="<?php echo $vendor['firstname']; ?>">
 											</div>
 											<div class="form-group">
 												<small class="req text-danger">* </small>
 												<label><?php _el('lastname');?>:</label>
-												<input type="text" class="form-control" placeholder="<?php _el('lastname');?>" id="lastname" name="lastname" value="<?php echo ucfirst($vendor['lastname']); ?>">
+												<input type="text" class="form-control" placeholder="<?php _el('lastname');?>" id="lastname" name="lastname" value="<?php echo $vendor['lastname']; ?>">
 											</div>
 											<div class="form-group">
 												<small class="req text-danger">* </small>
@@ -81,7 +79,7 @@
 											<div class="form-group">
 												<small class="req text-danger">* </small>
 												<label><?php _el('address');?>:</label>
-												<input type="text" class="form-control" placeholder="<?php _el('address');?>" id="address" name="address" value="<?php echo ucfirst($vendor['address']); ?>">
+												<input type="text" class="form-control" placeholder="<?php _el('address');?>" id="address" name="address" value="<?php echo $vendor['address']; ?>">
 											</div>
 											<div class="form-group">
 												<small class="req text-danger">* </small>
@@ -91,66 +89,63 @@
 											<div class="form-group">
 												<small class="req text-danger">* </small>
 												<label><?php _el('city');?>:</label>
-												<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo ucfirst($vendor['city']); ?>">
+												<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo $vendor['city']; ?>">
 											</div>
 <?php
 	$readonly = '';
-	?>
+?>
 											<div class="form-group">
 											<label><?php _el('status');?>:</label>
 											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $vendor['id']; ?>"<?php
-
-		if ($vendor['is_active'] == 1)
-		{
-			echo 'checked';}
-
-	?><?php echo $readonly; ?>>
+												if ($vendor['is_active'] == 1)
+												{
+													echo 'checked';
+												}
+											?><?php echo $readonly; ?>>
 											</div>
 										</fieldset>
 									</div>
 									<div class="col-md-6">
 										<fieldset>
-							                <legend class="text-semibold"><i class="icon-store position-left"></i><?php _el('shop')?><?php _el('details')?></legend>
+							                <legend class="text-semibold"><i class="icon-store position-left"></i><?php _el('shop_details')?></legend>
 <?php
-	$file = basename($vendor['logo']);
-	?>
+	$image_name = basename($vendor['logo']);
+?>
 													<div class="form-group">
-														<label><?php _el('shop');?>&nbsp<?php _el('logo');?>:</label>
-										                <div>
-															 <img src="<?php echo base_url().'assets/Uploads/vendors/logo/'.$file; ?>" alt="<?php _el('img_alt_msg')?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10"></img>
+														<label><?php _el('shop');?>&nbsp<?php _el('logo');?>:</label>	                <div>
+															<img src="<?php echo base_url().'assets/Uploads/vendors/logo/'.$image_name; ?>" alt="<?php _el('img_alt_msg')?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10"></img>
 														</div>
 													</div>
 													<div class="form-group">
 														<small class="req text-danger">* </small>
-														<label><?php _el('owner');?>&nbsp<?php _el('name');?>:</label>
-														<input type="text" class="form-control" placeholder="<?php _el('owner');?><?php _el('name');?> " id="owner_name" name="owner_name" value="<?php echo ucfirst($vendor['owner_name']); ?>">
+														<label><?php _el('owner_name');?>:</label>
+														<input type="text" class="form-control" placeholder="<?php _el('owner_name');?>" id="owner_name" name="owner_name" value="<?php echo $vendor['owner_name']; ?>">
 													</div>
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('shop');?>&nbsp<?php _el('name');?>:</label>
-														<input type="text" class="form-control" placeholder="<?php _el('shop');?><?php _el('name');?>" id="shop_name" name="shop_name" value="<?php echo ucfirst($vendor['shop_name']); ?>">
+														<input type="text" class="form-control" placeholder="<?php _el('shop');?><?php _el('name');?>" id="shop_name" name="shop_name" value="<?php echo $vendor['shop_name']; ?>">
 													</div>
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('shop');?>&nbsp<?php _el('number');?>:</label>
-														<input type="text" class="form-control" placeholder="<?php _el('shop');?><?php _el('number');?>" id="shop_number" name="shop_number" value="<?php echo ucfirst($vendor['shop_number']); ?>">
+														<input type="text" class="form-control" placeholder="<?php _el('shop');?><?php _el('number');?>" id="shop_number" name="shop_number" value="<?php echo $vendor['shop_number']; ?>">
 													</div>
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('shop');?>&nbsp<?php _el('details');?>:</label>
-														<textarea  rows="9" cols="50" class="form-control" placeholder="<?php _el('shop')?><?php _el('details')?>" id="shop_details" name="shop_details"><?php echo ucfirst($vendor['shop_details']); ?></textarea>
+														<textarea  rows="9" cols="50" class="form-control" placeholder="<?php _el('shop')?><?php _el('details')?>" id="shop_details" name="shop_details"><?php echo $vendor['shop_details']; ?></textarea>
 													</div>
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('total');?>&nbsp<?php _el('products');?>:</label>
-														<input type="text" class="form-control" placeholder="<?php _el('total');?><?php _el('products');?>" id="total_products" name="total_products" value="<?php echo ucfirst($vendor['total_products']); ?>">
+														<input type="text" class="form-control" placeholder="<?php _el('total');?><?php _el('products');?>" id="total_products" name="total_products" value="<?php echo $vendor['total_products']; ?>">
 													</div>
 										</fieldset>
 									</div>
 								</div>
 <?php
 	}
-
 ?>
 								<div class="row">
 			                        <div class="form-group col-md-12">
@@ -186,7 +181,7 @@ $("#vendor_edit_form").validate({
 		mobile: {
 			required: true,
             number: true,
-            minlength:10,
+            rangelength:[10,10],
 		},
 		address: {
 			required: true,
@@ -228,9 +223,9 @@ $("#vendor_edit_form").validate({
             email:"<?php _el('please_enter_valid_', _l('email'))?>",
 		},
 		mobile: {
-			required:"<?php _el('please_enter_', _l('lastname'))?>",
-			number: "plese enter only numbers",
-			minlength:"Please enter a valid 10 digit mobile number",
+			required:"<?php _el('please_enter_', _l('mobile_no'))?>",
+			number: "<?php _el('only_digits')?>",
+			rangelength:"<?php _el('only_10_digits') ?>",
 		},
 		address: {
 			required:"<?php _el('please_enter_', _l('address'))?>",
@@ -248,7 +243,7 @@ $("#vendor_edit_form").validate({
 			required:"<?php _el('please_enter_', (_l('shop').' '._l('name')))?>",
 		},
 		shop_number: {
-			number: "plese enter only numbers",
+			number: "<?php _el('only_digits')?>",
 			required:"<?php _el('please_enter_', (_l('shop').' '._l('number')))?>"
 
 		},
@@ -256,7 +251,7 @@ $("#vendor_edit_form").validate({
 			required:"<?php _el('please_enter_', (_l('shop').' '._l('details')))?>",
 		},
 		total_products: {
-			number: "plese enter only numbers",
+			number: "<?php _el('only_digits')?>",
 			required:"<?php _el('please_enter_', (_l('total').' '._l('products')))?>",
 		},
 

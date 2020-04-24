@@ -15,22 +15,4 @@ function get_star_rating($product_id)
 	return $star;
 }
 
-function get_wishlist_data($product_id, $info = '')
-{
-	$CI = &get_instance();
-	$CI->load->model('wishlist_model', 'wishlist');
-	$where['product_id'] = $product_id;
-	$where['user_id']    = $CI->session->userdata('user_id');
-	$product_data        = $CI->wishlist->get_wishlist_data($where);
-
-	if ($info != '')
-	{
-		return $product_data[$info];
-	}
-	else
-	{
-		return $product_data;
-	}
-}
-
 ?>

@@ -24,7 +24,6 @@
 <div class="content">
     <!-- Panel -->
     <div class="panel panel-flat">
-
         <!-- Panel heading -->
         <div class="panel-heading mt-20">
           <div class="heading-elements">
@@ -33,7 +32,6 @@
         </div>
     </div>
         <!-- /Panel heading -->
-
         <!-- Listing table -->
         <div class="panel-body table-responsive">
             <table id="plans_table" class="table table-bordered table-striped">
@@ -45,49 +43,43 @@
                         <th width="40%" ><?php _el('title');?></th>
                         <th width="15%" ><?php _el('cost');?></th>
                         <th width="15%" ><?php _el('duration');?>(<?php _el('days');?>)</th>
-                        <th width="20%" ><?php _el('product');?><?php _el('allowed');?></th>
+                        <th width="20%" ><?php _el('product');?>&nbsp<?php _el('allowed');?></th>
                         <th width="8%" class="text-center"><?php _el('actions');?></th>
                     </tr>
                 </thead>
                 <tbody>
 <?php
-
 	if ($plans)
 	{
 		foreach ($plans as $plan)
 		{
-		?>
-                    <tr >
-
+?>
+                    <tr>
                         <td class="text-center">
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $plan['id']; ?>" >
                         </td>
                         <td>
                             <?php echo ucfirst($plan['title']); ?>
                         </td>
-                         <td>
+                        <td>
                             <?php echo $plan['cost']; ?>
                         </td>
                         <td>
                             <?php echo ucfirst($plan['days']); ?>
                         </td>
-                         <td>
+                        <td>
                             <?php echo $plan['product_limit']; ?>
                         </td>
                         <td class="text-center">
-
                           <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/subscriptions/edit/').$plan['id']; ?>" id="<?php echo $plan['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
-
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $plan['id']; ?>);" class="text-danger" id="<?php echo $plan['id']; ?>"><i class=" icon-trash"></i></a>
-
                         </td>
                     </tr>
 <?php
+	   }
 	}
-	}
-
 ?>
-       </tbody>
+                </tbody>
             </table>
         </div>
         <!-- /Listing table -->
@@ -110,7 +102,6 @@ $(function() {
     //add class to style style datatable select box
     $('div.dataTables_length select').addClass('datatable-select');
  });
-
 
 var BASE_URL = "<?php echo base_url(); ?>";
 
@@ -217,5 +208,4 @@ function delete_selected()
         });
     });
 }
-
 </script>

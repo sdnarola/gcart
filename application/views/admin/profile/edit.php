@@ -95,13 +95,12 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<?php
-
 										if (null != $user['last_password_change'])
 										{
-										?>
+									?>
 									<small><?php _el('last_password_change_msg', time_to_words($user['last_password_change']))?></small>
-									<?php }
-
+									<?php 
+										}
 									?>
 								</div>
 								<div class="form-group">
@@ -173,8 +172,8 @@ $("#myprofileform").validate(
         },
         mobile: {
             required:"<?php _el('please_enter_', _l('contact_no'))?>",
-            digits:"Please Enter Only Digits",
-            rangelength: "Please enter 10 Digits only."
+            digits:"<?php _el('only_digits')?>",
+            rangelength: "<?php _el('only_10_digits') ?>"
 	    },
         email: {
          	required:"<?php _el('please_enter_', _l('email'))?>",

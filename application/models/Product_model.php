@@ -228,10 +228,11 @@ class Product_model extends MY_Model
 
 	public function get_whislist_products($product_id)
 	{
+// $start = ($page - 1) * 4;
 
-		// $start = ($page - 1) * 4;
-		// $this->db->limit($limit, $start);
-		// $sort = ($sort == 'name') ? $sort : 'price';
+// $this->db->limit($limit, $start);
+
+// $sort = ($sort == 'name') ? $sort : 'price';
 		// $this->db->order_by($sort, $order);
 		$this->db->where_in('id', $product_id);
 		$query  = $this->db->get('products');
@@ -260,7 +261,6 @@ class Product_model extends MY_Model
 	 */
 	public function get_all_products($where = array(), $page = 1, $limit = 1, $sort = 'name', $order = 'asc', $tags = '', $multiple_sub_category_id = '')
 	{
-		
 		if (empty($where))
 		{
 			return array();
@@ -487,7 +487,7 @@ class Product_model extends MY_Model
 	 */
 	public function get_hot_deals_products()
 	{
-		$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.product_id,hot_deals.type,hot_deals.value');
+		$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.product_id');
 		$this->db->from('products');
 		$this->db->join('hot_deals', 'products.id=hot_deals.product_id', 'inner');
 		$this->db->where(array('products.is_deleted' => 0, 'products.is_active' => 1, 'hot_deals.is_deleted' => 0, 'hot_deals.end_date >' => date('Y-m-d h:i:s'), 'hot_deals.start_date <' => date('Y-m-d h:i:s')));

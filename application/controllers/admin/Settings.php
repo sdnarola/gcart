@@ -16,10 +16,10 @@ class Settings extends Admin_Controller
 	 */
 	public function index()
 	{
-			$this->set_page_title(_l('settings'));
-			$data['settings'] = get_settings();
-			$data['content']  = $this->load->view('admin/settings/index', $data, TRUE);
-			$this->load->view('admin/layouts/index', $data);
+		$this->set_page_title(_l('settings'));
+		$data['settings'] = get_settings();
+		$data['content']  = $this->load->view('admin/settings/index', $data, TRUE);
+		$this->load->view('admin/layouts/index', $data);
 	}
 
 	/**
@@ -28,7 +28,7 @@ class Settings extends Admin_Controller
 	public function add()
 	{
 		$this->set_page_title(_l('settings').' | '._l('add'));
-	
+
 		if ($this->input->post())
 		{
 			foreach ($this->input->post() as $key => $value)

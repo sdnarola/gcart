@@ -31,6 +31,11 @@
                 <!-- Panel body -->
                 <div class="panel-body">
                     <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="pull-right">
+                                <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <table class="table table-hover table-framed table-sm table-striped rounded">
                               <thead>

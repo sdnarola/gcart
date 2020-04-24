@@ -32,25 +32,22 @@
                 </thead>
                 <tbody>
 <?php
-
 	if ($subscribers != ' ')
 	{
 		foreach ($subscribers as $subscriber)
 		{
-		?>
+?>
                     <tr>
                         <td>
                          <a href="mailto:<?php echo $subscriber['email'] ?> ?>"><?php echo $subscriber['email'] ?></a>
                         </td>
-
                         <td>
                             <?php echo date('jS F Y  h:i:s A', strtotime($subscriber['created_date'])); ?>
                         </td>
                     </tr>
 <?php
+	   }
 	}
-	}
-
 ?>
                 </tbody>
             </table>
@@ -74,5 +71,4 @@ $(function() {
     //add class to style style datatable select box
     $('div.dataTables_length select').addClass('datatable-select');
  });
-
 </script>

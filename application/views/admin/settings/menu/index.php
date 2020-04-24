@@ -12,7 +12,9 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('settings');?></li>
+            <li>
+                <a href="<?php echo base_url('admin/settings'); ?>"><?php _el('settings'); ?></a>
+            </li>
             <li class="active"><?php _el('menu_setup');?></li>
         </ul>
     </div>
@@ -32,12 +34,13 @@
 		        			<th width="30%" ><?php _el('display')?></th> 
 		        		</thead>
 		        		<tbody>
-		<?php
+<?php
 			$categories = get_all_categories();
+            $readonly = ' ';
+
 			foreach ($categories as $category) 
 			{
-				$readonly = ' ';
-		?>
+?>
 		<tr>
 			<td><?php echo ucfirst($category['name'])?></td>
 			<td>
@@ -53,10 +56,8 @@
 					</table>
 				</div>		
 			</div>
-			
         </div>
         <!-- /Listing table -->
-
     </div>
     <!-- /Panel -->
 </div>
@@ -103,7 +104,6 @@ function change_display_status(obj)
         	//alert(msg);
             if (msg == 'true')
             {   
-
                 jGrowlAlert("<?php _el('_activated', _l('display')); ?>", 'success');
             }
             else
@@ -113,5 +113,4 @@ function change_display_status(obj)
         }
     }); 
 }
- 
 </script>

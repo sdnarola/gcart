@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Banners extends Admin_Controller
+class Banners extends Admin_Controller 
 {
 	/**
 	 * Constructor for the class
@@ -9,13 +9,14 @@ class Banners extends Admin_Controller
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->load->model('banner_model', 'banners');
 	}
 
 	/**
 	 *  listing all banners
 	 */
-	public function index()
+	public function index() 
 	{
 		$this->set_page_title(_l('banners'));
 
@@ -27,39 +28,39 @@ class Banners extends Admin_Controller
 	/**
 	 * Add new banner
 	 */
-	public function add()
+	public function add() 
 	{
-		$this->set_page_title(_l('banners').' | '._l('add'));
+		$this->set_page_title(_l('banners') . ' | ' . _l('add'));
 
-		if ($this->input->post())
+		if ($this->input->post()) 
 		{
 			$data = $this->input->post();
 
-			if ($_FILES['banner']['name'] != NULL)
+			if ($_FILES['banner']['name'] != NULL) 
 			{
-				$result = upload_logo('assets/uploads/banners/', 'banner');
+				$result = upload_logo("assets/uploads/banners/", "banner");
 
-				if (!$result)
+				if (!$result) 
 				{
 					redirect('admin/banners/add');
 				}
 
 				$data['banner'] = $result;
-			}
-			else
+			} 
+			else 
 			{
 				$data['banner'] = 'assets/uploads/banners/default_banner.png';
 			}
 
 			$insert = $this->banners->insert($data);
 
-			if ($insert)
+			if ($insert) 
 			{
 				set_alert('success', _l('_added_successfully', _l('banner')));
 				redirect('admin/banners');
 			}
-		}
-		else
+		} 
+		else 
 		{
 			$data['content'] = $this->load->view('admin/settings/banners/add', ' ', TRUE);
 			$this->load->view('admin/layouts/index', $data);
@@ -71,22 +72,21 @@ class Banners extends Admin_Controller
 	 *
 	 * @param      int  $id     The identifier
 	 */
-	public function edit($id = '')
+	public function edit($id = '') 
 	{
-		$this->set_page_title(_l('banners').' | '._l('edit'));
+		$this->set_page_title(_l('banners') . ' | ' . _l('edit'));
 
-		if ($this->input->post())
+		if ($this->input->post()) 
 		{
 			$data = $this->input->post();
-			print_r($data);
 
-			if ($_FILES['banner']['name'] != NULL)
+			if ($_FILES['banner']['name'] != NULL) 
 			{
-				$result = upload_logo('assets/uploads/banners/', 'banner');
+				$result = upload_logo("assets/uploads/banners/", "banner");
 
-				if (!$result)
+				if (!$result) 
 				{
-					redirect('admin/banners/edit/'.$id);
+					redirect('admin/banners/edit/' . $id);
 				}
 
 				$data['banner'] = $result;
@@ -94,7 +94,7 @@ class Banners extends Admin_Controller
 				//for unlink image from folder
 				$old_upload_image = $this->banners->get($id);
 
-				if (basename($old_upload_image['banner']) != 'default_banner.png')
+				if (basename($old_upload_image['banner']) != 'default_banner.png') 
 				{
 					unlink($old_upload_image['banner']);
 				}
@@ -104,10 +104,10 @@ class Banners extends Admin_Controller
 
 			set_alert('success', _l('_updated_successfully', _l('banner')));
 			redirect('admin/banners');
-		}
-		else
+		} 
+		else 
 		{
-			$data['banner']  = $this->banners->get($id);
+			$data['banner'] = $this->banners->get($id);
 			$data['content'] = $this->load->view('admin/settings/banners/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
@@ -116,15 +116,15 @@ class Banners extends Admin_Controller
 	/**
 	 * Deletes the single banner record
 	 */
-	public function delete()
+	public function delete() 
 	{
 		$id = $this->input->post('banner_id');
 		//in soft delete move image to deleted folder
 		$old_upload_image = $this->banners->get($id);
-		$imagepath        = $old_upload_image['banner'];
-		$newpath          = 'assets/uploads/banners/deleted/'.basename($imagepath);
+		$imagepath = $old_upload_image['banner'];
+		$newpath = 'assets/uploads/banners/deleted/' . basename($imagepath);
 
-		if (basename($imagepath) != 'default_banner.png')
+		if (basename($imagepath) != 'default_banner.png') 
 		{
 			$copied = copy($imagepath, $newpath);
 			unlink($imagepath);
@@ -132,31 +132,31 @@ class Banners extends Admin_Controller
 
 		$deleted = $this->banners->delete($id);
 
-		if ($deleted)
+		if ($deleted) 
 		{
 			echo 'true';
-		}
-		else
+		} 
+		else 
 		{
 			echo 'false';
 		}
+
 	}
 
 	/**
 	 * Deletes multiple banners records
 	 */
-	public function delete_multiple()
+	public function delete_multiple() 
 	{
 		$where = $this->input->post('ids');
 		//in soft delete move image to deleted folder
 		$data = $this->banners->get_many($where);
-
-		foreach ($data as $record)
+		foreach ($data as $record) 
 		{
 			$imagepath = $record['banner'];
-			$newpath   = 'assets/uploads/banners/deleted/'.basename($imagepath);
+			$newpath = 'assets/uploads/banners/deleted/' . basename($imagepath);
 
-			if (basename($imagepath) != 'default_banner.png')
+			if (basename($imagepath) != 'default_banner.png') 
 			{
 				$copied = copy($imagepath, $newpath);
 				unlink($imagepath);
@@ -165,14 +165,16 @@ class Banners extends Admin_Controller
 
 		$deleted = $this->banners->delete_many($where);
 
-		if ($deleted)
+		if ($deleted) 
 		{
 			$ids = implode(',', $where);
 			echo 'true';
 		}
-		else
+		else 
 		{
 			echo 'false';
 		}
+
 	}
+
 }
