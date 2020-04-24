@@ -9,7 +9,7 @@ class Authentication extends My_Controller
 		$this->load->model('User_model', 'users');
 		$this->load->model('category_model', 'category');
 
-		if (get_settings('maintenance') == 1)
+		if (get_settings('maintenance') == 0)
 		{
 			redirect(site_url());
 		}

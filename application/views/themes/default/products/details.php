@@ -1,15 +1,15 @@
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
-<!--     <?php
-     	$ipaddress = $_SERVER['REMOTE_ADDR'];
-     echo $ipaddress;
-     ?> -->
+<!--                     <?php
+                     	$ipaddress = $_SERVER['REMOTE_ADDR'];
+                     echo $ipaddress;
+                     ?> -->
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
-				<li><a href="<?php echo site_url().'Home';?>"><?php _el('home');?></a></li>
-				<li><a href="<?php echo site_url('categories/'.$category_slug);?>"><?php echo ucwords($category_name);?></a></li>
-				<li class='active'><?php echo ucwords($products_name);?></li>
+				<li><a href="<?php echo site_url().'Home'; ?>"><?php _el('home');?></a></li>
+				<li><a href="<?php echo site_url('categories/'.$category_slug); ?>"><?php echo ucwords($category_name); ?></a></li>
+				<li class='active'><?php echo ucwords($products_name); ?></li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -45,29 +45,29 @@
 								<div class="products">
 									<div class="hot-deal-wrapper">
 										<div class="image">
-											<img src="<?php echo base_url().$hot_deals['thumb_image'];?>" alt="">
+											<img src="<?php echo base_url().$hot_deals['thumb_image']; ?>" alt="">
 										</div>
 <?php
 
 			if (!empty($hot_deals['off_percentage']))
 			{
 			?>
-										<div class="sale-offer-tag"><span><?php echo $hot_deals['off_percentage'].'%';?><br>off</span></div>
+										<div class="sale-offer-tag"><span><?php echo $hot_deals['off_percentage'].'%'; ?><br>off</span></div>
 <?php
 	}
 
 		?>
 <!--------------------------------------------------------------------- Timer counter ------------------------------------------------------------------------------------>
 									<script type="text/javascript">
-										time_counter("<?php echo $end_date;?>",<?php echo $hot_deals['id']?>);
+										time_counter("<?php echo $end_date; ?>",<?php echo $hot_deals['id'] ?>);
 									</script>
-										<div class="timing-wrapper" id="time_counter_<?php echo $hot_deals['id']?>" data-end-date="<?php echo $end_date;?>">
+										<div class="timing-wrapper" id="time_counter_<?php echo $hot_deals['id'] ?>" data-end-date="<?php echo $end_date; ?>">
 
 										</div>
 									</div><!-- /.hot-deal-wrapper -->
 <!--------------------------------------------------------------------- END Timer counter -------------------------------------------------------------------------------------->
 									<div class="product-info text-left m-t-20">
-										<h3 class="name"><a href="<?php echo site_url('Products/'.$hot_deals['slug']);?>"><?php echo $hot_deals['name'];?></a></h3>
+										<h3 class="name"><a href="<?php echo site_url('Products/'.$hot_deals['slug']); ?>"><?php echo $hot_deals['name']; ?></a></h3>
 <?php
 
 			if (!empty(get_star_rating($hot_deals['id'])))
@@ -76,7 +76,7 @@
 
 			?>
 											<div class="rating-star rateit-small">
-												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width ?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
 											</div>
 <?php
 	}
@@ -84,8 +84,8 @@
 		?>
 
 										<div class="product-price">
-											<span class="price"><?php echo $hot_deals['price'];?></span>
-										    <span class="price-before-discount"><?php echo $hot_deals['old_price'];?></span>
+											<span class="price"><?php echo $hot_deals['price']; ?></span>
+										    <span class="price-before-discount"><?php echo $hot_deals['old_price']; ?></span>
 										</div><!-- /.product-price -->
 									</div><!-- /.product-info -->
 
@@ -93,9 +93,9 @@
 										<div class="action">
 											<div class="add-cart-button btn-group">
 												<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-													<i class="fa fa-shopping-cart" onclick="add_to_cart(<?php echo $hot_deals['product_id'];?>)"></i>
+													<i class="fa fa-shopping-cart" onclick="add_to_cart(<?php echo $hot_deals['product_id']; ?>)"></i>
 												</button>
-												<button class="btn btn-primary cart-btn" onclick="add_to_cart(<?php echo $hot_deals['product_id'];?>)" type="button"><?php _el('add_to_cart');?></button>
+												<button class="btn btn-primary cart-btn" onclick="add_to_cart(<?php echo $hot_deals['product_id']; ?>)" type="button"><?php _el('add_to_cart');?></button>
 											</div>
 									    </div><!-- /.action -->
 								    </div><!-- /.cart -->
@@ -198,9 +198,9 @@
 			if (!empty($images))
 			{
 			?>
-						            <div class="single-product-gallery-item" id="slide<?php echo $key?>">
-						                <a data-lightbox="image-1" data-title="Gallery" href="<?php echo base_url().$images;?>">
-						                     <img class="img-responsive" alt="" src="<?php echo base_url().$images;?>" data-echo="<?php echo base_url().$images;?>" />
+						            <div class="single-product-gallery-item" id="slide<?php echo $key ?>">
+						                <a data-lightbox="image-1" data-title="Gallery" href="<?php echo base_url().$images; ?>">
+						                     <img class="img-responsive" alt="" src="<?php echo base_url().$images; ?>" data-echo="<?php echo base_url().$images; ?>" />
 						                </a>
 						            </div><!-- /.single-product-gallery-item -->
 <?php
@@ -234,8 +234,8 @@
 			{
 			?>
 						                <div class="item">
-						                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="<?php echo $key?>" href="#slide<?php echo $key?>">
-						                        <img class="img-responsive" width="85" alt="" src="<?php echo base_url().$images;?>" data-echo="<?php echo base_url().$images;?>"/>
+						                    <a class="horizontal-thumb" data-target="#owl-single-product" data-slide="<?php echo $key ?>" href="#slide<?php echo $key ?>">
+						                        <img class="img-responsive" width="85" alt="" src="<?php echo base_url().$images; ?>" data-echo="<?php echo base_url().$images; ?>"/>
 						                    </a>
 						                </div>
 <?php
@@ -250,7 +250,7 @@
 						</div><!-- /.gallery-holder -->
 						<div class='col-sm-6 col-md-7 product-info-block'>
 							<div class="product-info">
-								<h1 class="name"><?php echo $products_detail['name']; ?></h1>
+								<h1 class="name"><?php echo ucwords($products_detail['name']); ?></h1>
 
 								<div class="rating-reviews m-t-20">
 									<div class="row">
@@ -262,7 +262,7 @@
 		$width = (get_star_rating($products_detail['id']) * 70) / 5;
 	?>
 											<div class="rating-star rateit-small">
-												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width ?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
 											</div>
 <?php
 	}
@@ -276,7 +276,7 @@
 	?>
 										<div class="col-sm-8">
 											<div class="reviews">
-												<a href="#" class="lnk"><?php echo '('.$reviews.' Reviews)'?></a>
+												<a href="#" class="lnk"><?php echo '('.$reviews.' Reviews)' ?></a>
 											</div>
 										</div>
 <?php
@@ -340,7 +340,7 @@
 	if (is_user_logged_in() == TRUE)
 	{
 	?>
-												<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" onclick="add_wishlist_products(<?php echo $products_detail['id'];?>)" href="javascript:void(0);">
+												<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" onclick="add_wishlist_products(<?php echo $products_detail['id']; ?>)" href="javascript:void(0);">
 												    <i class="fa fa-heart"></i>
 												</a>
 <?php
@@ -370,9 +370,8 @@
 	{
 	?>
 									                <div class="arrows">
-
-									                  <div class="arrow plus gradient" ><span class="ir" ><i class="icon fa fa-sort-asc" onclick="increment_quntity('<?php echo $products_detail['quantity']; ?>')"></i></span></div>
-									                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc" onclick="decrement_quntity()"></i></span></div>
+									                	<div class="arrow plus gradient" ><span class="ir" ><i class="icon fa fa-sort-asc" onclick="increment_quntity('<?php echo $products_detail['quantity']; ?>')"></i></span></div>
+									                	<div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc" onclick="decrement_quntity()"></i></span></div>
 									                </div>
 
 									                <input type="text" id="procuct-quantity" value="1">
@@ -395,7 +394,7 @@
 	{
 	?>
 										<div class="col-sm-7">
-											<a href="javascript:void(0);" id="add_cart" onclick="add_to_cart(<?php echo $products_detail['id'];?> )" class="btn btn-primary" ><i class="fa fa-shopping-cart inner-right-vs"></i><?php _el('add_to_cart');?></a>
+											<a href="javascript:void(0);" id="add_cart" onclick="add_to_cart(<?php echo $products_detail['id']; ?> )" class="btn btn-primary" ><i class="fa fa-shopping-cart inner-right-vs"></i><?php _el('add_to_cart');?></a>
 										</div>
 <?php
 	}
@@ -477,13 +476,13 @@
 
 			?>
 												<div class="review">
-													<div class="review-title"><span class="summary"><?php echo $reviews_msg['review'];?></span>
+													<div class="review-title"><span class="summary"><?php echo $reviews_msg['review']; ?></span>
 <?php
 
 				if ($days > 0)
 				{
 				?>
-														<span class="date"><i class="fa fa-calendar"></i><span><?php echo $days?><?php _el('days_ago');?></span>
+														<span class="date"><i class="fa fa-calendar"></i><span><?php echo $days ?><?php _el('days_ago');?></span>
 <?php
 	}
 
@@ -621,14 +620,14 @@
 														?>
 
 												<div class="review">
-													<div class="review-title"><!-- <span class="summary"><?php echo $comments['comment'];?></span> -->
-														<div class="text summary">"<?php echo $comments['comment'];?>"
+													<div class="review-title"><!-- <span class="summary"><?php echo $comments['comment']; ?></span> -->
+														<div class="text summary">"<?php echo $comments['comment']; ?>"
 <?php
 
 			if ($days > 0)
 			{
 			?>
-														<span class="date"><i class="fa fa-calendar"></i><span><?php echo $days;?><?php _el('days_ago');?></span>
+														<span class="date"><i class="fa fa-calendar"></i><span><?php echo $days; ?><?php _el('days_ago');?></span>
 <?php
 	}
 
@@ -737,12 +736,12 @@
 								<div class="product">
 									<div class="product-image">
 										<div class="image">
-												<a href="<?php echo site_url('Products/'.$upsell->slug);?>"><img  src="<?php echo base_url().$upsell->thumb_image; ?> " alt=""></a>
+												<a href="<?php echo site_url('Products/'.$upsell->slug); ?>"><img  src="<?php echo base_url().$upsell->thumb_image; ?> " alt=""></a>
 						    			</div><!-- /.image -->
 										<div class="tag sale"><span>sale</span></div>
 									</div><!-- /.product-image -->
 									<div class="product-info text-left">
-										<h3 class="name"><a href="<?php echo site_url('Products/'.$upsell->slug);?>"><?php echo $upsell->name;?></a></h3>
+										<h3 class="name"><a href="<?php echo site_url('Products/'.$upsell->slug); ?>"><?php echo ucwords($upsell->name); ?></a></h3>
 <?php
 
 		if (!empty(get_star_rating($upsell->id)))
@@ -750,7 +749,7 @@
 			$width = (get_star_rating($upsell->id) * 70) / 5;
 		?>
 											<div class="rating-star rateit-small">
-												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
+												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?php echo $width ?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
 											</div>
 <?php
 	}
@@ -758,8 +757,8 @@
 	?>
 										<div class="description"></div>
 										<div class="product-price">
-											<span class="price"><?php echo $upsell->price;?></span>
-											<span class="price-before-discount"><?php echo $upsell->old_price;?></span>
+											<span class="price"><?php echo $upsell->price; ?></span>
+											<span class="price-before-discount"><?php echo $upsell->old_price; ?></span>
 										</div><!-- /.product-price -->
 									</div><!-- /.product-info -->
 									<div class="cart clearfix animate-effect">
@@ -767,9 +766,9 @@
 											<ul class="list-unstyled">
 												<li class="add-cart-button btn-group">
 													<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-														<i class="fa fa-shopping-cart" onclick="add_to_cart(<?php echo $upsell->id?>);"></i>
+														<i class="fa fa-shopping-cart" onclick="add_to_cart(<?php echo $upsell->id ?>);"></i>
 													</button>
-													<button class="btn btn-primary cart-btn" type="button" onclick="add_to_cart(<?php echo $upsell->id?>)"><?php _el('add_to_cart');?></button>
+													<button class="btn btn-primary cart-btn" type="button" onclick="add_to_cart(<?php echo $upsell->id ?>)"><?php _el('add_to_cart');?></button>
 								        		</li>
 <?php
 
@@ -777,7 +776,7 @@
 		{
 		?>
 				                				<li class="lnk wishlist">
-													<a class="add-to-cart" href="<?php echo site_url('Products/'.$upsell->slug);?>" title="Wishlist">
+													<a class="add-to-cart" href="<?php echo site_url('Products/'.$upsell->slug); ?>" title="Wishlist">
 														 <i class="icon fa fa-heart"></i>
 													</a>
 												</li>
@@ -808,7 +807,7 @@
 <script type="text/javascript">
 
 
-	let products_id="<?php echo $products_id;?>";
+	let products_id="<?php echo $products_id; ?>";
 
 	$(document).ready(function(){
 

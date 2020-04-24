@@ -53,7 +53,7 @@
                                 <tbody>
                                     <tr> <td width="40%" class="text-semibold"><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($product['name']); ?></td> </tr>
 
-                                    <tr> <td width="40%" class="text-semibold"><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo $product['slug']; ?></td> </tr>
+                                    <tr> <td width="40%" class="text-semibold"><?php _el('slug');?></td><td width="10%">:</td><td width="40%"><?php echo $product['slug']; ?></td> </tr>
 
                                     <tr> <td width="40%" class="text-semibold"><?php _el('category');?></td><td width="10%">:</td><td width="40%" ><?php echo ucwords(get_category($product['category_id'], 'name')); ?></td> </tr>
 

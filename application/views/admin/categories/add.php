@@ -43,17 +43,18 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label><?php _el('banner_name') ?></label>
+                              <label><?php _el('banner_name')?></label>
                               <select class="select-search" name="banner_id" id="banner_id">
 <?php
 	$banners = get_banners();
 
 	foreach ($banners as $banner)
 	{
-?>
+	?>
                                     <option id="$banner['id']" name="banner" value="<?php echo $banner['id'] ?>"><?php echo ucfirst($banner['title']) ?></option>
 <?php
 	}
+
 ?>
                                </select>
                             </div>

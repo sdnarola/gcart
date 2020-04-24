@@ -192,14 +192,15 @@ class Authentication extends My_Controller
 	 */
 	public function login_as_vendor()
 	{
-		$vendor = get_vendor_info(1);
+		$data   = $this->session->userdata();
+		$vendor = get_vendor_by(array('email' => $data['email'], 'is_admin' => $data['is_admin']));
 
 		if ($vendor['is_admin'] == 1)
 		{
 			$this->session->unset_userdata(array('email', 'user_id', 'username', 'is_admin', 'user_logged_in'));
 
 			$vendor_data = [
-				'vendor_id'        => 1,
+				'vendor_id'        => $vendor['id'],
 				'email'            => $vendor['email'],
 				'vendor_name'      => ucwords($vendor['firstname'].' '.$vendor['lastname']),
 				'is_admin'         => $vendor['is_admin'],

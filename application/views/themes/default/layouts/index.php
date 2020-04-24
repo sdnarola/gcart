@@ -4,8 +4,6 @@
 	$header_categories = $this->category->get_header_parent_category(1);
 	$brands            = $this->brands->get_all_brands();
 	$where['user_id']  = $this->session->userdata('user_id');
-	// $total_row=$this->cart->count_cart_row($where);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -124,7 +122,7 @@
             	if (is_user_logged_in())
             	{
             	?>
-                <li><a href="#">Welcome&nbsp<?php echo get_loggedin_info('username'); ?></a></li>
+                <li><a href="#">Welcome&nbsp;<?php echo get_loggedin_info('username'); ?></a></li>
                 <li><a href="<?php echo site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i>Wishlist</a></li>
                 <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');?></a></li>
                  <div class="dropdown" style="float: right;">

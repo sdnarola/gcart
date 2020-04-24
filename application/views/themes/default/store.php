@@ -198,7 +198,7 @@
                           <!-- /.product-image -->
 
                           <div class="product-info text-left">
-                            <h3 class="name"><a href="<?php echo base_url('products/show_details/').$product['id']; ?>"><?php echo ucwords($product['name']); ?></a></h3>
+                            <h3 class="name"><a href="<?php echo base_url('Products/').$product['slug']; ?>"><?php echo ucwords($product['name']); ?></a></h3>
                             <div class="rating rateit-small"></div>
                             <div class="product-price"> <span class="price"><?php echo '&#8377;'.'. '.$product['price']; ?></span> <span class="price-before-discount"><?php echo '&#8377;'.'. '.$product['old_price']; ?></span> </div>
                             <!-- /.product-price -->
@@ -218,7 +218,7 @@
                             <div class="action">
                               <ul class="list-unstyled">
                                 <li class="add-cart-button btn-group">
-                                    <a href="<?php echo base_url('cart/add/').$product['id']; ?>"<?php echo $disabled; ?>class="btn btn-primary icon"><i class="fa fa-shopping-cart"></i></a>
+                                    <a onclick="add_to_cart(<?php echo $product['id']; ?>)"class="btn btn-primary icon"><i class="fa fa-shopping-cart"></i></a>
 
                                 </li>
                                 <li class="wishlist-button btn-group">
@@ -269,7 +269,7 @@
                           <!-- /.col -->
                           <div class="col col-sm-8 col-lg-8">
                             <div class="product-info">
-                              <h3 class="name"><a href="<?php echo base_url('products/show_details/').$product['id']; ?>"><?php echo ucwords($product['name']); ?></a></h3>
+                              <h3 class="name"><a href="<?php echo base_url('Products/').$product['slug']; ?>"><?php echo ucwords($product['name']); ?></a></h3>
                               <div class="rating rateit-small"></div>
                               <div class="product-price"> <span class="price"><?php echo '&#8377;'.'. '.$product['price']; ?></span> <span class="price-before-discount"><?php echo '&#8377;'.'. '.$product['old_price']; ?></span> </div>
                               <!-- /.product-price -->
@@ -287,7 +287,7 @@
                                 <div class="action">
                                   <ul class="list-unstyled">
                                     <li class="add-cart-button btn-group">
-                                      <a href="<?php echo base_url('cart/add/').$product['id']; ?>"<?php echo $disabled; ?>><button class="btn btn-primary cart-btn" type="button" title="Cart">Add to cart</button></a>
+                                      <a onclick="add_to_cart(<?php echo $product['id']; ?>)"><button class="btn btn-primary cart-btn" type="button" title="Cart">Add to cart</button></a>
                                     </li>
                                     <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url('wishlist/add/').$product['id']; ?>"<?php echo $disabled; ?> title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
                                   </ul>
@@ -358,32 +358,3 @@
 
         <!-- /.cointainer -->
 <!-- /.body-cointainer -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

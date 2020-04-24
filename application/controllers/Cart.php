@@ -22,41 +22,6 @@ class Cart extends Frontend_Controller
 	}
 
 	/**
-	 * Adds product in cart.
-	 *
-	 * @param int 	$id 	Id of the Product.
-	 */
-	public function add($id = '')
-	{
-		if ($id)
-		{
-			$data['user_ip']      = $this->input->ip_address();
-			$data['product_id']   = $id;
-			$data['quantity']     = 1;
-			$data['total_amount'] = $data['quantity'] * (get_product($id, 'price'));
-			$data['date']         = date('Y-m-d h:i:s', time());
-
-			$cart = $this->cart->get_by(array('user_ip' => $data['user_ip'], 'product_id' => $id));
-
-			if ($cart['product_id'] == $id && $cart['user_ip'] == $data['user_ip'])
-			{
-				set_alert('warning', _l('_already_added', _l('product')));
-				redirect(site_url('cart'));
-			}
-			else
-			{
-				$insert = $this->cart->insert($data);
-
-				if ($insert)
-				{
-					set_alert('success', _l('_added_successfully', _l('product')));
-					redirect(site_url('cart'));
-				}
-			}
-		}
-	}
-
-	/**
 	 * [Add products in cart
 	 */
 	public function add_cart_product()

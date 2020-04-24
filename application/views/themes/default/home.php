@@ -99,7 +99,7 @@ function counter(end_date,id)
               	foreach ($main_categories as $main_category)
               	{
               	?>
-              <li class="dropdown menu-item "> <a href="<?php echo site_url('categories/'.$main_category['slug']);?>" class="dropdown-toggle" data-toggle="dropdown" id="<?php echo ($main_category['id']); ?>"><i class="fa fa"></i><?php echo ucwords($main_category['name']); ?></a>
+              <li class="dropdown menu-item "> <a href="<?php echo site_url('categories/'.$main_category['slug']); ?>" class="dropdown-toggle" data-toggle="dropdown" id="<?php echo ($main_category['id']); ?>"><i class="fa fa"></i><?php echo ucwords($main_category['name']); ?></a>
                 <ul class="dropdown-menu mega-menu" >
                   <li class="yamm-content ">
                     <div class="row customli">
@@ -118,7 +118,7 @@ function counter(end_date,id)
 				?>
                             <div class="col-sm-12 col-md-3">
                               <ul class="links list-unstyled">
-                                <li><a href="<?php echo site_url('categories/'.$main_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+                                <li><a href="<?php echo site_url('categories/'.$main_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
 				$counter++; ?></a></li>
                               </ul>
                             </div>
@@ -130,7 +130,7 @@ function counter(end_date,id)
                             				?>
                             <div class="col-sm-12 col-md-3">
                               <ul class="links list-unstyled">
-                               <li><a href="<?php echo site_url('categories/'.$main_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+                               <li><a href="<?php echo site_url('categories/'.$main_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
 				$counter++; ?></a></li>
                               </ul>
                             </div>
@@ -142,7 +142,7 @@ function counter(end_date,id)
                              				?>
                             <div class="col-sm-12 col-md-3">
                               <ul class="links list-unstyled">
-                               <li><a href="<?php echo site_url('categories/'.$main_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+                               <li><a href="<?php echo site_url('categories/'.$main_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
 				$counter++; ?></a></li>
                               </ul>
                             </div>
@@ -216,7 +216,7 @@ function counter(end_date,id)
                 <!-- /.hot-deal-wrapper -->
 
                 <div class="product-info text-left m-t-20">
-                  <h3 class="name"><a href="<?php echo site_url('Products/'.get_product($deal['product_id'], 'slug'));?>"><?php echo ucwords(get_product($deal['product_id'], 'name')); ?></a></h3>
+                  <h3 class="name"><a href="<?php echo site_url('Products/'.get_product($deal['product_id'], 'slug')); ?>"><?php echo ucwords(get_product($deal['product_id'], 'name')); ?></a></h3>
 
                   <div class="product-price"> <span class="price"><?php echo get_product($deal['product_id'], 'price'); ?></span> <span class="price-before-discount"><?php echo get_product($deal['product_id'], 'old_price'); ?></span> </div>
                   <!-- /.product-price -->
@@ -251,8 +251,7 @@ function counter(end_date,id)
                 <div class="cart clearfix animate-effect">
                   <div class="action">
                     <div class="add-cart-button btn-group">
-                      <a href="<?php echo base_url('cart/add/').$deal['product_id']; ?>">
-                      <button  type="button" class="btn btn-primary cart-btn" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Add to cart</button></a>
+                      <button  type="button" class="btn btn-primary cart-btn" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Add to cart</button>
                     </div>
                   </div>
                   <!-- /.action -->
@@ -292,7 +291,7 @@ function counter(end_date,id)
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
                           <div class="product-image">
-                            <div class="image"> <a href="<?php echo site_url('Products/'.$offer_product['slug']);?>"> <img src="<?php echo base_url().$offer_product['thumb_image'] ?>" alt="image"style="max-width: 90px;max-height: 90px"> </a> </div>
+                            <div class="image"> <a href="<?php echo site_url('Products/'.$offer_product['slug']); ?>"> <img src="<?php echo base_url().$offer_product['thumb_image'] ?>" alt="image"style="max-width: 90px;max-height: 90px"> </a> </div>
                             <!-- /.image -->
                           </div>
                           <!-- /.product-image -->
@@ -300,7 +299,7 @@ function counter(end_date,id)
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo site_url('Products/'.$offer_product['slug']);?>>"><?php echo ucwords($offer_product['name']); ?></a></h3>
+                            <h3 class="name"><a href="<?php echo site_url('Products/'.$offer_product['slug']); ?>>"><?php echo ucwords($offer_product['name']); ?></a></h3>
                             <div class="product-price"> <span class="price"><?php echo $offer_product['price']; ?></span> </div>
                             <!-- /.product-price -->
                        <?php
@@ -418,9 +417,8 @@ function counter(end_date,id)
                     <div class="product-micro">
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
-
                           <div class="product-image">
-                            <div class="image"> <a href="<?php echo site_url('Products/'.$deal_product['slug']);?>"> <img src="<?php echo base_url().$deal_product['thumb_image'] ?>" style="max-width: 90px;max-height: 90px"  alt="product-image"> </a> </div>
+                            <div class="image"> <a href="<?php echo site_url('Products/'.$deal_product['slug']); ?>"> <img src="<?php echo base_url().$deal_product['thumb_image'] ?>" style="max-width: 90px;max-height: 90px"  alt="product-image"> </a> </div>
                             <!-- /.image -->
 
                             <div class="tag hot" style="height: 35px; width:40px;"><span>
@@ -433,7 +431,7 @@ function counter(end_date,id)
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo site_url('Products/'.$deal_product['slug']);?>>"><?php echo ucwords($deal_product['name']); ?></a></h3>
+                            <h3 class="name"><a href="<?php echo site_url('Products/'.$deal_product['slug']); ?>>"><?php echo ucwords($deal_product['name']); ?></a></h3>
                             <div class="product-price"> <span class="price"><?php echo $deal_product['price']; ?></span> </div>
                             <!-- /.product-price -->
                       <?php
@@ -687,10 +685,11 @@ function counter(end_date,id)
                       <div class="product">
                         <div class="product-image">
 
-                          <div class="image"> <a href="<?php echo site_url('Products/'.$product['slug']);?>"><img  src="<?php echo base_url().$product['thumb_image']; ?>" alt="product-image" style="max-width: 189px;max-height: 170px"></a> </div>
+                          <div class="image"> <a href="<?php echo site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url().$product['thumb_image']; ?>" alt="product-image" style="max-width: 189px;max-height: 170px"></a> </div>
                           <!-- /.image -->
                          <?php
-                         	if ($product['is_hot'] == 1)
+
+                         		if ($product['is_hot'] == 1)
                          		{
                          		?>
                           <div class="tag hot"><span>
@@ -717,9 +716,9 @@ function counter(end_date,id)
                         <!-- /.product-image -->
 
                         <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo site_url('Products/'.$product['slug']);?>"><?php echo ucwords($product['name']); ?></a></h3>
+                          <h3 class="name"><a href="<?php echo site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']); ?></a></h3>
                            <div class="description"></div>
-                          <div class="product-price"> <span class="price">                                                                           <?php echo ucwords($product['price']); ?></span> <span class="price-before-discount"><?php echo ucwords($product['old_price']); ?></span> </div>
+                          <div class="product-price"> <span class="price">                                                                                                                                                                                                                                                                                                                                                                                                                                                             <?php echo ucwords($product['price']); ?></span> <span class="price-before-discount"><?php echo ucwords($product['old_price']); ?></span> </div>
                           <!-- /.product-price -->
                         </div>
                     <?php
@@ -827,7 +826,7 @@ function counter(end_date,id)
               <div class="products">
                 <div class="product">
                   <div class="product-image">
-                    <div class="image"> <a href="<?php echo site_url('Products/'.$product['slug']);?>"><img  src="<?php echo base_url().$product['thumb_image']; ?>" style="max-height: 170px;max-width:189px;" alt="featured image"></a> </div>
+                    <div class="image"> <a href="<?php echo site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url().$product['thumb_image']; ?>" style="max-height: 170px;max-width:189px;" alt="featured image"></a> </div>
                     <!-- /.image -->
 
                         <?php
@@ -860,9 +859,9 @@ function counter(end_date,id)
                   <!-- /.product-image -->
 
                   <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo site_url('Products/'.$product['slug']);?>"><?php echo ucwords($product['name']); ?></a></h3>
+                    <h3 class="name"><a href="<?php echo site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']); ?></a></h3>
                           <div class="description"></div>
-                    <div class="product-price"> <span class="price">                                                                     <?php echo $product['price']; ?> </span> <span class="price-before-discount"><?php echo $product['old_price']; ?></span> </div>
+                    <div class="product-price"> <span class="price">                                                                                                                                                                                                                                                                                                                                                                                                                         <?php echo $product['price']; ?> </span> <span class="price-before-discount"><?php echo $product['old_price']; ?></span> </div>
                     <!-- /.product-price -->
                     <?php
 
@@ -912,6 +911,7 @@ function counter(end_date,id)
            </div>
 
         <?php }
+
         ?>
        </div>
 
@@ -978,7 +978,7 @@ function counter(end_date,id)
                         <!-- /.col -->
                         <div class="col2 col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo site_url('Products/'.$product['slug']);?>"><?php echo ucwords($product['name']); ?></a></h3>
+                            <h3 class="name"><a href="<?php echo site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']); ?></a></h3>
                             <div class="product-price"> <span class="price"><?php echo $product['price']; ?> </span> </div>
                             <!-- /.product-price -->
                             <?php
@@ -1042,7 +1042,6 @@ function counter(end_date,id)
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
 <script type="text/javascript">
 //news letters
- var BASE_URL = "<?php echo base_url(); ?>";
 
 $.validator.addMethod("emailExists", function(value, element)
 {
@@ -1125,7 +1124,6 @@ $("#login_form").validate
             dataType: 'json',
             success: function(response)
             {
-            console.log(response);
             if(response)
             {
               $('#arrival_products').hide();

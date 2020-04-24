@@ -120,18 +120,17 @@
                                     <option value="0" selected readonly disabled >----- Select Brand -----</option>
 <?php
 
-    foreach ($brands as $key => $brand)
-    {
-    ?>
+	foreach ($brands as $key => $brand)
+	{
+	?>
     <option value="<?php echo $brand['id']; ?>" name="brand"><?php echo ucwords($brand['name']); ?></option>
 <?php
-    }
+	}
 
 ?>
                                 </select>
                             </div>
                         </div>
-
                         <!-- for multiple images upload -->
                         <div class="row images field_wrapper" style="display: none;">
                             <div class="form-group col-md-12 ">
