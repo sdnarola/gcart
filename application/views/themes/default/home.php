@@ -1,17 +1,80 @@
 <!--<div class="container" style="margin-top:30px;">-->
-<?php $this->load->view('themes/default/includes/alerts');
-  $main_categories = $this->category->get_parent_category(); //returns array of obj
-  $sub_categories  = $this->category->get_sub_category();
-  $slider          = $this->slider->get_slider();
-  $banners         = $this->slider->get_home_banners();
-  $hot_deals       = $this->product->get_hot_deals();
-  $reviews         = $this->product->get_all_reviews();
-  $all_new_products = $this->product->get_new_products(); //all new arrival products
-  $offer_products  = $this->product->get_special_offers(); //special offer products  
-  $tags            = $this->product->get_tags();  //to get all tags
-  $sellers_products = $this->product->get_best_sellers();  
-  $featured_products = $this->product->get_featured_products();  
-  $special_deal      =   $this->product->get_special_deal();
+<?php 
+ $this->load->view('themes/default/includes/alerts');
+?>
+
+<script>
+/**
+ * Set timer for hot_deal.
+ *
+ * @param  string      end_date   enddate of the deal.
+ * @param  int         id         id of the deal.
+ */
+function counter(end_date,id)
+{
+  var result = '';
+  // Set the date we're counting down to
+  var countDownDate = new Date(end_date).getTime();
+
+  // Update the count down every 1 second
+  var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    
+
+    // If the count down is over, write some text
+    if (distance < 0)
+    {
+      clearInterval(x);
+      result += "EXPIRED";
+    }
+    else
+    {
+      result += '<div class="box-wrapper">';
+    result += '<div class="date box"> <span class="key" id="days">'+days+'</span> <span class="value">DAYS</span> </div>';
+    result += '</div>';
+    result += '<div class="box-wrapper">';
+    result += '<div class="hour box"> <span class="key" id="hours">'+hours+'</span> <span class="value">HRS</span> </div>';
+    result += '</div>';
+    result += '<div class="box-wrapper">';
+    result += '<div class="minutes box"> <span class="key" id="minutes">'+minutes+'</span> <span class="value">MINS</span> </div>';
+    result += '</div>';
+    result += '<div class="box-wrapper hidden-md">';
+    result += '<div class="seconds box"> <span class="key" id="seconds">'+seconds+'</span> <span class="value">SEC</span> </div>';
+    result += '</div>';
+    }
+
+    $('#time_counter_'+id).html(result);
+    result='';
+  }, 1000);
+}
+</script>
+
+<?php 
+  $main_categories = $this->category->get_header_parent_category(); 
+  $sub_categories  = $this->category->get_sub_categories();
+  $slider          = $this->sliders->get_slider();
+  $banners         = $this->sliders->get_home_banners();
+  $hot_deals       = $this->products->get_hot_deals();
+  $reviews         = $this->products->get_all_reviews();
+  $all_new_products = $this->products->get_new_products(); //all new arrival products
+  $offer_products  = $this->products->get_special_offers(); //special offer  products  
+  $tags            = $this->products->get_tags();  //to get all tags
+  $sellers_products = $this->products->get_best_sellers();  
+  $featured_products = $this->products->get_featured_products();  
+  $special_deal      =  $this->products->get_special_deal();
+  $deals = $this->deals->get_all();
 
 ?>
 
@@ -26,24 +89,24 @@
         <!-- ================================== TOP NAVIGATION ================================== -->
         <div class="side-menu animate-dropdown outer-bottom-xs">
 
-          <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Categories</div>
+          <div class="head"><i class="icon fa fa-align-justify fa-fw"></i><?php _el('categories');?></div>
           <nav class="yamm megamenu-horizontal">
             <ul class="nav">
 
               <?php
-                foreach ($main_categories as $key => $main_category)
+                foreach ($main_categories as  $main_category)
                 {
                 ?>
-              <li class="dropdown menu-item "> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle" data-toggle="dropdown" id="<?php echo ($main_category->id); ?>"><i class="fa fa"></i><?php echo ucwords($main_category->name); ?></a>
+              <li class="dropdown menu-item "> <a href="<?= site_url('categories/'. $main_category['slug']); ?>" class="dropdown-toggle" data-toggle="dropdown" id="<?php echo ($main_category['id']); ?>"><i class="fa fa"></i><?php echo ucwords($main_category['name']); ?></a>
                 <ul class="dropdown-menu mega-menu" >
                   <li class="yamm-content ">
                     <div class="row customli">
                       <?php
                         $counter = 0;
 
-                       foreach ($sub_categories as $key => $sub_category)
+                       foreach ($sub_categories as  $sub_category)
                        {
-                        if ($sub_category->category_id == $main_category->id)
+                        if ($sub_category['category_id']== $main_category['id'])
                         {
                               ?>
                               <?php
@@ -52,7 +115,7 @@
                             ?>
                             <div class="col-sm-12 col-md-3">
                               <ul class="links list-unstyled">
-                                <li><a href="<?php echo base_url().'categories/get_sub_category_products/'.$sub_category->id; ?>"><?php echo ucwords($sub_category->name); $counter++; ?></a></li>
+                                <li><a href="<?= site_url('categories/'.$main_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']); $counter++; ?></a></li>
                               </ul>
                             </div>
                             <!-- /.col -->
@@ -63,7 +126,7 @@
                               ?>
                             <div class="col-sm-12 col-md-3">
                               <ul class="links list-unstyled">
-                               <li><a href="<?php echo base_url().'Categories/get_sub_category_products/'.$sub_category->id; ?>"><?php echo ucwords($sub_category->name); $counter++; ?></a></li>
+                               <li><a href="<?= site_url('categories/'.$main_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']); $counter++; ?></a></li>
                               </ul>
                             </div>
                             <!-- /.col -->
@@ -74,7 +137,7 @@
                               ?>
                             <div class="col-sm-12 col-md-3">
                               <ul class="links list-unstyled">
-                               <li><a href="<?php echo base_url().'Categories/get_sub_category_products/'.$sub_categories->id; ?>"><?php echo ucwords($sub_category->name); $counter++; ?></a></li>
+                               <li><a href="<?= site_url('categories/'.$main_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']); $counter++; ?></a></li>
                               </ul>
                             </div>
                              <?php
@@ -99,6 +162,7 @@
             <!-- /.nav -->
           </nav>
           <!-- /.megamenu-horizontal -->
+
         </div>
         <!-- /.side-menu -->
 
@@ -107,112 +171,69 @@
         <!-- ============================================== HOT DEALS ============================================== -->
         <div class="sidebar-widget hot-deals wow fadeInUp outer-bottom-xs">
           <h3 class="section-title">hot deals</h3>
-          <div id="countdowntimer"><span id="given_date"><span></div>
-
           <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
-          <?php
-
-            foreach ($hot_deals as $product)
-          {
-            ?> <div class="item">
+<?php  
+  if ($deals)
+  {
+    foreach ($deals as $deal)
+    {
+      $end_date = date('M d, Y  h:i:s', strtotime($deal['end_date']));
+    ?>
+            <div class="item">
               <div class="products">
-                <div class="hot-deal-wrapper">              
-  
-                 <div class="image"> <img src="<?php echo base_url().$product['thumb_image']; ?>" alt="product" style="max-height:150px;max-width:223px;height:auto;width:auto;"></div>
+                <div class="hot-deal-wrapper">
+                  <div class="image"> <img src="<?php echo base_url().get_product($deal['product_id'], 'thumb_image'); ?>" alt="image" style="max-width: 223px;max-height:190px"> </div>
+                  <div class="sale-offer-tag"><span>
+                    <?php
 
-                  <?php
-                    $percentage = ceil((($product['old_price'] - $product['new_price']) / $product['old_price']) * 100);
-                      $start      = date_create($product['start']);
-                      $date1=date_format($start,"F d,yy h:i:s");
-                      $end        = date_create($product['end']);
-                      $date2=date_format($end,"F d,yy h:i:s");
-                      $daydiff    = date_diff($end, $start);
-                    //  $hours      = $daydiff->h;
-                    ///$minutes    = $daydiff->m;
-                    //  $seconds    = $daydiff->s;
-                    $rem = strtotime($date2) - strtotime($date1);
-                    ?>
-                  <div class="sale-offer-tag"><span><?php echo $percentage.'%'; ?><br>
+                          if ($deal['type'] == 0)
+                          {
+                            echo '&#8377;'.'. '.$deal['value'];
+                          }
+                          else
+                          {
+                            echo $deal['value'].' &#37;';
+                          }
+
+                        ?><br>
                     off</span></div>
-                      <script>
-                                  
-              // Set the date we're counting down to
-               var countDownDate<?php echo $product['id'];?> = new Date("<?php echo $date2 ;?>").getTime();
-               var now<?php echo $product['id'];?> = new Date("<?php echo $date1 ;?>").getTime();
+                    <script type="text/javascript">
+                      counter("<?php echo $end_date; ?>",<?php echo $deal['id']; ?>);
+                    </script>
+                  <div class="timing-wrapper" id="time_counter_<?php echo $deal['id']; ?>">
 
-                // Update the count down every 1 second
-               var x<?php echo $product['id'];?> = setInterval(function() 
-               {
-                  now<?php echo $product['id'];?> = now<?php echo $product['id'];?> + 1000;
-                  // Find the distance between now an the count down date
-                  var distance<?php echo $product['id'];?> = countDownDate<?php echo $product['id'];?> - now<?php echo $product['id'];?>;
-                  // Time calculations for days, hours, minutes and seconds
-                  var days<?php echo $product['id'];?> = Math.floor(distance<?php echo $product['id'];?> / (1000 * 60 * 60 * 24));
-                  var hours<?php echo $product['id'];?> = Math.floor((distance<?php echo $product['id'];?> % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                  var minutes<?php echo $product['id'];?> = Math.floor((distance<?php echo $product['id'];?> % (1000 * 60 * 60)) / (1000 * 60));
-                  var seconds<?php echo $product['id'];?> = Math.floor((distance<?php echo $product['id'];?> % (1000 * 60)) / 1000);
- 
-                   if (distance<?php echo $product['id'];?> < 0)
-                   {
-                      clearInterval(x<?php echo $product['id'];?>);
-                      document.getElementByClass("timing-wrapper").innerHTML="expired";
-                      $('.box-wrapper').hide();
-                      
-                    }                  
-                       document.getElementById("days<?php echo $product['id'];?>").innerHTML = days<?php echo $product['id'];?> + "d " ;
-                       document.getElementById("hours<?php echo $product['id'];?>").innerHTML = hours<?php echo $product['id'];?> + "h " ;
-                       document.getElementById("min<?php echo $product['id'];?>").innerHTML = minutes<?php echo $product['id'];?> + "m " ;
-                       document.getElementById("sec<?php echo $product['id'];?>").innerHTML = seconds<?php echo $product['id'];?> + "s ";
-
-                      }, 1000);
-                      
-                      </script>
-
-                  <div class="timing-wrapper">
-                    <div class="box-wrapper">
-                      <div class="date box"> <span class="key" id="days<?php echo $product['id'];?>"></span> <span class="value">DAYS</span> </div>
-                    </div>
-                    <div class="box-wrapper">
-                      <div class="hour box"> <span class="key" id="hours<?php echo $product['id'];?>"></span> <span class="value">HRS</span> </div>
-                    </div>
-                    <div class="box-wrapper">
-                      <div class="minutes box"> <span class="key" id="min<?php echo $product['id'];?>"></span> <span class="value">MINS</span> </div>
-                    </div>
-                    <div class="box-wrapper hidden-md">
-                      <div class="seconds box"> <span class="key" id="sec<?php echo $product['id'];?>"></span> <span class="value">SEC</span> </div>
-                    </div>
                   </div>
                 </div>
                 <!-- /.hot-deal-wrapper -->
 
                 <div class="product-info text-left m-t-20">
-                  <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$product['name']?>"><?php echo ucwords($product['name']); ?></a></h3>
-                  <?php
-
+                  <h3 class="name"><a href="<?= site_url('Products/'.get_product($deal['product_id'], 'slug')); ?>"><?php echo ucwords(get_product($deal['product_id'], 'name')); ?></a></h3>
+                  
+                  <div class="product-price"> <span class="price"><?php echo get_product($deal['product_id'], 'price'); ?></span> <span class="price-before-discount"><?php echo get_product($deal['product_id'], 'old_price'); ?></span> </div>
+                  <!-- /.product-price -->
+                    <?php
                       foreach ($reviews as $review)
-                      {
-                        if ($review['product_id'] == $product['id'])
+                      { 
+
+                        if ($review['product_id'] == $deal['id'])
                         {
                           $i = 1;
 
-                          for ($i; $i <= $review['star_rating']; $i++)
+                          for ($i; $i <= $review['star_ratings']; $i++)
                           {
                           ?>
-                          <div class="fa fa-star" style="color: orange"></div>
-                        <?php
-                           }
-                          for ($i = $i; $i <= 5; $i++)
-                          {
-                        ?>           
-                         <div class="fa fa-star-o"></div>
-
+                            <div class="fa fa-star" style="color: orange"></div>
                           <?php
                             }
-                          }
-                        }
-                    ?>
-                  <div class="product-price"> <span class="price"><?php echo $product['new_price']; ?> </span> <span class="price-before-discount"><?php echo $product['old_price']; ?></span> </div>
-                  <!-- /.product-price -->
+                           for ($i = $i; $i <= 5; $i++)
+                           {
+                            ?>
+                           <div class="fa fa-star-o"></div>
+                            <?php
+                           }
+                         }                        
+                      }
+                        ?> 
 
                 </div>
                 <!-- /.product-info -->
@@ -220,18 +241,20 @@
                 <div class="cart clearfix animate-effect">
                   <div class="action">
                     <div class="add-cart-button btn-group">
-                      <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                      <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                      <a href="<?php echo base_url('cart/add/').$deal['product_id']; ?>">
+                      <button  type="button" class="btn btn-primary cart-btn" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Add to cart</button></a>
                     </div>
                   </div>
                   <!-- /.action -->
                 </div>
                 <!-- /.cart -->
-          </div>
-          </div>
-          <?php
-            }
-          ?>
+              </div>
+            </div>
+<?php
+  }
+  }
+
+?>
           </div>
           <!-- /.sidebar-widget -->
         </div>
@@ -259,7 +282,7 @@
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
                           <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url().'products/get_product/'.$offer_product['name']?>"> <img src="<?php echo base_url().$offer_product['thumb_image']?>" alt=""> </a> </div>
+                            <div class="image"> <a href="<?= site_url('Products/'.$offer_product['slug']); ?>"> <img src="<?php echo base_url().$offer_product['thumb_image']?>" alt="image"style="max-width: 90px;max-height: 90px"> </a> </div>
                             <!-- /.image -->
                           </div>
                           <!-- /.product-image -->
@@ -267,17 +290,17 @@
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$offer_product['name']?>"><?php echo ucwords($offer_product['name']);?></a></h3>
-                            <div class="product-price"> <span class="price"><?php echo $offer_product['new_price'];?></span> </div>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$offer_product['slug']); ?>>"><?php echo ucwords($offer_product['name']);?></a></h3>
+                            <div class="product-price"> <span class="price"><?php echo $offer_product['price'];?></span> </div>
                             <!-- /.product-price -->
-                  <?php
+                       <?php
                       foreach ($reviews as $review)
                       {
                         if ($review['product_id'] == $offer_product['id'])
                         {
                           $i = 1;
 
-                          for ($i; $i <= $review['star_rating']; $i++)
+                          for ($i; $i <= $review['star_ratings']; $i++)
                           {
                           ?>
                             <div class="fa fa-star" style="color: orange"></div>
@@ -291,7 +314,7 @@
                               }
                             }
                           }
-                              ?>                            
+                            ?>                            
 
                           </div>
                         </div>
@@ -334,7 +357,7 @@
 
                if($count<11)  {         
                   ?>
-                   <a class="item" title="Phone" href="<?php echo base_url().'products/get_product/'.$tag; ?>"><?php echo '#'.ucfirst($tag);$count++?></a>
+                   <a class="<?php echo ($count==2) ? "item active" : "item"; ?>"  title="Phone" href="<?php echo base_url().'products/search?tags='.$tag?>"><?php echo ucfirst($tag);$count++?></a>
                   <?php
                 }              
               }
@@ -361,8 +384,17 @@
             <div class="item">
                 <div class="products special-product">
                 <?php
+
                 foreach ($deal_product as $deal_product) 
-                {
+                { 
+                 if($deal_product['old_price']>$deal_product['price'])
+                   {
+                     $percentage = ceil((($deal_product['old_price'] - $deal_product['price']) / $deal_product['price']) * 100);
+                   }
+                   else
+                   {
+                    $percentage=0;
+                   }
                ?>
                   <div class="product">
                     <div class="product-micro">
@@ -370,11 +402,11 @@
                         <div class="col col-xs-5">
 
                           <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url().'products/get_product/'.$deal_product['name']?>"> <img src="<?php echo base_url().$deal_product['thumb_image']?>"  alt=""> </a> </div>
+                            <div class="image"> <a href="<?= site_url('Products/'.$deal_product['slug']); ?>"> <img src="<?php echo base_url().$deal_product['thumb_image']?>" style="max-width: 90px;max-height: 90px"  alt="product-image"> </a> </div>
                             <!-- /.image -->
 
                             <div class="tag hot" style="height: 35px; width:40px;"><span>
-                            <?php echo round($deal_product['discount']); ?>%OFF
+                            <?php echo round($percentage); ?>%OFF
                               </span></div>                              
                           </div>
 
@@ -383,9 +415,10 @@
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$deal_product['name']?>"><?php echo ucwords($deal_product['name']);?></a></h3>
-                            <div class="product-price"> <span class="price"><?php echo $deal_product['new_price'];?></span> </div>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$deal_product['slug']); ?>>"><?php echo ucwords($deal_product['name']);?></a></h3>
+                            <div class="product-price"> <span class="price"><?php echo $deal_product['price'];?></span> </div>
                             <!-- /.product-price -->
+
                       <?php
                       foreach ($reviews as $review)
                       {
@@ -393,7 +426,7 @@
                         {
                           $i = 1;
 
-                          for ($i; $i <= $review['star_rating']; $i++)
+                          for ($i; $i <= $review['star_ratings']; $i++)
                           {
                           ?>
                             <div class="fa fa-star" style="color: orange"></div>
@@ -410,6 +443,7 @@
                          ?>                          
         
                           </div>
+
                         </div>
                         <!-- /.col -->
                       </div>
@@ -589,13 +623,12 @@
             <li class="active"><a data-transition-type="backSlide" data-id="" name=""  data-toggle="tab">All</a></li>
             </ul>
                <?php
-                foreach ($main_categories as $key => $main_category)
+                foreach ($main_categories as $main_category)
                 {
                 ?> 
-                   <!--<?php echo base_url()."products/get_new_products/". $main_category->id; ?>-->  
-            <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
-            <li class="item"><a  id="cat_id" data-transition-type="backSlide"  data-id="<?php echo $main_category->id; ?>" name="<?php echo $main_category->id; ?>" data-toggle="tab"><?php echo ucwords($main_category->name); ?></a></li>
-            </ul>    
+                <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
+                <li class="item"><a  id="cat_id" data-transition-type="backSlide"  data-id="<?php echo $main_category['id']; ?>" name="<?php echo $main_category['id']; ?>" data-toggle="tab"><?php echo ucwords($main_category['name']); ?></a></li>
+                </ul>    
                 <?php                    
                 }
                 ?>
@@ -613,7 +646,7 @@
            <?php
           foreach ($all_new_products as $product)
            {
-            $created      = date_create($product['created_at']);
+            $created      = date_create($product['add_date']);
             $today        = date_create(date("Y-m-d h:i:sa"));
             $daydiff      = date_diff($today, $created);
 
@@ -622,14 +655,13 @@
             //{ 
                // if($days<30)
                // {                   
-          ?>
-                  
+          ?>                  
               <div class="item item-carousel" >
                     <div class="products" >
                       <div class="product">
                         <div class="product-image">
                          
-                          <div class="image"> <a href="<?php echo base_url().'products/get_product/'.$product['name']?>"><img  src="<?php echo base_url().$product['thumb_image'];?>" alt="product-image" style="max-width: 189px;max-height: 142px"></a> </div>
+                          <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url().$product['thumb_image'];?>" alt="product-image" style="max-width: 189px;max-height: 170px"></a> </div>
                           <!-- /.image -->
                          <?php if($product['is_hot']==1){?> 
                           <div class="tag hot"><span>
@@ -651,18 +683,20 @@
                         <!-- /.product-image -->
                         
                         <div class="product-info text-left">
-                          <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$product['name']?>"><?php echo ucwords($product['name']);?></a></h3>
+                          <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']);?></a></h3>
                            <div class="description"></div>
-                          <div class="product-price"> <span class="price"> <?php echo ucwords($product['new_price']);?></span> <span class="price-before-discount"><?php echo ucwords($product['old_price']);?></span> </div>
+                          <div class="product-price"> <span class="price"> <?php echo ucwords($product['price']);?></span> <span class="price-before-discount"><?php echo ucwords($product['old_price']);?></span> </div>
                           <!-- /.product-price -->                           
                         </div>
+
                     <?php
                       foreach ($reviews as $review)
-                      {                          
+                      {     
+
                         if ($review['product_id'] == $product['id'])
                         {
                           $i = 1;
-                          for ($i; $i <= $review['star_rating']; $i++)
+                          for ($i; $i <= $review['star_ratings']; $i++)
                           {
                           ?>
                           <div class="fa fa-star" style="color: orange"></div>
@@ -685,9 +719,9 @@
                                 <button data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Add Cart"> <i class="fa fa-shopping-cart"></i> </button>
                                 <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
                               </li>
-                              <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                              <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
-                            </ul>
+                              <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href=" <?php  if (!is_user_logged_in())
+                               {  echo site_url('authentication'); }else{ echo '#';}?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                              </ul>
                           </div>
                           <!-- /.action --> 
                         </div>
@@ -719,10 +753,10 @@
             <div class="col-md-7 col-sm-7">
               <div class="wide-banner cnt-strip">
 
-              <div class="item" style="background-image: url(<?php echo base_url() ?><?php echo $banners[0]['banner']; ?>)">
+              <div class="item" style="background-image: url(<?php echo base_url().$banners[0]['banner']; ?>)">
                </div>
            <!-- /.owl-carousel -->
-                <div class="image"> <img class="img-responsive" src="<?php echo base_url() ?><?php echo $banners[0]['banner']; ?>"alt="banner-imae">
+                <div class="image"> <img class="img-responsive" src="<?php echo base_url().$banners[0]['banner']; ?>"alt="banner-imae">
                 </div>
               </div>
               <!-- /.wide-banner -->
@@ -730,7 +764,7 @@
             <!-- /.col -->
             <div class="col-md-5 col-sm-5">
               <div class="wide-banner cnt-strip">
-                <div class="image"> <img class="img-responsive" src="<?php echo base_url() ?><?php echo $banners[1]['banner']; ?>" alt="banner-image"> </div>
+                <div class="image"> <img class="img-responsive" src="<?php echo base_url().$banners[1]['banner']; ?>" alt="banner-image"> </div>
               </div>
               <!-- /.wide-banner -->
             </div>
@@ -755,7 +789,7 @@
               <div class="products">
                 <div class="product">
                   <div class="product-image">
-                    <div class="image"> <a href="<?php echo base_url().'products/get_product/'.$product['name']?>"><img  src="<?php echo base_url().$product['thumb_image'];?>" style="max-height: 142px;max-width:189px;" alt="featured image"></a> </div>
+                    <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"><img  src="<?php echo base_url().$product['thumb_image'];?>" style="max-height: 170px;max-width:189px;" alt="featured image"></a> </div>
                     <!-- /.image -->
 
                         <?php 
@@ -780,9 +814,9 @@
                   <!-- /.product-image -->
 
                   <div class="product-info text-left">
-                    <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$product['name']?>"><?php echo ucwords($product['name']);?></a></h3>
+                    <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']);?></a></h3>
                           <div class="description"></div>
-                    <div class="product-price"> <span class="price"> <?php echo $product['new_price'];?> </span> <span class="price-before-discount"><?php echo $product['old_price'];?></span> </div>
+                    <div class="product-price"> <span class="price"> <?php echo $product['price'];?> </span> <span class="price-before-discount"><?php echo $product['old_price'];?></span> </div>
                     <!-- /.product-price -->
                     <?php
                       foreach ($reviews as $review)
@@ -790,7 +824,7 @@
                         if ($review['product_id'] == $product['id'])
                         {
                           $i = 1;
-                          for ($i; $i <= $review['star_rating']; $i++)
+                          for ($i; $i <= $review['star_ratings']; $i++)
                           {
                           ?>
                           <div class="fa fa-star" style="color: orange"></div>
@@ -815,8 +849,9 @@
                           <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
                           <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
                         </li>
-                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
-                        <li class="lnk"> <a class="add-to-cart" href="<?php echo base_url(); ?>detail.html" title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a> </li>
+                        <li class="lnk wishlist"> <a class="add-to-cart" href="<?php  if (!is_user_logged_in())
+                               {  echo site_url('authentication'); }else{ echo '#';}?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                       
                       </ul>
                     </div>
                     <!-- /.action -->
@@ -884,7 +919,7 @@
                       <div class="row product-micro-row">
                         <div class="col col-xs-5">
                           <div class="product-image">
-                            <div class="image"> <a href="<?php echo base_url().$product['thumb_image'];?>"> <img src="<?php echo base_url().$product['thumb_image'];?>" alt="best sellers product" style="max-width: 120.58px;max-height:120.58px"> </a> </div>
+                            <div class="image"> <a href="<?= site_url('Products/'.$product['slug']); ?>"> <img src="<?php echo base_url().$product['thumb_image'];?>" alt="product" style="max-width: 95px;max-height:95px"> </a> </div>
                             <!-- /.image -->
                           </div>
                           <!-- /.product-image -->
@@ -892,8 +927,8 @@
                         <!-- /.col -->
                         <div class="col2 col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?php echo base_url().'products/get_product/'.$product['name']?>"><?php echo ucwords($product['name']); ?></a></h3>
-                            <div class="product-price"> <span class="price"><?php echo $product['new_price'];?> </span> </div>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$product['slug']); ?>"><?php echo ucwords($product['name']); ?></a></h3>
+                            <div class="product-price"> <span class="price"><?php echo $product['price'];?> </span> </div>
                             <!-- /.product-price -->
                             <?php
                             foreach ($reviews as $review)
@@ -901,7 +936,7 @@
                               if ($review['product_id'] == $product['id'])
                               {
                                 $i = 1;
-                                for ($i; $i <= $review['star_rating']; $i++)
+                                for ($i; $i <= $review['star_ratings']; $i++)
                                 {
                                 ?>
                                 <div class="fa fa-star" style="color: orange"></div>
@@ -1018,15 +1053,14 @@ $("#login_form").validate
 
 //get new_arrival products
      // $(document).ready(function()
-     // {
-     
+     // {     
        $("#new-products-1 a").on("click", function()
        {
        
          $('#newone').html('<div id="arrival" class="owl-carousel home-owl-carousel custom-carousel owl-theme"></div>');
 
         var category_id = $(this).attr("data-id");
-
+        console.log(category_id);
         $.ajax({
           url:BASE_URL+'products/get_new_arrivals',
             type: 'POST',
@@ -1056,6 +1090,7 @@ $("#login_form").validate
                   p+='<div class="product">';
                 
                   p+='<div class="product-image">'; 
+
                   if(( new_products[i].is_hot)==1)
                   {
                   p+='<div class="tag hot"><span>HOT</span></div>';
@@ -1069,18 +1104,18 @@ $("#login_form").validate
                     p+='<div class="tag new"><span> NEW</span></div>';
                   }              
                   
-                  p+='<div class="image" id="image"> <a href="detail.html"><img  src="'+ new_products[i].thumb_image+'" alt="new_product image" style="max-width: 189px;max-height: 142px"></a> </div>';
-                  console.log( new_products[i].thumb_image);
+                  p+='<div class="image" id="image"> <a href="<?= site_url('Products/'); ?>'+ new_products[i].slug+'"><img  src="'+ new_products[i].thumb_image+'" alt="new_product image" style="max-width: 189px;max-height: 142px"></a> </div>';
                   p+='</div>';
           
                   p+='<div class="product-info text-left">';
-                  p+='<h3 class="name"><a id="n1" href="detail.html">'+ new_products[i].name+'</a></h3>';
+                  p+='<h3 class="name"><a id="n1" href="<?= site_url('Products/'); ?>'+ new_products[i].slug+'">'+ new_products[i].name+'</a></h3>';
                   p+='<div class="description"></div>';
-                  p+='<div class="product-price"> <span class="price">'+ new_products[i].new_price+' </span> <span class="price-before-discount">'+ new_products[i].old_price+'</span> </div>';                       
+                  p+='<div class="product-price"> <span class="price">'+ new_products[i].price+' </span> <span class="price-before-discount">'+ new_products[i].old_price+'</span> </div>'; 
+                  p+='<div class="cart clearfix animate-effect"><div class="action"><ul class="list-unstyled"><li class="add-cart-button btn-group"><button data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Add Cart"> <i class="fa fa-shopping-cart"></i> </button><button class="btn btn-primary cart-btn" type="button">Add to cart</button> </li><li class="lnk wishlist"><a data-toggle="tooltip" class="add-to-cart" href="<?php  if (!is_user_logged_in()){ echo site_url('authentication'); }else{ echo '#';}?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li></ul> </div></div>'; 
                   p+='</div>';
                   p+="</div>";
                   p+="</div>";
-                  p+="</div>";        
+                  p+="</div>";                 
                   p+='<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main1.css">'; 
                   }
                

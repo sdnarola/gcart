@@ -5,7 +5,8 @@ class Home extends Frontend_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		
+				$this->load->model('deal_model', 'deals');
+
 	}
 
 	public function index()

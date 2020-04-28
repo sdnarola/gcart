@@ -1,10 +1,9 @@
-<div class="container" style="margin-top:30px;">
     <?php $this->load->view('themes/default/includes/alerts');?>
     <div class="breadcrumb">
     <div class="container">
         <div class="breadcrumb-inner">
             <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo base_url(); ?>">Home</a></li>
+                <li><a href="<?php echo base_url(); ?>"><?php _el('home');?></a></li>
                 <li class='active'><?php _el('edit_profile');?></li>
             </ul>
         </div><!-- /.breadcrumb-inner -->
@@ -32,7 +31,7 @@
             <input type="text" class="form-control unicase-form-control text-input" id="lastname" name="lastname"  value="<?php echo $user['lastname']; ?>">
         </div>
         <div class="form-group">
-            <label class="info-title" for="mobile"><?php _el('mobile');?> <span>*</span></label>
+            <label class="info-title" for="mobile"><?php _el('mobile_no');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="mobile" name="mobile" value="<?php echo $user['mobile']; ?>" >
         </div>
         <div class="form-group">
@@ -40,29 +39,19 @@
             <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail2" name="email" value="<?php echo $user['email']; ?>">
         </div>
         <?php
-        $arr_size= sizeof($user_address);
-        if($arr_size==0)
-        {
-            $user_address['address_1']='';
-            $user_address['address_2']='';
-            $user_address['city']='';
-            $user_address['state']='';
-            $user_address['pincode']='';
-        }
-        else
+        if(!empty($user_address))
         {
             foreach ($user_address as $user_address)
             {
-            }
-        }
+            
         ?>
          <div class="form-group">
             <label class="info-title" for="address_1"><?php _el('address_1');?></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="address_1" name="address_1" value="<?php echo $user_address['address_1']; ?>">
+            <input type="text" class="form-control unicase-form-control text-input" id="address_1" name="address_1" value="<?php echo $user_address['house_or_village']; ?>">
         </div>
         <div class="form-group">
             <label class="info-title" for="address_2"><?php _el('address_2');?></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="address_2" name="address_2" value="<?php echo $user_address['address_2']; ?>">
+            <input type="text" class="form-control unicase-form-control text-input" id="address_2" name="address_2" value="<?php echo $user_address['street_or_society']; ?>">
         </div>
          <div class="form-group">
             <label class="info-title" for="city"><?php _el('city');?></label>
@@ -76,7 +65,10 @@
             <label class="info-title" for="pin_code"><?php _el('pincode');?></label>
             <input type="text" class="form-control unicase-form-control text-input" id="pincode"  name="pincode" value="<?php echo $user_address['pincode']; ?>">
         </div>
-        
+        <?php
+            }
+        }
+        ?>
         <button type="submit" id='save' name="submit" value="Upload Image" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>
 
 			</form>
@@ -86,7 +78,7 @@
 			<p class="">
 				<?php
 
-					if (null != $user['last_password_change'])
+					if ($user['last_password_change'] != null)
 					{
 					?>
                     <?php _el('last_password_change_msg', time_to_words($user['last_password_change']))?>
@@ -110,7 +102,7 @@
             	<label class="info-title" for="confirm_password"><?php _el('confirm_password');?><span>*</span></label>
            		<input type="password" class="form-control unicase-form-control text-input" id="confirm_password"  name="confirm_password" autocomplete="off">
         	</div>
-         	<button type="submit" id='submit_password' name="submit_password" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>
+         	<button type="submit" id='submit_password' name="submit_password" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>`
 
 			</form>
 
@@ -181,8 +173,6 @@ $("#myprofileform").validate({
     		required: true,
     		number: true,
     		maxlength:6
-
-
     	},
 
     },
@@ -251,7 +241,7 @@ $("#mypasswordform").validate({
 		confirm_password: {
 			required: true,
 			equalTo: "#new_password"
-		},
+		}
 	},
 	messages: {
 		old_password: {
@@ -264,7 +254,7 @@ $("#mypasswordform").validate({
 		confirm_password: {
 			required:"<?php _el('please_enter_', _l('confirm_password'))?>",
 			equalTo: "<?php _el('conf_password_donot_match')?>"
-		},
+		}
 	}
 });
 

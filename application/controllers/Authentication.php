@@ -7,18 +7,45 @@ class Authentication extends My_Controller
 		parent::__construct();
 		$this->load->model('Authentication_model');
 		$this->load->model('User_model', 'users');
-		$this->load->model('brand_model', 'brand');
+		$this->load->model('category_model', 'category');
+		$this->load->model('brand_model', 'brands');
+
+
+		if (get_settings('maintenance') == 1)
+		{
+			redirect(site_url());
+		}
+
 	}
 
+	/**
+	 * Entry Point
+	 * Call Login function
+	 */
 	public function index()
 	{
 		$this->login();
 	}
 
+
+	/**
+	 * Loads Maintenance page.
+	 */
+	public function maintenance()
+	{
+		$this->set_page_title(_l('maintenance'));
+		$this->load->view('themes/default/maintenance');
+	}
+
+	/**
+	 * Loads user login form & performs login
+	 */
+
 /**
  * [login user]
  * @return [type] [description]
  */
+
 	public function login()
 	{
 		if (is_user_logged_in())
@@ -77,6 +104,10 @@ class Authentication extends My_Controller
 		$this->template->load('index', 'content', 'authentication/login_signup');
 	}
 
+	/**
+	 * Loads user signup form & performs signup
+	 */
+
 /**user signup
  * [signup users]
  * @return [type] [description]
@@ -93,13 +124,25 @@ class Authentication extends My_Controller
 			}
 
 			$data['password'] = md5($data['password']);
+			$data['profile_image']='assets/uploads/users/default_user.png';
 			unset($data['confirm_password']);
-			//$data['profile_image']='./assets/uploads/users/user1.png';
-
 			$data['sign_up_key'] = app_generate_hash();
 
 			if ($this->users->insert($data))
 			{
+				$user_data = $this->db->get_where('users',$data)->result_array();
+				foreach ($user_data as $user) {
+					$user_id=$user['id'];
+				}
+				$user_address = array(
+				'users_id'    => $user_id,
+				'house_or_village'   => '',
+				'street_or_society'   => '',
+				'city'        => '',
+				'state'       => '',
+				'pincode'     =>''
+			);
+				$this->users->insert_user_address($user_address);
 				$template = get_email_template('new-user-signup');
 				$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
 
@@ -126,7 +169,7 @@ class Authentication extends My_Controller
 				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
 
 				$sent = send_email($data['email'], $subject, $message);
-
+				echo $send;
 				if ($sent)
 				{
 					set_alert('success', 'Your are registered successfully. Please check your email for account verification instructions.');

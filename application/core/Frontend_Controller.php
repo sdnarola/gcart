@@ -13,9 +13,10 @@ class Frontend_Controller extends My_Controller
 		parent::__construct();
 
 		$this->load->model('category_model', 'category');
-		$this->load->model('brand_model', 'brand');
-		$this->load->model('slider_model', 'slider');
-		$this->load->model('product_model', 'product');
+		$this->load->model('brand_model', 'brands');
+		$this->load->model('slider_model', 'sliders');
+		$this->load->model('product_model', 'products');
+
 
 	}
 }

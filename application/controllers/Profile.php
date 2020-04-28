@@ -35,22 +35,7 @@ class Profile extends Frontend_Controller
 
 		if ($id)
 		{
-			$data['user_address'] = $this->users->show($id);
-
-			if(sizeof($data['user_address'])==0)
-			{
-			$data = array(
-				'users_id'    => $id,
-				'address_1'   => '',
-				'address_2'   => '',
-				'city'        => '',
-				'state'       => '',
-				'pincode'     =>''
-			);
-
-			$this->users->insert_user_address($data);
-
-			}
+			$data['user_address'] = $this->users->show($id);			
 			$data['user_address'] = $this->users->show($id);
 			$data['user'] = $this->users->get($id);			
 
@@ -69,14 +54,13 @@ class Profile extends Frontend_Controller
 
 			$data   = array_map('strip_tags', $data);
 			$update = $this->users->update($id, $data);
-
 			$address_1 = $this->input->post('address_1');
 			$address_2 = $this->input->post('address_2');
 			$city      = $this->input->post('city');
 			$state     = $this->input->post('state');
 			$pincode   = $this->input->post('pincode');
 
-			$user_address = $this->users->edit($id, $address_1, $address_2, $city, $state, $pincode);
+			$user_address = $this->users->edit_user_address($id, $address_1, $address_2, $city, $state, $pincode);
 
 			if ($update == TRUE || $user_address == TRUE)
 			{
@@ -122,43 +106,30 @@ class Profile extends Frontend_Controller
 	public function uploads()
 	{
 		$id = get_loggedin_user_id();
+		$data = $this->input->post();
 
-		$config['upload_path']   = './assets/uploads/users';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']      = 2000;
-		$config['max_width']     = 1500;
-		$config['max_height']    = 1500;
-		$profile_image           = $id.'-'.$_FILES['profile_image']['name'];
-		$config['file_name']     = $profile_image;
-
-		$this->load->library('upload', $config);
-
-		if (!$this->upload->do_upload('profile_image'))
+		if ($_FILES['profile_image']['name'] != NULL)
 		{
-			$error = $this->upload->display_errors();
-			error_log($error,0);
-			set_alert('warning', _l('_updation_fail_please_try_again', _l('profile')));
-			redirect('profile/edit');
-		}
-		else
-		{
-			$data = $this->upload->data();
-			$rename = $data['raw_name'].$data['file_ext'];
-			//$value = $data['file']['raw_name'].$id.$data['file']['file_ext'];
-			$rename = $config['upload_path'].'/'.$rename;
+			$result = upload_logo('assets/uploads/users/', 'profile_image');
 
-			$data = array(
-				'profile_image' => $rename
-			);
-
-			$update = $this->users->update($id, $data);
-
-			if ($update)
+			if (!$result)
 			{
-				set_alert('success', _l('_updated_successfully', _l('profile')));
-				redirect('profile/edit');
+				set_alert('warning', _l('_updation_fail_please_try_again', _l('profile')));
+				redirect('profile/edit');	
 			}
-		}
+			else
+			{
+				$data['profile_image'] = $result;
+
+				$update = $this->users->update($id, $data);
+				if ($update)
+				{
+					set_alert('success', _l('_updated_successfully', _l('profile')));
+					redirect('profile/edit');
+				}
+			}
+	    }			
+	
 	}
 /***==================================================code end by vixuti patel=====================================================***/
 
