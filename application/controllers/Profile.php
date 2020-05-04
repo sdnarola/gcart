@@ -6,6 +6,10 @@ class Profile extends Frontend_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_model', 'users');
+		if (!is_user_logged_in())
+		{
+			redirect(site_url('authentication'));
+		}
 		//$this->load->model('activity_log_model', 'activity_log');
 	}
 /***==================================================code by vixuti patel=====================================================***/
@@ -18,7 +22,7 @@ class Profile extends Frontend_Controller
 		if ($id)
 		{
 			$data['user']  = $this->users->get($id);
-			$data['users'] = $this->users->show($id);
+			$data['user_address'] = $this->users->show($id);
 		}
 
 		$this->template->load('index', 'content', 'profile/index', $data);
@@ -35,23 +39,7 @@ class Profile extends Frontend_Controller
 
 		if ($id)
 		{
-			$data['user_address'] = $this->users->show($id);
-
-			if(sizeof($data['user_address'])==0)
-			{
-			$data = array(
-				'users_id'    => $id,
-				'address_1'   => '',
-				'address_2'   => '',
-				'city'        => '',
-				'state'       => '',
-				'pincode'     =>''
-			);
-
-			$this->users->insert_user_address($data);
-
-			}
-			$data['user_address'] = $this->users->show($id);
+			$data['user_address'] = $this->users->show($id);			
 			$data['user'] = $this->users->get($id);			
 
 			$this->template->load('index', 'content', 'profile/edit', $data);
@@ -69,7 +57,6 @@ class Profile extends Frontend_Controller
 
 			$data   = array_map('strip_tags', $data);
 			$update = $this->users->update($id, $data);
-
 			$address_1 = $this->input->post('address_1');
 			$address_2 = $this->input->post('address_2');
 			$city      = $this->input->post('city');
