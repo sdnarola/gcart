@@ -6,8 +6,10 @@ class Authentication extends My_Controller
 	{
 		parent::__construct();
 		$this->load->model('Authentication_model');
-		$this->load->model('brand_model', 'brand');
+		$this->load->model('brand_model', 'brands');
 		$this->load->model('vendor_model', 'vendors');
+		$this->load->model('category_model', 'category');
+
 	}
 
 	/**
@@ -160,7 +162,7 @@ class Authentication extends My_Controller
 			set_alert('error', 'Some issue in verifying your email.');
 		}
 
-		redirect(site_url('vendor/authentication/signup'));
+		redirect(site_url('vendor/authentication'));
 	}
 
 /*=================================================code end by vixuti pate=====================================*/

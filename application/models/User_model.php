@@ -96,7 +96,7 @@ class User_model extends MY_Model
  */
 	public function edit_user_address($id, $address_1, $address_2, $city, $state, $pincode)
 	{
-		$result = "UPDATE users_address as a SET a.address_1='$address_1',a.address_2='$address_2',a.city='$city',a.state='$state',a.pincode='$pincode' WHERE a.users_id=$id";
+		$result = "UPDATE users_address as a SET a.house_or_village='$address_1',a.street_or_society='$address_2',a.city='$city',a.state='$state',a.pincode='$pincode' WHERE a.users_id=$id";
 		$query  = $this->db->query($result);
 		
 		return $query;	

@@ -31,7 +31,7 @@ class News_letters extends Frontend_Controller
 
 		if ($inserts)
 		{
-			set_alert('success', 'Your are subscription successfully. ');
+			set_alert('success', 'Your subscription successfully. ');
 		}
 		else
 		{

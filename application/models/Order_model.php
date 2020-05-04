@@ -29,13 +29,22 @@ class Order_model extends MY_Model
 	 *
 	 * @return mixed 	$items 	ordered product's information.
 	 */
-	public function get_items($id, $vendor_id = '')
+
+	public function get_items($id='', $vendor_id = '',$order_id='')
 	{
 		$this->db->select('order_items.quantity AS item_quantity, order_items.*,products.id AS pro_id,products.*');
 		$this->db->from('order_items');
 		$this->db->join('products', 'products.id = order_items.product_id');
-		$this->db->where('order_items.order_id', $id);
 
+		if(!empty($id))
+		{
+		$this->db->where('order_items.order_id', $id);
+		}
+		if(!empty($order_id))
+		{
+			$this->db->where_in('order_items.order_id', $order_id);
+	
+		}
 		if ($vendor_id)
 		{
 			$this->db->where('products.vendor_id', $vendor_id);
@@ -185,6 +194,7 @@ class Order_model extends MY_Model
 
 		return $this->db->get('orders')->result_array();
 	}
+
 }
 
 ?>

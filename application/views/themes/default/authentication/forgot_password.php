@@ -1,11 +1,10 @@
-<div class="container" style="margin-top:30px;">
     <?php $this->load->view('themes/default/includes/alerts');?>
     <div class="breadcrumb">
     <div class="container">
         <div class="breadcrumb-inner">
             <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li class='active'>Forgot Password</li>
+                <li><a href="<?php echo base_url(); ?>"><?php _el('home');?></a></li>
+                <li class='active'><?php _el('forgot_password');?></li>
             </ul>
         </div><!-- /.breadcrumb-inner -->
     </div><!-- /.container -->
