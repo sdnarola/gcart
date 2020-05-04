@@ -59,7 +59,7 @@
             <input type="text" class="form-control unicase-form-control text-input" id="lastname" name="lastname" >
         </div>
         <div class="form-group">
-            <label class="info-title" for="mobile"><?php _el('mobile');?> <span>*</span></label>
+            <label class="info-title" for="mobile"><?php _el('mobile_no');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="mobile" name="mobile" >
         </div>
         <div class="form-group">
@@ -157,9 +157,9 @@ $("#signup_form").validate({
         lastname: {
             required:"<?php _el('please_enter_', _l('lastname'))?>",
         },
-        mobile_no: {
+        mobile: {
             required:"<?php _el('please_enter_', _l('mobile_no'))?>",
-            minlength :'Please enter a valid 10 digit mobile number',
+            minlength :'<?php _el('only_10_digits') ?>',
        },
         email: {
             required:"<?php _el('please_enter_', _l('email'))?>",

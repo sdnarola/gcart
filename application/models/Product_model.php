@@ -4,11 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product_model extends MY_Model
 {
 	/**
-	<<<<<<< HEAD
 	 * @var mixed
-	=======
 	 * @var boolean
-	>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 	 */
 	protected $soft_delete = TRUE;
 
