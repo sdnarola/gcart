@@ -27,12 +27,13 @@ class Category_model extends MY_Model
 	 * [get_parent_category description]
 	 * @return [boolean] Query true return sub catgories or return false
 	 */
-	public function get_parent_categories($id = '')
+	public function get_parent_categories($where = array())
 	{
-		if (!empty($id))
+		if (!empty($where))
 		{
 			$this->db->order_by('name', 'asc');
-			$query  = $this->db->get_where('categories', array('is_deleted' => 0, 'is_active' => 1, 'id' => $id));
+			$this->db->where($where);
+			$query  = $this->db->get_where('categories', array('is_deleted' => 0, 'is_active' => 1));
 			$result = $query->result_array();
 
 			if (empty($result))
@@ -74,12 +75,13 @@ class Category_model extends MY_Model
 	 *
 	 * @return [boolean]   Query is true return sub category or return false
 	 */
-	public function get_sub_categories($id = '')
+	public function get_sub_categories($where=array())
 	{
-		if (!empty($id))
+		if (!empty($where))
 		{
 			$this->db->order_by('name', 'asc');
-			$this->db->where(array('is_deleted' => 0, 'id' => $id));
+			$this->db->where($where);
+			$this->db->where(array('is_deleted' => 0));
 			$query  = $this->db->get('sub_categories');
 			$result = $query->result_array();
 
@@ -108,15 +110,13 @@ class Category_model extends MY_Model
 			}
 		}
 	}
-
-
 	/**
 	 * [get_shop_by_sub_category description]
 	 * @param  int $category_id    [category id]
 	 * @param  int $brand_id       [brand id]
 	 * @param  string $tags        [products tags]
-	 * 
-	 * @return [array]             
+	 *
+	 * @return [array]
 	 */
 	public function get_shop_by_sub_category($category_id = '', $brand_id = '', $tags = '')
 	{
@@ -172,28 +172,61 @@ class Category_model extends MY_Model
 
 // =========================== Bhavik ==================================//
 
-
 /**
- * get sub category of product
+ * get sub categories of parent category
  *
- * @param  int 		$id 	product id
+ * @param  int 		$id 	parent category id
  *
- * @return mixed 	sub category
+ * @return mixed 	sub categories
  */
-function get_sub_category_info($id)
-{
-	$this->db->where('id', $id);
-	$result = $this->db->get('sub_categories')->row_array();
-
-	if (!$result)
+	public function get_sub_categories_of_parent_category($id = '')
 	{
-		return false;
+		$this->_table = 'sub_categories';
+		$this->order_by('name');
+		if ($id == null)
+		{
+			$result = $this->get_all();
+
+			if (!$result)
+			{
+				return null;
+			}
+
+			return $result;
+		}
+
+		$result = $this->get_many_by('category_id', $id);
+
+		if (!$result)
+		{
+			return null;
+		}
+
+		return $result;
 	}
 
-	return $result;
-}
+	/**
+	 * get sub category of product
+	 *
+	 * @param  int 		$id 	product id
+	 *
+	 * @return mixed 	sub category
+	 */
+	public function get_sub_category_info($id)
+	{
+		$this->db->where('id', $id);
+		$result = $this->db->get('sub_categories')->row_array();
+
+		if (!$result)
+		{
+			return false;
+		}
+
+		return $result;
+	}
 
 // =========================== Bhavik ==================================//
+
 
 /***======================================================code by vixuti patel===========================================================***
 		/**
@@ -357,8 +390,6 @@ public function get_header_parent_category($is_header = '')
 		return false;
 	}
 
-
-
 	/**
 	 * [get_parent_category_products description]
 	 * @param  [type] $id [description]
@@ -377,6 +408,21 @@ public function get_header_parent_category($is_header = '')
 		return false;
 	}
 
+// public function get_data_to_cart_products($product_id)
+
+// {
+
+// 	$query = $this->db->get_where('products', array('id' => $products_id));
+
+// 	if ($query == TRUE)
+
+// 	{
+
+// 		return $query->result();
+
+// 	}
+
+// }
 	/**
 <<<<<<< HEAD
 	 * [get_products_tags description]
@@ -472,8 +518,10 @@ public function get_header_parent_category($is_header = '')
 	 * @param  string $slug [category slug]
 	 *
 	 * @return [array]
+<<<<<<< HEAD
+=======
 	 */
-	public function get_category_by_slug($slug = '')
+	public function get_category_by_banner($slug = '')
 	{
 		if (empty($slug))
 		{
@@ -522,6 +570,40 @@ public function get_header_parent_category($is_header = '')
 			if (empty($result))
 			{
 				return 0;
+			}
+			else
+			{
+				return $result;
+			}
+		}
+	}
+
+//=========================================================== END KOMAL WORK ===========================================================================================//
+
+	/**
+	 * [search category or product or brand]
+	 * @param  [type] $name [description]
+	 * @return [type]       [description]
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
+	 */
+	public function get_category_by_slug($slug = '')
+	{
+		if (empty($slug))
+		{
+			return false;
+		}
+		else
+		{
+			$this->db->select('categories.*,banners.title,banners.sub_title,banners.description,banners.banner');
+			$this->db->from('categories');
+			$this->db->join('banners', 'banners.id=categories.banner_id');
+			$this->db->where('categories.slug', $slug);
+			$query  = $this->db->get();
+			$result = $query->row_array();
+
+			if (empty($result))
+			{
+				return false;
 			}
 			else
 			{
@@ -639,6 +721,7 @@ public function get_header_parent_category($is_header = '')
 		}
 	}
 
+
 	/**
 	 * [get_all_products_count description]
 	 * @param  array  $where                    [[where cluse value in array]
@@ -741,8 +824,11 @@ public function get_header_parent_category($is_header = '')
 			return $result;
 		}
 	}
+
 	//=========================================================== END KOMAL WORK ===========================================================================================//
 
+
+	/***==================================================code end by vixuti patel=====================================================***/
 }
 
 

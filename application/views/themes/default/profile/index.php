@@ -1,12 +1,13 @@
 <style type="text/css">
+
+<style type="text/css">
 tr{
-  border: 1px solid #ddd;
   margin-top: 3px;
   padding-top: 3px;
   border-collapse: collapse; 
   line-height: 0px;
-  min-height: 25px;
-  height: 25px;
+   min-height: 25px;
+   height: 25px;
   border: none;
    }
 td{
@@ -17,6 +18,7 @@ td{
     color: #666;
     border-right: none;
     text-align:left;
+    max-width: 150px;
   }
 
 table, td, th {  
@@ -36,7 +38,18 @@ th {
     border: 1px solid #ddd;
 }
 
+.table>thead>tr>th,
+.table>tbody>tr>th,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>tbody>tr>td,
+.table>tfoot>tr>td {
+    padding: 12px 15px;
+    line-height: 1.5384616;
+    vertical-align: top;
+}
 </style>
+
    <?php $this->load->view('themes/default/includes/alerts');?>
     <div class="breadcrumb">
     <div class="container">
@@ -59,14 +72,11 @@ th {
         </center>
     <div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <!-- Panel -->          
-            <div class="row">
+   
 
                 <div class="col-md-6 col-sm-12">
-                    <table  class="table-responsive">
+                    <table  class="table table-responsive">
+                  <tbody>
                       <tr>
                         <td><?php _el('profile');?></td><td>:</td>
                         <td><?php
@@ -79,7 +89,7 @@ th {
                         else
                         {
                         ?>
-                        <img alt="profile" style="width:60px; height: 60px;" title="" class="img-circle img-thumbnail isTooltip" src="<?php echo base_url().$user['profile_image']; ?>" alt="<?php _el('profile_image');?>"  > 
+                        <img alt="profile" style="width:63px; height: 65px;" title="" class="img-circle img-thumbnail isTooltip" src="<?php echo base_url().$user['profile_image']; ?>" alt="<?php _el('profile_image');?>"  > 
                         <?php
                         }
                         ?></td>                      
@@ -104,24 +114,27 @@ th {
                         <td>:</td>
                         <td><a href="tel:<?php echo $user['mobile']; ?>"><?php echo $user['mobile']; ?></a></td>
                       </tr>                       
-                     
+                     </tbody>
                 </table>                           
             </div><!--col-md-6-->
 
             <div class="col-md-6">
 
-                 <table  class="table-responsive">
+                 <table  class="table table-responsive">
 
-                     <?php
-                        foreach ($users as $address)
-                        {
-                            
-                            if(!empty($users))
-                            {
-                        ?>
+                     <?php                     
+                if(!empty($user_address))
+                  {
+                  foreach ($user_address as $address)
+                  {
+                      
+                    ?>
+                    <thead>
                        <tr>
                         <th colspan="3"><h3 class="panel-title"><strong><?php _el('personal_address');?></strong></h3></th>  
                       </tr>
+                    </thead>
+                    <tbody>
                       <tr>
                         <td><?php _el('address_1');?></td>
                         <td>:</td>
@@ -152,9 +165,9 @@ th {
                         <td>:</td>
                         <td><?php echo $address['pincode']; ?></td>                      
                       </tr>
-                       
+                       </tbody>
                        <?php 
-                        }
+                       }
                     }
                  ?>
                  </table>                           

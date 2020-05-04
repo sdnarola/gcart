@@ -90,7 +90,7 @@
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
 <script type="text/javascript">
 
-var BASE_URL = "<?php echo base_url(); ?>";
+// var BASE_URL = "<?php echo base_url(); ?>";
 
 $.validator.addMethod("emailExists", function(value, element)
 {

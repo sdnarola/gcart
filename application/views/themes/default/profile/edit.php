@@ -117,8 +117,20 @@
 
 				<div class="form-group">
 				<!--<label class="info-title" for="profile_image"><?php _el('profile_image');?> </label>-->
-
+                <?php
+                if(empty($user['profile_image']))
+                {
+                ?>                       
+                 <img class="img-circle" id="blah" src="<?php echo base_url() ?>assets/uploads/users/1-user.png" alt="<?php _el('profile_image');?>" height=64 width=100 />
+                <?php
+                }
+                else
+                {
+               ?>
 			    <img class="img-circle" id="blah" src="<?php echo base_url() ?><?php echo $user['profile_image']; ?>" alt="<?php _el('profile_image');?>" height=64 width=100 />
+                <?php 
+                }
+                ?>
 	            <input type="file" class="form-control unicase-form-control text-input" id="profile_image" name="profile_image" size="33" />
 	        	</div>
 	            <button type="submit" value="Upload Image" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>

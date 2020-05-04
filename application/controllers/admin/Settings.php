@@ -16,17 +16,10 @@ class Settings extends Admin_Controller
 	 */
 	public function index()
 	{
-		if (!has_permissions('settings', 'view'))
-		{
-			$this->access_denied('settings', 'view');
-		}
-		else
-		{
-			$this->set_page_title(_l('settings'));
-			$data['settings'] = get_settings();
-			$data['content']  = $this->load->view('admin/settings/index', $data, TRUE);
-			$this->load->view('admin/layouts/index', $data);
-		}
+		$this->set_page_title(_l('settings'));
+		$data['settings'] = get_settings();
+		$data['content']  = $this->load->view('admin/settings/index', $data, TRUE);
+		$this->load->view('admin/layouts/index', $data);
 	}
 
 	/**
@@ -35,12 +28,6 @@ class Settings extends Admin_Controller
 	public function add()
 	{
 		$this->set_page_title(_l('settings').' | '._l('add'));
-
-		if (!has_permissions('settings', 'create'))
-		{
-			$this->access_denied('settings', 'create');
-		}
-		else
 
 		if ($this->input->post())
 		{
@@ -56,7 +43,6 @@ class Settings extends Admin_Controller
 					];
 
 					$this->settings->insert($data);
-					log_activity("New Settings Option Created [Name: $key, Value: $value]");
 				}
 
 				if ($settig_exists == 1)
@@ -66,15 +52,12 @@ class Settings extends Admin_Controller
 					if ($settings['value'] != $value && $value != '')
 					{
 						$this->settings->update($settings['id'], array('value' => $value));
-
-						log_activity("Settings Option Updated [Name: $key, Value: $value]");
 					}
 					else
 
 					if ($value == '' || $value == null)
 					{
 						$delete = $this->settings->delete_by(['name' => $key]);
-						log_activity("Settings Option Deleted [Name: $key]");
 					}
 				}
 			}

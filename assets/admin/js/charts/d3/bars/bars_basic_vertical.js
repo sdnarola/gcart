@@ -9,10 +9,10 @@
  *
  * ---------------------------------------------------------------------------- */
 
-$(function () {
+$(function() {
 
     // Initialize chart
-    barVertical('#d3-bar-vertical', 400);
+    barVertical('#d3-bar-vertical', 300);
 
     // Chart setup
     function barVertical(element, height) {
@@ -23,7 +23,12 @@ $(function () {
 
         // Define main variables
         var d3Container = d3.select(element),
-            margin = {top: 5, right: 10, bottom: 20, left: 40},
+            margin = {
+                top: 5,
+                right: 10,
+                bottom: 20,
+                left: 40
+            },
             width = d3Container.node().getBoundingClientRect().width - margin.left - margin.right,
             height = height - margin.top - margin.bottom - 5;
 
@@ -43,21 +48,7 @@ $(function () {
         // Color
         var color = d3.scale.category20c();
 
-
-
-        // Create axes
-        // ------------------------------
-
-        // Horizontal
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
-
-        // Vertical
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient("left")
-            .ticks(10, "%");
+        var formatxAxis = d3.format(',.0f');
 
 
 
@@ -72,29 +63,47 @@ $(function () {
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
 
         // Load data
         // ------------------------------
 
-        d3.tsv("assets/demo_data/d3/bars/bars_basic.tsv", function(error, data) {
-
+        d3.tsv(BASE_URL + '/admin/dashboard/sale', function(error, data) {
             // Pull out values
             data.forEach(function(d) {
-                d.frequency = +d.frequency;
+                d.sale = +d.sale;
             });
 
+            // Create axes
+            // ------------------------------
+            // Horizontal
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+
+            // Vertical
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .tickFormat(formatxAxis)
+                .ticks(d3.max(data, function(d) {
+                    return d.sale;
+                }));
 
             // Set input domains
             // ------------------------------
 
             // Horizontal
-            x.domain(data.map(function(d) { return d.letter; }));
+            x.domain(data.map(function(d) {
+                return d.day;
+            }));
 
             // Vertical
-            y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+            y.domain([0, d3.max(data, function(d) {
+                return d.sale;
+            })]);
 
 
             //
@@ -123,7 +132,7 @@ $(function () {
                 .style("text-anchor", "end")
                 .style("fill", "#999")
                 .style("font-size", 12)
-                .text("Frequency");
+                .text("Sale");
 
 
             // Add bars
@@ -131,12 +140,20 @@ $(function () {
                 .data(data)
                 .enter()
                 .append("rect")
-                    .attr("class", "d3-bar")
-                    .attr("x", function(d) { return x(d.letter); })
-                    .attr("width", x.rangeBand())
-                    .attr("y", function(d) { return y(d.frequency); })
-                    .attr("height", function(d) { return height - y(d.frequency); })
-                    .style("fill", function(d) { return color(d.letter); });
+                .attr("class", "d3-bar")
+                .attr("x", function(d) {
+                    return x(d.day);
+                })
+                .attr("width", x.rangeBand())
+                .attr("y", function(d) {
+                    return y(d.sale);
+                })
+                .attr("height", function(d) {
+                    return height - y(d.sale);
+                })
+                .style("fill", function(d) {
+                    return color(d.day);
+                });
         });
 
 
@@ -185,7 +202,9 @@ $(function () {
             // -------------------------
 
             // Line path
-            svg.selectAll('.d3-bar').attr("x", function(d) { return x(d.letter); }).attr("width", x.rangeBand());
+            svg.selectAll('.d3-bar').attr("x", function(d) {
+                return x(d.day);
+            }).attr("width", x.rangeBand());
         }
     }
 });

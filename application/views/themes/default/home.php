@@ -170,7 +170,7 @@ function counter(end_date,id)
 
         <!-- ============================================== HOT DEALS ============================================== -->
         <div class="sidebar-widget hot-deals wow fadeInUp outer-bottom-xs">
-          <h3 class="section-title">hot deals</h3>
+          <h3 class="section-title"><?php _el('hot_deals');?></h3>
           <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
 <?php  
   if ($deals)
@@ -178,6 +178,10 @@ function counter(end_date,id)
     foreach ($deals as $deal)
     {
       $end_date = date('M d, Y  h:i:s', strtotime($deal['end_date']));
+      $t = time();
+      $current_time = date("M d, Y h:i:s",$t);
+
+     if($current_time < $end_date){
     ?>
             <div class="item">
               <div class="products">
@@ -196,7 +200,7 @@ function counter(end_date,id)
                           }
 
                         ?><br>
-                    off</span></div>
+                    <?php _el('off');?></span></div>
                     <script type="text/javascript">
                       counter("<?php echo $end_date; ?>",<?php echo $deal['id']; ?>);
                     </script>
@@ -232,7 +236,7 @@ function counter(end_date,id)
                             <?php
                            }
                          }                        
-                      }
+                     }
                         ?> 
 
                 </div>
@@ -242,7 +246,7 @@ function counter(end_date,id)
                   <div class="action">
                     <div class="add-cart-button btn-group">
                       <a href="<?php echo base_url('cart/add/').$deal['product_id']; ?>">
-                      <button  type="button" class="btn btn-primary cart-btn" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;Add to cart</button></a>
+                      <button  type="button" class="btn btn-primary cart-btn" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;<?php _el('add_to_cart');?></button></a>
                     </div>
                   </div>
                   <!-- /.action -->
@@ -253,7 +257,7 @@ function counter(end_date,id)
 <?php
   }
   }
-
+}
 ?>
           </div>
           <!-- /.sidebar-widget -->
@@ -263,7 +267,7 @@ function counter(end_date,id)
         <!-- ============================================== SPECIAL OFFER ============================================== -->
 
         <div class="sidebar-widget outer-bottom-small wow fadeInUp">
-          <h3 class="section-title">Special Offer</h3>
+          <h3 class="section-title"><?php _el('Special_Offer');?></h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
                <?php
@@ -341,7 +345,7 @@ function counter(end_date,id)
         <!-- ============================================== SPECIAL OFFER : END ============================================== -->
         <!-- ============================================== PRODUCT TAGS ============================================== -->
         <div class="sidebar-widget product-tag wow fadeInUp">
-          <h3 class="section-title">Product tags</h3>
+          <h3 class="section-title"><?php _el('Product_tags');?></h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="tag-list"> 
               <?php 
@@ -372,7 +376,7 @@ function counter(end_date,id)
         <!-- ============================================== SPECIAL DEALS ============================================== -->
 
         <div class="sidebar-widget outer-bottom-small wow fadeInUp">
-          <h3 class="section-title">Special Deals</h3>
+          <h3 class="section-title"><?php _el('special_deals');?></h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="owl-carousel sidebar-carousel special-offer custom-carousel owl-theme outer-top-xs">
             
@@ -406,7 +410,7 @@ function counter(end_date,id)
                             <!-- /.image -->
 
                             <div class="tag hot" style="height: 35px; width:40px;"><span>
-                            <?php echo round($percentage); ?>%OFF
+                            <?php echo round($percentage); ?>%<?php _el('off');?>
                               </span></div>                              
                           </div>
 
@@ -415,7 +419,7 @@ function counter(end_date,id)
                         <!-- /.col -->
                         <div class="col col-xs-7">
                           <div class="product-info">
-                            <h3 class="name"><a href="<?= site_url('Products/'.$deal_product['slug']); ?>>"><?php echo ucwords($deal_product['name']);?></a></h3>
+                            <h3 class="name"><a href="<?= site_url('Products/'.$deal_product['slug']); ?>"><?php echo ucwords($deal_product['name']);?></a></h3>
                             <div class="product-price"> <span class="price"><?php echo $deal_product['price'];?></span> </div>
                             <!-- /.product-price -->
 
@@ -470,15 +474,15 @@ function counter(end_date,id)
         <!-- ============================================== SPECIAL DEALS : END ============================================== -->
         <!-- ============================================== NEWSLETTER ============================================== -->
         <div class="sidebar-widget newsletter wow fadeInUp outer-bottom-small">
-          <h3 class="section-title">Newsletters</h3>
+          <h3 class="section-title"><?php _el('newsletters');?></h3>
           <div class="sidebar-widget-body outer-top-xs">
-            <p>Sign Up for Our Newsletter!</p>
+            <p><?php _el('sign_up_for_our_newsletter');?></p>
             <form action="<?php echo base_url('news_letters'); ?>" id="login_form" method="POST">
               <div class="form-group">
-                <label class="sr-only" for="Subscribe_id">Email address</label>
+                <label class="sr-only" for="Subscribe_id"><?php _el('email_address');?></label>
                 <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Subscribe to our newsletter"  required>
               </div>
-              <button type="submit" id="newsletter"  class="btn btn-primary">Subscribe</button>
+              <button type="submit" id="newsletter"  class="btn btn-primary"><?php _el('subscribe'); ?></button>
 
             </form>
           </div>
@@ -486,6 +490,7 @@ function counter(end_date,id)
           <!-- /.sidebar-widget-body -->
         </div>
         <!-- /.sidebar-widget -->
+        
         <!-- ============================================== NEWSLETTER: END ============================================== -->
 
         <!-- ============================================== Testimonials============================================== -->
@@ -545,7 +550,7 @@ function counter(end_date,id)
                   <div class="slider-header fadeInDown-1"><?php echo ucwords($slider['title']); ?></div>
                   <div class="big-text fadeInDown-1"><?php echo ucwords($slider['sub_title']); ?></div>
                   <div class="excerpt fadeInDown-2 hidden-xs"> <span><?php echo ucwords($slider['description']); ?></span> </div>
-                  <div class="button-holder fadeInDown-3"> <a href="#<?php echo base_url(); ?>index.php?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button">Shop Now</a> </div>
+                  <div class="button-holder fadeInDown-3"> <a href="#<?php echo base_url(); ?>index.php?page=single-product" class="btn-lg btn btn-uppercase btn-primary shop-now-button"><?php _el('shop_now');?></a> </div>
                 </div>
                 <!-- /.caption -->
               </div>
@@ -568,10 +573,10 @@ function counter(end_date,id)
                 <div class="info-box">
                   <div class="row">
                     <div class="col-xs-12">
-                      <h4 class="info-box-heading green">money back</h4>
+                      <h4 class="info-box-heading green"><?php _el('money_back'); ?></h4>
                     </div>
                   </div>
-                  <h6 class="text">30 Days Money Back Guarantee</h6>
+                  <h6 class="text"><?php _el('30_Days_Money_Back_Guarantee');?></h6>
                 </div>
               </div>
               <!-- .col -->
@@ -580,10 +585,10 @@ function counter(end_date,id)
                 <div class="info-box">
                   <div class="row">
                     <div class="col-xs-12">
-                      <h4 class="info-box-heading green">free shipping</h4>
+                      <h4 class="info-box-heading green"><?php _el('free_shipping'); ?></h4>
                     </div>
                   </div>
-                  <h6 class="text">Shipping on orders over $99</h6>
+                  <h6 class="text"><?php _el('shipping_on_orders_over_$99'); ?></h6>
                 </div>
               </div>
               <!-- .col -->
@@ -592,10 +597,10 @@ function counter(end_date,id)
                 <div class="info-box">
                   <div class="row">
                     <div class="col-xs-12">
-                      <h4 class="info-box-heading green">Special Sale</h4>
+                      <h4 class="info-box-heading green"><?php _el('special_sale');?></h4>
                     </div>
                   </div>
-                  <h6 class="text">Extra $5 off on all items </h6>
+                  <h6 class="text"><?php _el('extra_$5_off_on_all_items'); ?> </h6>
                 </div>
               </div>
               <!-- .col -->
@@ -612,7 +617,7 @@ function counter(end_date,id)
          <div id="product-tabs-slider" class="scroll-tabs outer-top-vs wow fadeInUp">
           <div class="more-info-tab clearfix ">
             <form method="post" action="<?php  echo base_url('home'); ?>">
-            <h3 class="new-product-title pull-left">New Products</h3>
+            <h3 class="new-product-title pull-left"><?php _el('new_product'); ?></h3>
             <div><?php echo "</br>";?></div>
             <div><?php echo "</br>";?></div>
             <div><?php echo "</br>";?></div>
@@ -620,7 +625,7 @@ function counter(end_date,id)
             <div class="owl-carousel home-owl-carousel custom-carousel owl-theme" data-item="6" id="new-products-1"> 
        
             <ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
-            <li class="active"><a data-transition-type="backSlide" data-id="" name=""  data-toggle="tab">All</a></li>
+            <li class="active"><a data-transition-type="backSlide" data-id="" name=""  data-toggle="tab"><?php _el('all');?></a></li>
             </ul>
                <?php
                 foreach ($main_categories as $main_category)
@@ -665,17 +670,17 @@ function counter(end_date,id)
                           <!-- /.image -->
                          <?php if($product['is_hot']==1){?> 
                           <div class="tag hot"><span>
-                            HOT
+                            <?php _el('HOT')?>
                               </span></div>
                             <?php }
                             elseif ($product['is_hot']==1 || $product['is_sale']==1){?> 
                           <div class="tag sale"><span>
-                            SALE
+                            <?php _el('SALE');?>
                               </span></div>
                             <?php }
                             else{?>
                              <div class="tag new"><span>
-                            NEW
+                            <?php _el('new');?>
                               </span></div>
                             <?php }
                             ?>
@@ -717,7 +722,7 @@ function counter(end_date,id)
                             <ul class="list-unstyled">
                               <li class="add-cart-button btn-group">
                                 <button data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Add Cart"> <i class="fa fa-shopping-cart"></i> </button>
-                                <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                                <button class="btn btn-primary cart-btn" type="button"><?php _el('add_to_cart');?></button>
                               </li>
                               <li class="lnk wishlist"> <a data-toggle="tooltip" class="add-to-cart" href=" <?php  if (!is_user_logged_in())
                                {  echo site_url('authentication'); }else{ echo '#';}?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
@@ -777,7 +782,8 @@ function counter(end_date,id)
         <!-- ============================================== WIDE PRODUCTS : END ============================================== -->
         <!-- ============================================== FEATURED PRODUCTS ============================================== -->
         <section class="section featured-product wow fadeInUp">
-          <h3 class="section-title">Featured products</h3>
+
+          <h3 class="section-title"><?php _el('featured_product');?></h3>
          
           <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
        <?php
@@ -795,17 +801,17 @@ function counter(end_date,id)
                         <?php 
                             if($product['is_hot']==1){?>                   
                             <div class="tag hot"><span>
-                            HOT
+                            <?php _el('HOT');?>
                               </span></div>
                             <?php }
                             elseif ($product['is_hot']==1 || $product['is_sale']==1){?> 
                             <div class="tag sale"><span>
-                            SALE
+                           <?php _el('SALE');?>
                               </span></div>
                             <?php }
                             else{?>
                             <div class="tag new"><span>
-                            NEW
+                            <?php _el('new');?>
                               </span></div>
                             <?php }
                          ?>
@@ -847,7 +853,7 @@ function counter(end_date,id)
                       <ul class="list-unstyled">
                         <li class="add-cart-button btn-group">
                           <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
-                          <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
+                          <button class="btn btn-primary cart-btn" type="button"><?php _el('add_to_cart');?></button>
                         </li>
                         <li class="lnk wishlist"> <a class="add-to-cart" href="<?php  if (!is_user_logged_in())
                                {  echo site_url('authentication'); }else{ echo '#';}?>" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
@@ -884,7 +890,7 @@ function counter(end_date,id)
                   </div>
                 </div>
                 <div class="new-label">
-                  <div class="text">NEW</div>
+                  <div class="text"><?php _el('new');?></div>
                 </div>
                 <!-- /.new-label -->
               </div>
@@ -899,7 +905,7 @@ function counter(end_date,id)
         <!-- ============================================== BEST SELLER ============================================== -->
 
         <div class="best-deal wow fadeInUp outer-bottom-xs">
-          <h3 class="section-title">Best seller</h3>
+          <h3 class="section-title"><?php _el('best_seller');?></h3>
           <div class="sidebar-widget-body outer-top-xs">
             <div class="owl-carousel best-seller custom-carousel owl-theme outer-top-xs">
              <?php 
@@ -1079,7 +1085,7 @@ $("#login_form").validate
                
                 if(new_products.length === 0)
                 {
-                  p+='<center><div class="no_products" style="padding-left: 60%;">No products</br></div></center>';
+                  p+='<center><div class="no_products" style="padding-left: 60%;margin-top:30px;margin-bottom:60px;">No products</br></div></center>';
                 }
               
                   for(var i=0; i<new_products.length; i++)
@@ -1104,7 +1110,7 @@ $("#login_form").validate
                     p+='<div class="tag new"><span> NEW</span></div>';
                   }              
                   
-                  p+='<div class="image" id="image"> <a href="<?= site_url('Products/'); ?>'+ new_products[i].slug+'"><img  src="'+ new_products[i].thumb_image+'" alt="new_product image" style="max-width: 189px;max-height: 142px"></a> </div>';
+                  p+='<div class="image" id="image"> <a href="<?= site_url('Products/'); ?>'+ new_products[i].slug+'"><img  src="'+ new_products[i].thumb_image+'" alt="new_product image" style="max-width: 189px;max-height:170px"></a> </div>';
                   p+='</div>';
           
                   p+='<div class="product-info text-left">';

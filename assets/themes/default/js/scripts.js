@@ -254,11 +254,17 @@ jQuery(function () {
 
 // Price Slider
 if (jQuery('.price-slider').length > 0) {
+
+    var min_price=$("#pull-left").attr("value");
+    var max_price=$("#pull_right").attr("value");
+
+    // console.log(min_price);
+    // console.log(max_price);
     jQuery('.price-slider').slider({
         min: 100,
-        max: 700,
+        max: max_price,
         step: 10,
-        value: [200, 500],
+        value: [100, max_price],
         handle: "square"
 
     });
@@ -322,8 +328,6 @@ jQuery(function () {
 /*  TOOLTIP
 /*===================================================================================*/
 jQuery("[data-toggle='tooltip']").tooltip();
-
-
 
 
 })

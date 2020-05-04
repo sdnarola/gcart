@@ -1,4 +1,5 @@
-<?php	
+<?php defined('BASEPATH') or exit('No direct script access allowed');
+
 	$alert_class = $alert_type = '';
 
 	if ($this->session->flashdata('success'))
@@ -7,18 +8,18 @@
 	}
 	elseif ($this->session->flashdata('warning'))
 	{
-		$alert_class = $alert_type =  'warning';
+		$alert_class = $alert_type = 'warning';
 	}
 	elseif ($this->session->flashdata('error'))
 	{
 		$alert_class = 'danger';
-		$alert_type = 'error';
+		$alert_type  = 'error';
 	}
 	elseif ($this->session->flashdata('info'))
 	{
-		$alert_class = $alert_type =  'info';
+		$alert_class = $alert_type = 'info';
 	}
- 
+
 	if ($this->session->flashdata($alert_type))
 	{
 	?>
@@ -30,4 +31,6 @@
 		</div>
 	</div>
 </div>
-<?php } ?>
+<?php }
+
+?>

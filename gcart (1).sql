@@ -1,4 +1,5 @@
 -- phpMyAdmin SQL Dump
+<<<<<<< HEAD
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
@@ -6,6 +7,15 @@
 -- Generation Time: Apr 08, 2020 at 09:22 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
+=======
+-- version 4.9.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1:3306
+-- Generation Time: Apr 20, 2020 at 09:50 AM
+-- Server version: 10.4.10-MariaDB
+-- PHP Version: 7.3.12
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -35,7 +45,11 @@ CREATE TABLE IF NOT EXISTS `banners` (
   `sub_title` text NOT NULL,
   `description` mediumtext NOT NULL,
   `banner` mediumtext NOT NULL,
+<<<<<<< HEAD
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
@@ -60,7 +74,11 @@ CREATE TABLE IF NOT EXISTS `brands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `logo` mediumtext NOT NULL,
+<<<<<<< HEAD
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
@@ -95,21 +113,89 @@ CREATE TABLE IF NOT EXISTS `cart` (
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `total_amount` decimal(7,2) NOT NULL,
+<<<<<<< HEAD
+=======
+  `user_ip` varchar(50) NOT NULL,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   `date` datetime NOT NULL,
   `is_deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=latin1;
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 --
 -- Dumping data for table `cart`
 --
 
+<<<<<<< HEAD
 INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `total_amount`, `date`, `is_deleted`) VALUES
 (1, 1, 2, 2, '9120.24', '2020-03-20 10:54:29', 0),
 (2, 1, 3, 2, '30800.00', '2020-03-20 10:54:41', 0),
 (3, 1, 1, 1, '7850.35', '2020-03-30 04:09:30', 0);
+=======
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`, `total_amount`, `user_ip`, `date`, `is_deleted`) VALUES
+(1, 1, 2, 6, '60000.00', '::1', '2020-03-20 10:54:29', 1),
+(2, 1, 3, 8, '99999.99', '::1', '2020-03-20 10:54:41', 1),
+(3, 2, 1, 5, '90000.00', '::1', '2020-03-30 04:09:30', 0),
+(7, 2, 5, 2, '99999.99', '::1', '2020-04-15 12:22:08', 0),
+(11, NULL, 2, 10, '2332.00', '::1', '2020-04-02 00:00:00', 1),
+(28, NULL, 2, 1, '10000.00', '::2', '2020-04-16 02:49:18', 0),
+(42, NULL, 4, 10, '99999.99', '::1', '2020-04-16 05:19:09', 1),
+(54, 1, 4, 5, '99999.99', '::1', '2020-04-16 05:43:47', 1),
+(60, NULL, 5, 1, '12000.00', '::1', '2020-04-16 05:56:39', 1),
+(62, NULL, 11, 34, '42500.00', '::1', '2020-04-17 10:17:12', 1),
+(63, 1, 5, 2, '24000.00', '::1', '2020-04-17 03:26:04', 1),
+(64, 1, 8, 1, '12000.00', '::1', '2020-04-17 03:27:51', 1),
+(65, 1, 12, 12, '99999.99', '::1', '2020-04-17 03:28:05', 0),
+(66, 1, 11, 15, '18750.00', '::1', '2020-04-17 03:57:27', 1),
+(67, NULL, 4, 1, '30000.00', '::1', '2020-04-17 04:38:31', 1),
+(68, NULL, 5, 1, '12000.00', '::1', '2020-04-17 04:38:35', 1),
+(84, NULL, 8, 1, '12000.00', '::1', '2020-04-17 06:30:39', 1),
+(85, NULL, 8, 2, '24000.00', '::1', '2020-04-17 06:33:50', 1),
+(86, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:45:48', 1),
+(87, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:47:03', 1),
+(88, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:47:22', 1),
+(89, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:47:40', 1),
+(90, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:48:27', 1),
+(91, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:49:18', 1),
+(92, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:49:58', 1),
+(93, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:50:38', 1),
+(94, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:51:19', 1),
+(95, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:51:54', 1),
+(96, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:52:21', 1),
+(97, NULL, 11, 1, '1250.00', '::1', '2020-04-18 09:54:01', 1),
+(98, NULL, 11, 2, '2500.00', '::1', '2020-04-18 09:58:02', 1),
+(99, NULL, 11, 1, '1250.00', '::1', '2020-04-18 10:00:03', 1),
+(100, NULL, 11, 2, '2500.00', '::1', '2020-04-18 10:00:22', 1),
+(101, NULL, 11, 2, '2500.00', '::1', '2020-04-18 10:01:12', 1),
+(102, NULL, 11, 2, '2500.00', '::1', '2020-04-18 10:02:13', 1),
+(103, NULL, 11, 1, '1250.00', '::1', '2020-04-18 10:02:48', 1),
+(104, NULL, 11, 3, '3750.00', '::1', '2020-04-18 10:03:12', 1),
+(105, NULL, 4, 1, '30000.00', '::1', '2020-04-18 10:03:27', 1),
+(106, 1, 1, 2, '36000.00', '::1', '2020-04-18 11:56:18', 1),
+(107, 1, 1, 11, '99999.99', '::1', '2020-04-18 02:06:26', 1),
+(108, 1, 1, 18, '99999.99', '::1', '2020-04-18 02:45:49', 1),
+(109, 1, 2, 3, '30000.00', '::1', '2020-04-18 02:59:46', 1),
+(110, 1, 3, 1, '45000.00', '::1', '2020-04-18 03:04:44', 1),
+(111, NULL, 9, 25, '99999.99', '::1', '2020-04-18 07:24:34', 0),
+(112, 1, 4, 16, '99999.99', '::1', '2020-04-18 07:25:35', 1),
+(113, 1, 11, 13, '16250.00', '::1', '2020-04-18 07:26:17', 1),
+(114, NULL, 5, 2, '24000.00', '::1', '2020-04-18 07:28:36', 1),
+(115, NULL, 5, 2, '24000.00', '::1', '2020-04-18 07:28:47', 0),
+(116, 1, 5, 2, '24000.00', '::1', '2020-04-18 07:30:04', 1),
+(117, 1, 8, 3, '36000.00', '::1', '2020-04-18 08:24:49', 0),
+(118, 1, 3, 1, '45000.00', '::1', '2020-04-18 09:52:26', 1),
+(119, NULL, 4, 1, '30000.00', '::1', '2020-04-20 10:12:57', 0),
+(120, NULL, 11, 2, '2500.00', '::1', '2020-04-20 11:23:45', 0),
+(121, 56, 8, 1, '12000.00', '::1', '2020-04-20 12:25:54', 0),
+(122, 56, 12, 1, '15000.00', '::1', '2020-04-20 12:26:04', 0),
+(123, 56, 3, 3, '99999.99', '::1', '2020-04-20 03:05:25', 0);
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 -- --------------------------------------------------------
 
@@ -124,9 +210,15 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(50) NOT NULL,
   `slug` varchar(50) NOT NULL,
   `icon` mediumtext NOT NULL,
+<<<<<<< HEAD
   `is_header` tinyint(1) NOT NULL DEFAULT '0',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_header` tinyint(1) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `banner_id` (`banner_id`)
@@ -157,20 +249,52 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `user_name` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `comment` text NOT NULL,
+<<<<<<< HEAD
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+=======
+  `add_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 --
 -- Dumping data for table `comments`
 --
 
+<<<<<<< HEAD
 INSERT INTO `comments` (`id`, `product_id`, `user_name`, `user_email`, `comment`, `is_deleted`) VALUES
 (1, 2, 'patel', 'patel@mail.com', 'nice product', 0),
 (2, 3, 'patel2', 'patel7@mail.com', 'product', 0),
 (3, 1, 'patel', 'patel7@mail.com', 'product', 0),
 (4, 3, 'patel', 'patel44@mail.com', 'product', 0);
+=======
+INSERT INTO `comments` (`id`, `product_id`, `user_name`, `user_email`, `comment`, `add_date`, `is_deleted`) VALUES
+(1, 2, 'patel', 'patel@mail.com', 'nice product', '2020-04-10 11:54:46', 0),
+(2, 4, 'patel2', 'patel7@mail.com', 'product sdcss', '2020-04-08 11:54:46', 0),
+(3, 1, 'patel', 'patel7@mail.com', 'product', '2020-04-10 11:54:46', 0),
+(4, 3, 'patel', 'patel44@mail.com', 'product', '2020-04-01 11:54:46', 0),
+(13, 4, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaaaaaaaa', '2020-04-10 07:19:16', 0),
+(16, 4, 'komalproject', 'kdc@narola.email', 'good products', '2020-04-11 10:33:01', 0),
+(17, 7, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaaa', '2020-04-11 10:45:30', 0),
+(18, 3, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaa', '2020-04-11 11:46:56', 0),
+(19, 5, 'komalproject', 'kdc@narola.email', 'gooooooooooood', '2020-04-11 11:51:15', 0),
+(20, 5, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaaaaaaaaa', '2020-04-11 11:55:43', 0),
+(24, 1, 'aaa', 'kdc@narola.email', 'aaaaaaaaaaaa', '2020-04-11 03:19:34', 0),
+(25, 3, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaa', '2020-04-13 11:42:25', 0),
+(26, 4, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaaa', '2020-04-13 06:38:42', 0),
+(27, 4, 'komalproject', 'kdc@narola.email', 'ASD-scs=xcsc', '2020-04-13 06:39:14', 0),
+(28, 11, 'komalproject', 'kdc@narola.email', 'goood products', '2020-04-14 09:46:14', 0),
+(29, 2, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaaaaa', '2020-04-14 10:13:37', 0),
+(30, 2, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaaaaaaaa', '2020-04-14 11:22:27', 0),
+(31, 2, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaaaaaaa', '2020-04-14 11:31:44', 0),
+(32, 4, 'komalproject', 'kdc@narola.email', 'sasasaasasasa', '2020-04-15 10:03:58', 0),
+(33, 2, 'komalproject', 'kdc@narola.email', 'aaaaaaaaaaaaaa', '2020-04-15 04:07:42', 0);
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 -- --------------------------------------------------------
 
@@ -185,11 +309,19 @@ CREATE TABLE IF NOT EXISTS `coupons` (
   `type` tinyint(1) NOT NULL,
   `amount` bigint(10) NOT NULL,
   `quantity` int(11) NOT NULL,
+<<<<<<< HEAD
   `used` int(11) NOT NULL DEFAULT '0',
   `start_date` datetime DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `used` int(11) NOT NULL DEFAULT 0,
+  `start_date` datetime DEFAULT NULL,
+  `end_date` datetime DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -270,7 +402,11 @@ CREATE TABLE IF NOT EXISTS `hot_deals` (
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
   `off_percentage` varchar(20) NOT NULL,
+<<<<<<< HEAD
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
@@ -280,9 +416,15 @@ CREATE TABLE IF NOT EXISTS `hot_deals` (
 --
 
 INSERT INTO `hot_deals` (`id`, `product_id`, `type`, `value`, `start_date`, `end_date`, `off_percentage`, `is_deleted`) VALUES
+<<<<<<< HEAD
 (3, 1, 1, 60, '2020-03-31 00:00:00', '2020-04-25 00:00:00', '35', 0),
 (4, 5, 0, 500, '2020-04-04 19:55:00', '2020-04-06 19:57:27', '35', 0),
 (5, 4, 0, 1000, '2020-04-02 00:00:00', '2020-04-24 00:00:00', '', 0);
+=======
+(3, 1, 1, 60, '2020-03-31 00:00:00', '2020-04-12 00:00:00', '35', 0),
+(4, 5, 0, 500, '2020-04-14 00:00:00', '2020-04-30 19:57:27', '35', 0),
+(5, 4, 0, 1000, '2020-04-13 00:00:00', '2020-04-24 00:00:00', '', 0);
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 -- --------------------------------------------------------
 
@@ -294,10 +436,17 @@ DROP TABLE IF EXISTS `news_letters`;
 CREATE TABLE IF NOT EXISTS `news_letters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
+<<<<<<< HEAD
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+=======
+  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=latin1;
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 --
 -- Dumping data for table `news_letters`
@@ -307,7 +456,16 @@ INSERT INTO `news_letters` (`id`, `email`, `created_date`, `is_deleted`) VALUES
 (1, 'bdp@narola.email', '2020-03-11 00:00:00', 0),
 (2, 'vrp@narola.email', '2020-04-03 17:26:04', 0),
 (3, 'vrtp@narola.email', '2020-04-04 12:16:27', 0),
+<<<<<<< HEAD
 (4, 'vixutipatel129@gmail.com', '2020-04-06 19:57:33', 0);
+=======
+(4, 'vixutipatel129@gmail.com', '2020-04-06 19:57:33', 0),
+(128, 'kdc@narola.email', '2020-04-11 10:17:12', 0),
+(130, 'komal@gmail.com', '2020-04-14 10:30:37', 0),
+(134, 'ss@gmail.com', '2020-04-14 10:34:47', 0),
+(136, 'ADSAD@DXGDG', '2020-04-14 10:35:29', 0),
+(137, 'aa@gmail.com', '2020-04-17 09:34:50', 0);
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 -- --------------------------------------------------------
 
@@ -319,7 +477,11 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
+<<<<<<< HEAD
   `coupon_id` int(11) DEFAULT '0',
+=======
+  `coupon_id` int(11) DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   `order_number` varchar(32) NOT NULL,
   `invoice_number` bigint(20) NOT NULL,
   `total_products` int(11) NOT NULL,
@@ -327,8 +489,13 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `order_date` date NOT NULL,
   `order_status` tinyint(1) NOT NULL,
   `payment_method` varchar(20) NOT NULL DEFAULT 'cash on delivery',
+<<<<<<< HEAD
   `payment_status` tinyint(1) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `payment_status` tinyint(1) NOT NULL DEFAULT 0,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_number` (`order_number`),
   KEY `coupon_id` (`coupon_id`),
@@ -354,10 +521,17 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+<<<<<<< HEAD
   `vendor_status` tinyint(1) NOT NULL DEFAULT '0',
   `quantity` int(11) NOT NULL,
   `total_amount` decimal(7,2) NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `vendor_status` tinyint(1) NOT NULL DEFAULT 0,
+  `quantity` int(11) NOT NULL,
+  `total_amount` decimal(7,2) NOT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `product_id` (`product_id`)
@@ -398,23 +572,36 @@ CREATE TABLE IF NOT EXISTS `products` (
   `price` decimal(8,2) NOT NULL,
   `related_products` text NOT NULL,
   `tags` text NOT NULL,
+<<<<<<< HEAD
   `add_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `is_sale` tinyint(1) NOT NULL DEFAULT '0',
   `is_hot` tinyint(1) NOT NULL DEFAULT '0',
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `add_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_sale` tinyint(1) NOT NULL DEFAULT 0,
+  `is_hot` tinyint(1) NOT NULL DEFAULT 0,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`),
   KEY `vendor_id` (`vendor_id`),
   KEY `brand_id` (`brand_id`),
   KEY `category_id` (`category_id`),
   KEY `sub_category_id` (`sub_category_id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `slug`, `sku`, `short_description`, `long_description`, `thumb_image`, `images`, `quantity`, `old_price`, `price`, `related_products`, `tags`, `add_date`, `is_sale`, `is_hot`, `is_active`, `is_deleted`) VALUES
+<<<<<<< HEAD
 (1, 1, 1, 2, 4, 'smart tv 108cm', 'smart-tv-108cm', 458964, 'dsfdsfdfadsafsfsdf\r\nfdsfdgdfg\r\nsdgdfgdf\r\nfgdfg', 'ffsdfsfdagdfhfghfg\r\ndfgdhfgshfgh\r\nsgdfhfghfgfg\r\nsgdfghghfghfg\r\nsdgg', 'assets/upload/products/tv1.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 0, '20000.00', '18000.00', 'a:1:{i:0;s:1:\"1\";}', 'tv,led-tv', '2020-04-08 11:40:48', 1, 0, 1, 0),
 (2, 1, 4, 4, 3, 'smart watch', 'smart-watch', 4589769, 'dwfd', 'dsfdsf', 'assets/upload/products/watch_1.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 0, '15000.00', '10000.00', 'a:1:{i:0;s:1:\"1\";}', 'watch', '2020-04-08 11:40:48', 0, 1, 1, 0),
 (3, 1, 1, 2, 4, 'Android TV', 'Android-TV', 7856948, 'dsfdsggg\r\ndfg\r\nddg', 'dsgdfgd\r\ndfgdfg\r\ndfgdfg\r\ndfag\r\n', 'assets/upload/products/tv2.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 10, '50000.00', '45000.00', 'a:1:{i:0;s:1:\"1\";}', 'led-tv', '2020-04-08 11:40:48', 0, 0, 1, 0),
@@ -423,6 +610,16 @@ INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_categ
 (6, 1, 1, 4, 3, 'watch 4', 'watc-4', 789658, 'dgdfgdfg', 'dfgdhfhs', 'assets/upload/products/watch_3.jpg', '', 5, '1500.00', '1200.00', '', 'smart-watch', '2020-04-08 11:40:48', 0, 1, 1, 0),
 (7, 1, 4, 2, 4, 'LED TV', 'LED-TV', 789654, 'dsad', 'adad', 'assets/upload/products/tv1.jpg', '', 10, '20000.00', '15000.00', '', 'tv', '2020-04-08 11:40:48', 0, 0, 1, 0),
 (8, 1, 1, 2, 5, 'android mobile', 'android-mobile', 879589, 'dsfsdf', 'fsfsdf', 'assets/upload/products/tv1.jpg', '', 5, '20000.00', '12000.00', '', 'mobile', '2020-04-08 11:40:48', 0, 0, 1, 0),
+=======
+(1, 1, 1, 2, 4, 'smart tv 108cm', 'smart-tv-108cm', 458964, 'dsfdsfdfadsafsfsdf\r\nfdsfdgdfg\r\nsdgdfgdf\r\nfgdfg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'assets/upload/products/tv1.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 0, '20000.00', '18000.00', 'a:1:{i:0;s:1:\"1\";}', 'tv,led-tv', '2020-04-08 11:40:48', 1, 0, 1, 0),
+(2, 1, 4, 4, 3, 'smart watch', 'smart-watch', 4589769, 'dwfd', 'dsfdsf', 'assets/upload/products/watch_1.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 5, '15000.00', '10000.00', 'a:1:{i:0;s:1:\"1\";}', 'watch,smart-watch', '2020-04-08 11:40:48', 0, 1, 1, 0),
+(3, 1, 1, 2, 4, 'Android TV', 'Android-TV', 7856948, 'dsfdsggg\r\ndfg\r\nddg', 'dsgdfgd\r\ndfgdfg\r\ndfgdfg\r\ndfag\r\n', 'assets/upload/products/tv2.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 10, '50000.00', '45000.00', 'a:1:{i:0;s:1:\"1\";}', 'led-tv', '2020-04-08 11:40:48', 0, 0, 1, 0),
+(4, 1, 1, 2, 4, 'android LED 108 cm', 'android-LED-108-cm', 456985, 'qwdwddsdf', 'sffgdgdfgf\r\ndsgdfgdf\r\ndfgdfg\r\ndfag\r\nd', 'assets/upload/products/tv1.jpg', '', 11, '38000.00', '30000.00', 'a:1:{i:0;s:1:\"1\";}', 'tv,aaa,w2ww', '2020-04-08 11:40:48', 1, 0, 1, 0),
+(5, 1, 3, 4, 3, 'watch 3', 'watch-3', 789587, 'dfdsfdsfsf', 'sdfsdfdsfdsfdsf', 'assets/upload/products/watch_2.jpg', '', 4, '15000.00', '12000.00', '', 'watch', '2020-04-08 11:40:48', 1, 0, 1, 0),
+(6, 1, 1, 4, 3, 'watch 4', 'watc-4', 789658, 'dgdfgdfg', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'assets/upload/products/watch_3.jpg', '', 5, '1500.00', '1200.00', '', 'smart-watch', '2020-04-08 11:40:48', 0, 1, 1, 0),
+(7, 1, 4, 2, 4, 'LED TV', 'LED-TV', 789654, 'dsad', 'adad', 'assets/upload/products/tv1.jpg', '', 10, '20000.00', '15000.00', '', 'tv', '2020-04-08 11:40:48', 0, 0, 1, 0),
+(8, 1, 1, 2, 5, 'android mobile', 'android-mobile', 879589, 'dsfsdf', 'fsfsdf', 'assets/upload/products/tv1.jpg', '', 5, '20000.00', '12000.00', '', 'mobile,smart-mobile ', '2020-04-08 11:40:48', 0, 0, 1, 0),
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 (9, 1, 1, 2, 4, 'tv', 'tv', 7895647, 'sdsf', 'adadasd', 'assets/upload/products/tv1.jpg', '', 5, '20000.00', '10000.00', '', 'tv', '2020-04-08 11:40:48', 0, 0, 1, 0),
 (10, 1, 1, 2, 4, 'LED TV 108 cm ', 'LED-TV-108-cm ', 789658, 'acacascas', 'saADSADSAD', 'assets/upload/products/tv1.jpg', 'a:2:{i:0;s:30:\"assets/upload/products/tv1.jpg\";i:1;s:30:\"assets/upload/products/tv5.jpg\";}', 10, '45000.00', '32000.00', '', 'tv', '2020-04-08 11:40:48', 0, 0, 1, 0),
 (11, 1, 2, 1, 2, 'shirt', 'shirt', 799658, 'axcxzc', 'zxczxczxczxcsdfsd', 'assets/upload/products/shirt3.jpg', '', 10, '1500.00', '1250.00', '', 'shirt', '2020-04-08 11:40:48', 0, 0, 1, 0),
@@ -439,7 +636,11 @@ DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE IF NOT EXISTS `product_images` (
   `product_id` int(11) NOT NULL,
   `image` mediumtext NOT NULL,
+<<<<<<< HEAD
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   KEY `product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -463,16 +664,26 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `product_id` int(11) NOT NULL,
   `star_ratings` int(11) NOT NULL,
   `review` text NOT NULL,
+<<<<<<< HEAD
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+=======
+  `add_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 --
 -- Dumping data for table `reviews`
 --
 
+<<<<<<< HEAD
 INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `star_ratings`, `review`, `is_deleted`) VALUES
 (1, 1, 1, 3, 'fdsfdfdsf', 0),
 (2, 3, 2, 5, 'hfvfg', 0),
@@ -480,6 +691,19 @@ INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `star_ratings`, `review`, 
 (7, 1, 5, 4, 'good products', 0),
 (8, 3, 2, 2, 'amazing', 0),
 (9, 1, 3, 5, 'good one', 0);
+=======
+INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `star_ratings`, `review`, `add_date`, `is_deleted`) VALUES
+(1, 1, 1, 3, 'fdsfdfdsf', '2020-04-10 11:26:41', 0),
+(2, 3, 2, 5, 'hfvfg', '2020-04-10 11:26:41', 0),
+(3, 1, 3, 2, 'dfdsfds', '2020-04-09 11:26:41', 0),
+(8, 3, 2, 2, 'amazing', '2020-04-10 11:26:41', 0),
+(23, 1, 4, 5, 'aaaa ssds 02adas', '2020-04-13 06:37:19', 0),
+(24, 1, 2, 5, 'Amazing products', '2020-04-14 09:47:29', 0),
+(25, 1, 13, 5, 'very nice earphone', '2020-04-15 10:27:56', 0),
+(26, 1, 5, 5, 'goooooood', '2020-04-17 05:44:17', 0),
+(27, 1, 11, 5, 'gooooooooood', '2020-04-18 09:59:55', 0),
+(28, 56, 3, 5, 'kkkkkkkkkkkkkkkkkkk', '2020-04-20 03:07:11', 0);
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 -- --------------------------------------------------------
 
@@ -559,7 +783,11 @@ CREATE TABLE IF NOT EXISTS `slider_settings` (
   `sub_title` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `image` mediumtext NOT NULL,
+<<<<<<< HEAD
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
@@ -609,8 +837,13 @@ CREATE TABLE IF NOT EXISTS `sub_categories` (
   `category_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `slug` varchar(50) NOT NULL,
+<<<<<<< HEAD
   `is_active` tinyint(1) NOT NULL DEFAULT '1',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `category_id` (`category_id`)
@@ -647,7 +880,11 @@ INSERT INTO `sub_categories` (`id`, `category_id`, `name`, `slug`, `is_active`, 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+<<<<<<< HEAD
   `role_id` int(11) NOT NULL DEFAULT '0',
+=======
+  `role_id` int(11) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -656,25 +893,41 @@ CREATE TABLE IF NOT EXISTS `users` (
   `profile_image` mediumtext NOT NULL,
   `last_login` datetime NOT NULL,
   `last_ip` varchar(50) NOT NULL,
+<<<<<<< HEAD
   `signup_date` datetime DEFAULT CURRENT_TIMESTAMP,
+=======
+  `signup_date` datetime DEFAULT current_timestamp(),
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   `last_password_change` datetime DEFAULT NULL,
   `new_pass_key` varchar(32) NOT NULL,
   `new_pass_key_requested` datetime NOT NULL,
   `sign_up_key` varchar(32) NOT NULL,
   `is_email_verified` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
+<<<<<<< HEAD
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+=======
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `role_id` (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `last_login`, `last_ip`, `signup_date`, `last_password_change`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
+<<<<<<< HEAD
 (1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '', '2020-04-08 14:38:05', '::1', '2020-02-27 12:11:21', '2020-03-13 14:58:30', '', '2020-02-24 03:04:19', '', 1, 1, 1, 0),
+=======
+(1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '53acf5f531943514246a7ed92f496a7d', '', '2020-04-18 19:29:23', '::1', '2020-02-27 12:11:21', '2020-03-13 14:58:30', '', '2020-02-24 03:04:19', '', 1, 1, 1, 0),
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 (2, 0, 'User', 'User', 'user@gmail.com', 7878787878, 'ee11cbb19052e40b07aac0ca060c23ee', './assets/uploads/users/16-1-user.png', '2020-04-06 00:11:44', '::1', '2020-02-11 09:22:00', NULL, '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0),
 (3, 0, 'anonymous', 'user', 'anonymous@gmail.com', 6565656565, '294de3557d9d00b3d2d8a1e6aab028cf', '-', '2020-03-12 12:28:39', '::1', '2020-03-02 05:13:28', NULL, '-', '2020-03-03 00:00:00', '-', 1, 1, 0, 0),
 (8, 0, 'vixuti', 'patel', 'vrpp@narola.email', 9898675454, '7f237be719ee43162b69b1ea52140237', 'assets/uploads/users/1586111609-default_img.png', '2020-04-06 18:46:03', '::1', '2020-04-03 17:55:12', '2020-04-06 18:45:51', '', '0000-00-00 00:00:00', '6ec3125f81559a5cbfa7b37cccbc5cd3', 1, 1, 0, 0),
@@ -683,7 +936,13 @@ INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `email`, `mobile`
 (51, 0, 'jina', 'tandel', 'gcart.team@gmail.com', 9898786765, '1ac5a38d78b1c5159298aa191fb8b8d8', '', '2020-04-06 18:48:31', '::1', '2020-04-06 19:02:15', '2020-04-06 19:15:56', '', '0000-00-00 00:00:00', 'd0086194fbd3d608459c24afcb750405', 1, 1, 0, 0),
 (52, 0, 'ayushi', 'patel', 'vrpl@narola.email', 9887677656, '3e44e7ddd8c1c14677d4043253c67833', '', '0000-00-00 00:00:00', '', '2020-04-06 19:33:10', NULL, '', '0000-00-00 00:00:00', 'ea3aaf65954c4b2d153a224ef60d3286', 1, 1, 0, 0),
 (53, 0, 'vrp', 'narola', 'vixuti@gmail.com', 8787676556, '3e76c356c75da6415a8e741a6d50ffee', '', '2020-04-06 19:29:48', '::1', '2020-04-06 19:43:41', NULL, '', '0000-00-00 00:00:00', '33ec2d7a2f5d5b2ea48b9324e9bc1d6f', 1, 1, 0, 0),
+<<<<<<< HEAD
 (54, 0, 'ekta', 'patel', 'vrp@narola.email', 9898787667, '521b7f3b9f5189310321f1db7cf8eadd', 'assets/uploads/users/1586182037-dell.png', '2020-04-06 19:35:50', '::1', '2020-04-06 19:50:02', NULL, '', '0000-00-00 00:00:00', '019ef84b71ef206bea5d14aaaf7e5743', 1, 1, 0, 0);
+=======
+(54, 0, 'ekta', 'patel', 'vrp@narola.email', 9898787667, '521b7f3b9f5189310321f1db7cf8eadd', 'assets/uploads/users/1586182037-dell.png', '2020-04-06 19:35:50', '::1', '2020-04-06 19:50:02', NULL, '', '0000-00-00 00:00:00', '019ef84b71ef206bea5d14aaaf7e5743', 1, 1, 0, 0),
+(55, 0, 'komal', 'chhipa', 'kdc@narola.email', 7895469874, '8ffa9b29c4b60ee0510b52f535fb5bf9', '', '0000-00-00 00:00:00', '', '2020-04-20 12:21:17', NULL, '', '0000-00-00 00:00:00', 'e1639d4e08112dffbaa0691efc026c18', 0, 0, 0, 0),
+(56, 0, 'komal', 'chhipa', 'komalkhalasi.13@gmail.com', 7894569856, '8ffa9b29c4b60ee0510b52f535fb5bf9', '', '2020-04-20 14:34:08', '::1', '2020-04-20 12:23:41', NULL, '', '0000-00-00 00:00:00', 'be76e829f4fa3b554fd60a31222b391e', 1, 1, 0, 0);
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 -- --------------------------------------------------------
 
@@ -700,7 +959,11 @@ CREATE TABLE IF NOT EXISTS `users_address` (
   `city` varchar(50) NOT NULL,
   `state` varchar(50) NOT NULL,
   `pincode` int(6) NOT NULL,
+<<<<<<< HEAD
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   PRIMARY KEY (`id`),
   KEY `users_id` (`users_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
@@ -769,7 +1032,11 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `last_password_change` datetime DEFAULT NULL,
   `is_email_verified` tinyint(1) NOT NULL,
   `is_active` tinyint(1) NOT NULL,
+<<<<<<< HEAD
   `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+=======
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0,
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
   `is_deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `subscription_id` (`subscription_id`)
@@ -801,18 +1068,45 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 --
 -- Dumping data for table `wishlist`
 --
 
 INSERT INTO `wishlist` (`id`, `user_id`, `product_id`, `is_deleted`) VALUES
+<<<<<<< HEAD
 (1, 1, 3, 0),
 (2, 1, 3, 0),
 (3, 1, 2, 0),
 (4, 1, 5, 0),
 (5, 1, 6, 0);
+=======
+(5, 2, 6, 0),
+(17, 2, 4, 0),
+(18, 1, 2, 1),
+(19, 1, 1, 1),
+(20, 1, 3, 1),
+(21, 1, 11, 1),
+(22, 1, 5, 1),
+(23, 1, 11, 1),
+(24, 1, 11, 1),
+(25, 1, 11, 1),
+(26, 1, 4, 1),
+(27, 1, 5, 1),
+(28, 1, 11, 1),
+(29, 1, 8, 1),
+(30, 1, 8, 1),
+(31, 1, 8, 1),
+(32, 1, 11, 1),
+(33, 1, 11, 0),
+(34, 1, 3, 1),
+(35, 56, 12, 0);
+>>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976
 
 --
 -- Constraints for dumped tables

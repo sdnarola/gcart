@@ -3,14 +3,14 @@
   <div class="page-header-content">
     <div class="page-title">
       <h4>
-      	<span class="text-semibold"><?php _el('edit_profile'); ?></span>
+      	<span class="text-semibold"><?php _el('edit_profile');?></span>
       </h4>
     </div>
   </div>
   <div class="breadcrumb-line">
     <ul class="breadcrumb">
-			<li><a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a></li>			
-			<li class="active"><?php _el('edit_profile'); ?></li>
+			<li><a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a></li>
+			<li class="active"><?php _el('edit_profile');?></li>
 		</ul>
   </div>
 </div>
@@ -38,29 +38,36 @@
 							<div class="col-md-12">
 								<div class="form-group">
 									<small class="req text-danger">* </small>
-									<label><?php _el('firstname'); ?>:</label>
+									<label><?php _el('firstname');?>:</label>
 									<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $user['firstname']; ?>">
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
-									<label><?php _el('lastname'); ?>:</label>
+									<label><?php _el('lastname');?>:</label>
 									<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $user['lastname']; ?>">
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
-									<label><?php _el('email'); ?>:</label>
+									<label><?php _el('email');?>:</label>
 									<input type="text" class="form-control"  id="email" name="email" class="email"value="<?php echo $user['email']; ?>">
-								</div>	
+								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
-									<label><?php _el('contact_no'); ?>:</label>
-									<input type="text" class="form-control" id="mobile_no" name="mobile_no" value="<?php echo $user['mobile_no']; ?>">
+									<label><?php _el('mobile_no');?>:</label>
+									<input type="text" class="form-control" id="mobile" name="mobile" value="<?php echo $user['mobile']; ?>">
 								</div>
-								<div class="form-group" align="right">
-									<button type="submit" class="btn btn-success" name="submit" id="save"><?php _el('save'); ?></button>
+								<div class="form-group">
+									<small class="req text-danger">* </small>
+									<label><?php _el('shop_name');?>:</label>
+									<input type="text" class="form-control" id="shop_name" name="shop_name" value="<?php echo $shop_name; ?>">
 								</div>
+								<div class="form-group">
+	                                <div class="pull-right">
+	                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+	                                </div>
+		                        </div>
 							</div>
-						</div>	
+						</div>
 					</div>
 					<!-- /Panel body -->
 				</div>
@@ -77,7 +84,7 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-md-10">
-								<h5 class="panel-title"><?php _el('change_password'); ?></h5>
+								<h5 class="panel-title"><?php _el('change_password');?></h5>
 							</div>
 						</div>
 					</div>
@@ -87,28 +94,35 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<?php if(null!=$user['last_password_change']) { ?>
-									<small><?php _el('last_password_change_msg', time_to_words($user['last_password_change'])) ?></small>
-									<?php } ?>
+									<?php
+										if (null != $user['last_password_change'])
+										{
+									?>
+									<small><?php _el('last_password_change_msg', time_to_words($user['last_password_change']))?></small>
+									<?php 
+										}
+									?>
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
-									<label><?php _el('old_password'); ?>:</label>
-									<input type="password" name="old_password" class="form-control" id="old_password" autocomplete="off">								
+									<label><?php _el('old_password');?>:</label>
+									<input type="password" name="old_password" class="form-control" id="old_password" autocomplete="off">
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
-									<label><?php _el('new_password'); ?>:</label>
-									<input type="password" class="form-control" id="new_password" name="new_password" autocomplete="off">	
+									<label><?php _el('new_password');?>:</label>
+									<input type="password" class="form-control" id="new_password" name="new_password" autocomplete="off">
 								</div>
 								<div class="form-group">
 									<small class="req text-danger">* </small>
-									<label><?php _el('confirm_password'); ?>:</label>
-									<input type="password" class="form-control" id="confirm_password" name="confirm_password" autocomplete="off">						
+									<label><?php _el('confirm_password');?>:</label>
+									<input type="password" class="form-control" id="confirm_password" name="confirm_password" autocomplete="off">
 								</div>
-								<div class="form-group" align="right">
-									<button type="submit" class="btn btn-success" name="submit_password" id="submit_password"><?php _el('save'); ?></button>
-								</div>
+								<div class="form-group">
+	                                <div class="pull-right">
+	                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+	                                </div>
+		                        </div>
 							</div>
 						</div>
 					</div>
@@ -127,7 +141,7 @@
 
 $("#myprofileform").validate(
 {
-    rules: 
+    rules:
     {
     	firstname: {
     		required: true,
@@ -135,43 +149,51 @@ $("#myprofileform").validate(
     	lastname: {
     		required: true,
     	},
-    	mobile_no: {
+    	mobile: {
             required: true,
-            number: true
+            digits: true,
+            rangelength: [10,10]
         },
         email: {
             required: true,
             email: true
-        },	      
+        },
+        shop_name: {
+            required: true
+        }
     },
-   	messages: 
+   	messages:
    	{
     	firstname: {
-            required:"<?php _el('please_enter_', _l('firstname')) ?>",
+            required:"<?php _el('please_enter_', _l('firstname'))?>",
 		},
         lastname: {
-            required:"<?php _el('please_enter_', _l('lastname')) ?>",
+            required:"<?php _el('please_enter_', _l('lastname'))?>",
         },
-        mobile_no: {
-            required:"<?php _el('please_enter_', _l('contact_no')) ?>",
-            mobile_no:"Please Enter Digits"
+        mobile: {
+            required:"<?php _el('please_enter_', _l('contact_no'))?>",
+            digits:"<?php _el('only_digits')?>",
+            rangelength: "<?php _el('only_10_digits') ?>"
 	    },
         email: {
-         	required:"<?php _el('please_enter_', _l('email')) ?>",
-            email:"<?php _el('please_enter_valid_', _l('email')) ?>"
-        },	      
-    }	    
-}); 
+         	required:"<?php _el('please_enter_', _l('email'))?>",
+            email:"<?php _el('please_enter_valid_', _l('email'))?>"
+        },
+        shop_name: {
+            required:"<?php _el('please_enter_', _l('shop_name'))?>",
+        },
+    }
+});
 
-$.validator.addMethod("matcholdpassword", function(value, element) 
+$.validator.addMethod("matcholdpassword", function(value, element)
 {
 	var old_password = CryptoJS.MD5($(element).val());
-	var user_password = "<?php  echo $user['password']; ?>";
+	var user_password = "<?php echo $user['password']; ?>";
 
 	if (old_password == user_password)
 		return true;
-			
-}, "<?php _el('incorrect_password') ?>");
+
+}, "<?php _el('incorrect_password')?>");
 
 
 $("#mypasswordform").validate({
@@ -183,26 +205,26 @@ $("#mypasswordform").validate({
 		new_password: {
 			required: true,
 			minlength: 8
-		}, 
+		},
 		confirm_password: {
 			required: true,
 			equalTo: "#new_password"
-		},  
+		},
 	},
 	messages: {
 		old_password: {
-			required:"<?php _el('please_enter_',_l('old_password')) ?>",
+			required:"<?php _el('please_enter_', _l('old_password'))?>",
 		},
 		new_password: {
-			required:"<?php _el('please_enter_',_l('new_password')) ?>",
-			minlength: "<?php _el('password_min_length_must_be_', 8) ?>"
+			required:"<?php _el('please_enter_', _l('new_password'))?>",
+			minlength: "<?php _el('password_min_length_must_be_', 8)?>"
 		},
 		confirm_password: {
-			required:"<?php _el('please_enter_',_l('confirm_password')) ?>",
-			equalTo: "<?php _el('conf_password_donot_match') ?>"
-		},           
-	}      
-}); 
+			required:"<?php _el('please_enter_', _l('confirm_password'))?>",
+			equalTo: "<?php _el('conf_password_donot_match')?>"
+		},
+	}
+});
 
-</script> 
+</script>
 

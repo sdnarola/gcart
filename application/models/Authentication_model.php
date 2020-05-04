@@ -58,7 +58,7 @@ class Authentication_model extends MY_Model
 				return ['user_inactive' => true, 'id' => $user->id];
 			}
 
-			if ($user->is_admin != 0 && $user->is_email_verified == 0)
+			if ($user->is_email_verified == 0)
 			{
 				return ['email_unverified' => true, 'id' => $user->id];
 			}
@@ -119,7 +119,7 @@ class Authentication_model extends MY_Model
 				return ['vendor_inactive' => true, 'id' => $vendor->id];
 			}
 
-			if ($vendor->is_admin != 1 && $vendor->is_email_verified == 0)
+			if ($vendor->is_email_verified == 0 && $vendor->is_admin == 0)
 			{
 				return ['email_unverified' => true, 'id' => $vendor->id];
 			}
@@ -127,7 +127,7 @@ class Authentication_model extends MY_Model
 			$vendor_data = [
 				'vendor_id'        => $vendor->id,
 				'email'            => $vendor->email,
-				'vendorname'       => ucwords($vendor->firstname.' '.$vendor->lastname),
+				'vendor_name'      => ucwords($vendor->firstname.' '.$vendor->lastname),
 				'is_admin'         => $vendor->is_admin,
 				'vendor_logged_in' => true
 			];
@@ -333,6 +333,8 @@ class Authentication_model extends MY_Model
 
 		return ['invalid_user' => true];
 	}
+
+/**===================================code by vixuti patel=======================================*/
 /**
  * [verify_email  verify users email]
  * @param  [type] $sign_up_key [description]
@@ -354,7 +356,7 @@ class Authentication_model extends MY_Model
 
 		return null;
 	}
-	/**===================================code by vixuti patel=======================================*/
+
 	/**
 	 * [verify_vendor_email  (on registraion) ]
 	 * @param  [type] $sign_up_key [description]
@@ -376,7 +378,8 @@ class Authentication_model extends MY_Model
 
 		return null;
 	}
-	/*===========================code end by vixuti patel===========================================*/
+
+/*===========================code end by vixuti patel===========================================*/
 	/**
 	 * Resets user password after successful validation of the key
 	 *

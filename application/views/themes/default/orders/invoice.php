@@ -2,55 +2,8 @@
   $user    = get_user_info($order['user_id']);                                                                            
   $address    = $this->users->show($order['user_id']);                                         
  ?>
-  <style type="text/css">
-tr{
-  border:none;
-  margin-top: 3px;
-  padding-top: 3px;
-  border-collapse: collapse; 
-  line-height: 0px;
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/order.css">
   
-   }
-   @media (max-width:767px) {
-    td {
-        width:30%;
-    }
-    @media (min-width:768px) {
-    td {
-        width: 50px;
-    }
-}
-}
-td{
-    margin-top: 1px;
-    padding-top:1px;
-  }
-
-table, td, th {  
-  text-align: left;
-  font-size: 15px;
-   color: #666;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-
-}
-th,td{
-
-    padding: 10px;
-    border: none;    
-
-}
-.table-responsive .table {
-    max-width: none;
-    -webkit-overflow-scrolling: touch !important;
-}
-
-</style>
-
     <div class="breadcrumb">
     <div class="container">
         <div class="breadcrumb-inner col-md-12 col-sm-12">
@@ -66,8 +19,9 @@ th,td{
     </div><!-- /.breadcrumb -->
 <?php foreach ($order_items as $key => $item){
 ?>
-<a href="<?php echo base_url('orders/print_pdf/').$order['id'].'/'.$item['vendor_id'];;?>" class="btn btn-info btn-sm" style="text-align: right;margin-left: 88%;"><?php _el('print');?></a>
-<?php break; } ?>
+<a href="<?php echo base_url('orders/print_pdf/').$order['id'].'/'.$item['vendor_id'];?>" class="btn btn-info btn-sm" style="text-align: right;margin-left: 87%;"> <span class="glyphicon glyphicon-print"></span>&nbsp;<?php _el('print');?></a>
+<?php break; 
+} ?>
 <div class="body-content">
     <div class="container">
         <div class="sign-in-page">
@@ -87,15 +41,13 @@ th,td{
                             <h4 style="border-bottom: none;" class="panel-title">
                                 <i class="icon-store2 text-info position-left"></i>
                                 <strong><?php echo get_settings('company_name'); ?></strong><br>
-                                     <h5><?php echo date('jS F Y ', strtotime($order['invoice_date'])); ?></h5>
-                                
                                 <?php
                                 foreach ($order_items as $key => $item)
                                 {
                                 ?>
                                
-                               <div class="col-md-6 col-sm-3 col-12">
-                                <table  class="table-responsive table-hover table-framed table-striped rounded" style="border:none;" >
+                               <div class="col-md-6 col-sm-12 col-12">
+                                <table  class="table table-responsive table-hover table-framed table-striped rounded" style="border:none">
                                 
                                 <tbody>
                                     <tr>
@@ -123,29 +75,31 @@ th,td{
                                 <?php
                                 break; }
                                 ?>                        
-
+                            
                         </h4>                   
               </div>                                                   
 
     </div><!--row-->
-    <br>
+    
+
                 <!-- /Panel heading -->
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-12">
 
-                            <table class="table-responsive table-hover table-framed table-sm table-striped rounded">
-                               
-                                <thead>
-
-                                    <tr><th colspan="3"><p><h4 class="panel-title"><label class="info-title"><?php _el('order_details');?></label></h4></p></th></tr>
-                                </thead>
-                                <tbody>
-
+                            <table class="table table-responsive table-hover table-framed  table-striped rounded">
+                               <thead>
+                                    <tr><th colspan="3"><h3 class="panel-title"><b><?php _el('order_details');?></b></h3></th></tr>
+                               </thead>
+                               <tbody>
                                     <tr>
-                                        <td ><?php _el('invoice_number');?></td><td>&nbsp;:&nbsp;</td><td><?php echo $order['invoice_number']; ?></td>
+                                        <td><?php _el('invoice_date');?></td><td>&nbsp;:&nbsp;</td><td><?php echo date('jS F Y ', strtotime($order['invoice_date'])); ?></td>
                                     </tr>
                                     <tr>
-                                        <td><?php _el('order_date');?></td><td>&nbsp;:&nbsp;</td><td><?php echo date('jS F Y  h:i:s A', strtotime($order['order_date'])); ?></td>
+                                        <td><?php _el('invoice_number');?></td><td>&nbsp;:&nbsp;</td><td><?php echo $order['invoice_number']; ?></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><?php _el('order_date');?></td><td>&nbsp;:&nbsp;</td><td><?php echo date('jS F Y ', strtotime($order['order_date'])); ?></td>
                                     </tr>
                                     <tr>
                                         <td><?php _el('order_number');?></td><td>&nbsp;:&nbsp;</td><td><?php echo $order['order_number']; ?></td>
@@ -156,12 +110,12 @@ th,td{
 
                                 </tbody>
                             </table>
-                            <br></br>
+                            <br>
                         </div>
                         <div class="col-md-6 col-sm-12 col-12">
-                            <table  class="tabel-responsive table-hover table-framed  table-sm table-striped rounded">
+                            <table  class="table tabel-responsive table-hover table-framed  table-sm table-striped rounded">
                                 <thead>
-                                    <tr><th colspan="3"><p><h4 class="panel-title"><label class="info-title"><?php _el('billing_address');?></label></h4></p></th></tr>
+                                    <tr><th colspan="3"><h3 class="panel-title"><b><?php _el('billing_address');?></b></h3></th></tr>
                                 </thead>
                                 
                                 <tbody>
@@ -195,13 +149,13 @@ th,td{
                   
                     <div class="row">
                         <div class="col-md-12 col-sm-6 col-4">
-                            <table class="table tabel-responsive table-responsive-sm table-hover table-striped rounded">
+                            <table class="table table tabel-responsive table-responsive-sm table-hover table-striped rounded product">
                                
                                 <thead>    
                                                         
                                     <tr class="text-center">
-                                        <th ><?php _el('product_name');?></th>
-                                        <th  ><?php _el('shop_name');?></th>
+                                        <th><?php _el('product_name');?></th>
+                                        <th ><?php _el('shop_name');?></th>
                                         <th><?php _el('quantity');?></th>
                                         <th  class="text-center"><?php _el('price');?></th>
                                         <th><?php _el('total_amount');?></th>

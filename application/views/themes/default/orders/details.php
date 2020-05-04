@@ -2,46 +2,7 @@
   $user    = get_user_info($order['user_id']);                                      
   $address    = $this->users->show($order['user_id']);                                          
  ?>
-
-<style type="text/css">
-tr{
-  border: 1px solid #ddd;
-  margin-top: 3px;
-  padding-top: 3px;
-  border-collapse: collapse; 
-  line-height: 0px;
-   min-height: 25px;
-   height: 25px;
-  border: none;
-   }
-td{
-    margin-top: 3px;
-    padding-top: 3px;
-      padding: 20px;
-    font-size: 15px;
-    color: #666;
-    border-right: none;
-    text-align:left;
-  }
-
-table, td, th {  
-  text-align: left;
-
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  border: 1px solid #ddd;
-}
-
-th {
-    padding: 20px;
-    font-size: 15px;
-    border: 1px solid #ddd;
-}
-
-</style>
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/order.css">
 
     <div class="breadcrumb">
     <div class="container">
@@ -75,11 +36,14 @@ th {
             <!-- Panel -->          
             <div class="row">
                 <div class="col-md-6">
-                    <table  class="table-responsive">
+                    <table  class="table table-responsive">
+                      <thead>
                       <tr>
                         <th colspan="3"><h3 class="panel-title"><strong><?php _el('order_details');?></strong></h3></th>
                       
                       </tr>
+                    </thead>
+                    <tbody>
                       <tr>
                         
                         <td><?php _el('order_number');?></td>
@@ -127,21 +91,23 @@ th {
 
                       </tr>                   
                                                         
-
+                  </tbody>
                 </table>                           
             </div>
 
             <div class="col-md-6">
 
-                 <table  class="table-responsive">
+                 <table  class="table table-responsive">
 
                      <?php foreach ($address as $address)
                       {
                       ?>
+                      <thead>
                       <tr>
                         <th colspan="3"><h3 class="panel-title"><strong><?php _el('billing_details');?></strong></h3></th>  
                       </tr>
-                     
+                     </thead>
+                     <tbody>
                       <tr>
                         
                         <td><?php _el('customer_name');?></td>
@@ -189,41 +155,33 @@ th {
                        <?php 
                         }
                         ?>
+                      </tbody>
                  </table>
                            
             </div>
             </div>
-                <hr>
+                
                     <div class="row">
                         <div class="col-md-12">
-                            <table  class="table-responsive">                             
-
+                            <table  class="table table-responsive product">                             
+                                <thead>
                                 <tr>
                                 <th colspan="7"><h3 class="panel-title"><strong><?php _el('products_ordered');?></strong></h3></th>  
                                 </tr>  
+                             
                                 <tr>
-                                    <th><?php _el('product_name');?></th>
-                                    <th><?php _el('shop_name');?></th>
-                                    <th><?php _el('price');?></th>
-                                    <th><?php _el('quantity');?></th>
-                                    <th><?php _el('total_amount');?></th>
+                                    <th width="20%"><?php _el('product_name');?></th>
+                                    <th width="20%"><?php _el('shop_name');?></th>
+                                    <th width="15%"><?php _el('price');?></th>
+                                    <th width="10%"><?php _el('quantity');?></th>
+                                    <th width="15%"//><?php _el('total_amount');?></th>
                                     <th class="text-center"><?php _el('status');?></th>
                                     
-                                    <th class="text-center" width="12%"> <?php
-                                     if ($order['payment_status'] == 1)
-                                     {                                     
-                                      _el('invoice');
-                                    }
-                                      else
-                                      {
-                                        _el('total');
-                                      }
-                                    ?>
-
-                                    </th>
+                                    <th class="text-center" width="5%"><?php _el('action');?></th>
                                 </tr>
-                              
-                                <?php
+                              </thead>
+                              <tbody>
+                                 <?php
                                 foreach ($order_items as $key => $item)
                                 {
                                 ?>
@@ -252,18 +210,19 @@ th {
                                             ?>
                                     </td>
                                      <?php
-                                     if ($order['payment_status'] == 1)
-                                     {
+                                    // if ($item['vendor_status'] == 1)
+                                    // {
                                      ?>
-                                      <td width="15%"><center><a href="<?php  echo base_url('orders/invoice/').$order['id'].'/'.$item['vendor_id']; ?>"><i class='fa fa-file-text-o' style="font-size: 20px;color: green"></i></a></center></td>
+                                      <td width="10%"><center><a title="<?php _el('invoice')?>" href="<?php  echo base_url('orders/invoice/').$order['id'].'/'.$item['vendor_id']; ?>"><i class='fa fa-file-text-o' style="font-size: 20px;color: orange"></i></a></center></td>
                                     <?php }?>
                                 </tr>
                                
                                <?php 
-                                }
+                                //}
                                 ?>
 
                                 <tr rowspan="2" style="border-top: 1px solid #ddd;"><td><b><?php _el('amount_in_Words');?><?php echo str_repeat("&nbsp;",1); ?>:<?php echo str_repeat("&nbsp;",1); ?></b><br></td><td colspan="2"><?php echo no_to_words($order['grand_total']);?></td><td colspan="3" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><?php _el('rs');echo '.'.$order['grand_total']; ?></td></tr>
+                              </tbody>
                             </table>
                               <br> 
                               <br>  

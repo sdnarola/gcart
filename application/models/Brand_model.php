@@ -1,10 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class brand_model extends MY_Model
+class Brand_model extends MY_Model
 {
 	/**
-	 * @var mixed
+	 * @var boolean
+
 	 */
 	protected $soft_delete = TRUE;
 

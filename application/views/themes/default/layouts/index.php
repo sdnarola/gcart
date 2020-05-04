@@ -3,7 +3,7 @@
   $sub_categories    = $this->category->get_sub_categories();
   $header_categories = $this->category->get_header_parent_category(1);
   $brands            = $this->brands->get_all_brands(); 
-  
+	$where['user_id']  = $this->session->userdata('user_id');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,32 +16,92 @@
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
 <title><?php echo $this->page_title; ?></title>
-
 <!-- Bootstrap Core CSS -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">
+ <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">
 
-<!-- Customizable CSS -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/content.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/rateit.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-select.min.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
+        <!-- Customizable CSS -->
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/rateit.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-select.min.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jgrowl.css">
 
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/sweetalert2.css">
 
-<!-- Icons/Glyphs -->
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
 
-<!-- Fonts -->
-<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 
+        <!-- Icons/Glyphs -->
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
+
+        <!-- Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+        <script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/notifications/jgrowl.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/notifications/sweet_alert.min.js'); ?>"></script>
+
+        <!-- Fonts -->
+
+        <script type="text/javascript">
+
+  let SITE_URL="<?php echo site_url(); ?>";
+  let BASE_URL="<?php echo base_url(); ?>";
+
+            swal.setDefaults({
+            confirmButtonColor: "#2196F3",
+            closeOnConfirm: false,
+            });
+
+<?php
+
+	$alert_class = $alert_type = '';
+
+	if ($this->session->flashdata('success'))
+	{
+		$alert_class = $alert_type = 'success';
+	}
+	elseif ($this->session->flashdata('warning'))
+	{
+		$alert_class = $alert_type = 'warning';
+	}
+	elseif ($this->session->flashdata('error'))
+	{
+		$alert_class = 'danger';
+		$alert_type  = 'error';
+	}
+	elseif ($this->session->flashdata('info'))
+	{
+		$alert_class = $alert_type = 'info';
+	}
+
+	if ($this->session->flashdata($alert_type))
+	{
+	?>
+    $(document). ready(function() {
+    swal({
+            title:"<?php echo $this->session->flashdata($alert_type); ?>",
+            type: "<?php echo $alert_type; ?>",
+        });
+    });
+
+<?php
+	}
+
+?>
+</script>
+<!-- ---------------------------------time counter ---------------------------->
+<script src="<?php echo base_url(); ?>assets/themes/default/js/timer-counter-hot-deals.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/add-to-cart.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/delete-add-to-cart.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/pagination-2.1.5.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 
 <!-- Fonts -->
@@ -54,48 +114,69 @@
   <div class="top-bar animate-dropdown">
     <div class="container">
       <div class="header-top-inner">
-        <div class="cnt-account">
 
-            <ul class="list-unstyled">
             <?php
 
-              if (is_user_logged_in())
-              {
-              ?>
-                <li><a href="#">Welcome&nbsp<?php echo get_loggedin_info('username'); ?></a></li>
-                <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-                <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');?></a></li>
-                 <div class="dropdown" style="float: right;">
+            	if (is_user_logged_in())
+            	{
+            	?>      
+               <div class="cnt-block">
+                        <ul class="list-unstyled list-inline">
+                         
+                          <li  style= "float: right;" class="dropdown dropdown-small"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value"> <i class="icon fa fa-user"></i>&nbsp;<?php _el('my_account');?> </span><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                              <li><a href="<?php echo site_url('profile') ?>"><?php _el('my_profile');?></a></li>
+                              <li><a href="<?php echo site_url('profile/edit') ?>"><?php _el('edit_profile');?></a></li>
+                              <li><a href="<?php echo site_url('orders') ?>"><?php _el('my_orders');?></a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                        <!-- /.list-unstyled --> 
+                </div>
+                <div class="cnt-account">
+
+                          <ul class="list-unstyled">
+
+                <li><a href="#"><?php _el('welcome');?>&nbsp;<?php echo get_loggedin_info('username'); ?></a></li>
+                <li><a href="<?php echo site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i><?php _el('wishlist');?></a></li>
+                <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');echo '&nbsp';?></a></li>
+
+               <!--   <div class="dropdown" style="float: right;color: #12cca7;
+">
                   <div class="btn-group btn-group-sm">
-                  <a class="btn btn-primary  dropdown-toggle" href="<?php echo base_url(); ?>#" id="dropdownMenuLink" data-toggle="dropdown"  >
-
-                 <div class="icon fa fa-user"> My Account </div> </a>
-
+                  <a class="btn btn-primary  dropdown-toggle" href="<?php echo base_url(); ?>#" id="dropdownMenuLink" data-toggle="dropdown" >
+                 <div class="icon fa fa-user"> <?php _el('my_account');?> </div> </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item" href="<?php echo site_url('profile') ?>">My profile</a></li>
+                    <li><a class="dropdown-item" href="<?php echo site_url('profile') ?>"><?php _el('my_profile');?></a></li>
                     <li><a class="dropdown-item" href="<?php echo site_url('profile/edit') ?>"><?php _el('edit_profile');?></a></li>
-                     <li><a class="dropdown-item" href="<?php echo site_url('orders') ?>">My Orders</a></li>
+                     <li><a class="dropdown-item" href="<?php echo site_url('orders') ?>"><?php _el('my_orders');?></a></li>
                   </div>
                 </div>
-                </div>
+                </div> -->
+              </ul>
+            </div>
+            
+                    <!-- /.cnt-account -->
+     
             <?php
               }
-              else
-              {
-              ?>
+            	else
+            	{
+            	?>        <div class="cnt-account">
 
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
-            <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i>Login</a></li>
-            <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i>Sell</a></li>
-           <?php 
-             }
+                          <ul class="list-unstyled">
+
+            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i><?php _el('my_cart');?></a></li>
+            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i><?php _el('Checkout')?></a></li>
+            <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i><?php _el('Login');?></a></li>
+            <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i><?php _el('Sell');?></a></li>
+          </ul></div>
+           <?php
+           	}
            ?>
-          </ul>
 
         </div>
-        <!-- /.cnt-account -->
-
+    
         <!-- /.cnt-cart -->
         <div class="clearfix"></div>
       </div>
@@ -105,6 +186,7 @@
   </div>
   <!-- /.header-top -->
   <!-- ============================================== TOP MENU : END ============================================== -->
+ <!-- ============================================== TOP MENU : END ============================================== -->
   <div class="main-header">
     <div class="container">
       <div class="row">
@@ -120,19 +202,26 @@
         <div class="col-xs-12 col-sm-12 col-md-7 top-search-holder">
           <!-- /.contact-row -->
           <!-- ==================================================== SEARCH AREA ============================================================= -->
-    <style>    
-      .search-field:focus {
+<style>    
+ .search-field:focus {
       outline: none;
       }
-
-    </style>
+ @media only screen and (max-width: 600px) {
+     .search-field {
+    width: 10%;
+  }
+.select_category{
+  width: 10%;
+}
+}
+</style>
             <div class="search-area">
             <form action="<?php echo base_url('products/search') ?>" name="search" method='post'>
 
               <div class="control-group">
 
-                 <select id="Categories" name="category_id"  data-toggle="dropdown" ><b class="Caret"></b>
-                 <option value="" class="dropdown">Categories</option>
+                 <select id="Categories" name="category_id"  data-toggle="dropdown" class="select_category"><b class="Caret"></b>
+                 <option value="" class="dropdown"><?php _el('categories');?></option>
                   <?php
 
                   foreach ($main_categories as  $main_category)
@@ -223,7 +312,7 @@
             <div class="nav-outer">
               <ul class="nav navbar-nav">
 
-                 <li class="active dropdown yamm-fw"> <a data-hover="dropdown" class="dropdown-toggle"  href="<?php echo base_url(); ?>" >Home</a> </li>
+                 <li class="active dropdown yamm-fw"> <a data-hover="dropdown" class="dropdown-toggle"  href="<?php echo base_url(); ?>" ><?php _el('home');?></a> </li>
                 <?php
 
                   foreach ($header_categories as  $header_category)
@@ -313,10 +402,9 @@
   <!-- ============================================== NAVBAR : END ============================================== -->
 
 </header>
-
 <!-- main container -->
   <!-- ============================================== CONTAINER  : START ============================================== -->
-  <?php echo $content; ?>
+  <?php echo $content;?>
 
     <!-- ============================================== CONTAINER  : END============================================== -->
 
@@ -495,6 +583,8 @@
 <script src="<?php echo base_url(); ?>assets/themes/default/js/wow.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/typeahead.bundle.js"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
+
+
 
 <script>
           var temp = document.querySelectorAll('.customli');

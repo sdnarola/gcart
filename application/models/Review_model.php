@@ -40,4 +40,49 @@ class Review_model extends MY_Model
 
 		return $result;
 	}
+
+	/**
+	 * [get_products_by_review description]
+	 * @param  [int] $products_id [products id]
+	 * @return [array]             products review
+	 */
+	public function get_products_by_review($where = array())
+	{
+		if (empty($where))
+		{
+			return array();
+		}
+		else
+		{
+			$this->db->where($where);
+			$query  = $this->db->get_where('reviews', array('is_deleted' => 0));
+			$result = $query->result_array();
+
+			if (empty($result))
+			{
+				return false;
+			}
+			else
+			{
+				return $result;
+			}
+		}
+	}
+
+	public function get_products_star_rating($product_id)
+	{
+			$this->db->select('AVG(star_ratings) AS star');
+			$this->db->where('product_id',$product_id);
+			$query  = $this->db->get_where('reviews', array('is_deleted' => 0));
+			$result = $query->row_array();
+
+			if (empty($result))
+			{
+				return 0;
+			}
+			else
+			{
+				return $result['star'];
+			}
+	}	
 }
