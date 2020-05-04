@@ -36,11 +36,15 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-<?php
-    $image_name = basename($path);
-?>
-                            <div class="user-image">
-                            <img src="<?php echo base_url() . 'assets/uploads/users/' . $image_name; ?>" alt="<?php _el('img_alt_msg')?>" height="280" width="208" border="10"></img>
+                           <div class="thumbnail">
+                                <div class="thumb">
+                                    <img src="<?php echo base_url() .$path; ?>">
+                                    <div class="caption-overflow">
+                                        <span>
+                                            <a href="<?php echo base_url() .$path; ?>" target="_blank" data-popup="lightbox" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-plus3"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -87,7 +91,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($user['address_1'].', '.$user['address_2']); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($user['house_or_village'].', '.$user['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($user['city']); ?></td>

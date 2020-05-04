@@ -100,7 +100,7 @@
                                         <td width="40%" class="text-semibold"><?php _el('mobile_no');?></td><td width="10%">:</td><td width="40%"><a href="tel:<?php echo $user['mobile']; ?>"><?php echo $user['mobile']; ?></a></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['address_1'].', '.$address['address_2']); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['house_or_village'].', '.$address['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['city']); ?></td>

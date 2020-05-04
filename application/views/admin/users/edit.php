@@ -80,13 +80,13 @@ $image_name = basename($user['profile_image']);
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
-											<label><?php _el('address1');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('address1');?>" id="address1" name="address1" value="<?php echo $user['address_1']; ?>" readonly>
+											<label><?php _el('house_or_village');?>:</label>
+											<input type="text" class="form-control" placeholder="<?php _el('house_or_village');?>" id="house_or_village" name="house_or_village" value="<?php echo $user['house_or_village']; ?>" readonly>
 										</div>							
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
-											<label><?php _el('address2');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('address2');?>" id="address2" name="address2" value="<?php echo $user['address_2']; ?>" readonly>
+											<label><?php _el('street_or_society');?>:</label>
+											<input type="text" class="form-control" placeholder="<?php _el('street_or_society');?>" id="street_or_society" name="street_or_society" value="<?php echo $user['street_or_society']; ?>" readonly>
 										</div>
 									</div>
 									<div class="row">
@@ -156,10 +156,10 @@ $("#profileform").validate({
             number: true,
             rangelength:[10,10],
 		},
-		address1: {
+		house_or_village: {
 			required: true,
 		},
-		address2: {
+		street_or_society: {
 			required: true,
 		},
 		pincode: {
@@ -188,11 +188,11 @@ $("#profileform").validate({
 			number: "<?php _el('only_digits')?>",
 			rangelength:"<?php _el('only_10_digits')?>",
 		},
-		address1: {
-			required:"<?php _el('please_enter_', _l('address1'))?>",
+		house_or_village: {
+			required:"<?php _el('please_enter_', _l('house_or_village'))?>",
 		},
-		address2: {
-			required:"<?php _el('please_enter_', _l('address2'))?>",
+		street_or_society: {
+			required:"<?php _el('please_enter_', _l('street_or_society'))?>",
 		},
 		pincode: {
 			required:"<?php _el('please_enter_', _l('pincode'))?>",

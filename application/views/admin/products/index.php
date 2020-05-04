@@ -37,13 +37,12 @@
              <th width="2%" class="text-center">
               <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
             </th>
-            <th width="20%"><?php _el('name');?></th>
-            <th width="20%"><?php _el('slug');?></th>
-            <th width="10%"><?php _el('category');?></th>
-            <th width="12%"><?php _el('sub_category');?></th>
-            <th width="10%"><?php _el('brand');?></th>
-            <th width="10%"><?php _el('price');?></th>
-            <th width="8%" class="text-center"><?php _el('status');?></th>
+            <th width="20%"><?php _el('name');?></th> 
+            <th width="15%"><?php _el('category');?></th> 
+            <th width="15%"><?php _el('sub_category');?></th> 
+            <th width="15%"><?php _el('brand');?></th> 
+            <th width="15%"><?php _el('price');?></th> 
+            <th width="8%" class="text-center"><?php _el('status');?></th> 
             <th width="10%" class="text-center"><?php _el('actions');?></th>
           </tr>
         </thead>
@@ -60,7 +59,6 @@
                   <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $product['id']; ?>">
                 </td>
                 <td><?php echo ucwords($product['name']); ?></td>
-                <td><?php echo $product['slug']; ?></td>
                 <td><?php echo ucwords(get_category($product['category_id'], 'name')); ?></td>
                 <td><?php echo ucwords(get_sub_category($product['sub_category_id'], 'name')); ?></td>
                 <td><?php echo ucwords(get_brand($product['brand_id'], 'name')); ?></td>
@@ -102,7 +100,7 @@ $(function() {
 
     $('#products_table').DataTable({
         'columnDefs': [ {
-        'targets': [0,7,8], /* column index */
+        'targets': [0,6,7], /* column index */
         'orderable': false, /* disable sorting */
         }],
 

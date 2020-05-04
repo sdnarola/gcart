@@ -15,11 +15,9 @@
     <div class="container">
         <div class="sign-in-page">
             <div class="row">
-
 	<div class="col-md-6 col-sm-6 sign-in">
 		<h4 class=""><?php _el('edit_profile');?></h4>
     	<p class="">Hello, Welcome to your account.</p>
-        
         <!--edit user data-->
 		<form action="<?php echo base_url('profile/edit') ?>" id="myprofileform" method="POST"  class="register-form outer-top-xs" role="form">
 

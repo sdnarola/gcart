@@ -287,7 +287,7 @@ class Authentication_model extends MY_Model
 				$this->db->where('email', $email);
 				$user = $this->db->get('users')->row_array();
 
-				if ($user->is_admin == 1)
+				if ($user['is_admin'] == 1)
 				{
 					$reset_password_link = admin_url('authentication/reset_password/').$user['id'].'/'.$user['new_pass_key'];
 				}

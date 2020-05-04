@@ -45,6 +45,8 @@
                               <small class="req text-danger">* </small>
                               <label><?php _el('banner_name') ?></label>
                               <select class="select-search" name="banner_id" id="banner_id">
+                                <option value="0" selected readonly disabled >----- Select Banner -----</option>
+
 <?php
 	$banners = get_banners();
 
@@ -99,6 +101,9 @@ $("#categories_form").validate({
         },
         slug:{
             required: true,
+        },
+        banner_id:{
+            required: true,
         }
     },
     messages: {
@@ -107,6 +112,9 @@ $("#categories_form").validate({
         },
         slug:{
             required:"<?php _el('please_enter_', _l('slug'))?>"
+        },
+        banner_id:{
+            required:"<?php _el('please_select_', _l('banner'))?>"
         },
     }
 });

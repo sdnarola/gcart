@@ -48,6 +48,7 @@
                               <small class="req text-danger">* </small>
                               <label><?php _el('category_name') ?></label>
                               <select class="select-search" name="category_name" id="category_name">
+                                <option value="0" selected readonly disabled >----- Select Category -----</option>
 <?php
 	$categories = get_all_categories();
 
@@ -99,6 +100,9 @@ $("#categories_form").validate({
         },
         slug:{
             required: true,
+        },
+        category_name:{
+            required: true,   
         }
     },
     messages: {
@@ -107,6 +111,9 @@ $("#categories_form").validate({
         },
         slug:{
             required:"<?php _el('please_enter_', _l('slug'))?>"
+        },
+        category_name:{
+            required:"<?php _el('please_select_', _l('category'))?>"
         },
     }
 });
