@@ -144,7 +144,7 @@
             	{
             	?>
 
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
+            <li><a href="<?php echo base_url(); ?>cart"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
             <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i>Login</a></li>
             <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i>Sell</a></li>

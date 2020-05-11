@@ -218,6 +218,8 @@ class Cart extends Frontend_Controller
 		}
 	}
 
+// ----------------------- Bhavik -----------------------//
+
 	/**
 	 * Update cart details
 	 */
@@ -262,4 +264,6 @@ class Cart extends Frontend_Controller
 		$code = $this->input->post('coupon');
 		echo json_encode($this->coupons->get_by(array('code' => $code)));
 	}
+
+	// ----------------------- Bhavik -----------------------//
 }

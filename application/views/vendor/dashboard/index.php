@@ -39,7 +39,7 @@
 			<div class="panel bg-blue-400">
 				<div class="panel-body">
 					<h3 class="no-margin"><?php _el('total_earnings')?> ! <span class="label pull-right"><i class="icon-coins"></i></span></h3>
-					<h4><?php echo '&#8377;'.'. '.$total_earnings['total_amount']; ?> </h4>
+					<h4><?php echo '<i class="fa fa-inr"></i>'.'. '.$total_earnings['total_amount']; ?> </h4>
 					<div class="mt-10"><a href="<?php echo base_url('vendor/orders') ?>" class="btn btn-sm bg-blue-300"><?php _el('view_all')?><i class="icon-arrow-right14 position-right"></i></a></div>
 				</div>
 			</div>

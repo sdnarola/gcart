@@ -1,8 +1,8 @@
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
-<!--                     <?php
-                     	$ipaddress = $_SERVER['REMOTE_ADDR'];
-                     echo $ipaddress;
-                     ?> -->
+<!--                                 <?php
+                                 	$ipaddress = $_SERVER['REMOTE_ADDR'];
+                                 echo $ipaddress;
+                                 ?> -->
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
@@ -220,9 +220,6 @@
 						                    </a>
 						                </div>
 <?php
-	// $products_images = implode(',', array_unique(explode(',', $products_detail['images'])));
-
-	// $products_images = explode(',', $products_images);
 
 	$products_images = unserialize($products_detail['images']);
 
@@ -636,8 +633,7 @@
 													</div>
 												</div>
 												<?php
-													# code...
-														}
+													}
 													}
 
 												?>
@@ -819,10 +815,6 @@
 					return this.optional(element) || /^[a-zA-Z][a-zA-Z]$/.test(value);
 				});
 
-	// $("#add_cart").click(function(){
-	// 	alert('hello');
-	// });
-
 	$("#newsletter-subscribe").validate
     ({
         rules: {
@@ -830,16 +822,13 @@
                 required: true,
                 email: true,
                 emailExists: true
-
             },
-
         },
         messages: {
             email: {
                 required:"<?php _el('please_enter_', _l('email'))?>",
                 email:"<?php _el('please_enter_valid_', _l('email'))?>"
             },
-
         }
     });
 
@@ -872,13 +861,9 @@
     					$('.newletter-span-sucess').html(div);
     					$("#exampleInputEmail1").val("");
     				}
-
     			}
-
     		});
     	}
-
-
     });
 
 	$("#frm_review").validate
@@ -938,21 +923,13 @@
 	    			{
 	    				if(msg)
 	    				{
-
 	    					$('.product-add-review').html("");
 	    					$('.product-add-review-success').css('display','block');
 
 	    				}
-
 	    			}
-
 	    		});
-    		// alert(star);
     	}
-
-
-
-
     });
 
     $("#frm_comments").validate
@@ -1017,9 +994,6 @@
 
 		});
     	}
-
-
-
     });
 
 
@@ -1049,8 +1023,6 @@
     	e.preventDefault();
     	var tags=$("#exampleInputTag").val();
     	var spaceCount = (tags.split(" ").length - 1);
-
-
     	var len= tags.length;
     	if(len >= 3 && spaceCount == 0)
     	{
@@ -1060,7 +1032,6 @@
 			data:{ tags:tags,products_id:products_id },
 			success:function(msg)
 			{
-
 				if(msg == 'exits')
 				{
 					$(".errorTxt").html(" ");
@@ -1076,19 +1047,10 @@
 					var div = "<div class='tags-success-msg'><div class='alert alert-success alert-block fade in'><button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div></div>";
 					$("#exampleInputTag").val("");
 					$(".tags-success-msg").html(div);
-					// alert("success");
 				}
-				// alert('hello');
-				// $("#name").val("");
-				// $("#email").val("");
-				// $("#idcomments").val("");
-				// $(".comment-success-msg").css('display','block');
 			}
 			});
     	}
-
-
-
     });
 
 });
@@ -1124,6 +1086,4 @@
 
 		});
     }
-
-
 </script>

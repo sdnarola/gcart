@@ -52,7 +52,8 @@ class Wishlist extends Frontend_Controller
 
 			if ($wishlist['user_id'] == $data['user_id'] && $wishlist['product_id'] == $data['product_id'])
 			{
-				echo 'already added';
+				set_alert('warning', 'Already Added !');
+				redirect(site_url('wishlist'));
 			}
 			else
 			{
@@ -60,6 +61,7 @@ class Wishlist extends Frontend_Controller
 
 				if ($insert)
 				{
+					set_alert('success', 'Product Added Successfully.');
 					redirect(site_url('home'));
 				}
 			}

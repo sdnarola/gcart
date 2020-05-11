@@ -210,7 +210,7 @@ function enable_discount()
     {
     	$('#discount_row').removeClass('hidden');
     	$('#discount').remove();
-    	$('#discount_row').append('<div class="form-group col-md-12 has-feedback " id="discount"><small class="req text-danger">* </small><label><?php _el('amount');?>:</label> <input type="text" Class="form-control" placeholder="<?php _el('amount');?>" id="amount" name="amount" value="<?php echo $coupon['amount'] ?>"><div class="form-control-feedback"><?php echo '&#8377;'; ?></div></div>');
+    	$('#discount_row').append('<div class="form-group col-md-12 has-feedback " id="discount"><small class="req text-danger">* </small><label><?php _el('amount');?>:</label> <input type="text" Class="form-control" placeholder="<?php _el('amount');?>" id="amount" name="amount" value="<?php echo $coupon['amount'] ?>"><div class="form-control-feedback"><?php echo '<i class="fa fa-inr"></i>'; ?></div></div>');
     }
     //percentage value box.
     else if(discount == 1)

@@ -17,7 +17,6 @@ class Authentication extends My_Controller
 	public function index()
 	{
 		$this->vendor_login();
-		//$this->signup();
 	}
 
 	/**

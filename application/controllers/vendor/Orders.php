@@ -85,5 +85,20 @@ class Orders extends Vendor_Controller
 		$this->load->view('vendor/layouts/index', $data);
 	}
 
+	public function print_invoice($id = '')
+	{
+		$this->load->library('pdf');
+
+		$this->set_page_title(_l('print_invoice'));
+		$vendor_id = $this->session->userdata('vendor_id');
+
+		$data['order']       = $this->orders->get_orders($vendor_id, $id);
+		$data['order_items'] = $this->orders->get_items($id, $vendor_id);
+		// $this->load->view('vendor/orders/print_invoice', $data);
+		$this->pdf->load_view('vendor/orders/print_invoice', $data);
+		$this->pdf->render();
+		$this->pdf->stream('invoice.pdf', array('Attachment' => 0));
+	}
+
 // =========================== Bhavik ==================================//
 }

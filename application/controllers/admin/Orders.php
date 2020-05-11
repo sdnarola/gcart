@@ -119,5 +119,19 @@ class Orders extends Admin_Controller
 		$this->load->view('admin/layouts/index', $data);
 	}
 
+	public function print_invoice($id = '')
+	{
+		$this->load->library('pdf');
+
+		$this->set_page_title(_l('print_invoice'));
+		$data['order']       = $this->orders->get($id);
+		$data['order_items'] = $this->orders->get_items($id);
+		// $this->load->view('admin/orders/print_invoice', $data);
+
+		$this->pdf->load_view('admin/orders/print_invoice', $data);
+		$this->pdf->render();
+		$this->pdf->stream('invoice.pdf', array('Attachment' => 0));
+	}
+
 // =========================== Bhavik ==================================//
 }

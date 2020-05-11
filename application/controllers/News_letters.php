@@ -61,35 +61,38 @@ class News_letters extends Frontend_Controller
 
 		if (!empty($email))
 		{
-			$data['email']=$email;
+			$data['email'] = $email;
+
 			foreach ($news_letters_data as $key => $news_letters)
 			{
-				
-				$news_letters_email[] =  $news_letters['email'];
+				$news_letters_email[] = $news_letters['email'];
 			}
-			// print_r($news_letters_email);
 
+// print_r($news_letters_email);
 
-				if (in_array($email, $news_letters_email))
+			if (in_array($email, $news_letters_email))
+			{
+// echo "<p class='alert alert-danger alert-block fade in ' style='color: red'><button data-dismiss='alert' class='close close-xs' type='button' style='    line-height: 0.5;'>
+
+//                    <i class='fa fa-times' style='font-size:12px'></i>
+				//                </button> Email already exists</p>";
+				echo 'exit';
+			}
+			else
+			{
+				$inserts = $this->news_letters->insert($data);
+
+				if ($inserts)
 				{
-					// echo "<p class='alert alert-danger alert-block fade in ' style='color: red'><button data-dismiss='alert' class='close close-xs' type='button' style='    line-height: 0.5;'>
-     //                    <i class='fa fa-times' style='font-size:12px'></i>
-     //                </button> Email already exists</p>";
-                    echo 'exit';
+// echo "<p class='alert alert-success alert-block fade in ' style='color: green'><button data-dismiss='alert' class='close close-sm' type='button' style='    line-height: 0.5;'>
+
+//                   <i class='fa fa-times' style='font-size:12px'></i>
+
+//               </button> Email subscribe successfully</p>";
+					//
+					echo 'success';
 				}
-				else
-				{
-					$inserts = $this->news_letters->insert($data);
-					if($inserts)
-					{
-						// echo "<p class='alert alert-success alert-block fade in ' style='color: green'><button data-dismiss='alert' class='close close-sm' type='button' style='    line-height: 0.5;'>
-      //                   <i class='fa fa-times' style='font-size:12px'></i>
-      //               </button> Email subscribe successfully</p>";
-      //               
-                    echo 'success';
-					}
-				}
-			
+			}
 		}
 	}
 }

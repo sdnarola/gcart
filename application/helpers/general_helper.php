@@ -397,6 +397,14 @@ function pagination($url, $total_rows, $per_page, $uri_segment)
 	return $config;
 }
 
+function get_coupon_info($id)
+{
+	$CI = &get_instance();
+	$CI->load->model('coupon_model', 'coupons');
+
+	return $CI->coupons->get($id);
+}
+
 // =========================== Bhavik ==================================//
 
 /**
@@ -429,4 +437,3 @@ function upload_logo($path, $fieldname)
 
 	return $data;
 }
-

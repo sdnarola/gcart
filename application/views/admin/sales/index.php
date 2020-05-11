@@ -56,8 +56,8 @@
                   <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $sale['id']; ?>">
                 </td>
                 <td><?php echo ucwords($sale['name']); ?></td>
-                <td><?php echo '&#8377;'.'. '.$sale['price']; ?></td>
-                <td><del><?php echo '&#8377;'.'. '.$sale['old_price']; ?></del></td>
+                <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$sale['price']; ?></td>
+                <td><del><?php echo '<i class="fa fa-inr"></i>'.'. '.$sale['old_price']; ?></del></td>
                 <td class="text-center"><a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $sale['id']; ?>);" class="text-danger delete" id="<?php echo $sale['id']; ?>"><i class=" icon-trash"></i></a></td>
             </tr>
             <?php }

@@ -49,7 +49,7 @@
                 </td>
                 <td><?php echo $order['order_number']; ?></td>
                 <td><?php echo $order['total_products']; ?></td>
-                <td><?php echo '&#8377;'.'. '.$order['grand_total']; ?></td>
+                <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$order['grand_total']; ?></td>
                 <td class="text-center">
                     <select class="select" id="<?php echo $order['id']; ?>" onchange="change_status(this);">
                         <option value="0">Pending</option>

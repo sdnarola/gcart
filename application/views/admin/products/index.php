@@ -62,7 +62,7 @@
                 <td><?php echo ucwords(get_category($product['category_id'], 'name')); ?></td>
                 <td><?php echo ucwords(get_sub_category($product['sub_category_id'], 'name')); ?></td>
                 <td><?php echo ucwords(get_brand($product['brand_id'], 'name')); ?></td>
-                <td><?php echo '&#8377;'.'. '.$product['price']; ?></td>
+                <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$product['price']; ?></td>
                 <td class="text-center switchery-sm">
                     <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $product['id']; ?>"
 <?php

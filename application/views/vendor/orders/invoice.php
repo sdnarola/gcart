@@ -22,7 +22,6 @@
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
-
     <div class="row">
         <div class="col-md-12">
             <!-- Panel -->
@@ -38,7 +37,7 @@
                         </div>
                     </div>
                     <div class="heading-elements">
-                        <a href="<?php echo '#'; ?>" class="btn btn-info btn-sm"><i class="icon-printer2 position-left"></i><?php _el('print_invoice');?></a>
+                        <a href="<?php echo base_url('vendor/orders/print_invoice/').$order['order_id']; ?>" class="btn btn-info btn-sm"><i class="icon-printer2 position-left"></i><?php _el('print_invoice');?></a>
                     </div>
                 </div>
                 <!-- /Panel heading -->
@@ -80,13 +79,16 @@
                                         <td class="text-bold"><?php _el('customer_name');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($user['firstname'].' '.$user['lastname']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td class="text-bold"><?php _el('address');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['address_1'].', '.$address['address_2']); ?></td>
+                                        <td class="text-bold"><?php _el('address');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['house_or_village'].', '.$address['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold"><?php _el('city');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['city']); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold"><?php _el('pincode');?></td><td>&nbsp;:&nbsp;</td><td><?php echo $address['pincode']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-bold"><?php _el('mobile');?></td><td>&nbsp;:&nbsp;</td><td><?php echo $user['mobile']; ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -112,16 +114,16 @@
 	?>
     <tr>
         <td><?php echo ucwords($item['name']); ?></td>
-        <td><?php echo '&#8377;'.'. '.$item['price']; ?></td>
+        <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$item['price']; ?></td>
         <td><?php echo $item['item_quantity']; ?></td>
-        <td><?php echo '&#8377;'.'. '.$item['total_amount']; ?></td>
+        <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$item['total_amount']; ?></td>
     </tr>
 <?php
 	}
 
 ?>
 
-                                    <tr><td colspan="3" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><?php echo '&#8377;'.'. '.$order['SUM(order_items.total_amount)']; ?></td></tr>
+                                    <tr><td colspan="3" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><?php echo '<i class="fa fa-inr"></i>'.'. '.$order['SUM(order_items.total_amount)']; ?></td></tr>
                                 </tbody>
                             </table>
                         </div>
