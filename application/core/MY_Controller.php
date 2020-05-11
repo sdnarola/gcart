@@ -20,9 +20,11 @@ class MY_Controller extends CI_Controller
 		$this->lang->load('english');
 // <<<<<<< HEAD
 		$this->load->library('pagination');
+
 // =======
+
 // 		$this->load->model('category_model', 'category');
-// >>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
+		// >>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 	}
 
 	/**
@@ -54,22 +56,23 @@ class MY_Controller extends CI_Controller
 		$config['total_rows']       = $total_rows;
 		$config['per_page']         = $per_page;
 		$config['uri_segment']      = $uri_segment;
+		$config['num_links']        = 1;
 		$config['use_page_numbers'] = TRUE;
-		$config['full_tag_open']    = '<ul class="pagination ">';
+		$config['full_tag_open']    = '<ul class="list-inline list-unstyled">';
 		$config['full_tag_close']   = '</ul>';
 		$config['first_link']       = '&lt;&lt';
-		$config['first_tag_open']   = '<li class="page-item">';
+		$config['first_tag_open']   = '<li class="prev">';
 		$config['first_tag_close']  = '</li>';
 		$config['last_link']        = '&gt;&gt';
-		$config['last_tag_open']    = '<li class="page-item">';
+		$config['last_tag_open']    = '<li class="prev">';
 		$config['last_tag_close']   = '</li>';
 		$config['next_link']        = '&gt;';
-		$config['next_tag_open']    = '<li class="page-item">';
+		$config['next_tag_open']    = '<li class="prev">';
 		$config['next_tag_close']   = '</li>';
 		$config['prev_link']        = '&lt';
-		$config['prev_tag_open']    = '<li class="page-item">';
+		$config['prev_tag_open']    = '<li class="prev">';
 		$config['prev_tag_close']   = '</li>';
-		$config['cur_tag_open']     = '<li class="active btn-info"><a href="">';
+		$config['cur_tag_open']     = '<li class="active btn-info"><a href="" class="pagination_link" >';
 		$config['cur_tag_close']    = '</a></li>';
 		$config['num_tag_open']     = '<li class="page-item">';
 		$config['num_tag_close']    = '</li>';

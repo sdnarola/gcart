@@ -670,12 +670,12 @@ function counter(end_date,id)
                           <!-- /.image -->
                          <?php if($product['is_hot']==1){?> 
                           <div class="tag hot"><span>
-                            <?php _el('HOT')?>
+                            <?php _el('hot')?>
                               </span></div>
                             <?php }
                             elseif ($product['is_hot']==1 || $product['is_sale']==1){?> 
                           <div class="tag sale"><span>
-                            <?php _el('SALE');?>
+                            <?php _el('sale');?>
                               </span></div>
                             <?php }
                             else{?>
@@ -801,12 +801,12 @@ function counter(end_date,id)
                         <?php 
                             if($product['is_hot']==1){?>                   
                             <div class="tag hot"><span>
-                            <?php _el('HOT');?>
+                            <?php _el('hot');?>
                               </span></div>
                             <?php }
                             elseif ($product['is_hot']==1 || $product['is_sale']==1){?> 
                             <div class="tag sale"><span>
-                           <?php _el('SALE');?>
+                           <?php _el('sale');?>
                               </span></div>
                             <?php }
                             else{?>

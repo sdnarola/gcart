@@ -5,16 +5,18 @@ class Home extends Frontend_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('vendor_model', 'vendors');
-		$this->load->model('product_model', 'products');
-		$this->load->model('deal_model', 'deals');
-		$this->load->model('brand_model', 'brand');
+		// $this->load->model('vendor_model', 'vendors');
+		// $this->load->model('product_model', 'products');
+		// $this->load->model('deal_model', 'deals');
+		// $this->load->model('brand_model', 'brand');
+
 	}
 
 	public function index()
-	{
+	{		
 		$this->template->load('index', 'content', 'home');
 	}
+
 
 	/**
 	 * Loads the vendor store

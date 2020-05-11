@@ -12,9 +12,7 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
             </li>
-            <li>
-                <a href="<?php echo base_url('admin/settings'); ?>"><?php _el('settings'); ?></a>
-            </li>
+            <li class="active"><?php _el('settings'); ?></li>
             <li class="active"><?php _el('home_page'); ?></li>
             <li class="active"><?php _el('banners'); ?></li>
         </ul>
@@ -29,6 +27,7 @@
         <div class="panel-heading mt-20">
             <div class="heading-elements">
                 <a href="<?php echo base_url('admin/banners/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new'); ?><i class="icon-plus-circle2 position-right"></i></a>
+
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected'); ?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
@@ -57,10 +56,10 @@
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $banner['id']; ?>">
                         </td>
 <?php 
-            $banner_image = basename($banner['banner']);
+            $file = basename($banner['banner']);
 ?>
                         <td>
-                                <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/banners/').$banner_image ?>" width="350" height="150" border=2>
+                                <image name="icon1" id='icon1' src="<?php echo base_url('assets/uploads/banners/').$file ?>" width="350" height="150" border=2>
                         </td>
                         <td ><?php echo ucfirst($banner['title']); ?></td>
                         <td ><?php echo ucfirst($banner['sub_title']); ?></td>
@@ -204,4 +203,5 @@ function delete_selected()
         });
     });
 }
+
 </script>

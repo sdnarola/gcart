@@ -11,6 +11,7 @@ class Profile extends Vendor_Controller
 		parent::__construct();
 
 		$this->load->model('vendor_model', 'vendors');
+		$this->load->model('subscriptions_model', 'subscriptions');
 	}
 
 // =========================== Bhavik ==================================//
@@ -68,4 +69,17 @@ class Profile extends Vendor_Controller
 	}
 
 // =========================== Bhavik ==================================//
+
+//=====================================================maitri==================================================
+
+public function renew_paln_link($id)
+{
+	echo "hii";
+	$data['plans'] = $this->subscriptions->get_all();
+	$data['vendor'] = get_vendor_info($id);
+	//print_r($data);
+	$this->load->view('vendor/profile/renew_subscription_plan',$data);
+}
+//=====================================================maitri==================================================
+
 }

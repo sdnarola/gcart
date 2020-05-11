@@ -1,9 +1,9 @@
 <?php
-  $main_categories   = $this->category->get_header_parent_category();
-  $sub_categories    = $this->category->get_sub_categories();
-  $header_categories = $this->category->get_header_parent_category(1);
-  $brands            = $this->brands->get_all_brands(); 
-  
+    $main_categories   = $this->category->get_parent_category();
+    $sub_categories    = $this->category->get_sub_category();
+    $header_categories = $this->category->get_parent_category(1);
+  $brands            = $this->brand->get_all_brands();    
+    //echo sizeof($categories['categories']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title><?php echo $this->page_title; ?></title>
+<title>GCART</title>
 
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">
@@ -59,9 +59,9 @@
             <ul class="list-unstyled">
             <?php
 
-              if (is_user_logged_in())
-              {
-              ?>
+                if (is_user_logged_in())
+                {
+                ?>
                 <li><a href="#">Welcome&nbsp<?php echo get_loggedin_info('username'); ?></a></li>
                 <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
                 <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');?></a></li>
@@ -76,25 +76,27 @@
                     <li><a class="dropdown-item" href="<?php echo site_url('profile/edit') ?>"><?php _el('edit_profile');?></a></li>
                      <li><a class="dropdown-item" href="#">My Orders</a></li>
                   </div>
+
                 </div>
+
                 </div>
-            <?php
-              }
-              else
-              {
-              ?>
+            <?php }
+                else
+                {
+                ?>
 
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
             <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i>Login</a></li>
             <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i>Sell</a></li>
-           <?php 
-             }
+           <?php }
+
            ?>
           </ul>
 
         </div>
         <!-- /.cnt-account -->
+
 
         <!-- /.cnt-cart -->
         <div class="clearfix"></div>
@@ -110,53 +112,41 @@
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
           <!-- ============================================================= LOGO ============================================================= -->
-
           <div class="logo"> <a href="<?php echo base_url(); ?>"> <img src="<?php echo base_url(); ?>assets/themes/default/images/logo.png" alt="logo"> </a> </div>
 
           <!-- /.logo -->
-          <!-- ===================================================== LOGO : END ============================================================= --> </div>
+          <!-- ============================================================= LOGO : END ============================================================= --> </div>
         <!-- /.logo-holder -->
 
         <div class="col-xs-12 col-sm-12 col-md-7 top-search-holder">
           <!-- /.contact-row -->
-          <!-- ==================================================== SEARCH AREA ============================================================= -->
-    <style>    
-      .search-field:focus {
-      outline: none;
-      }
+          <!-- ============================================================= SEARCH AREA ============================================================= -->
 
-    </style>
             <div class="search-area">
-            <form action="<?php echo base_url('products/search') ?>" name="search" method='post'>
+            <form action="<?php echo base_url('categories/search') ?>" name="search" method='post'>
 
               <div class="control-group">
 
                  <select id="Categories" name="category_id"  data-toggle="dropdown" ><b class="Caret"></b>
-                 <option value="" class="dropdown">Categories</option>
-                  <?php
+                 <option value="*" class="dropdown">Categories</option>
+                     <?php
 
-                  foreach ($main_categories as  $main_category)
-                  {
-                  ?>
-                 <option class="dropdown"  value="<?php echo $main_category['id']; ?>"><?php echo ucwords($main_category['name']); ?></option>
+                        foreach ($main_categories as $key => $main_category)
+                        {
+                        ?>
+                <option class="dropdown"  value="<?php echo $main_category->id; ?>"><?php echo ucwords($main_category->name); ?></option>
 
-                 <?php 
-                  }
-                  ?>
+                      <?php }
+
+                      ?>
                 </select>
-
-                <input class="search-field" name="name" id="name"  style="border-style: hidden;" autocomplete="off" placeholder="Search here..." />
+                <input class="search-field" name="name"  placeholder="Search here..." />
                  <button type="submit" id='save' name="submit" class="search-button"></button>
                <!-- <a class="search-button"  href="#" ></a>-->
                 </div>
             </form>
           </div>
-
-          <div class="list-unstyle" id="search_result" style="position:absolute;background-color: white;margin-left: 130px;width:470px;">
-        
-          </div>
-
-          <!-- /.search-area --> 
+          <!-- /.search-area -->
           <!-- ============================================================= SEARCH AREA : END ============================================================= --> </div>
         <!-- /.top-search-holder -->
 
@@ -199,7 +189,7 @@
           </div>
           <!-- /.dropdown-cart -->
 
-          <!-- ===================================== SHOPPING CART DROPDOWN : END============================================================= --> </div>
+          <!-- ============================================================= SHOPPING CART DROPDOWN : END============================================================= --> </div>
         <!-- /.top-cart-row -->
       </div>
       <!-- /.row -->
@@ -222,76 +212,90 @@
           <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
             <div class="nav-outer">
               <ul class="nav navbar-nav">
-
-                 <li class="active dropdown yamm-fw"> <a href="<?php echo base_url(); ?>" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
+                 <li class="active dropdown yamm-fw"> <a href="<?php echo base_url(); ?>#" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
                 <?php
 
-                  foreach ($header_categories as  $header_category)
-                  {
-                  ?>
+                    foreach ($header_categories as $key => $header_category)
+                    {
+                    ?>
 
-                <li class="dropdown yamm mega-menu"><a href="<?php echo base_url().'categories/get_parent_category_products/'.$header_category['id']; ?>" data-hover="dropdown" class="dropdown-toggle"  data-toggle="dropdown"><?php echo ucwords($header_category['name']); ?> </a>
+                <li class="dropdown yamm mega-menu"><a href="<?php echo base_url().'categories/get_parent_category_products/'.$header_category->id; ?>" data-hover="dropdown" class="dropdown-toggle"  data-toggle="dropdown"><?php echo ucwords($header_category->name); ?> </a>
                                         <!-- /.accordion-heading -->
-                  <ul class="dropdown-menu container"  id="<?php echo $header_category['id']; ?>">
+                  <ul class="dropdown-menu container"  id="<?php echo $header_category->id; ?>">
                     <li>
                       
                      <div class="yamm-content">
 
                         <div class="row customli">
 
-                       
+                          <div class="row-xs-12 row-sm-12 row-md-12 row-menu">
+                          <!--  <h2 class="title"><?php echo ucwords($sub_categories->name); ?></h2>-->
+                            <ul class="links">
                     <?php
-                      $counter = 0;
+                        $counter = 0;
 
-                        foreach ($sub_categories as $sub_category)
-                        {
-                          if ($sub_category['category_id'] == $header_category['id'])
-                          {
-                            if ($counter < 4)
+                            foreach ($sub_categories as $key => $sub_category)
                             {
-                            ?>
+                                if ($sub_category->category_id == $header_category->id)
+                                {
+                                    if ($counter < 4)
+                                    {
+                                    ?>
                          <div  class="col-xs-12 col-sm-6 col-md-3 col-menu " >
                             <ul class="links">
-                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);  $counter++; ?></a></li>   
+
+                              <li><a href="<?php echo base_url().'categories/get_sub_category_products/'.$sub_category->id; ?>"><?php echo ucwords($sub_category->name);
+                $counter++; ?>
+                                  </a></li>
                                 </ul>
                          </div>
-                          <?php
-                            }
-                            elseif ($counter >= 4)
-                            {
-                            ?>
+                <?php
+                    }
+                                elseif ($counter >= 4)
+                                {
+                                ?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu" >
                             <ul class="links">
-                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);$counter++; ?>  </a></li>                                   
-                             </ul>
-                             </div>
-                            <?php
-                              }
-                              else
-                              {
-                            ?>
+                              <li><a href="<?php echo base_url().'Categories/get_sub_category_products/'.$sub_category->id; ?>"><?php echo ucwords($sub_category->name);
+                $counter++; ?>
+                                  </a></li>
+                                  </ul>
+                                  </div>
+                                <?php
+                                    }
+                                                else
+                                                {
+                                                ?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu">
                             <ul class="links">
-                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);$counter++; ?></a></li>                                  
-                             </ul>
-                            </div>
-                             <?php
-                                }
-                              ?>
-                        <?php
-                            }
-                          } //sub categories foreach end
-                          ?>
-                            
+                              <li><a href="<?php echo base_url().'Categories/get_sub_category_products/'.$sub_categories->id; ?>"><?php echo ucwords($sub_category->name);
+                $counter++; ?>
+                                  </a></li>
+                                  </ul>
+                                  </div>
+                                <?php
+                                    }
+
+                                            ?>
+<?php
+    }
+        }
+
+    ?>
+                            </ul>
+                          </div>
                       <!-- /.yamm-content -->
                         </div>
                       </div>
                     </li>
                   </ul>
                 </li>
+
              <?php
-              }
+                }
+
              ?>
+
               </ul>
 
               <!-- /.navbar-nav -->
@@ -314,10 +318,10 @@
 
 </header>
 
-
 <!-- main container -->
   <!-- ============================================== CONTAINER  : START ============================================== -->
 
+<div class="container" style="margin-top:30px;">
     <?php $this->load->view('themes/default/includes/alerts');
     ?>
 
@@ -325,8 +329,8 @@
     <div class="container">
         <div class="breadcrumb-inner">
             <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo base_url(); ?>"><?php _el('home');?></a></li>
-                <li class='active'><?php _el('register');?></li>
+                <li><a href="<?php echo base_url(); ?>">Home</a></li>
+                <li class='active'>Register</li>
             </ul>
         </div><!-- /.breadcrumb-inner -->
     </div><!-- /.container -->
@@ -359,7 +363,7 @@
             <input type="text" class="form-control unicase-form-control text-input" id="lastname" name="lastname" >
         </div>
         <div class="form-group">
-            <label class="info-title" for="mobile"><?php _el('mobile_no');?> <span>*</span></label>
+            <label class="info-title" for="mobile"><?php _el('mobile');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="mobile" name="mobile" >
         </div>
         <div class="form-group">
@@ -428,8 +432,8 @@
     </div>
 
     <!-- ============================================== CONTAINER  : END============================================== -->
- <!-- ============================================== BRANDS CAROUSEL ============================================== -->
 
+ <!-- ============================================== BRANDS CAROUSEL ============================================== -->
      <!--/.owl-carousel #logo-slider -->
 
     <div id="brands-carousel" class="logo-slider wow fadeInUp">
@@ -600,15 +604,11 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/themes/default/js/lightbox.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-select.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/wow.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/libraries/jquery.min.js'); ?>"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/typeahead.bundle.js"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery.countdownTimer.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery.countdownTimer.min.js"></script>
 
 <script>
-
-var BASE_URL = "<?php echo base_url(); ?>";
-          var temp = document.querySelectorAll('.customli');
-          console.log(temp);
+          var temp = document.querySelectorAll('.links');
           var t = document.querySelector('.yamm-content');
          temp.forEach((e)=>{
           if(e.children.length === 0)
@@ -619,30 +619,14 @@ var BASE_URL = "<?php echo base_url(); ?>";
           p.parentNode.style.display='none'
           }
          })
+        </script>
 
-  $(document).ready(function(){ 
 
- $('#name').typeahead({
-  source: function(query, result)
-  {
-   $.ajax({
-    url:BASE_URL + 'products/autocomplete_search',
-    method:"POST",
-    data:{query:query},
-    dataType:"json",
-    success:function(data)
-    {
-      console.log(data);
-     result($.map(data, function(item){
-      return item;
-     }));
-    }
-   })
-  }
- });
- 
-});
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/libraries/jquery.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
+<script type="text/javascript">
 
+var BASE_URL = "<?php echo base_url(); ?>";
 
 $.validator.addMethod("emailExists", function(value, element)
 {
@@ -749,7 +733,7 @@ $("#signup_form").validate({
             required:"<?php _el('please_enter_', _l('registration_number'))?>",
         },
         mobile: {
-            required:"<?php _el('please_enter_', _l('mobile_no'))?>",
+            required:"<?php _el('please_enter_', _l('mobile'))?>",
             minlength :'Please enter a valid 10 digit mobile number',
        },
         email: {

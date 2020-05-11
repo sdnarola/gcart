@@ -1,9 +1,32 @@
-<?php
+  <?php
   $main_categories   = $this->category->get_header_parent_category();
   $sub_categories    = $this->category->get_sub_categories();
   $header_categories = $this->category->get_header_parent_category(1);
   $brands            = $this->brands->get_all_brands(); 
-	$where['user_id']  = $this->session->userdata('user_id');
+
+  // =========================== cart display  Work by KOMAL===================================
+  $user_id          = $this->session->userdata('user_id');
+  $where['user_id'] = (empty($user_id))? 0 : $user_id;
+
+  if(empty($user_id))
+  {
+    $where['user_ip']=$this->input->ip_address();
+  }
+
+  $total_row          = (empty($this->cart->count_cart_row($where))) ? 0 : $this->cart->count_cart_row($where);
+  $garnd_total_amount = (empty($this->cart->count_total_amount($where))) ? 0 :  $this->cart->count_total_amount($where);
+  $cart_data          = $this->cart->get_cart_data($where);
+  $cart_products      = '';
+
+  if(!empty($cart_data))
+  {
+    $products_id   = get_products_id_foreach($cart_data);
+    $cart_products = $this->cart->get_cart_products_detail($where, $products_id);
+  }
+
+  $dropdown = (empty($cart_products)) ? "" : "dropdown";
+ // =========================== END cart display Work by KOMAL===================================
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,93 +39,92 @@
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
 <title><?php echo $this->page_title; ?></title>
+
 <!-- Bootstrap Core CSS -->
- <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/components.css">
+<!-- Customizable CSS -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/lightbox.css">
 
-        <!-- Customizable CSS -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/rateit.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-select.min.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jgrowl.css">
-
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/admin/css/sweetalert2.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/sweetalert2.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/rateit.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
+<link href="<?php echo base_url(); ?>assets/themes/default/css/pagination.css" rel="stylesheet" type="text/css">
 
 
-        <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript"> 
+  let SITE_URL            = "<?= site_url(); ?>";
+  let BASE_URL            = "<?= base_url(); ?>";
+  let title               = "<?php _el('single_deletion_alert');?>";
+  let text                = "<?php _el('single_recovery_alert');?>";
+  let cancelButtonText    = "<?php _el('no_cancel_it');?>";
+  let confirmButtonText   = "<?php _el('yes_i_am_sure');?>";
+  let add_to_cart_success = "<?php _el('add_to_cart_qty')?>";
+  let update_qty          = "<?php _el('update_qty')?>";
+  let qty_not_available   = "<?php _el('qty_not_available')?>";
+  let add_to_wishlist     = "<?php _el('add_to_wishlist')?>";
+  let remove_wishlist     = "<?php _el('remove_wishlist')?>";
+  let cart_empty_title = "<?php _el('your_car_is_empty')?>";
+  let cart_empty_msg   = "<?php _el('cart_empty_msg')?>";
+  let url                  = "<?= site_url() ."Home"; ?>";
+  let shop_now             = "<?php _el('shop_now')?>";
 
-        <!-- Icons/Glyphs -->
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
 
-        <!-- Fonts -->
-        <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+</script>
 
-        <script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
-        <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/notifications/jgrowl.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/notifications/sweet_alert.min.js'); ?>"></script>
+<!-- Icons/Glyphs -->
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
 
-        <!-- Fonts -->
+<!-- Fonts -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
-        <script type="text/javascript">
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<script src="<?php echo base_url(); ?>assets/themes/default/js/timer-counter-hot-deals.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/pagination-2.1.5.js"></script>
 
-  let SITE_URL="<?php echo site_url(); ?>";
-  let BASE_URL="<?php echo base_url(); ?>";
 
-            swal.setDefaults({
-            confirmButtonColor: "#2196F3",
-            closeOnConfirm: false,
-            });
 
+
+<script type="text/javascript">
+  <?php
+
+  $alert_class = '';
+
+  if ($this->session->flashdata('success'))
+  {
+    $alert_class = 'success';
+  }
+  elseif ($this->session->flashdata('warning'))
+  {
+    $alert_class = 'warning';
+  }
+  elseif ($this->session->flashdata('danger'))
+  {
+    $alert_class = 'danger';
+  }
+  elseif ($this->session->flashdata('info'))
+  {
+    $alert_class = 'info';
+  }
+
+  if ($this->session->flashdata($alert_class))
+  {
+  ?>
+    jGrowlAlert("<?php echo $this->session->flashdata($alert_class) ?>",'<?php echo $alert_class; ?>');
 <?php
-
-	$alert_class = $alert_type = '';
-
-	if ($this->session->flashdata('success'))
-	{
-		$alert_class = $alert_type = 'success';
-	}
-	elseif ($this->session->flashdata('warning'))
-	{
-		$alert_class = $alert_type = 'warning';
-	}
-	elseif ($this->session->flashdata('error'))
-	{
-		$alert_class = 'danger';
-		$alert_type  = 'error';
-	}
-	elseif ($this->session->flashdata('info'))
-	{
-		$alert_class = $alert_type = 'info';
-	}
-
-	if ($this->session->flashdata($alert_type))
-	{
-	?>
-    $(document). ready(function() {
-    swal({
-            title:"<?php echo $this->session->flashdata($alert_type); ?>",
-            type: "<?php echo $alert_type; ?>",
-        });
-    });
-
-<?php
-	}
+  }
 
 ?>
 </script>
-<!-- ---------------------------------time counter ---------------------------->
-<script src="<?php echo base_url(); ?>assets/themes/default/js/timer-counter-hot-deals.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/add-to-cart.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/delete-add-to-cart.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/pagination-2.1.5.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 
 <!-- Fonts -->
 </head>
@@ -117,9 +139,9 @@
 
             <?php
 
-            	if (is_user_logged_in())
-            	{
-            	?>      
+              if (is_user_logged_in())
+              {
+              ?>      
                <div class="cnt-block">
                         <ul class="list-unstyled list-inline">
                          
@@ -138,7 +160,7 @@
                           <ul class="list-unstyled">
 
                 <li><a href="#"><?php _el('welcome');?>&nbsp;<?php echo get_loggedin_info('username'); ?></a></li>
-                <li><a href="<?php echo site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i><?php _el('wishlist');?></a></li>
+                <li><a href="<?= site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i><?php _el('wishlist');?></a></li>
                 <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');echo '&nbsp';?></a></li>
 
                <!--   <div class="dropdown" style="float: right;color: #12cca7;
@@ -160,19 +182,19 @@
      
             <?php
               }
-            	else
-            	{
-            	?>        <div class="cnt-account">
+              else
+              {
+              ?>        <div class="cnt-account">
 
                           <ul class="list-unstyled">
 
             <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i><?php _el('my_cart');?></a></li>
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i><?php _el('Checkout')?></a></li>
+            <li><a href="<?= site_url('cart/');?>"><i class="icon fa fa-check"></i><?php _el('Checkout')?></a></li>
             <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i><?php _el('Login');?></a></li>
             <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i><?php _el('Sell');?></a></li>
           </ul></div>
            <?php
-           	}
+            }
            ?>
 
         </div>
@@ -186,7 +208,6 @@
   </div>
   <!-- /.header-top -->
   <!-- ============================================== TOP MENU : END ============================================== -->
- <!-- ============================================== TOP MENU : END ============================================== -->
   <div class="main-header">
     <div class="container">
       <div class="row">
@@ -251,37 +272,50 @@
 
         <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
           <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
-
-          <div class="dropdown dropdown-cart"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
+ <!-- ========================================================= cart display  Work by KOMAL ================================================================== -->
+          <div class="dropdown dropdown-cart"> <a href="javascript:void(0);" class="dropdown-toggle lnk-cart" id="cart-dropdown" data-toggle="<?=  $dropdown ?>">
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-              <div class="basket-item-count"><span class="count">2</span></div>
-              <div class="total-price-basket"> <span class="lbl">cart -</span> <span class="total-price"> <span class="sign">$</span><span class="value">600.00</span> </span> </div>
+              <div class="basket-item-count"><span class="count"><?= $total_row ?></span></div>
+              <div class="total-price-basket"> <span class="lbl"><?php _el('cart') ?></span> <span class="total-price"> <span class="sign">$</span><span class="value"><?= $garnd_total_amount ?></span> </span> </div>
             </div>
             </a>
             <ul class="dropdown-menu">
               <li>
+               
                 <div class="cart-item product-summary">
-                  <div class="row">
+                   <?php
+
+                  if(!empty($cart_products))
+                  {
+                  foreach ($cart_products as $key => $cart) {
+                   
+                
+                ?>
+                  <div id="cart-<?=  $cart['cart_id']; ?>" class="row">
                     <div class="col-xs-4">
-                      <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img src="assets/themes/default/images/cart.jpg" alt=""></a> </div>
+                      <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img src="<?php echo base_url().$cart['thumb_image']; ?>" alt=""></a> </div>
                     </div>
                     <div class="col-xs-7">
-                      <h3 class="name"><a href="<?php echo base_url(); ?>index.php?page-detail">Simple Product</a></h3>
-                      <div class="price">$600.00</div>
+                      <h3 class="name"><a href="<?php echo base_url(); ?>index.php?page-detail"><?= $cart['name']; ?></a></h3>
+                      <div class="price"><?= $cart['total_amount']?></div>
                     </div>
-                    <div class="col-xs-1 action"> <a href="<?php echo base_url(); ?>#"><i class="fa fa-trash"></i></a> </div>
+                    <div class="col-xs-1 action"> <a href="javascript:void(0);"><i class="fa fa-trash" id="delete_cart_product" onclick="delete_to_Cart_product(<?= $cart['cart_id'] ?>);" ></i></a> </div>
                   </div>
+                  <?php
+                  }}
+                ?>
                 </div>
+                
                 <!-- /.cart-item -->
                 <div class="clearfix"></div>
                 <hr>
                 <div class="clearfix cart-total">
-                  <div class="pull-right"> <span class="text">Sub Total :</span><span class='price'>$600.00</span> </div>
+                  <div class="pull-right sub-total"> <span class="text"><?php _el('sub_total') ?></span><span class='price'><?= $garnd_total_amount ?></span> </div>
                   <div class="clearfix"></div>
-                  <a href="<?php echo base_url(); ?>checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a> </div>
+                  <a href="<?= site_url('cart/');?>" class="btn btn-upper btn-primary btn-block m-t-20"><?php _el('checkout') ?></a> </div>
                 <!-- /.cart-total-->
-
+ <!-- ============================================================= END cart display  Work by KOMAL ====================================================================== -->
               </li>
             </ul>
             <!-- /.dropdown-menu-->
@@ -568,7 +602,9 @@
 <!-- For demo purposes – can be removed on production : End -->
 
 <!-- JavaScripts placed at the end of the document so the pages load faster -->
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script> -->
+
+
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-hover-dropdown.min.js"></script>
@@ -578,17 +614,28 @@
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-slider.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery.rateit.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/themes/default/js/lightbox.min.js"></script>
+
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-select.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/wow.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/wow.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/typeahead.bundle.js"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('assets/themes/default/js/sweet_alert.min.js'); ?>"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script> -->
+<script src="<?php echo base_url(); ?>assets/themes/default/js/common.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jgrowl.min.js"></script>
+<!-- ---------------------------------time counter ---------------------------->
+
+<script src="<?php echo base_url(); ?>assets/themes/default/js/add-to-cart.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/delete-add-to-cart.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/add-wishlist.js"></script>
+<!-- ----------------------------------------------------------------------------------------------- -->
+<script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
 
 
 
 <script>
           var temp = document.querySelectorAll('.customli');
-          console.log(temp);
+          // console.log(temp);
           var t = document.querySelector('.yamm-content');
          temp.forEach((e)=>{
           if(e.children.length === 0)
@@ -599,30 +646,6 @@
           p.parentNode.style.display='none'
           }
          })
-
- $(document).ready(function(){ 
-
- $('#name').typeahead({
-  source: function(query, result)
-  {
-   $.ajax({
-    url:"<?php echo base_url(); ?>products/autocomplete_search",
-    method:"POST",
-    data:{query:query},
-    dataType:"json",
-    success:function(data)
-    {
-      console.log(data);
-     result($.map(data, function(item){
-      return item;
-     }));
-    }
-   })
-  }
- });
- 
-});
-
-</script>
+        </script>
 </body>
 </html>

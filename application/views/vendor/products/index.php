@@ -34,7 +34,7 @@
       <table id="products_table" class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th width="2%" class="text-center">
+            <th width="2%">
               <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
             </th>
             <th width="20%"><?php _el('name');?></th>

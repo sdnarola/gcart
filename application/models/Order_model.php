@@ -29,22 +29,13 @@ class Order_model extends MY_Model
 	 *
 	 * @return mixed 	$items 	ordered product's information.
 	 */
-
-	public function get_items($id='', $vendor_id = '',$order_id='')
+	public function get_items($id, $vendor_id = '')
 	{
 		$this->db->select('order_items.quantity AS item_quantity, order_items.*,products.id AS pro_id,products.*');
 		$this->db->from('order_items');
 		$this->db->join('products', 'products.id = order_items.product_id');
-
-		if(!empty($id))
-		{
 		$this->db->where('order_items.order_id', $id);
-		}
-		if(!empty($order_id))
-		{
-			$this->db->where_in('order_items.order_id', $order_id);
-	
-		}
+
 		if ($vendor_id)
 		{
 			$this->db->where('products.vendor_id', $vendor_id);
@@ -195,6 +186,32 @@ class Order_model extends MY_Model
 		return $this->db->get('orders')->result_array();
 	}
 
+//==================================================================== WORK BY KOMAL ========================================================================================
+	/**
+	 * [add_order_item_data description]
+	 * @param  $data array valuse
+	 */
+	public function add_order_item_data($data)
+	{
+		return $this->db->insert('order_items', $data);
+	}
+
+	public function get_orders_products_id($where = array())
+	{
+		$this->db->select('DISTINCT(product_id)');
+		$this->db->from('orders');
+		$this->db->join('order_items', 'orders.id = order_items.order_id', 'inner');
+		$this->db->where($where);
+		$this->db->where(array('orders.is_deleted' => 0));
+		$query  = $this->db->get();
+		$result = $query->result_array();
+		if ($result)
+		{
+			return $result;
+		}
+	}
+
+//==================================================================== END WORK BY KOMAL ========================================================================================
 }
 
 ?>

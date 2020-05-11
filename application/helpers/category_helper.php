@@ -89,10 +89,10 @@ function get_banners()
 {
 	$CI = &get_instance();
 	$CI->load->model('banner_model', 'banners');
-	$CI->banners->order_by('title', 'ASC');
+	$CI->banners->order_by('title','ASC');
 	$banners = $CI->banners->get_all();
 
-	return $banners;
+ 	return $banners;
 }
 
 ?>

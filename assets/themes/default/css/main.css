@@ -5887,5 +5887,25 @@ z-index:10000
 
  .sidebar .sidebar-module-container .sidebar-widget .sidebar-widget-body .accordion .accordion-group .accordion-body .accordion-inner ul li a.sub-categoriesname:before {
     content: " ";
-
-  
+}
+  .topnavigation-custom .right-arrow-custom:after{
+    color: #bababa;
+    content: "\f105";
+    float: right;
+    font-size: 12px;
+    height: 20px;
+    line-height: 18px;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    width: 10px;
+    font-family: "FontAwesome";
+    top: 50%;
+    position: absolute;
+    right: 15px;
+    margin-top: -10px;
+  }
+  .topnavigation-customspan.right-arrow-custom {
+    cursor: pointer;
+}

@@ -94,4 +94,5 @@ $("#faq_form").validate({
         },
     }
 });
+
 </script>

@@ -8,6 +8,13 @@ class Authentication extends My_Controller
 		$this->load->model('Authentication_model');
 		$this->load->model('User_model', 'users');
 		$this->load->model('category_model', 'category');
+		$this->load->model('cart_model', 'cart');
+
+		if (get_settings('maintenance') == 1)
+		{
+			redirect(site_url());
+		}
+
 		$this->load->model('brand_model', 'brands');
 	}
 
@@ -32,10 +39,12 @@ class Authentication extends My_Controller
 	/**
 	 * Loads user login form & performs login
 	 */
+
 /**
  * [login user]
  * @return [type] [description]
  */
+
 	public function login()
 	{
 		if (is_user_logged_in())
@@ -83,6 +92,49 @@ class Authentication extends My_Controller
 
 			log_activity("User Logged In [Email: $email]");
 
+			$user_ip        = $this->input->ip_address();
+			$user_id        = 0;
+			$where['email'] = $this->input->post('email');
+			$user_data      = $this->users->get_users($where);
+			$cart_data      = $this->cart->get_many_by(array('user_ip' => $user_ip, 'user_id' => $user_id));
+			$user_cart_data = $this->cart->get_many_by(array('user_id' => $user_data['id']));
+
+			$cart_user_ip = array();
+
+			if (!empty($cart_data))
+			{
+				foreach ($cart_data as $key => $data)
+				{
+					foreach ($user_cart_data as $key => $value)
+					{
+						if ($value['product_id'] == $data['product_id'])
+						{
+							$products_where['product_id']    = $data['product_id'];
+							$update_products['quantity']     = $data['quantity'] + $value['quantity'];
+							$update_products['total_amount'] = $data['total_amount'] + $value['total_amount'];
+							$update                          = $this->cart->edit_cart($products_where, $update_products);
+
+							if ($update)
+							{
+								$this->cart->delete($data['id']);
+							}
+						}
+					}
+
+					$cart_user_ip[] = $data['user_ip'];
+
+					$update_where['user_ip'] = $user_ip;
+					$update_where['user_id'] = 0;
+
+					$update_data['user_id'] = $user_data['id'];
+
+					if (in_array($user_ip, $cart_user_ip))
+					{
+						$this->cart->edit_cart($update_where, $update_data);
+					}
+				}
+			}
+
 			//If previous redirect URL is set in session, redirect to that URL
 			maybe_redirect_to_previous_url();
 
@@ -93,6 +145,114 @@ class Authentication extends My_Controller
 		$this->set_page_title('Login');
 		$this->template->load('index', 'content', 'authentication/login_signup');
 	}
+
+// ============================================ WORK BY KOMAl =================================================================================================
+	/**
+	 * [checkout_login description]
+	 *
+	 */
+	public function checkout_login()
+	{
+		if (is_user_logged_in())
+		{
+			redirect(site_url());
+		}
+
+		if ($this->input->post())
+		{
+			$email    = $this->input->post('email');
+			$password = $this->input->post('password');
+			$remember = $this->input->post('remember');
+			$user     = $this->Authentication_model->login($email, $password, $remember);
+
+			if (is_array($user) && isset($user['user_inactive']))
+			{
+				set_alert('error', _l('your_account_is_not_active'));
+				log_activity("Inactive User Tried to Login [Email: $email]", $user['id']);
+				redirect(site_url('authentication/checkout_login'));
+			}
+			elseif (is_array($user) && isset($user['email_unverified']))
+			{
+				set_alert('error', 'Your email is not verified. Please verify your email first.');
+				log_activity("Non Verified User Tried to Login [Email: $email]");
+				redirect(site_url('authentication/checkout_login'));
+			}
+			elseif (is_array($user) && isset($user['invalid_email']))
+			{
+				set_alert('error', _l('incorrect_email'));
+				log_activity("Non Existing User Tried to Login [Email: $email]");
+				redirect(site_url('authentication/checkout_login'));
+			}
+			elseif (is_array($user) && isset($user['invalid_password']))
+			{
+				set_alert('error', _l('incorrect_password'));
+				log_activity("Failed Login Attempt With Incorrect Password [Email: $email]", $user['id']);
+				redirect(site_url('authentication/checkout_login'));
+			}
+			elseif ($user == false)
+			{
+				set_alert('error', _l('incorrect_email_or_password'));
+				log_activity("Failed Login Attempt [Email: $email]");
+				redirect(site_url('authentication/checkout_login'));
+			}
+
+			log_activity("User Logged In [Email: $email]");
+
+			$user_ip        = $this->input->ip_address();
+			$user_id        = 0;
+			$where['email'] = $this->input->post('email');
+			$user_data      = $this->users->get_users($where);
+			$cart_data      = $this->cart->get_many_by(array('user_ip' => $user_ip, 'user_id' => $user_id));
+			$user_cart_data = $this->cart->get_many_by(array('user_id' => $user_data['id']));
+
+			$cart_user_ip = array();
+
+			if (!empty($cart_data))
+			{
+				foreach ($cart_data as $key => $data)
+				{
+					foreach ($user_cart_data as $key => $user_cart)
+					{
+						if ($user_cart['product_id'] == $cart['product_id'])
+						{
+							$products_where['product_id']    = $cart['product_id'];
+							$update_products['quantity']     = $cart['quantity'] + $user_cart['quantity'];
+							$update_products['total_amount'] = $cart['total_amount'] + $user_cart['total_amount'];
+							$update                          = $this->cart->edit_cart($products_where, $update_products);
+
+							if ($update)
+							{
+								$this->cart->delete($cart['id']);
+							}
+						}
+					}
+
+					$cart_user_ip[] = $data['user_ip'];
+
+					$update_where['user_ip'] = $user_ip;
+					
+
+					$update_data['user_id'] = (empty($user_data['id']))? 0 : $user_data['id'];
+
+					if (in_array($user_ip, $cart_user_ip))
+					{
+						$this->cart->edit_cart($update_where, $update_data);
+					}
+				}
+			}
+
+			// If previous redirect URL is set in session, redirect to that URL
+			maybe_redirect_to_previous_url();
+
+			//Else rediret to home page.
+			redirect(site_url('cart'));
+		}
+
+		$this->set_page_title('Login');
+		$this->template->load('index', 'content', 'checkout');
+	}
+
+// ============================================ END  WORK BY KOMAl ====================================================================================
 
 	/**
 	 * Loads user signup form & performs signup
@@ -114,25 +274,13 @@ class Authentication extends My_Controller
 			}
 
 			$data['password'] = md5($data['password']);
-			$data['profile_image']='assets/uploads/users/default_user.png';
 			unset($data['confirm_password']);
+			//$data['profile_image']='./assets/uploads/users/user1.png';
+
 			$data['sign_up_key'] = app_generate_hash();
 
 			if ($this->users->insert($data))
 			{
-				$user_data = $this->db->get_where('users',$data)->result_array();
-				foreach ($user_data as $user) {
-					$user_id=$user['id'];
-				}
-				$user_address = array(
-				'users_id'    => $user_id,
-				'house_or_village'   => '',
-				'street_or_society'   => '',
-				'city'        => '',
-				'state'       => '',
-				'pincode'     =>''
-			);
-				$this->users->insert_user_address($user_address);
 				$template = get_email_template('new-user-signup');
 				$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
 
@@ -155,9 +303,12 @@ class Authentication extends My_Controller
 				];
 
 				$message .= str_replace($find, $replace, $template['message']);
+
 				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
+
 				$sent = send_email($data['email'], $subject, $message);
-				
+				echo $send;
+
 				if ($sent)
 				{
 					set_alert('success', 'Your are registered successfully. Please check your email for account verification instructions.');
@@ -304,16 +455,8 @@ class Authentication extends My_Controller
 	 */
 	public function logout()
 	{
+		log_activity('User Logged Out [Email: '.get_loggedin_info('email').']', get_loggedin_user_id());
 		$this->Authentication_model->logout();
 		redirect(site_url());
 	}
-
-	// /**
-	//  * Loads Maintenance page.
-	//  */
-	// public function maintenance()
-	// {
-	// 	$this->set_page_title(_l('maintenance'));
-	// 	$this->load->view('themes/default/maintenance');
-	// }
 }

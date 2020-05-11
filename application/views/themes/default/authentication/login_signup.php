@@ -1,3 +1,5 @@
+
+<div class="container" style="margin-top:30px;">
     <?php $this->load->view('themes/default/includes/alerts');
     ?>
 
@@ -5,8 +7,8 @@
     <div class="container">
         <div class="breadcrumb-inner">
             <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo base_url(); ?>"><?php _el('home');?></a></li>
-                <li class='active'><?php _el('login');?></li>
+                <li><a href="<?php echo base_url(); ?>">Home</a></li>
+                <li class='active'>Login</li>
             </ul>
         </div><!-- /.breadcrumb-inner -->
     </div><!-- /.container -->
@@ -156,9 +158,9 @@ $("#signup_form").validate({
         lastname: {
             required:"<?php _el('please_enter_', _l('lastname'))?>",
         },
-        mobile: {
+        mobile_no: {
             required:"<?php _el('please_enter_', _l('mobile_no'))?>",
-            minlength :'<?php _el('only_10_digits') ?>',
+            minlength :'Please enter a valid 10 digit mobile number',
        },
         email: {
             required:"<?php _el('please_enter_', _l('email'))?>",

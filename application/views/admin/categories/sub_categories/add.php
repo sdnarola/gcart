@@ -46,18 +46,18 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label><?php _el('category_name') ?></label>
+                              <label>category name</label>
                               <select class="select-search" name="category_name" id="category_name">
-                                <option value="0" selected readonly disabled >----- Select Category -----</option>
 <?php
 	$categories = get_all_categories();
 
 	foreach ($categories as $category)
 	{
-?>
+	?>
                                     <option id="category" name="category" value="<?php echo $category['name'] ?>"><?php echo ucfirst($category['name']) ?></option>
 <?php
 	}
+
 ?>
                                 </select>
                             </div>
@@ -100,9 +100,6 @@ $("#categories_form").validate({
         },
         slug:{
             required: true,
-        },
-        category_name:{
-            required: true,   
         }
     },
     messages: {
@@ -111,9 +108,6 @@ $("#categories_form").validate({
         },
         slug:{
             required:"<?php _el('please_enter_', _l('slug'))?>"
-        },
-        category_name:{
-            required:"<?php _el('please_select_', _l('category'))?>"
         },
     }
 });

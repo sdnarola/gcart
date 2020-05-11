@@ -22,6 +22,7 @@
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
+
     <div class="row">
         <div class="col-md-12">
             <!-- Panel -->
@@ -31,11 +32,6 @@
                 <!-- Panel body -->
                 <div class="panel-body">
                     <div class="row">
-                        <div class="form-group col-md-12">
-                            <div class="pull-right">
-                                <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
-                            </div>
-                        </div>
                         <div class="col-md-6">
                             <table class="table table-hover table-framed table-sm table-striped rounded">
                               <thead>
@@ -100,7 +96,7 @@
                                         <td width="40%"class="text-semibold" ><?php _el('mobile_no');?></td><td width="10%">:</td><td width="40%"><a href="tel:<?php echo $user['mobile']; ?>"><?php echo $user['mobile']; ?></a></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%"class="text-semibold" ><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['house_or_village'].', '.$address['street_or_society']); ?></td>
+                                        <td width="40%"class="text-semibold" ><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['address_1'].', '.$address['address_2']); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%"class="text-semibold" ><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['city']); ?></td>
@@ -181,4 +177,3 @@
     </div>
 </div>
 <!-- /Content area
->>>>>>> 022d7a6b9ec5ea2eb26a67a83e61761003432976

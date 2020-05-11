@@ -25,7 +25,7 @@
           <div class="heading-elements">
             <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
           </div>
-        </div>
+      </div>
         <!-- /Panel heading -->
         <!-- Listing table -->
         <div class="panel-body table-responsive">
@@ -34,12 +34,14 @@
                     <tr>
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
+
                         </th>
                         <th width="30%" ><?php _el('name');?></a></th>
                         <th width="30%" ><?php _el('email');?></th>
                         <th width="20%" ><?php _el('mobile_no');?></th>
                         <th width="8%" class="text-center"><?php _el('status');?></th>
                         <th width="10%" class="text-center"><?php _el('actions');?></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -49,13 +51,19 @@
 	{
 		foreach ($users as $user)
 		{
-?>
+		?>
                     <tr>
                         <td>
-                            <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php if($user->id != get_loggedin_info('user_id')){echo $user->id;}?>">
+                            <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php
+
+                                                                                               			if ($user->id != get_loggedin_info('user_id'))
+                                                                                               			{
+                                                                                               				echo $user->id;}
+
+                                                                                               		?>">
                         </td>
                         <td>
-                            <?php echo ucfirst($user->firstname).'&nbsp;'.ucfirst($user->lastname);?>
+                            <?php echo ucfirst($user->firstname).'&nbsp;'.ucfirst($user->lastname); ?>
                         </td>
                         <td>
                             <a href="mailto:<?php echo $user->email; ?>"><?php echo $user->email; ?></a>
@@ -72,7 +80,7 @@
 				echo 'checked';
 			}
 
-?>>
+		?>>
                         </td>
                         <td class="text-center">
                             <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/').$user->id; ?> " class="text-slate" id="<?php echo $user->id; ?>" ><i class="icon-info3"></i></a>
@@ -81,8 +89,9 @@
                         </td>
                     </tr>
 <?php
-	   }
 	}
+	}
+
 ?>
                 </tbody>
             </table>

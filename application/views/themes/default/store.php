@@ -166,9 +166,9 @@
                 <div class="row">
                   <?php
 
-                  	foreach ($products as $product)
-                  	{
-                  	?>
+                    foreach ($products as $product)
+                    {
+                    ?>
                     <div class="col-sm-6 col-md-3 wow fadeInUp">
                       <div class="products">
                         <div class="product">
@@ -178,21 +178,21 @@
 
                            <?php
 
-                           		if ($product['is_sale'] == 1)
-                           		{
-                           		?>
+                                if ($product['is_sale'] == 1)
+                                {
+                                ?>
                                 <div class="tag sale"><span><?php _el('sale');?></span></div>
                                 <?php
-                                	}
+                                    }
 
-                                		if ($product['is_hot'] == 1)
-                                		{
-                                		?>
+                                        if ($product['is_hot'] == 1)
+                                        {
+                                        ?>
                                 <div class="tag hot"><span><?php _el('hot');?></span></div>
                                 <?php
-                                	}
+                                    }
 
-                                	?>
+                                    ?>
 
                           </div>
                           <!-- /.product-image -->
@@ -206,14 +206,14 @@
                           </div>
                           <!-- /.product-info -->
                           <?php
-                          	$disabled = '';
+                            $disabled = '';
 
-                          		if (!is_user_logged_in())
-                          		{
-                          			$disabled = ' disabled ';
-                          		}
+                                if (!is_user_logged_in())
+                                {
+                                    $disabled = ' disabled ';
+                                }
 
-                          	?>
+                            ?>
                           <div class="cart clearfix animate-effect">
                             <div class="action">
                               <ul class="list-unstyled">
@@ -235,7 +235,7 @@
                       <!-- /.products -->
                     </div>
                       <?php
-                      	}
+                        }
 
                       ?>
 
@@ -253,9 +253,9 @@
 
                 <?php
 
-                	foreach ($products as $product)
-                	{
-                	?>
+                    foreach ($products as $product)
+                    {
+                    ?>
                   <div class="category-product-inner wow fadeInUp">
                     <div class="products">
                       <div class="product-list product">
@@ -275,14 +275,14 @@
                               <!-- /.product-price -->
                               <div class="description m-t-10"><?php echo ucfirst($product['long_description']) ?></div>
                               <?php
-                              	$disabled = '';
+                                $disabled = '';
 
-                              		if (!is_user_logged_in())
-                              		{
-                              			$disabled = ' disabled ';
-                              		}
+                                    if (!is_user_logged_in())
+                                    {
+                                        $disabled = ' disabled ';
+                                    }
 
-                              	?>
+                                ?>
                               <div class="cart clearfix animate-effect">
                                 <div class="action">
                                   <ul class="list-unstyled">
@@ -304,21 +304,21 @@
                         <!-- /.product-list-row -->
                         <?php
 
-                        		if ($product['is_sale'] == 1)
-                        		{
-                        		?>
+                                if ($product['is_sale'] == 1)
+                                {
+                                ?>
                             <div class="tag sale"><span><?php _el('sale');?></span></div>
                             <?php
-                            	}
+                                }
 
-                            		if ($product['is_hot'] == 1)
-                            		{
-                            		?>
+                                    if ($product['is_hot'] == 1)
+                                    {
+                                    ?>
                             <div class="tag hot"><span><?php _el('hot');?></span></div>
                             <?php
-                            	}
+                                }
 
-                            	?>
+                                ?>
                       </div>
                       <!-- /.product-list -->
                     </div>
@@ -326,7 +326,7 @@
                   </div>
                   <!-- /.category-product-inner -->
                  <?php
-                 	}
+                    }
 
                  ?>
 

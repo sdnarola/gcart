@@ -4,8 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product_model extends MY_Model
 {
 	/**
+	<<<<<<< HEAD
 	 * @var mixed
+	=======
 	 * @var boolean
+	>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 	 */
 	protected $soft_delete = TRUE;
 
@@ -22,6 +25,7 @@ class Product_model extends MY_Model
 		parent::__construct();
 	}
 
+// =====================================================  WORK BY KOMAL ========================================================================================
 	/**
 	 * [get_products_by_slug description]
 	 * @param  string $products_slug [products slug]
@@ -49,25 +53,6 @@ class Product_model extends MY_Model
 		}
 	}
 
-	public function get_products($id)
-	{
-		$this->db->select('products.*,categories.name AS category_name,categories.is_active AS category_status');
-		$this->db->from('products');
-		$this->db->join('categories', 'products.category_id = categories.id');
-		$this->db->where('vendor_id', $id);
-		$query = $this->db->get();
-
-		return $query->result_array();
-	}
-
-	public function get_vendor_products($id)
-	{
-		$this->db->where('vendor_id', $id);
-
-		return $this->db->get('products')->num_rows();
-	}
-
-		
 	/**
 
 	 * [get_products_tags description]
@@ -76,11 +61,27 @@ class Product_model extends MY_Model
 	 *
 	 * @return [array]                           [products tags data]
 	 */
-	public function get_products_tags($where = array(), $multiple_sub_category_id = '')
+	public function get_products_tags($where = array(), $multiple_sub_category_id = '', $product_id = '')
 	{
 		if (empty($where))
 		{
 			return array();
+		}
+		elseif (empty($where) && !empty($product_id = ''))
+		{
+			$this->db->distinct();
+			$this->db->order_by('tags', 'asc');
+			$this->db->select('tags');
+			$this->db->where_in('products.id', $product_id);
+			$this->db->where(array('is_deleted' => 0, 'is_active' => 1));
+			$query = $this->db->get('products')->result_array();
+
+			if ($query)
+			{
+				return $query;
+			}
+
+			# code...
 		}
 		elseif (!empty($where) && !empty($multiple_sub_category_id))
 		{
@@ -114,126 +115,12 @@ class Product_model extends MY_Model
 	}
 
 	/**
-	 * [get_brands description]
-	 * @param  int $category_id    	              products categories forgeign Key
-	 * @param  int  $sub_category_id              products sub categories foreign key
-	 * @param  string $multiple_sub_category_id   multiple sub category id
-	 * @param  string $tags                       products Tags
-	 *
-	 * @return [array]
+	 * [get_hot_deals_data description]
+	 * @return hot deals data in array
 	 */
-	public function get_products_brands($category_id = '', $sub_category_id = '', $multiple_sub_category_id = '', $tags = '')
+	public function get_hot_deals_data()
 	{
-		if (!empty($category_id) && !empty($multiple_sub_category_id) && !empty($tags))
-		{
-			$this->db->distinct();
-			$this->db->order_by('name', 'asc');
-			$this->db->select('brands.*,products.category_id');
-			$this->db->from('brands');
-			$this->db->join('products', 'products.brand_id= brands.id', 'inner');
-			$this->db->like('products.tags', $tags, 'both');
-			$this->db->where_in('products.sub_category_id', $multiple_sub_category_id);
-			$this->db->where(array('products.is_active' => 1, 'products.is_deleted' => 0, 'brands.is_deleted' => 0, 'products.category_id' => $category_id));
-			$query = $this->db->get();
-
-			if ($query == TRUE)
-			{
-				return $query->result();
-			}
-		}
-		elseif (!empty($category_id) && !empty($tags))
-		{
-			$this->db->distinct();
-			$this->db->order_by('name', 'asc');
-			$this->db->select('brands.*,products.category_id');
-			$this->db->from('brands');
-			$this->db->join('products', 'products.brand_id= brands.id', 'inner');
-			$this->db->like('products.tags', $tags, 'both');
-			$this->db->where(array('products.is_active' => 1, 'products.is_deleted' => 0, 'brands.is_deleted' => 0, 'products.category_id' => $category_id));
-			$query = $this->db->get();
-
-			if ($query == TRUE)
-			{
-				return $query->result();
-			}
-		}
-		elseif (!empty($sub_category_id) && !empty($tags))
-		{
-			$this->db->distinct();
-			$this->db->order_by('name', 'asc');
-			$this->db->select('brands.*,products.category_id');
-			$this->db->from('brands');
-			$this->db->join('products', 'products.brand_id= brands.id', 'inner');
-			$this->db->like('products.tags', $tags, 'both');
-			$this->db->where_in('products.sub_category_id', $multiple_sub_category_id);
-			$this->db->where(array('products.is_active' => 1, 'products.is_deleted' => 0, 'brands.is_deleted' => 0, 'products.sub_category_id' => $sub_category_id));
-			$query = $this->db->get();
-
-			if ($query == TRUE)
-			{
-				return $query->result();
-			}
-		}
-		elseif (!empty($category_id) && !empty($multiple_sub_category_id))
-		{
-			$this->db->distinct();
-			$this->db->order_by('name', 'asc');
-			$this->db->select('brands.*,products.category_id');
-			$this->db->from('brands');
-			$this->db->join('products', 'products.brand_id= brands.id', 'inner');
-			$this->db->where_in('products.sub_category_id', $multiple_sub_category_id);
-			$this->db->where(array('products.is_active' => 1, 'products.is_deleted' => 0, 'brands.is_deleted' => 0, 'products.category_id' => $category_id));
-			$query = $this->db->get();
-
-			if ($query == TRUE)
-			{
-				return $query->result();
-			}
-		}
-		elseif (!empty($category_id) && !empty($sub_category_id))
-		{
-			$this->db->distinct();
-			$this->db->order_by('name', 'asc');
-			$this->db->select('brands.*,products.sub_category_id');
-			$this->db->from('brands');
-			$this->db->join('products', 'products.brand_id= brands.id', 'inner');
-			$this->db->where(array('products.is_active' => 1, 'products.is_deleted' => 0, 'brands.is_deleted' => 0, 'products.sub_category_id' => $sub_category_id, 'products.category_id' => $category_id));
-			$query = $this->db->get();
-
-			if ($query == TRUE)
-			{
-				return $query->result();
-			}
-		}
-		elseif (!empty($category_id))
-		{
-			$this->db->distinct();
-			$this->db->order_by('name', 'asc');
-			$this->db->select('brands.*,products.category_id');
-			$this->db->from('brands');
-			$this->db->join('products', 'products.brand_id= brands.id', 'inner');
-			$this->db->where(array('products.is_active' => 1, 'products.is_deleted' => 0, 'brands.is_deleted' => 0, 'products.category_id' => $category_id));
-			$query = $this->db->get();
-
-			if ($query == TRUE)
-			{
-				return $query->result();
-			}
-		}
-
-		return false;
-	}
-
-	public function get_whislist_products($product_id)
-	{
-// $start = ($page - 1) * 4;
-
-// $this->db->limit($limit, $start);
-
-// $sort = ($sort == 'name') ? $sort : 'price';
-		// $this->db->order_by($sort, $order);
-		$this->db->where_in('id', $product_id);
-		$query  = $this->db->get('products');
+		$query  = $this->db->get_where('hot_deals', array('is_deleted' => 0, 'end_date >' => date('Y-m-d h:i:s'), 'start_date <' => date('Y-m-d h:i:s')));
 		$result = $query->result_array();
 
 		if (empty($result))
@@ -401,6 +288,64 @@ class Product_model extends MY_Model
 		}
 	}
 
+	/**
+	 * [get_hot_deals_products description]
+	 * @return return Hote Deals products data
+	 */
+	public function get_hot_deals_products()
+	{
+		$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.product_id,hot_deals.type,hot_deals.value');
+		$this->db->from('products');
+		$this->db->join('hot_deals', 'products.id=hot_deals.product_id and products.quantity > 0', 'inner');
+		$this->db->where(array('products.is_deleted' => 0, 'products.is_active' => 1, 'hot_deals.is_deleted' => 0, 'hot_deals.end_date >' => date('Y-m-d h:i:s'), 'hot_deals.start_date <' => date('Y-m-d h:i:s')));
+		$query  = $this->db->get();
+		$result = $query->result_array();
+
+		if (empty($result))
+		{
+			return false;
+		}
+		else
+		{
+			return $result;
+		}
+	}
+
+	/**
+	 * [add_product_by_tags description]
+	 * @param [int] $product_id [products primary key]
+	 * @param [array] $data
+	 */
+	public function add_product_by_tags($product_id, $data)
+	{
+		$this->db->where('id', $product_id);
+		$this->db->update('products', $data);
+	}
+
+// ===================================================== END WORK BY KOMAL ========================================================================================
+
+//
+
+//
+	//
+	public function get_products($id)
+	{
+		$this->db->select('products.*,categories.name AS category_name,categories.is_active AS category_status');
+		$this->db->from('products');
+		$this->db->join('categories', 'products.category_id = categories.id');
+		$this->db->where('vendor_id', $id);
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+	public function get_vendor_products($id)
+	{
+		$this->db->where('vendor_id', $id);
+
+		return $this->db->get('products')->num_rows();
+	}
+
 // public function get_product_by_star_raring($product_id)
 
 // {
@@ -434,9 +379,6 @@ class Product_model extends MY_Model
 	public function get_all_reviews()
 	{
 		$this->db->select('product_id,AVG(star_ratings) as star_ratings', TRUE);
-		//$this->db->from('reviews ');
-		$this->db->group_by('product_id');
-		$this->db->where(array('is_deleted' => 0));
 		$this->db->from('reviews as r');
 		$this->db->group_by('product_id');
 		$query = $this->db->get();
@@ -457,7 +399,8 @@ class Product_model extends MY_Model
 		if (empty($id))
 		{
 			$this->db->order_by('add_date', 'des');
-			$query = $this->db->get_where('products', array('is_active' => 1,'is_deleted' =>0));
+
+			$query = $this->db->get_where('products', array('is_active' => 1));
 
 			if ($query)
 			{
@@ -469,8 +412,8 @@ class Product_model extends MY_Model
 		else
 		{
 			$this->db->order_by('add_date', 'des');
-			$query = $this->db->get_where('products', array('is_active' => 1,'is_deleted'=>0, 'category_id' => $id));
 
+			$query = $this->db->get_where('products', array('is_active' => 1, 'category_id' => $id));
 
 			if ($query)
 			{
@@ -482,31 +425,6 @@ class Product_model extends MY_Model
 	}
 
 	/**
-	 * [get_hot_deals_products description]
-	 * @return return Hote Deals products data
-	 */
-	public function get_hot_deals_products()
-	{
-		$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.off_percentage');
-	  //$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.product_id');
-		$this->db->from('products');
-		$this->db->join('hot_deals', 'products.id=hot_deals.product_id', 'inner');
-		$this->db->where(array('products.is_deleted' => 0, 'products.is_active' => 1, 'hot_deals.is_deleted' => 0, 'hot_deals.end_date >' => date('Y-m-d h:i:s'), 'hot_deals.start_date <' => date('Y-m-d h:i:s')));
-		
-		$query  = $this->db->get();
-		$result = $query->result_array();
-
-		if (empty($result))
-		{
-			return false;
-		}
-		else
-		{
-			return $result;
-		}
-	}
-
-	/**
 	 * [get_special_offers description]
 	 * @return [type] [description]
 	 */
@@ -514,7 +432,7 @@ class Product_model extends MY_Model
 	{
 		$this->db->order_by('add_date', 'des');
 
-		$query = $this->db->get_where('products', array('is_active' => 1, 'is_deleted' => 0, 'is_sale' => 1));
+		$query = $this->db->get_where('products', array('is_active' => 1, 'is_sale' => 1));
 
 		if ($query)
 		{
@@ -560,59 +478,6 @@ class Product_model extends MY_Model
 		return false;
 	}
 
-	/**
-	 * [add_to_cart description]
-	 * @param [array] $data [data value]
-	 */
-	public function add_to_cart($data)
-	{
-		$this->db->insert('cart', $data);
-	}
-
-
-	public function add_product_by_tags($product_id, $data)
-	{
-		$this->db->where('id', $product_id);
-		$this->db->update('products', $data);
-	}
-
-	/**
-	 * [count_products_review description]
-	 * @param  [int] $product_id  reviews products table forgein key
-	 *
-	 * @return boolean            query is true return review data in array
-	 */
-	public function count_products_review($product_id)
-	{
-		$query = $this->db->get_where('reviews', array('product_id' => $product_id, 'is_deleted' => 0));
-
-		if ($query == TRUE)
-		{
-			return $query->num_rows();
-		}
-
-		return false;
-	}
-
-
-	/**
-	 * [get_wishlist_data description]
-	 * @return [boolean] query is true return wish List data in array
-	 */
-	public function get_wishlist_data($user_id)
-	{
-		$this->db->select('product_id');
-		$query = $this->db->get_where('wishlist', array('is_deleted' => 0, 'user_id' => $user_id));
-
-		if ($query == TRUE)
-		{
-			return $query->result();
-		}
-
-		return false;
-	}
-
-
 /**
  * [get_best_sellers description]
  * @return [type] [description]
@@ -643,7 +508,7 @@ class Product_model extends MY_Model
 		$this->db->distinct();
 		$this->db->select('p.*');
 		$this->db->from('products as p');
-		$this->db->where(array('is_active' => 1,'is_deleted'=> 0,'short_description !=' => ''));
+		$this->db->where(array('is_active' => 1, 'short_description !=' => ''));
 		//$this->db->where('long_description !=', '');
 		$query = $this->db->get();
 
@@ -653,17 +518,6 @@ class Product_model extends MY_Model
 		}
 
 		return false;
-	}
-
-	/**
-	 * [add_wishlist_products description]
-	 * @param [array] $data [data value]
-	 */
-	public function add_wishlist_products($data)
-	{
-		$query = $this->db->insert('wishlist', $data);
-
-		return $query;
 	}
 
 /**
@@ -676,146 +530,145 @@ class Product_model extends MY_Model
 		$this->db->order_by('tags', 'asc');
 		$this->db->select('id,tags');
 		$this->db->limit(6);
-		$this->db->where(array('is_active' => 1, 'is_deleted' => 0));
 		$result = $this->db->get('products')->result_array();
 
 		return $result;
 	}
 
-/**
- * [autocomplete by product name or tags in search ]
- * @param  [type] $query [description]
- * @return [type]        [description]
- */
- public function autocomplete($query)
- {
-  $this->db->distinct();
-  $this->db->select("name,tags,slug");
-  $this->db->from("products");
-  if($query != '')
-  {
-   $this->db->like('name', $query,'both');
-   $this->db->or_like('tags', $query,'both');
-   $this->db->or_like('slug', $query,'both');  
-  }
-  $this->db->order_by('name', 'DESC');
-  return $this->db->get();
- // $query=$this->db->get();
- // return $query->result_array();
+	/**
+	 * [autocomplete by product name or tags in search ]
+	 * @param  [type] $query [description]
+	 * @return [type]        [description]
+	 */
+	public function autocomplete($query)
+	{
+		$this->db->distinct();
+		$this->db->select('name,tags,slug');
+		$this->db->from('products');
 
- }
+		if ($query != '')
+		{
+			$this->db->like('name', $query, 'both');
+			$this->db->or_like('tags', $query, 'both');
+			$this->db->or_like('slug', $query, 'both');
+		}
 
-     /**
+		$this->db->order_by('name', 'DESC');
+
+		return $this->db->get();
+
+// $query=$this->db->get();
+		// return $query->result_array();
+	}
+
+	/**
 	 * [search category or product or brand]
 	 * @param  [type] $name [description]
 	 * @return [type]       [description]
 	 */
-	public function search($category_id='', $name = '')
-	{	
-
-		 //search by category
-	    if(!empty($category_id && empty($name)))
-	    {
-	    	$this->db->select('c.slug as cat_slug', TRUE);
-			$this->db->from('products as p');
-	    	$this->db->join('categories as c', ' c.id=p.category_id');
-	    	$this->db->where(array('c.is_active' => 1,'c.is_deleted' => 0, 'p.category_id' => $category_id));
-			$query = $this->db->get();
-			$result= $query->result_array();
-			return $result;
-
-	    }
-
-		if(!empty($category_id) && !empty($name) )
-		{	
-				$this->db->distinct();
-				$this->db->select('s.slug as sub_cat_slug,c.slug as cat_slug', TRUE);
-				$this->db->from('products as p');
-				$this->db->join('categories as c', ' c.id=p.category_id');
-				$this->db->join('sub_categories as s', ' s.category_id=c.id');
-				$this->db->like('s.name', $name, 'both');
-				$this->db->where(array('c.is_active' => 1,'c.is_deleted' => 0, 'p.category_id' => $category_id));
-
-				$query = $this->db->get();
-				$result= $query->result_array();
-		
-			//search subcategory
-			if(empty($result))
-			{
-			$this->db->distinct();
-			$this->db->select('p.slug as product_slug', TRUE);
+	public function search($category_id = '', $name = '')
+	{
+//search by category
+		if (!empty($category_id && empty($name)))
+		{
+			$this->db->select('c.slug as cat_slug', TRUE);
 			$this->db->from('products as p');
 			$this->db->join('categories as c', ' c.id=p.category_id');
-			$this->db->join('brands as b', ' p.brand_id=b.id ');
+			$this->db->where(array('c.is_active' => 1, 'c.is_deleted' => 0, 'p.category_id' => $category_id));
+			$query  = $this->db->get();
+			$result = $query->result_array();
 
-			$this->db->like('p.name', $name, 'both');
-			$this->db->or_like('p.tags', $name, 'both');
-			$this->db->or_like('b.name', $name, 'both');
-
-			$this->db->where(array('c.is_active' => 1,'c.is_deleted' => 0));
-
-			$query = $this->db->get();
-			$result= $query->result_array();
 			return $result;
-							//var_dump($result);
+		}
 
+		if (!empty($category_id) && !empty($name))
+		{
+			$this->db->distinct();
+			$this->db->select('s.slug as sub_cat_slug,c.slug as cat_slug', TRUE);
+			$this->db->from('products as p');
+			$this->db->join('categories as c', ' c.id=p.category_id');
+			$this->db->join('sub_categories as s', ' s.category_id=c.id');
+			$this->db->like('s.name', $name, 'both');
+			$this->db->where(array('c.is_active' => 1, 'c.is_deleted' => 0, 'p.category_id' => $category_id));
+
+			$query  = $this->db->get();
+			$result = $query->result_array();
+
+//search subcategory
+			if (empty($result))
+			{
+				$this->db->distinct();
+				$this->db->select('p.slug as product_slug', TRUE);
+				$this->db->from('products as p');
+				$this->db->join('categories as c', ' c.id=p.category_id');
+				$this->db->join('brands as b', ' p.brand_id=b.id ');
+
+				$this->db->like('p.name', $name, 'both');
+				$this->db->or_like('p.tags', $name, 'both');
+				$this->db->or_like('b.name', $name, 'both');
+
+				$this->db->where(array('c.is_active' => 1, 'c.is_deleted' => 0));
+
+				$query  = $this->db->get();
+				$result = $query->result_array();
+
+				return $result;
+				//var_dump($result);
 			}
 			else
 			{
 				return $result;
-
 			}
-			
+		}
 
-	    }
-	   
-	    if(empty($category_id) && !empty($name))
-	    {
-	    	$this->db->distinct();
+		if (empty($category_id) && !empty($name))
+		{
+			$this->db->distinct();
 			$this->db->select('s.slug as sub_cat_slug,c.slug as cat_slug', TRUE);
 			$this->db->from('products as p');
 			$this->db->join('categories as c', ' c.id=p.category_id');
 			$this->db->join('sub_categories as s', ' s.category_id=c.id');
 			$this->db->like('s.name', $name, 'both');
 
-			$query = $this->db->get();
-			$result= $query->result_array();
-		
-			//search subcategory
-			if(empty($result))
+			$query  = $this->db->get();
+			$result = $query->result_array();
+
+//search subcategory
+			if (empty($result))
 			{
-	    	$this->db->select('p.slug as product_slug,p.id', TRUE);
-			$this->db->from('products as p');
-			$this->db->join('brands as b', ' p.brand_id=b.id ');
+				$this->db->select('p.slug as product_slug,p.id', TRUE);
+				$this->db->from('products as p');
+				$this->db->join('brands as b', ' p.brand_id=b.id ');
 
-	    	$this->db->like('p.name', $name, 'both');
-	    	$this->db->or_like('p.tags', $name, 'both');
-	    	$this->db->or_like('b.name', $name,'both');
+				$this->db->like('p.name', $name, 'both');
+				$this->db->or_like('p.tags', $name, 'both');
+				$this->db->or_like('b.name', $name, 'both');
 
-			$this->db->where(array('p.is_active' => 1,'p.is_deleted' => 0));
+				$this->db->where(array('p.is_active' => 1, 'p.is_deleted' => 0));
 
-			$query = $this->db->get();
-			$result= $query->result_array();
-			return $result;
-		   }
-		   else
+				$query  = $this->db->get();
+				$result = $query->result_array();
+
+				return $result;
+			}
+			else
 			{
 				return $result;
-
 			}
-		
-	    }
-	    if(empty($category_id) && empty($name))
-	    {
-	    	$this->db->select('p.slug as product_slug', TRUE);
+		}
+
+		if (empty($category_id) && empty($name))
+		{
+			$this->db->select('p.slug as product_slug', TRUE);
 			$this->db->from('products as p');
-	        $this->db->where(array('p.is_active' => 1,'p.is_deleted' => 0));
+			$this->db->where(array('p.is_active' => 1, 'p.is_deleted' => 0));
 
-			$query = $this->db->get();
-			$result= $query->result_array();
+			$query  = $this->db->get();
+			$result = $query->result_array();
+
 			return $result;
-	    }
-
+		}
 	}
+
 	//======================================================code end by vixuti patel========================================================//
 }

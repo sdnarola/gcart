@@ -74,21 +74,6 @@ function get_vendor_info($id, $info = '')
 	}
 }
 
-/**
- * Get Vendor's information by field.
- * @param  string 		$field 		Field name.
- * @return mixed        			vendor's information.
- */
-function get_vendor_by($data)
-{
-	$CI = &get_instance();
-	$CI->load->model('vendor_model', 'vendors');
-
-	$vendor = $CI->vendors->get_by($data);
-
-	return $vendor;
-}
-
 // =========================== Bhavik ==================================//
 
 /**
@@ -131,9 +116,9 @@ function expire_subscription($id)
 	$date1           = get_vendor_info($id, 'subscribe_date');
 	$days            = get_subscription_info($subscription_id, 'days');
 	//calculate expire date of subscription
-	$date = new DateTime($date1);
-	$day  = 'P'.$days.'D';
-
+	$date     = new DateTime($date1);
+	$day      = 'P'.$days.'D';
+	
 	$exp_date = $date->add(new DateInterval($day));
 	$exp      = $exp_date->format('Y-m-d H:i:s');
 

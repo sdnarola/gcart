@@ -40,13 +40,13 @@ class Review_model extends MY_Model
 
 		return $result;
 	}
-
+// ================================================ WORK BY KOMAL ================================================================================
 	/**
 	 * [get_products_by_review description]
 	 * @param  [int] $products_id [products id]
 	 * @return [array]             products review
 	 */
-	public function get_products_by_review($where = array())
+	public function get_products_by_review($where = array(),$limit=1,$start=0)
 	{
 		if (empty($where))
 		{
@@ -55,6 +55,9 @@ class Review_model extends MY_Model
 		else
 		{
 			$this->db->where($where);
+			
+			$this->db->limit($limit, $start);
+			$this->db->order_by('add_date','desc');
 			$query  = $this->db->get_where('reviews', array('is_deleted' => 0));
 			$result = $query->result_array();
 
@@ -69,6 +72,29 @@ class Review_model extends MY_Model
 		}
 	}
 
+	/**
+	 * [count_products_review description]
+	 * @param  [int] $product_id  reviews products table forgein key
+	 *
+	 * @return boolean            query is true return review data in row array
+	 */
+	public function count_products_review($product_id)
+	{
+		$query = $this->db->get_where('reviews', array('product_id' => $product_id, 'is_deleted' => 0));
+
+		if ($query == TRUE)
+		{
+			return $query->num_rows();
+		}
+
+		return false;
+	}
+
+	/**
+	 * [get_products_star_rating description]
+	 * @param  [int] $product_id  reviews products table forgein key
+	 * @return boolean            query is true return star data in row array
+	 */
 	public function get_products_star_rating($product_id)
 	{
 			$this->db->select('AVG(star_ratings) AS star');
@@ -85,4 +111,5 @@ class Review_model extends MY_Model
 				return $result['star'];
 			}
 	}	
+	// ================================================ WORK BY KOMAL ================================================================================
 }
