@@ -1,6 +1,6 @@
 <?php
-    defined('BASEPATH') OR exit('No direct script access allowed');
-   
+	defined('BASEPATH') OR exit('No direct script access allowed');
+
 ?>
 <div class="breadcrumb">
     <div class="container">
@@ -18,11 +18,11 @@
             <div class="shopping-cart">
                 <div class="shopping-cart-table ">
                     <?php
-                        $grand_total = 0;
+                    	$grand_total = 0;
 
-                        if (!empty($cart_items))
-                        {
-                        ?>
+                    	if (!empty($cart_items))
+                    	{
+                    	?>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -37,17 +37,18 @@
                                 </thead><!-- /thead -->
                                 <tbody>
                                     <?php
-                                            foreach ($cart_items as $cart_item)
-                                            {
-                                            ?>
+
+                                    		foreach ($cart_items as $cart_item)
+                                    		{
+                                    		?>
                                         <tr id="main_cart-<?php echo $cart_item['id']; ?>">
-                                            <td class="cart-image">
+                                            <td class="cart-image" id="cart-image" data-id="<?php echo $cart_item['id']; ?>">
                                                 <a class="entry-thumbnail" href="<?php echo base_url().get_product($cart_item['product_id'], 'thumb_image') ?>" target="_blank" >
                                                     <img src="<?php echo base_url().get_product($cart_item['product_id'], 'thumb_image') ?>" alt="">
                                                 </a>
                                             </td>
                                             <td class="cart-product-name-info text-center">
-                                                <h4 class='cart-product-description'><a href="detail.html"><?php echo ucwords(get_product($cart_item['product_id'], 'name')); ?></a></h4>
+                                                <h4 class='cart-product-description'><a href=""><?php echo ucwords(get_product($cart_item['product_id'], 'name')); ?></a></h4>
                                             </td>
                                             <td class="cart-product-quantity">
                                                 <div class="quant-input">
@@ -60,13 +61,15 @@
 
                                                 </div>
                                                  <?php
-                                                    if($cart_item['quantity'] > get_product($cart_item['product_id'], 'quantity'))
-                                                    {
-                                                ?>
+
+                                                 			if ($cart_item['quantity'] > get_product($cart_item['product_id'], 'quantity'))
+                                                 			{
+                                                 			?>
                                                  <span style="display: block;color: red; font-size: 10px;font-weight: bold;"><?php _el('not_available')?></span>
                                                  <?php
-                                                     }
-                                                 ?>
+                                                 	}
+
+                                                 		?>
                                             </td>
                                             <td class="cart-product-sub-total">
                                                 <span class="cart-sub-total-price" id="price_<?php echo $cart_item['id'] ?>">
@@ -83,28 +86,29 @@
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
                                             </td>
-                                            <?php 
-                                            if($cart_item['quantity'] <= get_product($cart_item['product_id'], 'quantity'))
-                                            {
+                                            <?php
 
-                                            $grand_total = $grand_total + (get_product($cart_item['product_id'], 'price')) * ($cart_item['quantity']);
-                                            }
-                                            ?>
+                                            			if ($cart_item['quantity'] <= get_product($cart_item['product_id'], 'quantity'))
+                                            			{
+                                            				$grand_total = $grand_total + (get_product($cart_item['product_id'], 'price')) * ($cart_item['quantity']);
+                                            			}
+
+                                            		?>
                                         </tr>
-                                       
-                                        <?php
-                                          
-                                            }
 
-                                            ?>
+                                        <?php
+                                        	}
+
+                                        	?>
                                 </tbody><!-- /tbody -->
                             </table><!-- /table -->
                         </div>
                     </div><!-- /.shopping-cart-table -->
 <?php
-                     if($grand_total != 0)
-                    {
-?>
+
+		if ($grand_total != 0)
+		{
+		?>
                     <div class="col-md-6 col-sm-12 estimate-ship-tax">
                         <table class="table">
                             <thead>
@@ -147,7 +151,7 @@
                                 <tr>
                                     <td>
                                         <div class="cart-checkout-btn pull-right">
-                                               <button type="button" class="btn btn-primary checkout-btn" onclick="checkcout();"><?php _el('procced_to_checkout');?></button> 
+                                               <button type="button" class="btn btn-primary checkout-btn" onclick="checkcout();"><?php _el('procced_to_checkout');?></button>
                                         </div>
                                     </td>
                                 </tr>
@@ -155,23 +159,23 @@
                         </table><!-- /table -->
                     </div><!-- /.cart-shopping-total -->
                     <?php }
-                    ?>
+
+                    	?>
                 </div><!-- /.shopping-cart -->
     <?php
-        }
-        else
-        {
-            ?>
+    	}
+    	else
+    	{
+    	?>
             <div class="text-center">
                 <div ><b><?php _el('your_car_is_empty')?></b></div>
                 <div><p><?php _el('cart_empty_msg')?></p></div>
-                <div ><a href="<?= site_url() ."Home"; ?>" class="btn btn-primary"><?php _el('shop_now')?></a></div>
+                <div ><a href="<?php echo site_url().'Home';?>" class="btn btn-primary"><?php _el('shop_now')?></a></div>
             </div>
             <?php
-            
-        }
+            	}
 
-    ?>
+            ?>
         </div> <!-- /.row -->
     </div><!-- /.container -->
 </div><!-- /.body-content -->
@@ -220,7 +224,7 @@ function checkcout()
 //                         {
 //                              var wishlist_empty_title = "<?php _el('your_car_is_empty')?>";
 //                             var wishlist_empty_msg   = "<?php _el('cart_empty_msg')?>";
-//                             var url                  = "<?= site_url() ."Home"; ?>";
+//                             var url                  = "<?php echo site_url().'Home';?>";
 //                             var shop_now             = "<?php _el('shop_now')?>";
 
 //                             var div="<div class='text-center'><div ><b>"+wishlist_empty_title+"</b></div><div><p >"+wishlist_empty_msg+"</p></div><div ><a href='"+url+"' class='btn btn-primary'>"+shop_now+"</a></div></div>"
@@ -234,7 +238,7 @@ function checkcout()
 //                                 $(".sub-total").text("");
 //                         }
 
-                       
+
 //                     }
 //                     else
 //                     {
@@ -300,9 +304,11 @@ function apply_coupon(grand_total)
  */
 function update_cart(obj)
 {
-    var id          = obj.closest('tr').id;
+    var id          = $('#cart-image').attr('data-id');
+    // var id          = obj.closest('tr').id;
     var quantity    = parseInt(obj.value);
     var stock       = parseInt($('#stock_'+id).val());
+
 
     if(quantity > stock)
     {
@@ -315,6 +321,8 @@ function update_cart(obj)
     {
         var price       = $('#price_' + id).text();
         var sub_total   = parseFloat(quantity * price).toFixed(2);
+
+
 
         $.ajax({
                 url: BASE_URL + 'cart/edit',

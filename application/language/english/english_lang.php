@@ -74,7 +74,7 @@ $lang['logout']           = 'Log Out';
 $lang['signup']           = 'Sign Up';
 $lang['registration']     = 'Registration';
 $lang['update']           = 'Update';
-$lang['my_account'] = 'My Account';
+$lang['my_account']       = 'My Account';
 
 #Dashboard
 #---------
@@ -106,6 +106,7 @@ $lang['img_alt_msg']      = "profile image can't loaded";
 $lang['address_1']        = 'Address_1';
 $lang['address_2']        = 'Address_2';
 $lang['contact_no']       = 'Contact No';
+$lang['mobile']           = 'Mobile No';
 
 #vendors
 #-------
@@ -213,6 +214,7 @@ $lang['products_ordered'] = 'Products Ordered';
 $lang['payment_method']   = 'Payment Method';
 $lang['payment_status']   = 'Payment Status';
 $lang['billing_details']  = 'Billing Details';
+$lang['rs_symbol']        = '<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>';
 
 #Projects
 #--------
@@ -339,23 +341,24 @@ $lang['years']   = 'years';
 
 #Frontend Home page
 #-------------------------
-$lang['all'] = 'All';
-$lang['sale'] = 'SALE';
-$lang['my_profile'] = 'My profile';
-$lang['my_cart'] = 'My Cart';
-$lang['Login'] ='Login';
-$lang['Sell'] = 'Sell';
-$lang['Checkout'] = 'Checkout';
-$lang['Product_tags'] = 'Product tags';
-$lang['special_deals'] = 'Special Deals';
-$lang['shop_now'] = 'Shop Now';
-$lang['money_back'] = 'money back';
-$lang['free_shipping'] ='free shipping';
-$lang['special_sale'] = 'Special Sale';
-$lang['new_product'] = 'New Products';
-$lang['best_seller'] = 'Best seller';
-$lang['extra_$5_off_on_all_items'] = 'Extra $5 off on all items';
-$lang['shipping_on_orders_over_$99'] = 'Shipping on orders over $99';
+
+$lang['all']                          = 'All';
+$lang['sale']                         = 'SALE';
+$lang['my_profile']                   = 'My profile';
+$lang['my_cart']                      = 'My Cart';
+$lang['Login']                        = 'Login';
+$lang['Sell']                         = 'Sell';
+$lang['Checkout']                     = 'Checkout';
+$lang['Product_tags']                 = 'Product tags';
+$lang['special_deals']                = 'Special Deals';
+$lang['shop_now']                     = 'Shop Now';
+$lang['money_back']                   = 'money back';
+$lang['free_shipping']                = 'free shipping';
+$lang['special_sale']                 = 'Special Sale';
+$lang['new_product']                  = 'New Products';
+$lang['best_seller']                  = 'Best seller';
+$lang['extra_$5_off_on_all_items']    = 'Extra $5 off on all items';
+$lang['shipping_on_orders_over_$99']  = 'Shipping on orders over $99';
 $lang['30_Days_Money_Back_Guarantee'] = '30 Days Money Back Guarantee';
 
 #Forntend category page
@@ -454,7 +457,7 @@ $lang['cash_on_delivery']  = 'Cash On Delivery';
 $lang['order_summary']     = 'Order summary :';
 $lang['item_sub_total']    = 'Item(s) Subtotal :';
 $lang['shipping']          = 'Shipping :';
-$lang['total']             = 'Total :';
+$lang['total']             = 'Total';
 $lang['promotion_applied'] = 'Promotion Applied :';
 $lang['grand_total']       = 'Grand Total :';
 $lang['confirm_order']     = 'Confirm Order';

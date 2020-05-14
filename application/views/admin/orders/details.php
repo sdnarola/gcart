@@ -44,8 +44,34 @@
                                     <td width="40%" class="text-semibold"><?php _el('total_products');?></td><td width="10%">:</td><td width="40%"><?php echo $order['total_products']; ?></td>
                                 </tr>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('grand_total');?></td><td width="10%">:</td><td width="40%"><?php echo '&#8377;'.'. '.$order['grand_total']; ?></td>
+                                    <td width="40%" class="text-semibold"><?php _el('grand_total');?></td><td width="10%">:</td><td width="40%"><?php echo '<i class="fa fa-inr"></i>'.'. '.$order['grand_total']; ?></td>
                                 </tr>
+                                <?php
+
+                                	if ($order['coupon_id'] != null)
+                                	{
+                                		$coupon = get_coupon_info($order['coupon_id']);
+                                		$code   = $coupon['code'];
+
+                                		if ($coupon['type'] == 1)
+                                		{
+                                			$discount = $order['grand_total'] * ($coupon['amount'] / 100);
+                                			$total    = $order['grand_total'] - $discount;
+                                		}
+                                		else
+                                		{
+                                			$discount = $coupon['amount'];
+                                			$total    = $order['grand_total'] - $coupon['amount'];
+                                		}
+
+                                	?>
+                                    <tr>
+                                        <td width="40%" class="text-semibold"><?php _el('coupon');?></td><td width="10%">:</td><td width="40%"><?php echo $coupon['code']; ?></td>
+                                    </tr>
+                                        <?php
+                                        	}
+
+                                        ?>
                                 <tr>
                                     <td width="40%" class="text-semibold"><?php _el('order_date');?></td><td width="10%">:</td><td width="40%"><?php echo date('jS F Y  h:i:s A', strtotime($order['order_date'])); ?></td>
                                 </tr>
@@ -95,7 +121,7 @@
                                         <td width="40%" class="text-semibold"><?php _el('mobile_no');?></td><td width="10%">:</td><td width="40%"><a href="tel:<?php echo $user['mobile']; ?>"><?php echo $user['mobile']; ?></a></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['address_1'].', '.$address['address_2']); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['house_or_village'].', '.$address['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['city']); ?></td>
@@ -136,9 +162,9 @@
     <tr>
         <td><?php echo ucwords($item['name']); ?></td>
         <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'shop_name')); ?></td>
-        <td><?php echo '&#8377;'.'. '.$item['price']; ?></td>
+        <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$item['price']; ?></td>
         <td><?php echo $item['item_quantity']; ?></td>
-        <td><?php echo '&#8377;'.'. '.$item['total_amount']; ?></td>
+        <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$item['total_amount']; ?></td>
         <td class="text-center">
             <?php
 
@@ -165,7 +191,6 @@
 
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
@@ -175,4 +200,4 @@
         </div>
     </div>
 </div>
-<!-- /Content area
+<!-- /Content area --!

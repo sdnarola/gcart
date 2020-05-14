@@ -77,7 +77,7 @@
 
                     			if ($deal['type'] == 0)
                     			{
-                    				echo '&#8377;'.'. '.$deal['value'];
+                    				echo '<i class="fa fa-inr"></i>'.'. '.$deal['value'];
                     			}
                     			else
                     			{

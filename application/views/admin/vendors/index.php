@@ -44,11 +44,11 @@
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                         </th>
-                        <th width="20%" ><?php _el('store');?>&nbsp<?php _el('name');?></th>
-                        <th width="15%" ><?php _el('vendor');?>&nbsp<?php _el('name');?></th>
-                        <th width="15%" ><?php _el('vendor');?>&nbsp<?php _el('email');?></th>
-                        <th width="15%" ><?php _el('shop');?>&nbsp<?php _el('number');?></th>
-                        <th width="15%" ><?php _el('total');?>&nbsp<?php _el('products');?></th>
+                        <th width="20%" ><?php _el('store');?>&nbsp;<?php _el('name');?></th>
+                        <th width="15%" ><?php _el('vendor');?>&nbsp;<?php _el('name');?></th>
+                        <th width="15%" ><?php _el('vendor');?>&nbsp;<?php _el('email');?></th>
+                        <th width="15%" ><?php _el('shop');?>&nbsp;<?php _el('number');?></th>
+                        <th width="15%" ><?php _el('total');?>&nbsp;<?php _el('products');?></th>
                         <th width="8%" class="text-center"><?php _el('status');?></th>
                         <th width="10%" class="text-center"><?php _el('actions');?></th>
                     </tr>

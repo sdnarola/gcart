@@ -23,23 +23,24 @@ class Categories extends Frontend_Controller
 //check if category slug is there
 		//
 
-		$category                = array();
-		$sub_category            = array();
-		$products                = array();
-		$list_container          = $this->input->get('list-container');
-		$list_container          = (empty($list_container)) ? '' : $list_container;
-		$page                    = $this->input->get('page');
-		$page                    = (empty($page)) ? 1 : $page;
-		$limit                   = 4;
-		$total                   = 0;
-		$sort                    = $this->input->get('sort');
-		$sort                    = (empty($sort)) ? 'name' : $sort;
-		$order                   = $this->input->get('order');
-		$order                   = (empty($order)) ? 'asc' : $order;
-		$tags                    = $this->input->get('tags');
-		$tags                    = (empty($tags)) ? '' : $tags;
-		$manufacture             = $this->input->get('manufacture');
-		$manufacture             = (empty($manufacture)) ? '' : $manufacture;
+		$category       = array();
+		$sub_category   = array();
+		$products       = array();
+		$list_container = $this->input->get('list-container');
+		$list_container = (empty($list_container)) ? '' : $list_container;
+		$page           = $this->input->get('page');
+		$page           = (empty($page)) ? 1 : $page;
+		$limit          = 4;
+		$total          = 0;
+		$sort           = $this->input->get('sort');
+		$sort           = (empty($sort)) ? 'name' : $sort;
+		$order          = $this->input->get('order');
+		$order          = (empty($order)) ? 'asc' : $order;
+		$tags           = $this->input->get('tags');
+		$tags           = (empty($tags)) ? '' : $tags;
+		$manufacture_id = $this->input->get('manufacture');
+
+		$manufacture             = (empty($manufacture_id)) ? '' : $manufacture_id;
 		$multiple_subcategory    = $this->input->get('subcategory');
 		$multiple_subcategory    = (empty($multiple_subcategory)) ? '' : $multiple_subcategory;
 		$pricerange              = $this->input->get('pricerange');
@@ -61,18 +62,21 @@ class Categories extends Frontend_Controller
 
 			//get the products now
 			$where['category_id']                                  = $category['id'];
+			$max_min_where['category_id']                          = $category['id'];
 			$brands_where['category_id']                           = $category['id'];
 			$shop_sub_category_where['sub_categories.category_id'] = $category['id'];
 
 			if (!empty($sub_category_slug))
 			{
-				$where['sub_category_id']        = $sub_category['id'];
-				$brands_where['sub_category_id'] = $sub_category['id'];
+				$where['sub_category_id']         = $sub_category['id'];
+				$max_min_where['sub_category_id'] = $sub_category['id'];
+				$brands_where['sub_category_id']  = $sub_category['id'];
 			}
 
 			if (!empty($manufacture))
 			{
 				$where['brand_id']                            = $manufacture;
+				$max_min_where['brand_id']                    = $manufacture;
 				$shop_sub_category_where['products.brand_id'] = $manufacture;
 			}
 
@@ -110,7 +114,7 @@ class Categories extends Frontend_Controller
 			}
 
 			$this->data['products_tags'] = $products_tags;
-			$default_min_max             = $this->products->get_all_products_min_max($where, $tags, $multiple_subcategory_id);
+			$default_min_max             = $this->products->get_all_products_min_max($max_min_where, $tags, $multiple_subcategory_id);
 			$total                       = $this->products->get_all_products_count($where, $tags, $multiple_subcategory_id);
 			$products                    = $this->products->get_all_products($where, $page, $limit, $sort, $order, $tags, $multiple_subcategory_id);
 		}
