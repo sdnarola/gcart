@@ -17,6 +17,7 @@
 <link href="<?php echo base_url('assets/admin/css/core.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/components.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/colors.css'); ?>" rel="stylesheet" type="text/css">
+<link href="<?php echo base_url('assets/themes/default/css/font-awesome.css'); ?> " rel="stylesheet" type="text/css">
 <!-- /global stylesheets -->
 
 <style type="text/css">

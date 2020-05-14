@@ -34,7 +34,7 @@
       <table id="products_table" class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th width="2%" class="text-center">
+            <th width="2%">
               <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
             </th>
             <th width="20%"><?php _el('name');?></th>
@@ -60,7 +60,7 @@
                 <td><?php echo ucwords(get_category($product['category_id'], 'name')); ?></td>
                 <td><?php echo ucwords(get_sub_category($product['sub_category_id'], 'name')); ?></td>
                 <td><?php echo ucwords(get_brand($product['brand_id'], 'name')); ?></td>
-                <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$product['price']; ?></td>
+                <td><?php echo '&#8377;'.'. '.$product['price']; ?></td>
                 <td class="text-center switchery-sm">
                     <input type="checkbox" onchange="change_status(this);" class="switchery"  id="<?php echo $product['id']; ?>"
 <?php

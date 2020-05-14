@@ -78,7 +78,7 @@
 
         						if ($coupon['type'] == 0)
         						{
-        							echo '<i class="fa fa-inr"></i>'.'. '.$coupon['amount'];
+        							echo '&#8377;'.'. '.$coupon['amount'];
         						}
         						else
         						{

@@ -5,6 +5,7 @@
 #=============================================
 #General
 #-------
+
 $lang['welcome']           = 'Welcome';
 $lang['add']               = 'Add';
 $lang['add_new']           = 'Add New';
@@ -26,10 +27,6 @@ $lang['old_price']         = 'Old Price';
 $lang['new_price']         = 'New Price';
 $lang['active']            = 'Active';
 $lang['inactive']          = 'Inactive';
-$lang['checkout']          = 'CheckOut';
-$lang['discount_code']     = 'Discount Code';
-$lang['price']             = 'Price';
-$lang['old_price']         = 'Old Price';
 $lang['description']       = 'Description';
 $lang['short_description'] = 'Short Description';
 $lang['long_description']  = 'Long Description';
@@ -38,7 +35,6 @@ $lang['quantity']          = 'Quantity';
 $lang['related_products']  = 'Related Products';
 $lang['created_at']        = 'Created at';
 $lang['actions']           = 'Actions';
-$lang['apply']             = 'Apply';
 $lang['confirm']           = 'Confirm';
 $lang['save']              = 'Save';
 $lang['digits']            = 'Digits';
@@ -47,11 +43,7 @@ $lang['close']             = 'Close';
 $lang['no_cancel_it']      = 'No, Cancel It';
 $lang['yes_i_am_sure']     = 'Yes, I am sure';
 $lang['click_to_sort']     = 'Click to sort';
-$lang['shopping_cart']     = 'Shopping Cart';
-$lang['cart']              = 'Cart';
 $lang['number']            = 'Number';
-$lang['total']             = 'Total';
-$lang['sub_total']         = 'Sub Total';
 $lang['view']              = 'View';
 $lang['create']            = 'Create';
 $lang['edit']              = 'Edit';
@@ -81,6 +73,7 @@ $lang['logout']           = 'Log Out';
 $lang['signup']           = 'Sign Up';
 $lang['registration']     = 'Registration';
 $lang['update']           = 'Update';
+$lang['my_account']       = 'My Account';
 
 #Dashboard
 #---------
@@ -92,7 +85,6 @@ $lang['firstname']        = 'Firstname';
 $lang['lastname']         = 'Lastname';
 $lang['mobile_no']        = 'Mobile Number';
 $lang['last_login']       = 'Last Login';
-$lang['address']          = 'Address';
 $lang['address1']         = 'Address1';
 $lang['address2']         = 'Address2';
 $lang['pincode']          = 'Pincode';
@@ -113,6 +105,7 @@ $lang['img_alt_msg']      = "profile image can't loaded";
 $lang['address_1']        = 'Address_1';
 $lang['address_2']        = 'Address_2';
 $lang['contact_no']       = 'Contact No';
+$lang['mobile']           = 'Mobile No';
 
 #vendors
 #-------
@@ -136,6 +129,7 @@ $lang['logo']                = 'Logo';
 $lang['subscription_plan']   = 'Subscription Plan';
 $lang['join_date']           = 'Joining Date';
 $lang['expired']             = 'Expired';
+$lang['address']             = 'Address';
 
 #Subscriptions
 #-------------
@@ -165,6 +159,7 @@ $lang['manage_coupons'] = 'Manage Coupons';
 
 #Products
 #---------
+#
 $lang['product']            = 'Product';
 $lang['products']           = 'Products';
 $lang['product_name']       = 'Product Name';
@@ -176,7 +171,6 @@ $lang['products_added']     = 'Products Added';
 $lang['recent_products']    = 'Recent Product(s)';
 $lang['popular_products']   = 'Popular Product(s)';
 $lang['stock']              = 'Stock';
-$lang['price']              = 'Price';
 $lang['review']             = 'Review';
 $lang['reviews']            = 'Reviews';
 $lang['reviewer']           = 'Reviewer';
@@ -221,32 +215,6 @@ $lang['payment_status']   = 'Payment Status';
 $lang['billing_details']  = 'Billing Details';
 $lang['rs_symbol']        = '<span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span>';
 
-#-----
-$lang['firstname']   = 'Firstname';
-$lang['lastname']    = 'Lastname';
-$lang['address_1']   = 'Address_1';
-$lang['address_2']   = 'Address_2';
-$lang['city']        = 'City';
-$lang['state']       = 'State';
-$lang['pincode']     = 'Pin code';
-$lang['contact_no']  = 'Contact No';
-$lang['mobile']      = 'Mobile No';
-$lang['upload_file'] = 'Profile Image';
-$lang['last_login']  = 'Last Login';
-$lang['user']        = 'User';
-$lang['users']       = 'Users';
-$lang['add_user']    = 'Add User';
-$lang['edit_user']   = 'Edit User';
-
-#Vendors
-#-----
-$lang['shop_name']           = 'Shop Name';
-$lang['owner_name']          = 'Owner Name';
-$lang['shop_number']         = 'Shop Number';
-$lang['shop_details']        = 'Shop Details';
-$lang['registration_number'] = 'Registration Number';
-$lang['address']             = 'Address';
-
 #Projects
 #--------
 $lang['project']      = 'Project';
@@ -284,11 +252,10 @@ $lang['partners']     = 'Partners';
 $lang['partner']      = 'Partner';
 $lang['add_partner']  = 'Add Partner';
 $lang['edit_partner'] = 'Edit Partner';
-$lang['partners']     = 'Partners';
 $lang['manufactures'] = 'Manufactures';
 
 #Faq
-#-------
+#-------------------
 $lang['faq']      = 'Faq';
 $lang['faqs']     = 'Faqs';
 $lang['add_faq']  = 'Add Faq';
@@ -315,7 +282,6 @@ $lang['add_deal']            = 'Add Deal';
 $lang['hot_deal']            = 'Hot Deal';
 $lang['hot_deals']           = 'Hot Deals';
 $lang['product_deals_sales'] = 'Product Deals And Sales';
-$lang['sale']                = 'Sale';
 $lang['sales']               = 'Sales';
 $lang['discount']            = 'Discount';
 $lang['discount_type']       = 'Type Of Discount';
@@ -372,6 +338,27 @@ $lang['months']  = 'months';
 $lang['year']    = 'year';
 $lang['years']   = 'years';
 
+#Frontend Home page
+#-------------------------
+$lang['all']                          = 'All';
+$lang['sale']                         = 'SALE';
+$lang['my_profile']                   = 'My profile';
+$lang['my_cart']                      = 'My Cart';
+$lang['Login']                        = 'Login';
+$lang['Sell']                         = 'Sell';
+$lang['Checkout']                     = 'Checkout';
+$lang['Product_tags']                 = 'Product tags';
+$lang['special_deals']                = 'Special Deals';
+$lang['shop_now']                     = 'Shop Now';
+$lang['money_back']                   = 'money back';
+$lang['free_shipping']                = 'free shipping';
+$lang['special_sale']                 = 'Special Sale';
+$lang['new_product']                  = 'New Products';
+$lang['best_seller']                  = 'Best seller';
+$lang['extra_$5_off_on_all_items']    = 'Extra $5 off on all items';
+$lang['shipping_on_orders_over_$99']  = 'Shipping on orders over $99';
+$lang['30_Days_Money_Back_Guarantee'] = '30 Days Money Back Guarantee';
+
 #Forntend category page
 #-------------------------
 $lang['shop_by']             = 'shop by';
@@ -385,7 +372,20 @@ $lang['price_high_to_low']   = 'Price:High to Low';
 $lang['product_name_a_to_z'] = 'Product Name:A to Z';
 $lang['product_name_z_to_a'] = 'Product Name:Z to A';
 $lang['no_products']         = 'No Products';
-$lang['wishlist']            = 'Wishlist';
+$lang['show_now']            = 'Show Now ';
+
+#forntend wishlist page
+#----------------------------------
+$lang['wishlist']               = 'Wishlist';
+$lang['my_wishlist']            = 'My Wishlist';
+$lang['your_wishlist_is_empty'] = 'Your wishlist is empty';
+$lang['whishlist_empty_msg']    = 'Save items that you like in your wishlist.Review them anytime and easily move them to the bag.';
+$lang['shop_now']               = 'SHOP NOW';
+$lang['update_qty']             = 'Quality has been updated';
+$lang['add_to_cart_qty']        = 'Added to bag';
+$lang['qty_not_available']      = 'Quantity is not available';
+$lang['add_to_wishlist']        = 'Added to wishlist';
+$lang['remove_wishlist']        = 'Item remove from wishlist';
 
 #Forntend products detail page
 #----------------------------------
@@ -418,20 +418,72 @@ $lang['days_ago']                   = 'days ago';
 $lang['upsell_products']            = 'upsell products';
 $lang['review_submit_successfully'] = 'Thanks for given the Reviews';
 $lang['comments_success_msg']       = 'Thanks for given the Comments';
+$lang['see_more']                   = 'See More';
+$lang['off']                        = 'off';
+
+#Forntend checkout page
+##-----------------------------
+$lang['please_log_below']     = 'Please log in below:';
+$lang['already_registered']   = 'Already registered?';
+$lang['checkout_method']      = 'Checkout Method';
+$lang['register_login']       = 'Register Login';
+$lang['register_convenience'] = 'Register with us for future convenience:';
+$lang['apply']                = 'Apply';
+$lang['checkout']             = 'Checkout';
+$lang['procced_to_checkout']  = 'PROCCED TO CHEKOUT';
+$lang['shopping_cart']        = 'Shopping Cart';
+$lang['coupone_label']        = 'Enter your coupon code if you have one..';
+$lang['your_car_is_empty']    = 'Your cart is empty';
+$lang['cart_empty_msg']       = 'Save items that you like in your Cart.Review them anytime and easily move them to the bag.';
+$lang['not_available']        = 'Not Available';
+
+#fontend checkout address page
+#-------------------------------------
+$lang['house_village']  = 'House No./Village';
+$lang['street_society'] = 'Street/Society Name(Nearest area)';
+$lang['personal_info']  = 'Personal Information :';
+$lang['name']           = 'Name';
+$lang['cancel']         = 'Cancel';
+$lang['continue']       = 'Continue';
+
+#Fontend placeorder page
+#-----------------------------
+$lang['products_detail']   = 'Products Details : ';
+$lang['shipping_address']  = 'Shipping Address :';
+$lang['payment_info']      = 'Payment information : ';
+$lang['cash_on_delivery']  = 'Cash On Delivery';
+$lang['order_summary']     = 'Order summary :';
+$lang['item_sub_total']    = 'Item(s) Subtotal :';
+$lang['shipping']          = 'Shipping :';
+$lang['total']             = 'Total';
+$lang['promotion_applied'] = 'Promotion Applied :';
+$lang['grand_total']       = 'Grand Total :';
+$lang['confirm_order']     = 'Confirm Order';
+$lang['qty']               = 'Qty:';
+$lang['sold_by']           = 'Sold By:';
+$lang['view_detail']       = 'View Detail';
+
+#Fontend confirm order successfully page
+#-----------------------------------------
+$lang['confirm_thanks_msg'] = 'Thank you,your Order has been placed';
+$lang['confirm_msg']        = 'We will send you an email an acknowledgment of your order and with your confirmation details shortly.';
+$lang['continue_shopping']  = 'Continue shopping';
+
+# fontend layout/index
+# --------------------
+$lang['cart']      = 'cart -';
+$lang['sub_total'] = 'Sub Total :';
 
 #=============================================
 #Instructions, messages, alerts, notifications
 #=============================================
 #General
 #-------
-$lang['no_data_found']                   = 'No Data Found.';
+$lang['_activated']                      = '%s activated.';
 $lang['_added_successfully']             = '%s added successfully.';
-$lang['_updated_successfully']           = '%s updated successfully.';
 $lang['_deleted_successfully']           = '%s deleted successfully.';
-$lang['_activated']                      = '%s activated.';
-$lang['_deactivated']                    = '%s deactivated.';
-$lang['_removed_successfully']           = '%s removed successfully.';
-$lang['_activated']                      = '%s activated.';
+$lang['_updated_successfully']           = '%s updated successfully.';
+$lang['no_data_found']                   = 'No Data Found.';
 $lang['_deactivated']                    = '%s deactivated.';
 $lang['please_enter_']                   = 'Please Enter  %s';
 $lang['please_enter_valid_']             = 'Please Enter Valid %s';
@@ -448,66 +500,26 @@ $lang['discount_percentage']             = 'Discount By Percentage';
 $lang['greater_than_start_date']         = 'End Date Must Be Greater Than Start Date.';
 $lang['only_digits']                     = 'Only Digits Are Allowed.';
 $lang['last_30_day_sale']                = 'Total Sales in Last 30 Days';
-$lang['no_data_found']                   = 'No Data Found.';
 $lang['_updation_fail_please_try_again'] = '%s Upadation failed please try again..';
-
-$lang['please_select_star']           = 'Please Select Star';
-$lang['email_already_exists']         = 'Email already exists';
-$lang['email_subscribe_successfully'] = 'Email subscribe successfully';
-$lang['min_length_required']          = 'Please Enter minimum 10 characters ';
-$lang['please_enter_tags']            = 'Please Enter tags';
-$lang['tags_min_lenght']              = 'Please Enter minimum 3 characters';
-$lang['tags-sucess']                  = 'Tags add sucessfully';
-$lang['tags-exits']                   = 'Tags Already exists';
-$lang['only_letter_enter']            = 'Please Enter Only Letters and spaces but must not start with a space';
-$lang['not_start_space']              = 'Please not start with wide space and digits';
-$lang['no_space_allowed']             = 'Please Enter Letters wide space is not allowed';
-
-$lang['please_enter_']              = 'Please Enter  %s';
-$lang['please_enter_valid_']        = 'Please Enter Valid %s';
-$lang['please_select_']             = 'Please Select %s';
-$lang['single_deletion_alert']      = 'Are you sure you want to delete this record?';
-$lang['single_recovery_alert']      = 'You will not be able to recover this record after deletion.';
-$lang['multiple_deletion_alert']    = 'Are you sure you want to delete selected records?';
-$lang['multiple_recovery_alert']    = 'You will not be able to recover these records after deletion.';
-$lang['select_before_delete_alert'] = 'Please select some records to delete.';
-$lang['access_denied']              = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
-
-$lang['denied']                          = 'You do not have rights to change this.';
-$lang['discount_amount']                 = 'Discount By Amount';
-$lang['discount_percentage']             = 'Discount By Percentage';
-$lang['greater_than_start_date']         = 'End Date Must Be Greater Than Start Date.';
-$lang['only_digits']                     = 'Only Digits Are Allowed.';
-$lang['last_30_day_sale']                = 'Total Sales in Last 30 Days';
-$lang['_updation_fail_please_try_again'] = '%s Upadation failed please try again..';
-
-$lang['please_enter_']              = 'Please Enter  %s';
-$lang['please_enter_valid_']        = 'Please Enter Valid %s';
-$lang['please_select_']             = 'Please Select %s';
-$lang['single_deletion_alert']      = 'Are you sure you want to delete this record?';
-$lang['single_recovery_alert']      = 'You will not be able to recover this record after deletion.';
-$lang['multiple_deletion_alert']    = 'Are you sure you want to delete selected records?';
-$lang['multiple_recovery_alert']    = 'You will not be able to recover these records after deletion.';
-$lang['select_before_delete_alert'] = 'Please select some records to delete.';
-$lang['access_denied']              = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
+$lang['please_select_star']              = 'Please Select Star';
+$lang['email_already_exists']            = 'Email already exists';
+$lang['email_subscribe_successfully']    = 'Email subscribe successfully';
+$lang['min_length_required']             = 'Please Enter minimum 10 characters ';
+$lang['please_enter_tags']               = 'Please Enter tags';
+$lang['tags_min_lenght']                 = 'Please Enter minimum 3 characters';
+$lang['tags-sucess']                     = 'Tags add sucessfully';
+$lang['tags-exits']                      = 'Tags Already exists';
+$lang['only_letter_enter']               = 'Please Enter Only Letters and spaces but must not start with a space';
+$lang['not_start_space']                 = 'Please not start with wide space and digits';
+$lang['no_space_allowed']                = 'Please Enter Letters wide space is not allowed';
+$lang['only_10_digits']                  = 'Only 10 Digits Are Allowed.';
 
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------
-$lang['customer_email']               = 'Customer Email';
-$lang['customer_name']                = 'Customer Name';
-$lang['login_to_your_account']        = 'Login to your account';
-$lang['login_as_vendor']              = 'Login As a Vendor';
-$lang['enter_your_credentials_below'] = 'Please enter your credentials below';
-$lang['incorrect_email']              = 'Incorrect email.';
-$lang['incorrect_password']           = 'Incorrect password.';
-
-$lang['login_to_your_account']        = 'Login to your account';
-$lang['enter_your_credentials_below'] = 'Please enter your credentials below';
-$lang['incorrect_email']              = 'Incorrect email.';
-$lang['incorrect_password']           = 'Incorrect password.';
-$lang['email_exists']                 = 'This Email has already been taken.';
-
+$lang['customer_email']                                         = 'Customer Email';
+$lang['customer_name']                                          = 'Customer Name';
 $lang['login_to_your_account']                                  = 'Login to your account';
+$lang['login_as_vendor']                                        = 'Login As a Vendor';
 $lang['enter_your_credentials_below']                           = 'Please enter your credentials below';
 $lang['incorrect_email']                                        = 'Incorrect email.';
 $lang['incorrect_password']                                     = 'Incorrect password.';

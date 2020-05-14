@@ -1,3 +1,4 @@
+
 <div class="container" style="margin-top:30px;">
     <?php $this->load->view('themes/default/includes/alerts');
     ?>
@@ -59,7 +60,7 @@
             <input type="text" class="form-control unicase-form-control text-input" id="lastname" name="lastname" >
         </div>
         <div class="form-group">
-            <label class="info-title" for="mobile"><?php _el('mobile');?> <span>*</span></label>
+            <label class="info-title" for="mobile"><?php _el('mobile_no');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="mobile" name="mobile" >
         </div>
         <div class="form-group">

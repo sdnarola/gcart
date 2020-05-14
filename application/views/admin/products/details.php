@@ -3,7 +3,7 @@
     <div class="page-header-content">
         <div class="page-title">
             <h4>
-                <span class="text-semibold"><?php _el('product_details');?></span>
+                <span class="text-semibold"><?php _el('product_detail');?></span>
             </h4>
         </div>
     </div>
@@ -15,7 +15,7 @@
             <li>
                 <a href="<?php echo base_url('admin/products'); ?>"><?php _el('products');?></a>
             </li>
-            <li class="active"><?php _el('details');?></li>
+            <li class="active"><?php _el('detail');?></li>
         </ul>
     </div>
 </div>
@@ -26,14 +26,20 @@
         <div class="col-md-12">
             <!-- Panel -->
             <div class="panel panel-flat">
+                <!-- Panel heading -->
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3 class="panel-title">
+                                <strong><?php _el('product');?></strong>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
                     <div class="row">
-                        <div class="form-group col-md-12">
-                            <div class="pull-right">
-                                <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
-                            </div>
-                        </div>
                         <div class="col-md-2">
                             <div class="thumbnail">
                                 <div class="thumb">
@@ -51,8 +57,6 @@
                                 <tbody>
                                     <tr> <td width="40%" class="text-semibold"><?php _el('name');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($product['name']); ?></td> </tr>
 
-                                    <tr> <td width="40%" class="text-semibold"><?php _el('slug');?></td><td width="10%">:</td><td width="40%"><?php echo $product['slug']; ?></td> </tr>
-
                                     <tr> <td width="40%" class="text-semibold"><?php _el('category');?></td><td width="10%">:</td><td width="40%" ><?php echo ucwords(get_category($product['category_id'], 'name')); ?></td> </tr>
 
                                     <tr> <td width="40%" class="text-semibold"><?php _el('sub_category');?></td><td width="10%">:</td><td width="40%" ><?php echo ucwords(get_sub_category($product['sub_category_id'], 'name')); ?></td> </tr>
@@ -68,7 +72,7 @@
                                     <tr> <td width="40%" class="text-semibold"><?php _el('vendor');?></td><td width="10%">:</td><td width="40%" ><a data-popup="tooltip" data-placement="top"  title="<?php _el('vendor')?>" href="<?php echo base_url('home/store/').$product['vendor_id']; ?>"><?php echo ucwords(get_vendor_info($product['vendor_id'], 'shop_name')); ?>
                                         </a></td> </tr>
 
-                                    <tr> <td width="40%" class="text-semibold"><?php _el('price');?></td><td width="10%">:</td><td width="40%" ><?php echo '<i class="fa fa-inr"></i>'.'. '.$product['price']; ?></td> </tr>
+                                    <tr> <td width="40%" class="text-semibold"><?php _el('price');?></td><td width="10%">:</td><td width="40%" ><?php echo '&#8377;'.'. '.$product['price']; ?></td> </tr>
 
                                     <tr> <td width="40%" class="text-semibold"><?php _el('sku');?></td><td width="10%">:</td><td width="40%" ><?php echo $product['sku']; ?></td> </tr>
 

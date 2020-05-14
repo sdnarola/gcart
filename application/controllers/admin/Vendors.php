@@ -200,4 +200,84 @@ class Vendors extends Admin_Controller
 			}
 		}
 	}
+
+	public function renew()
+	{
+		//echo "hii";
+		$data['vendors'] = $this->vendors->get_all();
+		//print_r($data);		
+
+		foreach($data['vendors'] as $vendor)
+		{
+			$expired = expire_subscription($vendor['id']);
+
+			if($expired)
+			{
+				$vendor_list[] = get_vendor_info($vendor['id']);
+				//print_r($vendor_list);
+				
+
+				//print_r($vendors_list);
+
+				// 
+			}
+		}
+				$data['vendors'] = $vendor_list;
+				$data['content'] = $this->load->view('admin/vendors/renew_plan', $data, TRUE);
+				$this->load->view('admin/layouts/index', $data);
+				//print_r($vendor_list);	
+	}
+
+	public function ask_for_subscription()
+	{
+		$ids = $this->input->post();
+		// print_r($ids);
+		if($ids)
+		{
+			foreach($ids as $id)
+			{
+				$vendor = get_vendor_info($id);
+
+				$template = get_email_template('renew-subscription-plan');
+				$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
+
+				$message = get_settings('email_header');
+				$expired = expire_subscription($id);
+
+				$find = [
+					'{firstname}',
+					'{lastname}',
+					'{url}',
+					'{email_signature}',
+					'{company_name}',
+					'{expired_date}'
+				];
+
+				$replace = [
+					$vendor['firstname'],
+					$vendor['lastname'],
+					site_url('authentication/verify_email/').$vendor['sign_up_key'],
+					get_settings('email_signature'),
+					get_settings('company_name'),
+					$expired
+				];
+				//print_r($replace);
+
+				$message .= str_replace($find, $replace, $template['message']);
+				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
+				$sent = send_email($vendor['email'], $subject, $message);
+				
+				if ($sent)
+				{
+					echo "true";
+				}
+				else
+				{
+					echo "false";
+				}
+			}
+
+		}
+	}
+
 }

@@ -185,6 +185,33 @@ class Order_model extends MY_Model
 
 		return $this->db->get('orders')->result_array();
 	}
+
+//==================================================================== WORK BY KOMAL ========================================================================================
+	/**
+	 * [add_order_item_data description]
+	 * @param  $data array valuse
+	 */
+	public function add_order_item_data($data)
+	{
+		return $this->db->insert('order_items', $data);
+	}
+
+	public function get_orders_products_id($where = array())
+	{
+		$this->db->select('DISTINCT(product_id)');
+		$this->db->from('orders');
+		$this->db->join('order_items', 'orders.id = order_items.order_id', 'inner');
+		$this->db->where($where);
+		$this->db->where(array('orders.is_deleted' => 0));
+		$query  = $this->db->get();
+		$result = $query->result_array();
+		if ($result)
+		{
+			return $result;
+		}
+	}
+
+//==================================================================== END WORK BY KOMAL ========================================================================================
 }
 
 ?>

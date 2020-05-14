@@ -47,6 +47,27 @@ function get_user_info($id, $info = '')
 	}
 }
 
+
+/**
+ * Gets the requested info of user.
+ *
+ * @param  int  $id    The id of the user.
+ * @param  str  $info  The key of the information required.
+ *
+ * @return mixed The information required.
+ */
+function get_user_address_info($user_id)
+{
+	$CI = &get_instance();
+	$CI->load->model('Users_address_model', 'user_address');
+	$user_address = $CI->user_address->get_user_address($user_id);
+
+	if ($user_address)
+	{
+		return $user_address;
+	}
+	
+}
 /**
  * Gets the address info of user.
  *

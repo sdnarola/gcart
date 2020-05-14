@@ -34,7 +34,7 @@ class Wishlist_model extends MY_Model
 	{
 		if (!empty($where))
 		{
-			$this->db->select('product_id,user_id,id');
+			
 			$this->db->where($where);
 			$query  = $this->db->get_where('wishlist', array('is_deleted' => 0));
 			$result = $query->result_array();
@@ -46,7 +46,7 @@ class Wishlist_model extends MY_Model
 		}
 		else
 		{
-			$this->db->select('product_id,user_id');
+			
 			$query  = $this->db->get_where('wishlist', array('is_deleted' => 0));
 			$result = $query->result_array();
 
@@ -57,4 +57,27 @@ class Wishlist_model extends MY_Model
 		}
 	}
 
+	// ===================================================== WORK BY KOMAL ====================================================================================
+
+	/**
+	 * [get_whislist_products description]
+	 * @param  [type] $product_id [products id in array]
+	 * @return whishlist products data
+	 */
+	public function get_whislist_products($product_id)
+	{
+		$this->db->where_in('id', $product_id);
+		$query  = $this->db->get('products');
+		$result = $query->result_array();
+
+		if (empty($result))
+		{
+			return 0;
+		}
+		else
+		{
+			return $result;
+		}
+	}
+	// ===================================================== WORK BY KOMAL ====================================================================================
 }

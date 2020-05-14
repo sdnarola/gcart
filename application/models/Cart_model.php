@@ -25,14 +25,7 @@ class Cart_model extends MY_Model
 	{
 		parent::__construct();
 	}
-
-// public function add_Cart_products($data)
-
-// {
-
-// 	$this->db->insert($data);
-
-// }
+// ========================================================== WORK BY KOAML ======================================================================================
 
 	/**
 	 * [get_cart_products description]
@@ -80,7 +73,7 @@ class Cart_model extends MY_Model
 		}
 		else
 		{
-			$this->db->select('products.*,cart.total_amount');
+			$this->db->select('products.*,cart.total_amount,cart.quantity as cart_qty,cart.id as cart_id');
 			$this->db->from('cart');
 			$this->db->join('products', 'products.id=cart.product_id', 'inner');
 			$this->db->where($where);
@@ -137,6 +130,44 @@ class Cart_model extends MY_Model
 	}
 
 	/**
+	 * [count_cart_row_for_confirm_order]
+	 * @param  array  $where [array where condition]
+	 * @return where condition wise get cart total rows
+	 */
+	public function count_cart_row_for_confirm_order($where = array())
+	{
+		$this->db->select('count(*) AS cart_row');
+		$this->db->from('cart');
+		$this->db->join('products', 'cart.product_id = products.id and cart.quantity <= products.quantity', 'inner');
+		$this->db->where(array('cart.is_deleted' => 0));
+		$this->db->where($where);
+		$query  = $this->db->get();
+		$result = $query->row_array();
+
+		if (empty($result))
+		{
+			return 0;
+		}
+		else
+		{
+			return $result['cart_row'];
+		}
+	}
+
+	public function count_total_amount($where = array())
+	{
+		$this->db->select('sum(total_amount) AS total_amount');
+		$this->db->where($where);
+		$query  = $this->db->get_where('cart', array('is_deleted' => 0));
+		$result = $query->row_array();
+		if ($result)
+		{
+			return $result['total_amount'];
+	
+		}
+	}
+
+	/**
 	 * [count_total_procucts_amount description]
 	 * @param  array  $where [array where condition]
 	 * @return where condition wise get cart total Amount
@@ -144,9 +175,12 @@ class Cart_model extends MY_Model
 
 	public function count_total_procucts_amount($where = array())
 	{
-		$this->db->select('sum(total_amount) AS total_amount');
+		$this->db->select('sum(cart.total_amount) AS total_amount');
+		$this->db->from('cart');
+		$this->db->join('products', 'cart.product_id = products.id and cart.quantity <= products.quantity', 'inner');
+		$this->db->where(array('cart.is_deleted' => 0));
 		$this->db->where($where);
-		$query  = $this->db->get_where('cart', array('is_deleted' => 0));
+		$query  = $this->db->get();
 		$result = $query->row_array();
 
 		if (empty($result))
@@ -158,4 +192,19 @@ class Cart_model extends MY_Model
 			return $result['total_amount'];
 		}
 	}
+// ========================================================== END WORK BY KOAML ======================================================================================
+	/**
+	 * [edit_cart description]
+	 * @param  [array] $where [array value for check condition]
+	 * @param  [array] $data  [array value for set]
+	 */
+	public function edit_cart($where, $data)
+	{
+		$this->db->where($where);
+		$this->db->where(array('is_deleted' => 0));
+		$query = $this->db->update('cart', $data);
+
+		return $query;
+	}
+
 }

@@ -136,6 +136,18 @@ class Emails extends Admin_Controller
 					'{email_signature}'        => 'Email Signature',
 					'{company_name}'           => 'Company Name'
 				]
+			],
+			[
+				'name'         => 'Renew Subscription Plan',
+				'slug'         => 'renew-subscription-plan',
+				'placeholders' => [
+					'{firstname}'              => 'User Firstname',
+					'{lastname}'               => 'User Lastname',
+					'{email_verification_url}' => 'Email Verification URL',
+					'{email_signature}'        => 'Email Signature',
+					'{company_name}'           => 'Company Name',
+					'{expired_date}'		   => 'Expired Date'
+				]
 			]
 		];
 

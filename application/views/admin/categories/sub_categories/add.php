@@ -46,17 +46,18 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label><?php _el('category_name') ?></label>
+                              <label>category name</label>
                               <select class="select-search" name="category_name" id="category_name">
 <?php
 	$categories = get_all_categories();
 
 	foreach ($categories as $category)
 	{
-?>
+	?>
                                     <option id="category" name="category" value="<?php echo $category['name'] ?>"><?php echo ucfirst($category['name']) ?></option>
 <?php
 	}
+
 ?>
                                 </select>
                             </div>

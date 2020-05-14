@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Users extends Admin_Controller 
+class Users extends Admin_Controller
 {
 	/**
 	 * Constructor for the class
 	 */
-	public function __construct() 
+	public function __construct()
 	{
 		parent::__construct();
 
@@ -17,11 +17,11 @@ class Users extends Admin_Controller
 	/**
 	 * Loads the list of users.
 	 */
-	public function index() 
+	public function index()
 	{
 		$this->set_page_title(_l('users'));
 
-		$data['users'] = $this->users->get_users();
+		$data['users']   = $this->users->get_users();
 		$data['content'] = $this->load->view('admin/users/index', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
@@ -31,31 +31,31 @@ class Users extends Admin_Controller
 	 *
 	 * @param int  $id  The user id
 	 */
-	public function edit($id = '') 
+	public function edit($id = '')
 	{
-		$this->set_page_title(_l('users') . ' | ' . _l('edit'));
+		$this->set_page_title(_l('users').' | '._l('edit'));
 
-		if ($this->input->post()) 
+		if ($this->input->post())
 		{
 			$data = array
 				(
 				'firstname' => $this->input->post('firstname'),
-				'lastname' => $this->input->post('lastname'),
-				'email' => $this->input->post('email'),
-				'mobile' => $this->input->post('mobile'),
-				'is_active' => ($this->input->post('is_active')) ? 1 : 0,
+				'lastname'  => $this->input->post('lastname'),
+				'email'     => $this->input->post('email'),
+				'mobile'    => $this->input->post('mobile'),
+				'is_active' => ($this->input->post('is_active')) ? 1 : 0
 			);
 			$edit = $this->users->edit($data, $id);
 
-			if ($edit) 
+			if ($edit)
 			{
 				set_alert('success', _l('_updated_successfully', _l('user')));
 				redirect('admin/users');
 			}
-		} 
-		else 
+		}
+		else
 		{
-			$data['users'] = $this->users->show($id);
+			$data['user']    = $this->users->show($id);
 			$data['content'] = $this->load->view('admin/users/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
@@ -64,15 +64,15 @@ class Users extends Admin_Controller
 	/**
 	 * Deletes the single user record
 	 */
-	public function delete() 
+	public function delete()
 	{
 		$user_id = $this->input->post('user_id');
 
-		$user = $this->users->get($user_id);
+		$user      = $this->users->get($user_id);
 		$imagepath = $user['profile_image'];
-		$newpath = 'assets/uploads/users/deleted/' . basename($imagepath);
+		$newpath   = 'assets/uploads/users/deleted/'.basename($imagepath);
 
-		if (basename($imagepath) != 'default_img.png') 
+		if (basename($imagepath) != 'default_img.png')
 		{
 			$copied = copy($imagepath, $newpath);
 			unlink($imagepath);
@@ -80,11 +80,11 @@ class Users extends Admin_Controller
 
 		$deleted = $this->users->delete($user_id);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			echo 'true';
-		} 
-		else 
+		}
+		else
 		{
 			echo 'false';
 		}
@@ -95,16 +95,16 @@ class Users extends Admin_Controller
 	 *
 	 * @param      <int>  $id     The user id
 	 */
-	public function details($id) 
+	public function details($id)
 	{
-		$this->set_page_title(_l('users') . ' | ' . _l('details'));
+		$this->set_page_title(_l('users').' | '._l('details'));
 
-		$data['user'] = $this->users->show($id);
+		$data['user']    = $this->users->show($id);
 		$data['records'] = $this->order_details($id);
 		//get image path from database
 		$record = $this->users->get($id);
 
-		if ($record['profile_image']) 
+		if ($record['profile_image'])
 		{
 			$data['path'] = $record['profile_image'];
 		}
@@ -116,18 +116,18 @@ class Users extends Admin_Controller
 	/**
 	 * Deletes multiple user records
 	 */
-	public function delete_selected() 
+	public function delete_selected()
 	{
 		$where = $this->input->post('ids');
 
 		$data = $this->users->get_many($where);
 
-		foreach ($data as $record) 
+		foreach ($data as $record)
 		{
 			$imagepath = $record['profile_image'];
-			$newpath = 'assets/uploads/users/deleted/' . basename($imagepath);
+			$newpath   = 'assets/uploads/users/deleted/'.basename($imagepath);
 
-			if (basename($imagepath) != 'default_img.png') 
+			if (basename($imagepath) != 'default_img.png')
 			{
 				$copied = copy($imagepath, $newpath);
 				unlink($imagepath);
@@ -136,12 +136,12 @@ class Users extends Admin_Controller
 
 		$deleted = $this->users->delete_many($where);
 
-		if ($deleted) 
+		if ($deleted)
 		{
 			$ids = implode(',', $where);
 			echo 'true';
-		} 
-		else 
+		}
+		else
 		{
 			echo 'false';
 		}
@@ -150,19 +150,19 @@ class Users extends Admin_Controller
 	/**
 	 * Toggles the user status to Active or Inactive
 	 */
-	public function update_status() 
+	public function update_status()
 	{
 		$user_id = $this->input->post('user_id');
-		$data = array('is_active' => $this->input->post('is_active'));
-		$update = $this->users->update($user_id, $data);
+		$data    = array('is_active' => $this->input->post('is_active'));
+		$update  = $this->users->update($user_id, $data);
 
-		if ($update) 
+		if ($update)
 		{
-			if ($this->input->post('is_active') == 1) 
+			if ($this->input->post('is_active') == 1)
 			{
 				echo 'true';
-			} 
-			else 
+			}
+			else
 			{
 				echo 'false';
 			}
@@ -176,7 +176,7 @@ class Users extends Admin_Controller
 	 *
 	 * @return     <array>  ( orders of particular user )
 	 */
-	public function order_details($user_id) 
+	public function order_details($user_id)
 	{
 		$this->orders->order_by('order_number', 'ASC');
 		$order_records = $this->orders->get_many_by('user_id', $user_id);

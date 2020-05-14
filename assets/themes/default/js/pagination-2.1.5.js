@@ -900,12 +900,12 @@
 
     // Total entries
     totalNumber: 0,
-
+    
     // Default page
     pageNumber: 1,
 
     // entries of per page
-    pageSize: 10,
+    pageSize: 4,
 
     // Page range (pages on both sides of the current page)
     pageRange: 2,

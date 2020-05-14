@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Category_model extends MY_Model
 {
-//=========================================================== KOMAL WORK ================================================================================================//
+//=========================================================== WORK BY KOMAL================================================================================================//
 	/**
 	 * @var mixed
 	 */
@@ -81,7 +81,7 @@ class Category_model extends MY_Model
 		{
 			$this->db->order_by('name', 'asc');
 			$this->db->where($where);
-			$this->db->where(array('is_deleted' => 0));
+			$this->db->where(array('is_deleted' => 0,'is_active'=>1));
 			$query  = $this->db->get('sub_categories');
 			$result = $query->result_array();
 
@@ -97,7 +97,7 @@ class Category_model extends MY_Model
 		else
 		{
 			$this->db->order_by('name', 'asc');
-			$query  = $this->db->get_where('sub_categories', array('is_deleted' => 0));
+			$query  = $this->db->get_where('sub_categories', array('is_deleted' => 0,'is_active'=>1));
 			$result = $query->result_array();
 
 			if (empty($result))
@@ -112,6 +112,30 @@ class Category_model extends MY_Model
 	}
 
 	/**
+	 * [get_shop_by_parent_category description]
+	 *
+	 * @return [boolean] Query true return main catgories this have to sub categories and products or return false
+	 */
+	public function get_shop_by_parent_category($category_id)
+	{
+		$this->db->distinct();
+		$this->db->order_by('name', 'asc');
+		$this->db->select('categories.*');
+		$this->db->from('categories');
+		$this->db->join('sub_categories', 'sub_categories.category_id=categories.id', 'inner');
+		$this->db->join('products', 'products.category_id=categories.id', 'inner');
+		$this->db->where(array('categories.is_active' => 1, 'categories.is_deleted' => 0, 'products.is_deleted' => 0, 'products.is_active' => 1, 'products.category_id' => $category_id));
+		$query = $this->db->get();
+
+		if ($query == TRUE)
+		{
+			return $query->result_array();
+		}
+
+		return false;
+	}
+
+	/**
 	 * [get_shop_by_sub_category description]
 	 * @param  int $category_id    [category id]
 	 * @param  int $brand_id       [brand id]
@@ -119,17 +143,24 @@ class Category_model extends MY_Model
 	 *
 	 * @return [array]
 	 */
-	public function get_shop_by_sub_category($category_id = '', $brand_id = '', $tags = '')
+	public function get_shop_by_sub_category($where=array(), $tags = '')
 	{
-		if (!empty($category_id) && !empty($tags))
+
+		if (empty($where))
+		{
+			return array();
+		}
+		else
 		{
 			$this->db->distinct();
 			$this->db->order_by('name', 'asc');
 			$this->db->select('sub_categories.*');
 			$this->db->from('sub_categories');
 			$this->db->join('products', 'products.sub_category_id=sub_categories.id', 'inner');
+			$tags = (empty($tags)) ? '' : $tags;
 			$this->db->like('products.tags', $tags, 'both');
-			$this->db->where(array('sub_categories.is_active' => 1, 'sub_categories.is_deleted' => 0, 'sub_categories.category_id' => $category_id, 'products.is_deleted' => 0, 'products.is_active' => 1));
+			$this->db->where(array('sub_categories.is_active' => 1, 'sub_categories.is_deleted' => 0, 'products.is_deleted' => 0, 'products.is_active' => 1));
+			$this->db->where($where);
 			$query = $this->db->get();
 
 			if ($query == TRUE)
@@ -137,42 +168,44 @@ class Category_model extends MY_Model
 				return $query->result();
 			}
 		}
-		elseif (!empty($category_id) && !empty($brand_id))
-		{
-			$this->db->distinct();
-			$this->db->order_by('name', 'asc');
-			$this->db->select('sub_categories.*');
-			$this->db->from('sub_categories');
-			$this->db->join('products', 'products.sub_category_id=sub_categories.id', 'inner');
-			$this->db->where(array('sub_categories.is_active' => 1, 'sub_categories.is_deleted' => 0, 'sub_categories.category_id' => $category_id, 'products.is_deleted' => 0, 'products.is_active' => 1, 'products.brand_id' => $brand_id));
-			$query = $this->db->get();
-
-			if ($query == TRUE)
-			{
-				return $query->result();
-			}
-		}
-		elseif (!empty($category_id))
-		{
-			$this->db->distinct();
-			$this->db->order_by('name', 'asc');
-			$this->db->select('sub_categories.*');
-			$this->db->from('sub_categories');
-			$this->db->join('products', 'products.sub_category_id=sub_categories.id', 'inner');
-			$this->db->where(array('sub_categories.is_active' => 1, 'sub_categories.is_deleted' => 0, 'sub_categories.category_id' => $category_id, 'products.is_deleted' => 0, 'products.is_active' => 1));
-			$query = $this->db->get();
-
-			if ($query == TRUE)
-			{
-				return $query->result();
-			}
-		}
-
-		return false;
 	}
+	
+	/**
+	 * [get_sub_category_by_slug description]
+	 * @param  integer $category_id [category id]
+	 * @param  string  $slug        [sub category slug]
+	 *
+	 * @return [array]
+	 */
+		public function get_sub_category_by_slug($category_id = 0, $slug = '')
+		{
+			if (empty($slug) || empty($category_id))
+			{
+				return false;
+			}
+			else
+			{
+				$this->db->where('slug', $slug);
+				$this->db->where('category_id', $category_id);
+				$query  = $this->db->get('sub_categories');
+				$result = $query->row_array();
 
-// =========================== Bhavik ==================================//
+				if (empty($result))
+				{
+					return 0;
+				}
+				else
+				{
+					return $result;
+				}
+			}
+		}
 
+//=========================================================== END WORK BY KOMAL ===========================================================================================//
+
+	// =========================== Bhavik ==================================//
+	// 
+	
 /**
  * get sub categories of parent category
  *
@@ -213,18 +246,19 @@ class Category_model extends MY_Model
 	 *
 	 * @return mixed 	sub category
 	 */
-	public function get_sub_category_info($id)
-	{
-		$this->db->where('id', $id);
-		$result = $this->db->get('sub_categories')->row_array();
-
-		if (!$result)
+		function get_sub_category_info($id)
 		{
-			return false;
+			$this->db->where('id', $id);
+			$result = $this->db->get('sub_categories')->row_array();
+
+			if (!$result)
+			{
+				return false;
+			}
+
+			return $result;
 		}
 
-		return $result;
-	}
 
 // =========================== Bhavik ==================================//
 
@@ -278,6 +312,69 @@ class Category_model extends MY_Model
 		return false;
 	}
 
+
+	/**
+	 * [get_all_products description]
+	 * @param  array   $where                    [where cluse value in array]
+	 * @param  integer $page                     [page number]
+	 * @param  integer $limit                    [limit]
+	 * @param  string  $sort                     [sorted value]
+	 * @param  string  $order                    [ordered value]
+	 * @param  string  $tags                     [products tags]
+	 * @param  string  $multiple_sub_category_id [multiple sub category id]
+	 * @return [array]                            [description]
+	 */
+	public function get_all_products($where = array(), $page = 1, $limit = 4, $sort = 'name', $order = 'asc', $tags = '', $multiple_sub_category_id = '',$manufacture='')
+	{
+		if(empty($tags) && !empty($manufacture))
+		{
+			$this->db->where($where);
+			$start = ($page - 1) * 4;
+			$this->db->limit($limit, $start);
+			$sort = ($sort == 'name') ? $sort : 'price';
+			$this->db->order_by($sort, $order);
+			 $tags = (empty($tags)) ? '' : $tags;
+			 $this->db->like('tags', $tags, 'both');
+			$query  = $this->db->get('products');
+			$result = $query->result_array();
+
+			if (empty($result))
+			{
+				return 0;
+			}
+			else
+			{
+				return $result;
+			}
+		}
+		if(!empty($tags) && !empty($manufacture))
+		{
+			$this->db->where($where);
+			$start = ($page - 1) * 4;
+			$this->db->limit($limit, $start);
+			$this->db->order_by($sort, $order);
+			 $tags = (empty($tags)) ? '' : $tags;
+
+			 $this->db->like('tags', $tags, 'both');
+			if($manufacture!=0)
+			{
+			$this->db->where('brand_id',$manufacture);
+			}
+			$query  = $this->db->get('products');
+			$result = $query->result_array();
+
+			if (empty($result))
+			{
+				return 0;
+			}
+			else
+			{
+				return $result;
+			}
+		}
+		
+	}
+
 // public function get_data_to_cart_products($product_id)
 
 // {
@@ -310,72 +407,6 @@ class Category_model extends MY_Model
 
 		return false;
 	}
-
-	/**
-
-	 * [get_category_by_slug description]
-	 * @param  string $slug [category slug]
-	 *
-	 * @return [array]
-	 */
-	public function get_category_by_banner($slug = '')
-	{
-		if (empty($slug))
-		{
-			return false;
-		}
-		else
-		{
-			$this->db->select('categories.*,banners.title,banners.sub_title,banners.description,banners.banner');
-			$this->db->from('categories');
-			$this->db->join('banners', 'banners.id=categories.banner_id');
-			$this->db->where('categories.slug', $slug);
-			$query  = $this->db->get();
-			$result = $query->row_array();
-
-			if (empty($result))
-			{
-				return false;
-			}
-			else
-			{
-				return $result;
-			}
-		}
-	}
-
-	/**
-	 * [get_sub_category_by_slug description]
-	 * @param  integer $category_id [category id]
-	 * @param  string  $slug        [sub category slug]
-	 *
-	 * @return [array]
-	 */
-	public function get_sub_category_by_slug($category_id = 0, $slug = '')
-	{
-		if (empty($slug) || empty($category_id))
-		{
-			return false;
-		}
-		else
-		{
-			$this->db->where('slug', $slug);
-			$this->db->where('category_id', $category_id);
-			$query  = $this->db->get('sub_categories');
-			$result = $query->row_array();
-
-			if (empty($result))
-			{
-				return 0;
-			}
-			else
-			{
-				return $result;
-			}
-		}
-	}
-
-//=========================================================== END KOMAL WORK ===========================================================================================//
 
 	/**
 	 * [search category or product or brand]

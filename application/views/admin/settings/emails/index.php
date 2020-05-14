@@ -12,9 +12,7 @@
       <li>
         <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
       </li>
-      <li>
-        <a href="<?php echo base_url('admin/settings'); ?>"><?php _el('settings'); ?></a>
-      </li>
+      <li class="active"><?php _el('settings'); ?></li>
       <li class="active">
         Email Templates
       </li>

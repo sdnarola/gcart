@@ -28,6 +28,7 @@
         <div class="panel-heading mt-20">
             <div class="heading-elements">
                 <a href="<?php echo base_url('admin/sub_categories/add'); ?>" class="btn btn-primary btn-sm"><?php _el('add_new');?><i class="icon-plus-circle2 position-right"></i></a>
+
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
             </div>
         </div>
@@ -49,10 +50,11 @@
                 </thead>
                 <tbody>
 <?php
+
 	foreach ($sub_categories as $sub_category)
 	{
 		$category = get_category($sub_category['category_id']);
-?>
+	?>
                     <tr>
                         <td>
                             <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $sub_category['id']; ?>">
@@ -256,4 +258,5 @@ function delete_selected()
         });
     });
 }
+
 </script>

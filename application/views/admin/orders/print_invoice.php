@@ -141,7 +141,7 @@
                                         <td colspan="3" class="text-right">
                                             <strong><?php _el('total_amount');?></strong>
                                             <br>
-                                            <strong><?php _el('discount');?></strong>
+                                            <strong><?php echo _l('discount').' (-)'; ?></strong>
                                             <hr>
                                             <strong><?php _el('grand_total');?></strong>
                                         </td>

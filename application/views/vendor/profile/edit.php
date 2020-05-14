@@ -165,10 +165,9 @@ $("#myprofileform").validate(
     	lastname: {
     		required: true,
     	},
-    	mobile: {
+    	mobile_no: {
             required: true,
-            number: true,
-            rangelength: [10,10]
+            number: true
         },
         email: {
             required: true,
@@ -183,10 +182,9 @@ $("#myprofileform").validate(
         lastname: {
             required:"<?php _el('please_enter_', _l('lastname'))?>",
         },
-        mobile: {
+        mobile_no: {
             required:"<?php _el('please_enter_', _l('contact_no'))?>",
-            number:"Please Enter Digits",
-            rangelength: "Please enter 10 Digits only.",
+            mobile_no:"Please Enter Digits"
 	    },
         email: {
          	required:"<?php _el('please_enter_', _l('email'))?>",

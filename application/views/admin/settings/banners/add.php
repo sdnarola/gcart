@@ -12,9 +12,7 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
             </li>
-            <li>
-                <a href="<?php echo base_url('admin/settings'); ?>"><?php _el('settings'); ?></a>
-            </li>
+            <li class="active"><?php _el('settings'); ?></li>
             <li class="active"><?php _el('home_page'); ?></li>
              <li>
                 <a href="<?php echo base_url('admin/banners'); ?>"><?php _el('banners');?></a>
@@ -45,6 +43,26 @@
                 <div class="panel-body">
                     <form action="<?php echo base_url('admin/banners/add'); ?>" id="banners_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
+
+                             <!-- div class="form-group">
+                              <small class="req text-danger">* </small>
+                              <label><?php _el('category'); ?> <?php _el('name'); ?>:</label>
+                              <select class="select-search" name="category_id" id="category_id">
+                                <option value=""><?php _el('no_select')?></option>
+<?php
+                            $categories = get_all_categories();
+                            foreach ($categories as $category ) 
+                            {
+?>
+                                    <option id="<?php echo $category['id']?>" name="category" value="<?php echo $category['id'];?>"><?php echo ucfirst($category['name'])?></option>
+<?php                                  
+                            }
+?> 
+                                </select>
+                            </div>
+ -->
+
+
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('title'); ?>:</label>
@@ -56,15 +74,16 @@
                                 <input type="text" class="form-control" placeholder="<?php _el('sub_title'); ?>" id="sub_title" name="sub_title">
                             </div>  
                             <div class="form-group">                             
-                                <div>
+                               <div>
                                     <small class="req text-danger">* </small>
                                     <label><?php _el('description'); ?>:</label>
                                 </div>
                                 <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"></textarea>
                             </div>
+
                             <div class="form-group">
                                 <label><?php _el('image'); ?>:</label>
-                                <input type="file" class="file-input form-control"  name="banner" id='banner' data-show-upload="false">
+                                <input type="file" class="file-input form-control"  name="banner" id='banner'>
                             </div>
                         </div> 
                           <div class="row">
@@ -86,7 +105,6 @@
 
 <script type="text/javascript">
 $('.select-search').select2();
-
 $("#banners_form").validate({
     rules: {
         title: {
@@ -116,6 +134,7 @@ $("#banners_form").validate({
 $('.file-input').fileinput({
         browseLabel: 'Browse',
         browseIcon: '<i class="icon-file-plus"></i>',
+        uploadIcon: '<i class="icon-file-upload2"></i>',
         removeIcon: '<i class="icon-cross3"></i>',
         layoutTemplates: {
             icon: '<i class="icon-file-check"></i>',

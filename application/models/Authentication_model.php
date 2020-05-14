@@ -317,7 +317,7 @@ class Authentication_model extends MY_Model
 				$message .= str_replace($find, $replace, $template['message']);
 
 				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
-
+     			
 				$sent = send_email($email, $subject, $message);
 
 				if ($sent)
@@ -333,7 +333,6 @@ class Authentication_model extends MY_Model
 
 		return ['invalid_user' => true];
 	}
-
 /**===================================code by vixuti patel=======================================*/
 /**
  * [verify_email  verify users email]
@@ -356,7 +355,6 @@ class Authentication_model extends MY_Model
 
 		return null;
 	}
-
 	/**
 	 * [verify_vendor_email  (on registraion) ]
 	 * @param  [type] $sign_up_key [description]
@@ -378,8 +376,7 @@ class Authentication_model extends MY_Model
 
 		return null;
 	}
-
-/*===========================code end by vixuti patel===========================================*/
+	/*===========================code end by vixuti patel===========================================*/
 	/**
 	 * Resets user password after successful validation of the key
 	 *

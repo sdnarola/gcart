@@ -6,17 +6,16 @@ class Categories extends Frontend_Controller
 	{
 		parent::__construct();
 		$this->CI = &get_instance();
-		$this->load->model('category_model', 'category');
-		$this->load->model('Product_model', 'product');
 	}
 
+// ============================================ WORK BY KOMAl =================================================================================================
 	/**
 	 * [index description]
 	 * @param  string $category_slug      [Categories slug]
 	 * @param  string $sub_category_slug [sub category slug]
 	 * @return [All category page data]
 	 */
-	public function index($category_slug = '', $sub_category_slug = '')
+	public function index($category_slug = '', $sub_category_slug = '', $page = '')
 	{
 		$this->data['main_category'] = $this->category->get_parent_categories();
 		$this->data['sub_category']  = $this->category->get_sub_categories();
@@ -39,43 +38,46 @@ class Categories extends Frontend_Controller
 		$order                   = (empty($order)) ? 'asc' : $order;
 		$tags                    = $this->input->get('tags');
 		$tags                    = (empty($tags)) ? '' : $tags;
-		$manufacture             = $this->input->get('manufacture');
-		$manufacture             = (empty($manufacture)) ? '' : $manufacture;
+		$manufacture_id             = $this->input->get('manufacture');
+
+		$manufacture             = (empty($manufacture_id)) ? '' : $manufacture_id;
 		$multiple_subcategory    = $this->input->get('subcategory');
 		$multiple_subcategory    = (empty($multiple_subcategory)) ? '' : $multiple_subcategory;
 		$pricerange              = $this->input->get('pricerange');
 		$default_min_max         = array('min' => 100, 'max' => 800);
 		$multiple_subcategory_id = '';
 		$result                  = array();
+		$page_size               = 4;
 
 		if (!empty($multiple_subcategory))
 		{
 			$multiple_subcategory_id = (explode(',', $multiple_subcategory));
 		}
 
-		if (!empty($category_slug) || !empty($sub_category_slug))
+		if (!empty($category_slug))
 		{
 			//get the category id from it
-			$category     = $this->category->get_category_by_banner($category_slug);
+			$category     = $this->banners->get_category_by_banner($category_slug);
 			$sub_category = $this->category->get_sub_category_by_slug($category['id'], $sub_category_slug);
 
-			$this->data['category_title']    = $category['name'];
-			$this->data['subcategory_title'] = $sub_category['name'];
-			$this->data['category_slug']     = $category_slug;
-			//get the brands
-			$this->data['brands'] = $this->product->get_products_brands($category['id'], $sub_category['id'], $multiple_subcategory_id, $tags);
-
 			//get the products now
-			$where['category_id'] = $category['id'];
+			$where['category_id']                                  = $category['id'];
+			$max_min_where['category_id']                          = $category['id'];
+			$brands_where['category_id']                           = $category['id'];
+			$shop_sub_category_where['sub_categories.category_id'] = $category['id'];
 
 			if (!empty($sub_category_slug))
 			{
-				$where['sub_category_id'] = $sub_category['id'];
+				$where['sub_category_id']         = $sub_category['id'];
+				$max_min_where['sub_category_id'] = $sub_category['id'];
+				$brands_where['sub_category_id']  = $sub_category['id'];
 			}
 
 			if (!empty($manufacture))
 			{
-				$where['brand_id'] = $manufacture;
+				$where['brand_id']                            = $manufacture;
+				$max_min_where['brand_id']                    = $manufacture;;
+				$shop_sub_category_where['products.brand_id'] = $manufacture;
 			}
 
 			if (!empty($pricerange))
@@ -85,15 +87,21 @@ class Categories extends Frontend_Controller
 				$where['price <='] = $prices[1];
 			}
 
-//sub categories
+			$this->data['category_title']    = $category['name'];
+			$this->data['subcategory_title'] = $sub_category['name'];
+			$this->data['category_slug']     = $category_slug;
+			//get the brands
+			$this->data['brands'] = $this->brands->get_products_brands($brands_where, $tags, $multiple_subcategory_id);
+
 			if (empty($sub_category_slug))
 			{
-				$this->data['categoriesfilters'] = $this->category->get_shop_by_sub_category($category['id'], $manufacture, $tags);
+				$this->data['parent_categoriesfilter'] = $this->category->get_shop_by_parent_category($category['id']);
+				$this->data['categoriesfilters']       = $this->category->get_shop_by_sub_category($shop_sub_category_where, $tags);
 			}
 
 			//tags
 
-			$products_tags = $this->product->get_products_tags($where, $multiple_subcategory_id);
+			$products_tags = $this->products->get_products_tags($where, $multiple_subcategory_id);
 
 			if (!empty($products_tags))
 			{
@@ -106,16 +114,18 @@ class Categories extends Frontend_Controller
 			}
 
 			$this->data['products_tags'] = $products_tags;
-			$default_min_max             = $this->product->get_all_products_min_max($where, $tags, $multiple_subcategory_id);
-			$total                       = $this->product->get_all_products_count($where, $tags, $multiple_subcategory_id);
-			$products                    = $this->product->get_all_products($where, $page, $limit, $sort, $order, $tags, $multiple_subcategory_id);
+			$default_min_max             = $this->products->get_all_products_min_max($max_min_where, $tags, $multiple_subcategory_id);
+			$total                       = $this->products->get_all_products_count($where, $tags, $multiple_subcategory_id);
+			$products                    = $this->products->get_all_products($where, $page, $limit, $sort, $order, $tags, $multiple_subcategory_id);
 		}
 
 		$pricerange                    = (empty($pricerange)) ? $default_min_max['min'].','.$default_min_max['max'] : $pricerange;
+		$this->data['vendors_data']    = $this->vendors->get_many_by(array('is_active' => 1, 'is_deleted' => 0));
 		$this->data['category']        = (empty($category)) ? array() : $category;
 		$this->data['products']        = $products;
 		$this->data['list_container']  = $list_container;
 		$this->data['page']            = $page;
+		$this->data['page_size']       = $page_size;
 		$this->data['limit']           = $limit;
 		$this->data['total']           = $total;
 		$this->data['sort']            = $sort;
@@ -129,43 +139,7 @@ class Categories extends Frontend_Controller
 		$this->template->load('index', 'content', 'products/index', $this->data);
 	}
 
-	/**==================================================code  by vixuti patel=====================================================
-		 * [search_category ]
-		 * @return [type] [description]
-	*/
-	public function search()
-	{
-		if ($this->input->post('category_id'))
-		{
-			$name        = $this->input->post('name');
-			$category_id = $this->input->post('category_id');
-			$data        = $this->category->search($category_id, $name);
-
-//var_dump($data);
-
-			foreach ($data as $search)
-			{
-				if (!empty($search['s_id']))
-				{
-					//$data['sub_category_products'] = $this->category->get_sub_category_products($search['s_id']);
-					return $this->category->get_sub_category_products($search['s_id']);
-				}
-				else
-				{
-					//$data['parent_category_products'] = $this->category->get_parent_category_products($search['c_id']);
-					return $this->category->get_parent_category_products($search['c_id']);
-				}
-
-				//	$this->template->load('index', 'content', 'products/index', $data);
-			}
-
-			if (!$data)
-			{
-				set_alert('error', _l('no_data_found', _l('')));
-				redirect();
-			}
-		}
-	}
+// ============================================ END  WORK BY KOMAl =================================================================================================
 
 	/***==================================================code end by vixuti patel=====================================================***/
 
@@ -181,5 +155,10 @@ class Categories extends Frontend_Controller
 	{
 		$parent_id                     = $this->uri->segment(3);
 		$data['sub_category_products'] = $this->category->get_sub_category_products($parent_id);
+
+// var_dump($data);
+
+// //$this->data=$this->get_all();
+		// 		//$this->template->load('index', 'content', 'products/index', $data);
 	}
 }
