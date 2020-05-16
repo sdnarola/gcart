@@ -76,21 +76,6 @@
 												<label><?php _el('mobile_no');?>:</label>
 												<input type="text" class="form-control" placeholder="<?php _el('mobile_no');?>" id="mobile" name="mobile" value="<?php echo $vendor['mobile']; ?>">
 											</div>
-											<div class="form-group">
-												<small class="req text-danger">* </small>
-												<label><?php _el('address');?>:</label>
-												<input type="text" class="form-control" placeholder="<?php _el('address');?>" id="address" name="address" value="<?php echo $vendor['address']; ?>">
-											</div>
-											<div class="form-group">
-												<small class="req text-danger">* </small>
-												<label><?php _el('pincode');?>:</label>
-												<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $vendor['pincode']; ?>">
-											</div>
-											<div class="form-group">
-												<small class="req text-danger">* </small>
-												<label><?php _el('city');?>:</label>
-												<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo $vendor['city']; ?>">
-											</div>
 <?php
 	$readonly = '';
 ?>
@@ -102,7 +87,7 @@
 													echo 'checked';
 												}
 											?><?php echo $readonly; ?>>
-											</div>
+											</div>										
 										</fieldset>
 									</div>
 									<div class="col-md-6">
@@ -134,14 +119,51 @@
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('shop');?>&nbsp<?php _el('details');?>:</label>
-														<textarea  rows="9" cols="50" class="form-control" placeholder="<?php _el('shop')?><?php _el('details')?>" id="shop_details" name="shop_details"><?php echo $vendor['shop_details']; ?></textarea>
+														<textarea  rows="3" cols="30" class="form-control" placeholder="<?php _el('shop')?><?php _el('details')?>" id="shop_details" name="shop_details"><?php echo $vendor['shop_details']; ?></textarea>
 													</div>
 													<div class="form-group">
 														<small class="req text-danger">* </small>
 														<label><?php _el('total');?>&nbsp<?php _el('products');?>:</label>
 														<input type="text" class="form-control" placeholder="<?php _el('total');?><?php _el('products');?>" id="total_products" name="total_products" value="<?php echo $vendor['total_products']; ?>">
 													</div>
-										</fieldset>
+													<div class="form-group">
+														<small class="req text-danger">* </small>
+							                            <label><?php _el('state') ?></label>
+							                            <select class="select-search" name="state" id="state" onchange="get_cities();">
+							                                <option value="0" selected readonly disabled>----- Select State -----</option>
+<?php
+				foreach ($states as $state)
+				{
+?>
+					                                    <option id="<?php echo $state['id'] ?>" name="state['name']" value="<?php echo $state['id']; ?>"
+					                                    <?php
+					                                    		if ($state['id'] == $vendor['state'])
+					                                    		{ echo ' selected';}?>>
+					                                    <?php echo ucfirst($state['name']) ?>
+					                                    </option>
+<?php
+				}
+?>
+			                               				</select>
+													</div>
+													<div class="form-group">
+														<small class="req text-danger">* </small>
+						                                <label><?php _el('city');?>:</label>
+						                                <select class="form-control select-search" name="city" id="city" >
+						                                    <option  value='<?php echo $user['city'];?>' selected="selected"readonly disabled><?php get_city_name($vendor['city']);?></option>
+						                                </select>
+													</div>
+													<div class="form-group">
+														<small class="req text-danger">* </small>
+														<label><?php _el('address');?>:</label>
+														<input type="text" class="form-control" placeholder="<?php _el('address');?>" id="address" name="address" value="<?php echo $vendor['address']; ?>">
+													</div>
+													<div class="form-group">
+														<small class="req text-danger">* </small>
+														<label><?php _el('pincode');?>:</label>
+														<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $vendor['pincode']; ?>">
+													</div>
+											</fieldset>
 									</div>
 								</div>
 <?php
@@ -189,7 +211,7 @@ $("#vendor_edit_form").validate({
 		pincode: {
 			required: true,
 		},
-		city: {
+		state: {
 			required: true,
 		},
 		owner_name: {
@@ -233,8 +255,8 @@ $("#vendor_edit_form").validate({
 		pincode: {
 			required:"<?php _el('please_enter_', _l('pincode'))?>",
 		},
-		city: {
-			required:"<?php _el('please_enter_', _l('city'))?>",
+		state: {
+			required:"<?php _el('please_enter_', _l('state'))?>",
 		},
 		owner_name: {
 			required:"<?php _el('please_enter_', (_l('owner').' '._l('name')))?>",
@@ -257,6 +279,42 @@ $("#vendor_edit_form").validate({
 
 	}
 });
+
+var BASE_URL = "<?php echo base_url(); ?>";
+/**
+ * Gets the cities name from state id
+ */
+function get_cities()
+{
+    var id = $( "#state option:selected" ).val(); //get value of state
+    var state = $( "#state option:selected" ).text(); //get text of state
+    var city_id = '<?php echo $vendor['city']; ?>'; //user city id
+    $( ".city" ).remove();
+    $.ajax({
+        type:'post',
+        url:BASE_URL+'admin/users/get_cities_by_state_id/'+id,
+        data: { id:id },
+        dataType: 'json',
+        success:function(response){
+            if(response != null)
+            {
+                var len = response.length;
+                for( var i = 0; i<len; i++ )
+                {
+                    var id = response[i]['id']; //id of sub category
+                    var name = response[i]['name']; //name of sub category
+                    var select = ( id == city )?'selected':'';
+                    $("#city").append("<option value='"+id+"' "+select+" class='city'>"+name.charAt(0).toUpperCase() + name.substr(1).toLowerCase()+"</option>");
+                }
+            }
+            else
+            {
+                $("#city").append("<option value='' class='city'>No city</option>");
+            }
+
+        }
+    });
+}
 </script>
 
 

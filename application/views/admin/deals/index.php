@@ -77,7 +77,7 @@
 
                     			if ($deal['type'] == 0)
                     			{
-                    				echo '&#8377;'.'. '.$deal['value'];
+                    				echo _l('currency_symbol').'. '.$deal['value'];
                     			}
                     			else
                     			{

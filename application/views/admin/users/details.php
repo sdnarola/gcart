@@ -66,7 +66,7 @@
                                     <td width="40%" class="text-semibold"><?php _el('mobile_no');?></td><td width="10%">:</td><td width="40%"><?php echo $user['mobile']; ?></td>
                                 </tr>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('last_login');?></td><td width="10%">:</td><td width="40%"><?php $time =time_to_words($user['last_login']); echo $time; ?></td>
+                                    <td width="40%" class="text-semibold"><?php _el('last_login');?></td><td width="10%">:</td><td width="40%"><?php $time =time_to_words($user['last_login']); echo $time.' '._l('ago'); ?></td>
                                 </tr>
                                 <tr>
                                     <td width="40%" class="text-semibold"><?php _el('email_varified');?></td><td width="10%">:</td><td width="40%">
@@ -94,10 +94,10 @@
                                         <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($user['house_or_village'].', '.$user['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst($user['city']); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo  ucfirst(get_city_name($user['city'])); ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($user['state']); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucfirst(get_state_name($user['state'])); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" class="text-semibold"><?php _el('pincode');?></td><td width="10%">:</td><td width="40%"><?php echo $user['pincode']; ?></td>
@@ -134,7 +134,7 @@
                                         <td>
                                             <?php echo $record['order_date'] ?>
                                         </td>        
-                                        <td><?php echo $record['grand_total'] ?></td>
+                                        <td><?php echo _l('currency_symbol').' '.$record['grand_total'] ?></td>
                                         <td class="text-center">
 <?php
                                         if($record['order_status'] == 0) 

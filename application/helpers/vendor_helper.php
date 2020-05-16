@@ -141,7 +141,7 @@ function expire_subscription($id)
 
 	if ($current >= $exp)
 	{
-		return 1;
+		return $exp;
 	}
 	else
 	{

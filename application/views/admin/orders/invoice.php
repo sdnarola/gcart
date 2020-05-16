@@ -111,16 +111,16 @@
 	?>
     <tr>
         <td><?php echo ucwords($item['name']); ?></td>
-        <td><?php echo '&#8377;'.'. '.$item['price']; ?></td>
+        <td><?php echo _l("currency_symbol").'. '.$item['price']; ?></td>
         <td><?php echo $item['item_quantity']; ?></td>
-        <td><?php echo '&#8377;'.'. '.$item['total_amount']; ?></td>
+        <td><?php echo _l("currency_symbol").'. '.$item['total_amount']; ?></td>
     </tr>
 <?php
 	}
 
 ?>
 
-                                    <tr><td colspan="3" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><?php echo '&#8377;'.'. '.$order['grand_total']; ?></td></tr>
+                                    <tr><td colspan="3" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><?php echo _l("currency_symbol").'. '.$order['grand_total']; ?></td></tr>
                                 </tbody>
                             </table>
                         </div>

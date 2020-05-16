@@ -85,8 +85,6 @@ class Categories extends Admin_Controller
 			//for deactive subcategories status
 			$status = array('is_active' => $data['is_active']);
 
-//$sub_categories_update = $this->sub_categories->update_subcategories_status($id, $status);
-
 			if ($_FILES['icon']['name'] != NULL)
 			{
 				$result = upload_logo('assets/uploads/main_categories/', 'icon');

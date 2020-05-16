@@ -32,7 +32,9 @@
 
 ?>></input> </label>
                 <div class="heading-elements">
-                    <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
+                <a href="<?php echo base_url('admin/vendors/pending_list');?>" class="btn btn-info btn-sm" id="pending_list"><?php echo _l('pending').' '._l('subscriptions');?></a>
+
+                <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
                 </div>
         </div>
         <!-- /Panel heading -->

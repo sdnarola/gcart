@@ -74,20 +74,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td>
-                                    <td width="40%"><?php echo ucfirst($vendor['address']) ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('city');?></td>
-                                    <td width="10%">:</td>
-                                    <td><?php echo ucfirst($vendor['city']) ?>,</td>
-                                </tr>
-                                <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('pincode');?></td><td width="10%">:</td>
-                                            <td><?php echo ucfirst($vendor['pincode']) ?>,</td>
-                                </tr>
-                                <tr>
                                     <td width="40%" class="text-semibold"><?php _el('subscription_plan');?></td><td width="10%">:</td><td width="40%">
 <?php
 	//for subscription title display either deleted or not
@@ -96,19 +82,21 @@
 	if ($del == 1)
 	{
 		echo '<del>'.get_subscription_info($vendor['subscription_id'], 'title').'</del>';
+        echo ' '.'<span class="label label-danger label-rounded">'._l('delete').'</span>';
 	}
 	else
 	{
 		echo get_subscription_info($vendor['subscription_id'], 'title');
-	}
+	
 
 	//for expired subscription lebel
 	$expire = expire_subscription($vendor['id']);
 
-	if ($expire == 1)
+	if ($expire)
 	{
 		echo ' '.'<span class="label label-danger label-rounded">'._l('expired').'</span>';
 	}
+}
 ?>
                                     </td>
                                 </tr>
@@ -160,6 +148,25 @@
                                     <td width="40%" class="text-semibold"><?php _el('shop_details');?></td><td width="10%">:</td>
                                     <td width="40%"><?php echo ucfirst($vendor['shop_details']); ?></td>
                                 </tr>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td>
+                                    <td width="40%"><?php echo ucfirst($vendor['address']) ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('pincode');?></td><td width="10%">:</td>
+                                            <td><?php echo ucfirst($vendor['pincode']) ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('city');?></td>
+                                    <td width="10%">:</td>
+                                    <td><?php echo ucfirst(get_city_name($vendor['city'])) ?></td>
+                                </tr>
+                                <tr>
+                                    <td width="40%" class="text-semibold"><?php _el('state');?></td>
+                                    <td width="10%">:</td>
+                                    <td><?php echo ucfirst(get_state_name($vendor['state'])) ?></td>
+                                </tr>
                                 <tr> <td width="40%" class="text-semibold"><?php _el('total');?>&nbsp<?php _el('products');?>
                                 </td><td width="10%">:</td>
                                             <td><?php echo $vendor['total_products']; ?></td></tr>
@@ -195,7 +202,7 @@
         <tr>
             <td><?php echo $record['name'] ?></td>
             <td><?php echo $record['category_name'] ?></td>
-            <td><?php echo $record['price'] ?></td>
+            <td><?php echo _l('currency_symbol').' '.$record['price'] ?></td>
             <td><?php echo $record['quantity'] ?></td>
             <td class="text-center switchery-sm">
                 <input type="checkbox" class="switchery" id="<?php echo $record['id']; ?>"<?php

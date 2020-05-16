@@ -37,6 +37,7 @@ class Users extends Admin_Controller
 
 		if ($this->input->post()) 
 		{
+			print_r($this->input->post());
 			$data = array
 				(
 				'firstname' => $this->input->post('firstname'),
@@ -45,9 +46,19 @@ class Users extends Admin_Controller
 				'mobile' => $this->input->post('mobile'),
 				'is_active' => ($this->input->post('is_active')) ? 1 : 0,
 			);
-			$edit = $this->users->edit($data, $id);
 
-			if ($edit) 
+			$address_data = array(
+				'house_or_village' => $this->input->post('house_or_village'),
+				'street_or_society' => $this->input->post('street_or_society'),
+				'pincode' => $this->input->post('pincode'),
+				'city' => $this->input->post('city'),
+				'state' => $this->input->post('state')
+			);
+		
+			$edit = $this->users->edit($data, $id);
+			$edit_address = $this->users->edit_user_address($id,$address_data['house_or_village'] , $address_data['street_or_society'],$address_data['city'],$address_data['state'],$address_data['pincode']);
+
+			if ($edit && $edit_address) 
 			{
 				set_alert('success', _l('_updated_successfully', _l('user')));
 				redirect('admin/users');
@@ -56,6 +67,8 @@ class Users extends Admin_Controller
 		else 
 		{
 			$data['users'] = $this->users->show($id);
+			$data['states'] = $this->users->get_states();
+			$data['cities'] = $this->users->get_cities_by_state($data['users'][0]['state']);
 			$data['content'] = $this->load->view('admin/users/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
@@ -183,4 +196,11 @@ class Users extends Admin_Controller
 
 		return $order_records;
 	}
+
+	public function get_cities_by_state_id($id)
+	{
+		$data = $this->users->get_cities_by_state($id);
+		echo json_encode($data);
+	}
+
 }

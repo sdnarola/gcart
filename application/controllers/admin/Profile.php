@@ -33,6 +33,28 @@ class Profile extends Admin_Controller
 		if ($this->input->post())
 		{
 			$data      = $this->input->post();
+
+			if ($_FILES['profile_image']['name'] != NULL)
+			{
+				$result = upload_logo('assets/uploads/users/', 'profile_image');
+
+				if (!$result)
+				{
+					$error = array('error' => $this->upload->display_errors());
+					set_alert('danger', ucwords($error['error']));
+					redirect('admin/profile/edit');
+				}
+
+				$data['profile_image'] = $result;
+				//for unlink image from folder
+				$old_upload_image = $this->users->get($id);
+
+				if (basename($old_upload_image['profile_image']) != 'default_user.png')
+				{
+					unlink($old_upload_image['profile_image']);
+				}
+			}
+
 			$shop_name = $data['shop_name'];
 			unset($data['shop_name']);
 			$update = $this->users->update($id, $data);

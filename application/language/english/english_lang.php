@@ -58,6 +58,7 @@ $lang['delete_selected']   = 'Delete Selected';
 $lang['add_sale']          = 'Add sale';
 $lang['ago']               = 'Ago';
 $lang['under_maintenance'] = 'UNDER MAINTENANCE';
+$lang['currency_symbol']   = '<i class="fa fa-inr"></i>';
 
 #Login/Logout/Forgot Password/Change Password/Profile
 #----------------------------------------------------
@@ -140,6 +141,7 @@ $lang['subscription_plan'] = 'Subscription Plan';
 $lang['join_date'] = 'Joining Date';
 $lang['expired'] = 'Expired';
 $lang['address'] = 'Address';
+$lang['renew'] = 'Ask Re-New Plan';
 
 #Subscriptions
 #-------------
@@ -457,6 +459,8 @@ $lang['single_recovery_alert'] = 'You will not be able to recover this record af
 $lang['multiple_deletion_alert'] = 'Are you sure you want to delete selected records?';
 $lang['multiple_recovery_alert'] = 'You will not be able to recover these records after deletion.';
 $lang['select_before_delete_alert'] = 'Please select some records to delete.';
+$lang['select_before_send'] = 'Please select some records to send';
+$lang['send_successfully'] = 'Email send successfully';
 $lang['access_denied'] = 'You do not have enough permissions to access this page. Please contact to your Administrator.';
 $lang['denied'] = 'You do not have rights to change this.';
 $lang['discount_amount'] = 'Discount By Amount';

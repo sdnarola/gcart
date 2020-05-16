@@ -81,32 +81,50 @@ $image_name = basename($user['profile_image']);
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('house_or_village');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('house_or_village');?>" id="house_or_village" name="house_or_village" value="<?php echo $user['house_or_village']; ?>" readonly>
+											<input type="text" class="form-control" placeholder="<?php _el('house_or_village');?>" id="house_or_village" name="house_or_village" value="<?php echo $user['house_or_village']; ?>">
 										</div>							
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('street_or_society');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('street_or_society');?>" id="street_or_society" name="street_or_society" value="<?php echo $user['street_or_society']; ?>" readonly>
+											<input type="text" class="form-control" placeholder="<?php _el('street_or_society');?>" id="street_or_society" name="street_or_society" value="<?php echo $user['street_or_society']; ?>" >
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('pincode');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $user['pincode']; ?>" readonly>
-										</div>
-										<div class="col-md-6 form-group">
-											<small class="req text-danger">* </small>
-											<label><?php _el('city');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo $user['city']; ?>" readonly>
-										</div>
+											<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $user['pincode']; ?>" >
+										</div>								
+										<div class="col-md-6 form-group">		
+			                              <small class="req text-danger">* </small>
+			                              <label><?php _el('state') ?></label>
+			                              <select class="select-search" name="state" id="state" onchange="get_cities();">
+			                                <option value="0" selected readonly disabled>----- Select State -----</option>
+<?php
+				foreach ($states as $state)
+				{
+?>
+			                                    <option id="<?php echo $state['id'] ?>" name="state['name']" value="<?php echo $state['id']; ?>"
+			                                    <?php
+			                                    		if ($state['id'] == $user['state'])
+			                                    		{ echo ' selected';}?>>
+			                                    <?php echo ucfirst($state['name']) ?>
+			                                    </option>
+<?php
+				}
+?>
+			                               </select>
+                            			</div>
 									</div>
+
 									<div class="row">
-										<div class="col-md-6 form-group">
-											<small class="req text-danger">* </small>
-											<label><?php _el('state');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo $user['state']; ?>" readonly>
-										</div>
+										<div class="form-group col-md-6">
+		                                <small class="req text-danger">* </small>
+		                                <label><?php _el('city');?>:</label>
+		                                <select class="form-control select-search" name="city" id="city" >
+		                                    <option  value='<?php echo $user['city'];?>' selected="selected"readonly disabled><?php get_city_name($user['city']);?></option>
+		                                </select>
+                            			</div>										
 <?php
 		$readonly = '';
 ?>
@@ -165,9 +183,6 @@ $("#profileform").validate({
 		pincode: {
 			required: true,
 		},
-		city: {
-			required: true,
-		},
 		state: {
 			required: true
 		}
@@ -197,14 +212,47 @@ $("#profileform").validate({
 		pincode: {
 			required:"<?php _el('please_enter_', _l('pincode'))?>",
 		},
-		city: {
-			required:"<?php _el('please_enter_', _l('city'))?>",
-		},
 		state: {
 			required:"<?php _el('please_enter_', _l('state'))?>",
 		},
 	}
 });
+
+var BASE_URL = "<?php echo base_url(); ?>";
+/**
+ * Gets the cities name from state id
+ */
+function get_cities()
+{
+    var id = $( "#state option:selected" ).val(); //get value of state
+    var state = $( "#state option:selected" ).text(); //get text of state
+    var city_id = '<?php echo $user['city']; ?>'; //user city id
+    $( ".city" ).remove();
+    $.ajax({
+        type:'post',
+        url:BASE_URL+'admin/users/get_cities_by_state_id/'+id,
+        data: { id:id },
+        dataType: 'json',
+        success:function(response){
+            if(response != null)
+            {
+                var len = response.length;
+                for( var i = 0; i<len; i++ )
+                {
+                    var id = response[i]['id']; //id of sub category
+                    var name = response[i]['name']; //name of sub category
+                    var select = ( id == city )?'selected':'';
+                    $("#city").append("<option value='"+id+"' "+select+" class='city'>"+name.charAt(0).toUpperCase() + name.substr(1).toLowerCase()+"</option>");
+                }
+            }
+            else
+            {
+                $("#city").append("<option value='' class='city'>No city</option>");
+            }
+
+        }
+    });
+}
 </script>
 
 

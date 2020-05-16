@@ -20,7 +20,8 @@
 	<div class="row">
 		<!-- Left column -->
 		<div class="col-md-7">
-			<form action="<?php echo base_url('admin/profile/edit/') ?>" id="myprofileform" method="POST">
+			<form action="<?php echo base_url('admin/profile/edit/') ?>" id="myprofileform" method="POST"
+				enctype="multipart/form-data">
 				<!-- Panel -->
 				<div class="panel panel-flat">
 					<!-- Panel heading -->
@@ -61,6 +62,24 @@
 									<label><?php _el('shop_name');?>:</label>
 									<input type="text" class="form-control" id="shop_name" name="shop_name" value="<?php echo $shop_name; ?>">
 								</div>
+								<div class="row">
+		                            <div class="form-group col-md-12 ">
+		                                <label><?php _el('profile_image');?>:</label><br>
+<?php
+	if ($user['profile_image'] != null)
+	{
+	?>
+		                                <div class="col-md-3">
+			                                <div class="thumbnail">
+			                                    <img src="<?php echo base_url().$user['profile_image']; ?>">
+			                                </div>
+		                                </div>
+<?php
+	}
+?>
+		                                <input type="file" name="profile_image" id="profile_image" class="form-control">
+		                            </div>
+		                        </div>
 								<div class="form-group">
 	                                <div class="pull-right">
 	                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>

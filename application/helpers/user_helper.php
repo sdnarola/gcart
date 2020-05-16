@@ -100,4 +100,42 @@ function has_permissions($feature, $capability)
 	}
 }
 
+//===============temp maitri===========
+
+ function get_state_name($id)
+{
+	$CI = &get_instance();
+	$CI->load->model('user_model', 'users');
+
+	$state_name = $CI->users->get_state_name($id);
+
+	if ($state_name == '')
+	{
+		return false;
+	}
+
+	return $state_name;
+}
+
+function get_city_name($id)
+{
+	$CI = &get_instance();
+	$CI->load->model('user_model', 'users');
+
+	$city_name = $CI->users->get_city_name($id);
+
+	if ($city_name == '')
+	{
+		return false;
+	}
+
+	return $city_name;
+}
+
+
+
+
+
+
+//===============temp maitri===========
 ?>

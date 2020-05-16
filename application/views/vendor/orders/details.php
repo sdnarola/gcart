@@ -49,7 +49,7 @@
                                     <td width="40%"class="text-semibold" ><?php _el('total_products');?></td><td width="10%">:</td><td width="40%"><?php echo $order['SUM(order_items.quantity)']; ?></td>
                                 </tr>
                                 <tr>
-                                    <td width="40%"class="text-semibold" ><?php _el('total_amount');?></td><td width="10%">:</td><td width="40%"><?php echo '&#8377;'.'. '.$order['SUM(order_items.total_amount)']; ?></td>
+                                    <td width="40%"class="text-semibold" ><?php _el('total_amount');?></td><td width="10%">:</td><td width="40%"><?php echo _l('currency_symbol').' '.$order['SUM(order_items.total_amount)']; ?></td>
                                 </tr>
                                 <tr>
                                     <td width="40%"class="text-semibold" ><?php _el('order_date');?></td><td width="10%">:</td><td width="40%"><?php echo date('jS F Y  h:i:s A', strtotime($order['order_date'])); ?></td>
@@ -141,9 +141,9 @@
     <tr>
         <td><?php echo ucwords($item['name']); ?></td>
         <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'shop_name')); ?></td>
-        <td><?php echo '&#8377;'.'. '.$item['price']; ?></td>
+        <td><?php echo _l('currency_symbol').' '.$item['price']; ?></td>
         <td><?php echo $item['item_quantity']; ?></td>
-        <td><?php echo '&#8377;'.'. '.$item['total_amount']; ?></td>
+        <td><?php echo _l('currency_symbol').' '.$item['total_amount']; ?></td>
         <td class="text-center">
             <?php
 
