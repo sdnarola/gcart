@@ -45,7 +45,6 @@ class User extends Frontend_Controller
 		else
 		{
 			$this->data['users_data'] = $this->users->show($data['users_id']);
-
 			$this->template->load('index', 'content', 'checkout_address', $this->data);
 		}
 	}

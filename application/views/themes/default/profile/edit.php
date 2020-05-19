@@ -1,4 +1,4 @@
-    <?php $this->load->view('themes/default/includes/alerts');?>
+<?php $this->load->view('themes/default/includes/alerts');?>
     <div class="breadcrumb">
     <div class="container">
         <div class="breadcrumb-inner">
@@ -9,7 +9,7 @@
         </div><!-- /.breadcrumb-inner -->
     </div><!-- /.container -->
     </div><!-- /.breadcrumb -->
-
+<?php $user = get_user_info($this->session->userdata('user_id'));?>
 <div class="body-content">
     <div class="container">
         <div class="sign-in-page">
@@ -37,12 +37,12 @@
             <input type="email" class="form-control unicase-form-control text-input" id="exampleInputEmail2" name="email" value="<?php echo $user['email']; ?>">
         </div>
         <?php
-        if(!empty($user_address))
-        {
-            foreach ($user_address as $user_address)
-            {
-            
-        ?>
+
+        	if (!empty($user_address))
+        	{
+        		foreach ($user_address as $user_address)
+        		{
+        		?>
          <div class="form-group">
             <label class="info-title" for="address_1"><?php _el('address_1');?></label>
             <input type="text" class="form-control unicase-form-control text-input" id="address_1" name="address_1" value="<?php echo $user_address['house_or_village']; ?>">
@@ -64,8 +64,9 @@
             <input type="text" class="form-control unicase-form-control text-input" id="pincode"  name="pincode" value="<?php echo $user_address['pincode']; ?>">
         </div>
         <?php
-            }
-        }
+        	}
+        	}
+
         ?>
         <button type="submit" id='save' name="submit" value="Upload Image" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>
 
@@ -79,10 +80,10 @@
 					if ($user['last_password_change'] != null)
 					{
 					?>
-                    <?php _el('last_password_change_msg', time_to_words($user['last_password_change']))?>
-                    <?php }
+<?php _el('last_password_change_msg', time_to_words($user['last_password_change']))?>
+<?php }
 
-                    ?>
+?>
 		    </p>
 
             <!--change password-->
@@ -116,18 +117,20 @@
 				<div class="form-group">
 				<!--<label class="info-title" for="profile_image"><?php _el('profile_image');?> </label>-->
                 <?php
-                if(empty($user['profile_image']))
-                {
-                ?>                       
+
+                	if (empty($user['profile_image']))
+                	{
+                	?>
                  <img class="img-circle" id="blah" src="<?php echo base_url() ?>assets/uploads/users/1-user.png" alt="<?php _el('profile_image');?>" height=64 width=100 />
                 <?php
-                }
-                else
-                {
-               ?>
+                	}
+                	else
+                	{
+                	?>
 			    <img class="img-circle" id="blah" src="<?php echo base_url() ?><?php echo $user['profile_image']; ?>" alt="<?php _el('profile_image');?>" height=64 width=100 />
-                <?php 
-                }
+                <?php
+                	}
+
                 ?>
 	            <input type="file" class="form-control unicase-form-control text-input" id="profile_image" name="profile_image" size="33" />
 	        	</div>

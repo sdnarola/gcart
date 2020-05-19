@@ -18,13 +18,7 @@ class MY_Controller extends CI_Controller
 	{
 		parent::__construct();
 		$this->lang->load('english');
-// <<<<<<< HEAD
 		$this->load->library('pagination');
-
-// =======
-
-// 		$this->load->model('category_model', 'category');
-		// >>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 	}
 
 	/**
