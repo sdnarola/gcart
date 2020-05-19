@@ -160,12 +160,12 @@
                                 <tr>
                                     <td width="40%" class="text-semibold"><?php _el('city');?></td>
                                     <td width="10%">:</td>
-                                    <td><?php echo ucfirst(get_city_name($vendor['city'])) ?></td>
+                                    <td><?php echo ucfirst(get_city_name($vendor['city_id'])) ?></td>
                                 </tr>
                                 <tr>
                                     <td width="40%" class="text-semibold"><?php _el('state');?></td>
                                     <td width="10%">:</td>
-                                    <td><?php echo ucfirst(get_state_name($vendor['state'])) ?></td>
+                                    <td><?php echo ucfirst(get_state_name($vendor['state_id'])) ?></td>
                                 </tr>
                                 <tr> <td width="40%" class="text-semibold"><?php _el('total');?>&nbsp<?php _el('products');?>
                                 </td><td width="10%">:</td>
