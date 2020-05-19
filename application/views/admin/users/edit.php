@@ -22,11 +22,6 @@
 <!-- Page header -->
 <!-- Content area -->
 <div class="content">
-<?php
-
-	if ($user)
-	{
-	?>
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
 						<!-- Panel -->
@@ -44,32 +39,30 @@
 							<!-- /Panel heading -->
 							<!-- Panel body -->
 							<div class="panel-body">
-								<form action="<?php echo base_url('admin/users/edit/').$user['id']; ?>" id="profileform" name="profileform" method="POST">
-
 <?php
-
-		if ($user['profile_image'] == null)
-		{
-			$user['profile_image'] = 'assets/uploads/users/default_img.png';
-		}
-
-		$address = get_user_address($user['id']);
-	?>
+	if ($user) 
+	{
+		$user = $user[0];		
+?>
+								<form action="<?php echo base_url('admin/users/edit/') . $user['users_id']; ?>" id="profileform" name="profileform" method="POST">							
+<?php
+$image_name = basename($user['profile_image']);
+?>									
 									<div>
 										<div class="form-group">
-											 <p align="center"><img src="<?php echo base_url().$user['profile_image']; ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
+											 <p align="center"><img src="<?php echo base_url() . 'assets/uploads/users/' . $image_name; ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('firstname');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('firstname');?>" id="firstname" name="firstname" value="<?php echo ucfirst($user['firstname']); ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('firstname');?>" id="firstname" name="firstname" value="<?php echo $user['firstname']; ?>">
 										</div>
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('lastname');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('lastname');?>" id="lastname" name="lastname" value="<?php echo ucfirst($user['lastname']); ?>">
+											<input type="text" class="form-control" placeholder="<?php _el('lastname');?>" id="lastname" name="lastname" value="<?php echo $user['lastname']; ?>">
 										</div>
 									</div>
 									<div class="row">
@@ -87,68 +80,71 @@
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
-											<label><?php _el('address1');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('address1');?>" id="address1" name="address1" value="<?php echo ucfirst($address['address_1']); ?>" readonly>
-										</div>
+											<label><?php _el('house_village');?>:</label>
+											<input type="text" class="form-control" placeholder="<?php _el('house_village');?>" id="house_village" name="house_village" value="<?php echo $user['house_or_village']; ?>">
+										</div>							
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
-											<label><?php _el('address2');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('address2');?>" id="address2" name="address2" value="<?php echo ucfirst($address['address_2']); ?>" readonly>
+											<label><?php _el('street_society');?>:</label>
+											<input type="text" class="form-control" placeholder="<?php _el('street_society');?>" id="street_society" name="street_society" value="<?php echo $user['street_or_society']; ?>" >
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('pincode');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $address['pincode']; ?>" readonly>
-										</div>
-										<div class="col-md-6 form-group">
-											<small class="req text-danger">* </small>
-											<label><?php _el('city');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo ucfirst($address['city']); ?>" readonly>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-6 form-group">
-											<small class="req text-danger">* </small>
-											<label><?php _el('state');?>:</label>
-											<input type="text" class="form-control" placeholder="<?php _el('state');?>" id="state" name="state" value="<?php echo ucfirst($address['state']); ?>" readonly>
-										</div>
+											<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $user['pincode']; ?>" >
+										</div>								
+										<div class="col-md-6 form-group">		
+			                              <small class="req text-danger">* </small>
+			                              <label><?php _el('state') ?></label>
+			                              <select class="select-search" name="state" id="state" onchange="get_cities();">
+			                                <option value="0" selected readonly disabled>----- Select State -----</option>
 <?php
-	$readonly = '';
+				foreach ($states as $state)
+				{
+?>
+			                                    <option id="<?php echo $state['id'] ?>" name="state['name']" value="<?php echo $state['id']; ?>"
+			                                    <?php
+			                                    		if ($state['id'] == $user['state_id'])
+			                                    		{ echo ' selected';}?>>
+			                                    <?php echo ucfirst($state['name']) ?>
+			                                    </option>
+<?php
+				}
+?>
+			                               </select>
+                            			</div>
+									</div>
 
-		if ($user['id'] == get_loggedin_user_id())
-		{
-			$readonly = ' readonly';
-		}
-
-	?>
+									<div class="row">
+										<div class="form-group col-md-6">
+		                                <small class="req text-danger">* </small>
+		                                <label><?php _el('city');?>:</label>
+		                                <select class="form-control select-search" name="city" id="city" >
+		                                    <option  value='<?php echo $user['city_id'];?>' selected="selected"readonly><?php get_city_name($user['city_id']);?></option>
+		                                </select>
+                            			</div>										
+<?php
+		$readonly = '';
+?>
 										<div class="col-md-6 form-group">
 											<label><?php _el('status');?>:</label>
-
-											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['id']; ?>"<?php
-
-		if ($user['is_active'] == 1)
-		{
-			echo 'checked';}
-
-	?><?php echo $readonly; ?>>
+											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['users_id']; ?>" <?php if ($user['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
 										</div>
 <?php
-	}
-
-?>
+}
+?>	
 									</div>
-								<div class="row">
-		                            <div class="form-group col-md-12">
-		                                <div class="pull-right">
-		                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
-		                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
-		                                </div>
-		                            </div>
-		                        </div>
+									<div class="row">
+			                            <div class="form-group col-md-12">
+			                                <div class="pull-right">
+			                                    <button type="submit" class="btn btn-primary"><i class="icon-checkmark3 position-left"></i><?php _el('save');?></button>
+			                                    <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+			                                </div>
+			                            </div>
+			                        </div>
                     			</form>
-
 							</div>
 					<!-- /Panel body -->
 						</div>
@@ -176,18 +172,15 @@ $("#profileform").validate({
 		mobile: {
 			required: true,
             number: true,
-            minlength:10,
+            rangelength:[10,10],
 		},
-		address1: {
+		house_or_village: {
 			required: true,
 		},
-		address2: {
+		street_or_society: {
 			required: true,
 		},
 		pincode: {
-			required: true,
-		},
-		city: {
 			required: true,
 		},
 		state: {
@@ -206,27 +199,60 @@ $("#profileform").validate({
             email:"<?php _el('please_enter_valid_', _l('email'))?>",
 		},
 		mobile: {
-			required:"<?php _el('please_enter_', _l('lastname'))?>",
-			number: "plese enter only numbers",
-			minlength:"Please enter a valid 10 digit mobile number",
+			required:"<?php _el('please_enter_', _l('mobile_no'))?>",
+			number: "<?php _el('only_digits')?>",
+			rangelength:"<?php _el('only_10_digits')?>",
 		},
-		address1: {
-			required:"<?php _el('please_enter_', _l('address1'))?>",
+		house_or_village: {
+			required:"<?php _el('please_enter_', _l('house_or_village'))?>",
 		},
-		address2: {
-			required:"<?php _el('please_enter_', _l('address2'))?>",
+		street_or_society: {
+			required:"<?php _el('please_enter_', _l('street_or_society'))?>",
 		},
 		pincode: {
 			required:"<?php _el('please_enter_', _l('pincode'))?>",
-		},
-		city: {
-			required:"<?php _el('please_enter_', _l('city'))?>",
 		},
 		state: {
 			required:"<?php _el('please_enter_', _l('state'))?>",
 		},
 	}
 });
+
+var BASE_URL = "<?php echo base_url(); ?>";
+/**
+ * Gets the cities name from state id
+ */
+function get_cities()
+{
+    var id = $( "#state option:selected" ).val(); //get value of state
+    var state = $( "#state option:selected" ).text(); //get text of state
+    var city_id = '<?php echo $user['city_id']; ?>'; //user city id
+    $( ".city" ).remove();
+    $.ajax({
+        type:'post',
+        url:BASE_URL+'admin/users/get_cities_by_state_id/'+id,
+        data: { id:id },
+        dataType: 'json',
+        success:function(response){
+            if(response != null)
+            {
+                var len = response.length;
+                for( var i = 0; i<len; i++ )
+                {
+                    var id = response[i]['id']; //id of sub category
+                    var name = response[i]['name']; //name of sub category
+                    var select = ( id == city )?'selected':'';
+                    $("#city").append("<option value='"+id+"' "+select+" class='city'>"+name.charAt(0).toUpperCase() + name.substr(1).toLowerCase()+"</option>");
+                }
+            }
+            else
+            {
+                $("#city").append("<option value='' class='city'>No city</option>");
+            }
+
+        }
+    });
+}
 </script>
 
 

@@ -31,6 +31,11 @@
                 <!-- Panel body -->
                 <div class="panel-body">
                     <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="pull-right">
+                                <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <table class="table table-hover table-framed table-sm table-striped rounded">
                               <thead>
@@ -44,7 +49,7 @@
                                     <td width="40%" class="text-semibold"><?php _el('total_products');?></td><td width="10%">:</td><td width="40%"><?php echo $order['total_products']; ?></td>
                                 </tr>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('grand_total');?></td><td width="10%">:</td><td width="40%"><?php echo '<i class="fa fa-inr"></i>'.'. '.$order['grand_total']; ?></td>
+                                    <td width="40%" class="text-semibold"><?php _el('grand_total');?></td><td width="10%">:</td><td width="40%"><?php echo _l("currency_symbol").'. '.$order['grand_total']; ?></td>
                                 </tr>
                                 <?php
 
@@ -124,10 +129,10 @@
                                         <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['house_or_village'].', '.$address['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['city']); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_city_name($address['city_id'])); ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['state']); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_state_name($address['state_id'])); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" class="text-semibold"><?php _el('pincode');?></td><td width="10%">:</td><td width="40%"><?php echo $address['pincode']; ?></td>
@@ -162,9 +167,9 @@
     <tr>
         <td><?php echo ucwords($item['name']); ?></td>
         <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'shop_name')); ?></td>
-        <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$item['price']; ?></td>
+        <td><?php echo _l("currency_symbol").'. '.$item['price']; ?></td>
         <td><?php echo $item['item_quantity']; ?></td>
-        <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$item['total_amount']; ?></td>
+        <td><?php echo _l("currency_symbol").'. '.$item['total_amount']; ?></td>
         <td class="text-center">
             <?php
 

@@ -34,7 +34,6 @@
                     <tr>
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
-
                         </th>
                         <th width="30%" ><?php _el('name');?></a></th>
                         <th width="30%" ><?php _el('email');?></th>

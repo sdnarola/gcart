@@ -12,7 +12,6 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li class="active"><?php _el('settings');?></li>
             <li class="active"><?php _el('menu_setup');?></li>
         </ul>
     </div>

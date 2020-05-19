@@ -27,19 +27,15 @@
             <!-- Panel -->
             <div class="panel panel-flat">
                 <!-- Panel heading -->
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <h3 class="panel-title">
-                                <strong><?php _el('product');?></strong>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
                 <!-- /Panel heading -->
                 <!-- Panel body -->
                 <div class="panel-body">
                     <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="pull-right">
+                                <a href="javascript:window.history.back();" class="btn btn-default"><i class="icon-undo2 position-left"></i><?php _el('back');?></a>
+                            </div>
+                        </div>
                         <div class="col-md-2">
                             <div class="thumbnail">
                                 <div class="thumb">
@@ -72,7 +68,7 @@
                                     <tr> <td width="40%" class="text-semibold"><?php _el('vendor');?></td><td width="10%">:</td><td width="40%" ><a data-popup="tooltip" data-placement="top"  title="<?php _el('vendor')?>" href="<?php echo base_url('home/store/').$product['vendor_id']; ?>"><?php echo ucwords(get_vendor_info($product['vendor_id'], 'shop_name')); ?>
                                         </a></td> </tr>
 
-                                    <tr> <td width="40%" class="text-semibold"><?php _el('price');?></td><td width="10%">:</td><td width="40%" ><?php echo '&#8377;'.'. '.$product['price']; ?></td> </tr>
+                                    <tr> <td width="40%" class="text-semibold"><?php _el('price');?></td><td width="10%">:</td><td width="40%" ><?php echo _l('currency_symbol').' '.$product['price']; ?></td> </tr>
 
                                     <tr> <td width="40%" class="text-semibold"><?php _el('sku');?></td><td width="10%">:</td><td width="40%" ><?php echo $product['sku']; ?></td> </tr>
 

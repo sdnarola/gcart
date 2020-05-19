@@ -77,7 +77,7 @@
 
                     			if ($deal['type'] == 0)
                     			{
-                    				echo '<i class="fa fa-inr"></i>'.'. '.$deal['value'];
+                    				echo _l('currency_symbol').'. '.$deal['value'];
                     			}
                     			else
                     			{

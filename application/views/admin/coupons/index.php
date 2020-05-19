@@ -78,7 +78,7 @@
 
         						if ($coupon['type'] == 0)
         						{
-        							echo '&#8377;'.'. '.$coupon['amount'];
+        							echo _l('currency_symbol').'. '.$coupon['amount'];
         						}
         						else
         						{

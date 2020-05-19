@@ -143,7 +143,7 @@ class Emails extends Admin_Controller
 				'placeholders' => [
 					'{firstname}'              => 'User Firstname',
 					'{lastname}'               => 'User Lastname',
-					'{email_verification_url}' => 'Email Verification URL',
+					'{url}' 				   => 'Update Subscriptions',
 					'{email_signature}'        => 'Email Signature',
 					'{company_name}'           => 'Company Name',
 					'{expired_date}'		   => 'Expired Date'

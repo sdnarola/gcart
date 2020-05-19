@@ -2,7 +2,7 @@
 <div class="page-header page-header-default">
 	<div class="page-header-content">
 		<div class="page-title">
-			<h4></i> <span class="text-semibold"><?php _el('settings'); ?></span></h4>
+			<h4></i> <span class="text-semibold"><?php _el('web_setup'); ?></span></h4>
 		</div>
 	</div>
 	<div class="breadcrumb-line">
@@ -10,7 +10,7 @@
 			<li>
 				<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
 			</li>
-			<li class="active"><?php _el('settings'); ?></li>
+			<li class="active"><?php _el('web_setup'); ?></li>
 		</ul>
 	</div>
 </div>

@@ -17,6 +17,8 @@ function send_email($email, $subject, $message)
 	$CI->email->from(get_settings('smtp_user'), get_settings('from_name'));
 	$CI->email->reply_to(get_settings('reply_to_email'), get_settings('reply_to_name'));
 	$CI->email->to($email);
+	$CI->email->SMTPAuth = true;
+   	$CI->email->SMTPDebug = true;
 	$CI->email->set_newline("\r\n");
 /* if BCC email is set in settings, send mail to BCC email */
 	if (get_settings('bcc_emails_to') != '')

@@ -12,7 +12,6 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard'); ?></a>
             </li>
-            <li class="active"><?php _el('settings'); ?></li>
             <li class="active"><?php _el('home_page'); ?></li>
             <li>
                 <a href="<?php echo base_url('admin/banners'); ?>"><?php _el('banners');?></a>
@@ -43,60 +42,30 @@
                 <div class="panel-body">
                      <form action="<?php echo base_url('admin/banners/edit/'). $banner['id']; ?>" id="banners_form" method="POST" enctype="multipart/form-data">
                         <div class="col-md-12">
-
-                            <!--  <div class="form-group">
-                              <small class="req text-danger">* </small>
-                              <label>category name</label>
-                              <select class="select-search" name="category_id" id="category_id">
-                                <option id="" name="category" value=""
-
-                               <?php
-                                    if($banner['category_id'] == NULL)
-                                    {
-                                        echo 'selected';
-                                    } 
-                                ?> ><?php _el('no_select')?></option>
-<?php
-                            $categories = get_all_categories();
-                            foreach ($categories as $category ) 
-                            {
-?>
-                                    <option id="<?php echo $category['id']?>" name="category" value="<?php echo $category['id'];?>"
-                                    <?php 
-                                    if($category['id']==$banner['category_id'])
-                                        {echo ' selected';}
-                                    ?>><?php echo ucfirst($category['name'])?></option>
-<?php                                  
-                            }
-?> 
-                                </select>
-                            </div> -->
-
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('title'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('title'); ?>" id="title" name="title" value="<?php echo ucfirst($banner['title'])?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('title'); ?>" id="title" name="title" value="<?php echo $banner['title'] ?>">
                             </div>
                              <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('sub_title'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('sub_title'); ?>" id="sub_title" name="sub_title" value="<?php echo ucfirst($banner['sub_title'])?>">
+                                <input type="text" class="form-control" placeholder="<?php _el('sub_title'); ?>" id="sub_title" name="sub_title" value="<?php echo $banner['sub_title'] ?>">
                             </div>  
                             <div class="form-group">                             
-                               <div>
+                                <div>
                                     <small class="req text-danger">* </small>
                                     <label><?php _el('description'); ?>:</label>
                                 </div>
-                                <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"><?php echo ucfirst($banner['description'])?></textarea>
+                                <textarea id="description" name="description" rows="5" class="form-control" placeholder="<?php _el('description');?>"><?php echo $banner['description']?></textarea>
                             </div>
 <?php 
-$file = basename($banner['banner']);
+$banner_image = basename($banner['banner']);
 ?>
-
                             <div class="form-group">
                                 <label><?php _el('image'); ?>:</label>
                                 <div>
-                                <image name="image1" id='image1' src="<?php echo base_url('assets/uploads/banners/').$file ?>" width="400" height="200">
+                                <image name="image1" id='image1' src="<?php echo base_url('assets/uploads/banners/').$banner_image ?>" width="400" height="200">
                                 </div>
                             </div>
                             <div class="form-group">

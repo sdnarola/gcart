@@ -44,15 +44,15 @@
                             <div class="form-group">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('name'); ?>:</label>
-                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" value="<?php echo ucfirst($brand['name'])?>" oninput="generate_slug()">
+                                <input type="text" class="form-control" placeholder="<?php _el('name'); ?>" id="name" name="name" value="<?php echo $brand['name']?>" oninput="generate_slug()">
                             </div>
 <?php 
-$file = basename($brand['logo']);
+$logo_name = basename($brand['logo']);
 ?>
 
                             <div class="form-group">
                                 <label><?php _el('logo'); ?>:</label>
-                                <image name="logo1" id='logo1' src="<?php echo base_url('assets/uploads/brands/').$file ?>" width="400" height="200">
+                                <image name="logo1" id='logo1' src="<?php echo base_url('assets/uploads/brands/').$logo_name ?>" width="400" height="200">
                             </div>
                             <div class="form-group">
                                 <input type="file"  class="file-input"  name="logo" id='logo' data-show-caption="false" data-show-upload="false">

@@ -12,9 +12,6 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li>
-                <a href="<?php echo base_url('admin/vendors'); ?>"><?php _el('vendors');?></a>
-            </li>
             <li class="active"><?php _el('subscriptions');?></li>
         </ul>
     </div>
@@ -42,10 +39,10 @@
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                         </th>
-                        <th width="40%" ><?php _el('title');?></th>
+                        <th width="45%" ><?php _el('title');?></th>
                         <th width="15%" ><?php _el('cost');?></th>
                         <th width="15%" ><?php _el('duration');?>(<?php _el('days');?>)</th>
-                        <th width="20%" ><?php _el('product');?><?php _el('allowed');?></th>
+                        <th width="15%" ><?php _el('product');?>&nbsp<?php _el('allowed');?></th>
                         <th width="8%" class="text-center"><?php _el('actions');?></th>
                     </tr>
                 </thead>
@@ -65,8 +62,8 @@
                         <td>
                             <?php echo ucfirst($plan['title']); ?>
                         </td>
-                         <td>
-                            <?php echo $plan['cost']; ?>
+                        <td>
+                            <?php echo _l('currency_symbol').'. '.$plan['cost']; ?>
                         </td>
                         <td>
                             <?php echo ucfirst($plan['days']); ?>
@@ -85,7 +82,6 @@
 <?php
 	}
 	}
-
 ?>
        </tbody>
             </table>

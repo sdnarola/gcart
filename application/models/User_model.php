@@ -58,13 +58,13 @@ class User_model extends MY_Model
 	 */
 	public function show($id)
 	{
-		$this->db->select('users.*,users_addresses.id as users_addresses_id,users_addresses.users_id,users_addresses.house_or_village,users_addresses.street_or_society,users_addresses.city,users_addresses.state,users_addresses.pincode');
+		$this->db->select('*');
 		$this->db->from('users');
 		$this->db->join('users_addresses', 'users.id = users_addresses.users_id');
-		$this->db->where('users.id', $id);
+		$this->db->where('users_id', $id);
 		$query = $this->db->get();
 
-		return $query->row_array();
+		return $query->result_array();
 	}
 
 	/**
@@ -111,7 +111,7 @@ class User_model extends MY_Model
  */
 	public function edit_user_address($id, $address_1, $address_2, $city, $state, $pincode)
 	{
-		$result = "UPDATE users_addresses as a SET a.house_or_village='$address_1',a.street_or_society='$address_2',a.city='$city',a.state='$state',a.pincode='$pincode' WHERE a.users_id=$id";
+		$result = "UPDATE users_addresses as a SET a.house_or_village='$address_1',a.street_or_society='$address_2',a.city_id='$city',a.state_id='$state',a.pincode='$pincode' WHERE a.users_id=$id";
 		$query  = $this->db->query($result);
 
 		return $query;
@@ -127,5 +127,95 @@ class User_model extends MY_Model
 		return $this->db->insert('users_address', $data);
 	}
 
+
 /***==================================================code end by vixuti patel=====================================================***/
+
+//========================================maitri temporary=========================================
+
+ /**
+   * [get_state_name by state id]
+   * @param  [type] $id [state id]
+   * @return [state name]
+   */  
+public function get_state_name($id)
+{
+ 	$this->db->select('name');
+	$this->db->where(array('is_active' => 1, 'is_deleted' => 0, 'id' =>$id)); 
+    $query = $this->db->get('states');
+    $result = $query->result_array();
+    if($result)
+    {
+	    foreach ($result as $state_name) 
+	    {
+			echo $state_name['name'];
+	    }
+	}
+	else{
+		return false;
+	}
+
+ }
+ 
+ /**
+   * [get_state_name by city id]
+   * @param  [int] $id [city id]
+   * @return     [city name]
+   */
+  public function get_city_name($id)
+  {
+ 	$this->db->select('name');
+	$this->db->where(array('is_active' => 1, 'is_deleted' => 0, 'id' =>$id)); 
+    $query = $this->db->get('cities');
+    $result = $query->result_array();
+    if($result)
+    {
+	    foreach ($result as $city_name) 
+	    {
+			echo $city_name['name'];
+	    }
+	}
+	else
+	{
+		return false;
+	}
+
+ }
+
+ /**
+ * [get_state all states details]
+ * @return [array] $response [all states details ]
+ */
+public function get_states()
+{  
+    $this->db->select('*');
+    $this->db->order_by('name', 'asc');
+	$this->db->where(array('is_active' => 1, 'is_deleted' => 0)); 
+    $query = $this->db->get('states');
+    $response = $query->result_array();
+
+    return $response;
+ }
+
+  /**
+  * [get_cities_by_state (by state_id)]
+  * @param  [int] $state_id [state_id]
+  * @return [array]           [array of cities details]
+  */
+ public function get_cities_by_state($state_id)
+ {
+        if($state_id)
+        {
+        $this->db->where(array('is_active' => 1, 'is_deleted' => 0, 'state_id' =>$state_id)); 
+	    $query = $this->db->get('cities');
+	    $cities = $query->result_array();   
+	    return $cities;             
+        }
+        else
+        {
+        	return false;
+        }
+  }
+
+//========================================maitri temporary=========================================
+
 }

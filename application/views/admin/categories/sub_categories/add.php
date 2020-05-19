@@ -13,9 +13,6 @@
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
             <li>
-                <a href="<?php echo base_url('admin/categories'); ?>"><?php _el('categories');?></a>
-            </li>
-            <li>
                 <a href="<?php echo base_url('admin/sub_categories'); ?>"><?php _el('sub_categories');?></a>
             </li>
             <li class="active"><?php _el('add');?></li>
@@ -46,18 +43,18 @@
                         <div class="col-md-12">
                             <div class="form-group">
                               <small class="req text-danger">* </small>
-                              <label>category name</label>
+                              <label><?php _el('category_name') ?></label>
                               <select class="select-search" name="category_name" id="category_name">
+                                <option value="0" selected readonly disabled >----- Select Category -----</option>
 <?php
-	$categories = get_all_categories();
+    $categories = get_all_categories();
 
-	foreach ($categories as $category)
-	{
-	?>
+    foreach ($categories as $category)
+    {
+?>
                                     <option id="category" name="category" value="<?php echo $category['name'] ?>"><?php echo ucfirst($category['name']) ?></option>
 <?php
-	}
-
+    }
 ?>
                                 </select>
                             </div>
@@ -100,6 +97,9 @@ $("#categories_form").validate({
         },
         slug:{
             required: true,
+        },
+        category_name:{
+            required: true,   
         }
     },
     messages: {
@@ -108,6 +108,9 @@ $("#categories_form").validate({
         },
         slug:{
             required:"<?php _el('please_enter_', _l('slug'))?>"
+        },
+        category_name:{
+            required:"<?php _el('please_select_', _l('category'))?>"
         },
     }
 });

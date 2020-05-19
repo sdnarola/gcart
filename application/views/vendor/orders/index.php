@@ -45,7 +45,7 @@
             <tr id="<?php echo $order['order_id']; ?>">
                 <td><?php echo $order['order_number']; ?></td>
                 <td><?php echo $order['SUM(order_items.quantity)']; ?></td>
-                <td><?php echo '<i class="fa fa-inr"></i>'.'. '.$order['SUM(order_items.total_amount)']; ?></td>
+                <td><?php echo _l('currency_symbol').'. '.$order['SUM(order_items.total_amount)']; ?></td>
                 <td><?php echo ucwords($order['payment_method']); ?></td>
                 <td class="text-center">
                     <select class="select" id="<?php echo $order['order_id']; ?>" onchange="change_status(this);">

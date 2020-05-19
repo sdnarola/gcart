@@ -19,6 +19,8 @@
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
     <!-- Panel -->
     <div class="panel panel-flat">
         <!-- Listing table -->
@@ -26,8 +28,8 @@
             <table id="users_table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th width="30%" ><?php _el('email');?></a></th>
-                        <th width="30%" ><?php _el('subscribe_date');?></th>
+                        <th width="50%" ><?php _el('email');?></a></th>
+                        <th width="50%" ><?php _el('subscribe_date');?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +60,8 @@
         <!-- /Listing table -->
     </div>
     <!-- /Panel -->
+</div>
+</div>
 </div>
 <!-- /Content area -->
 

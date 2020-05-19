@@ -14,6 +14,7 @@ class Vendors extends Admin_Controller
 		$this->load->model('product_model', 'products');
 		$this->load->model('settings_model', 'settings');
 		$this->load->model('subscriptions_model', 'subscriptions');
+		$this->load->model('user_model','users');
 	}
 
 	/**
@@ -35,11 +36,9 @@ class Vendors extends Admin_Controller
 	public function delete() 
 	{
 		$vendor_id = $this->input->post('vendor_id');
-
 		$vendor = $this->vendors->get($vendor_id);
 		$imagepath = $vendor['profile_image'];
 		$newpath = 'assets/uploads/vendors/profile/deleted/' . basename($imagepath);
-
 		$logopath = $vendor['logo'];
 		$new_logopath = 'assets/uploads/vendors/logo/deleted/' . basename($logopath);
 
@@ -134,6 +133,7 @@ class Vendors extends Admin_Controller
 		else 
 		{
 			$data['vendor'] = $this->vendors->get($id);
+			$data['states'] = $this->users->get_states();
 			$data['content'] = $this->load->view('admin/vendors/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
 		}
@@ -201,49 +201,58 @@ class Vendors extends Admin_Controller
 		}
 	}
 
-	public function renew()
+	/**
+	 * { display list of vendors whoes subscription is expired }
+	 */
+	public function pending_list()
 	{
-		//echo "hii";
-		$data['vendors'] = $this->vendors->get_all();
-		//print_r($data);		
+		$this->set_page_title(_l('vendors') . ' | ' . _l('pending') .' ' ._l('subscription'));
 
-		foreach($data['vendors'] as $vendor)
+		$vendor_list = [];
+		$vendors = $this->vendors->get_all();	
+
+		foreach($vendors as $vendor)
 		{
 			$expired = expire_subscription($vendor['id']);
 
 			if($expired)
 			{
 				$vendor_list[] = get_vendor_info($vendor['id']);
-				//print_r($vendor_list);
-				
-
-				//print_r($vendors_list);
-
-				// 
 			}
 		}
-				$data['vendors'] = $vendor_list;
-				$data['content'] = $this->load->view('admin/vendors/renew_plan', $data, TRUE);
-				$this->load->view('admin/layouts/index', $data);
-				//print_r($vendor_list);	
+
+		if($vendor_list)
+		{
+			$data['vendors'] = $vendor_list;
+		}
+		else
+		{
+			$data['vendors'] = " ";
+		}
+
+		$data['content'] = $this->load->view('admin/vendors/pending_subscription', $data, TRUE);
+		$this->load->view('admin/layouts/index', $data);
 	}
 
-	public function ask_for_subscription()
+	/**
+	 * { send emails to vendors whom subscription is pending }
+	 */
+	public function mail_renew_subscription()
 	{
-		$ids = $this->input->post();
-		// print_r($ids);
+		$ids = $this->input->post('ids');
+
 		if($ids)
 		{
+			$template = get_email_template('renew-subscription-plan');
+			$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
+			$message = get_settings('email_header');
 			foreach($ids as $id)
 			{
 				$vendor = get_vendor_info($id);
-
-				$template = get_email_template('renew-subscription-plan');
-				$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
-
-				$message = get_settings('email_header');
 				$expired = expire_subscription($id);
-
+				$key = md5($vendor['mobile'] + $vendor['id']);
+				$url = site_url('vendor/profile/renew_paln_link/').$vendor['id'].'/'.$key;
+				
 				$find = [
 					'{firstname}',
 					'{lastname}',
@@ -253,31 +262,37 @@ class Vendors extends Admin_Controller
 					'{expired_date}'
 				];
 
-				$replace = [
+				$replace= [
 					$vendor['firstname'],
 					$vendor['lastname'],
-					site_url('authentication/verify_email/').$vendor['sign_up_key'],
+					$url,
 					get_settings('email_signature'),
 					get_settings('company_name'),
-					$expired
+					$expired,
 				];
-				//print_r($replace);
 
 				$message .= str_replace($find, $replace, $template['message']);
 				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
 				$sent = send_email($vendor['email'], $subject, $message);
 				
 				if ($sent)
-				{
-					echo "true";
+				{	
+					$result[] = "true";
 				}
 				else
 				{
-					echo "false";
+					$result[] = "false";
 				}
 			}
-
+			
+			foreach ($result as $value) 
+			{
+				if($value == "false")
+				{
+					echo 'false';
+				}
+			}
+			echo "true";
 		}
 	}
-
 }

@@ -12,9 +12,6 @@
             <li>
                 <a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i><?php _el('dashboard');?></a>
             </li>
-            <li>
-                <a href="<?php echo base_url('admin/categories'); ?>"><?php _el('categories');?></a>
-            </li>
             <li class="active"><?php _el('sub_categories');?></li>
         </ul>
     </div>
