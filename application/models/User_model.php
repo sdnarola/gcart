@@ -82,25 +82,6 @@ class User_model extends MY_Model
 		return $result;
 	}
 
-// =========================== Bhavik ==================================//
-	/**
-	 * Get user's address
-	 * @param  int  	$id    		The id of the user.
-	 *
-	 * @return mixed 	$address 	The Address Information.
-	 */
-	public function get_user_address($id)
-	{
-		$this->_table = 'users_addresses';
-		$address      = $this->get($id);
-
-		return $address;
-	}
-
-// =========================== Bhavik ==================================//
-
-//
-
 /***==================================================code by vixuti patel=====================================================***/
 
 /**
@@ -111,8 +92,37 @@ class User_model extends MY_Model
  */
 	public function edit_user_address($id, $address_1, $address_2, $city, $state, $pincode)
 	{
-		$result = "UPDATE users_addresses as a SET a.house_or_village='$address_1',a.street_or_society='$address_2',a.city_id='$city',a.state_id='$state',a.pincode='$pincode' WHERE a.users_id=$id";
-		$query  = $this->db->query($result);
+		$this->_table = "users_addresses";
+		$flag = 0;
+		$records = $this->get_all();
+
+		foreach ($records as $record) 
+		{
+			if($record['users_id'] == $id)
+			{
+				$flag=1;
+				break;
+			}
+
+		}
+		if($flag == 1)
+		{
+			$result = "UPDATE users_addresses as a SET a.house_or_village='$address_1',a.street_or_society='$address_2',a.city_id='$city',a.state_id='$state',a.pincode='$pincode' WHERE a.users_id=$id";
+			$query  = $this->db->query($result);
+		}
+		else
+		{
+			$data = array('house_or_village' => $address_1,
+				 			'street_or_society'=> $address_2,
+				 			'city_id'=> $city,
+				 			'state_id'=> $state,
+				 			'pincode'=> $pincode,
+				 			'users_id' => $id,
+				 			'is_deleted' => 0
+			 );
+			$query = $this->db->insert('users_addresses',$data);	
+
+		}
 
 		return $query;
 	}

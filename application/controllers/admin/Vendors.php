@@ -246,12 +246,14 @@ class Vendors extends Admin_Controller
 			$template = get_email_template('renew-subscription-plan');
 			$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
 			$message = get_settings('email_header');
+
 			foreach($ids as $id)
 			{
 				$vendor = get_vendor_info($id);
 				$expired = expire_subscription($id);
 				$key = md5($vendor['mobile'] + $vendor['id']);
 				$url = site_url('vendor/profile/renew_paln_link/').$vendor['id'].'/'.$key;
+
 				
 				$find = [
 					'{firstname}',

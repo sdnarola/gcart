@@ -37,7 +37,6 @@ class Users extends Admin_Controller
 
 		if ($this->input->post())
 		{
-			print_r($this->input->post());
 			$data = array
 				(
 				'firstname' => $this->input->post('firstname'),
@@ -51,14 +50,14 @@ class Users extends Admin_Controller
 				'house_or_village' => $this->input->post('house_village'),
 				'street_or_society' => $this->input->post('street_society'),
 				'pincode' => $this->input->post('pincode'),
+				'landmark' => $this->input->post('landmark'),
 				'city_id' => $this->input->post('city'),
 				'state_id' => $this->input->post('state')
 			);
 		
-			$edit = $this->users->edit($data, $id);
+			$edit = $this->users->edit($data,$id);
 			$edit_address = $this->users->edit_user_address($id,$address_data['house_or_village'] , $address_data['street_or_society'],$address_data['city_id'],$address_data['state_id'],$address_data['pincode']);
-
-
+			
 			if ($edit && $edit_address) 
 			{
 				set_alert('success', _l('_updated_successfully', _l('user')));
@@ -67,7 +66,8 @@ class Users extends Admin_Controller
 		}
 		else
 		{
-			$data['user'] = $this->users->show($id);
+        	$data['user']    = get_user_info($id);
+        	$data['address'] = get_user_address($data['user']['id']);
 			$data['states'] = $this->users->get_states();
 			$data['content'] = $this->load->view('admin/users/edit', $data, TRUE);
 			$this->load->view('admin/layouts/index', $data);
@@ -112,16 +112,9 @@ class Users extends Admin_Controller
 	{
 		$this->set_page_title(_l('users').' | '._l('details'));
 
-		$data['user']    = $this->users->show($id);
+        $data['user']    = get_user_info($id);
+        $data['address'] = get_user_address($id);
 		$data['records'] = $this->order_details($id);
-		//get image path from database
-		$record = $this->users->get($id);
-
-		if ($record['profile_image'])
-		{
-			$data['path'] = $record['profile_image'];
-		}
-
 		$data['content'] = $this->load->view('admin/users/details', $data, TRUE);
 		$this->load->view('admin/layouts/index', $data);
 	}
