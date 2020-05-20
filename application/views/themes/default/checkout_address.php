@@ -4,7 +4,8 @@
         <div class="breadcrumb-inner">
             <ul class="list-inline list-unstyled">
                 <li><a href="<?php echo base_url(); ?>"><?php _el('home');?></a></li>
-                <li class='active'><?php _el('checkout');?></li>
+                <li ><?php _el('checkout');?></li>
+                <li class='active'><?php _el('checkout_shipping_address');?></li>
             </ul>
         </div><!-- /.breadcrumb-inner -->
     </div><!-- /.container -->
@@ -28,7 +29,7 @@
 				      				<div class="col-md-6">
 						      			<div class="form-group">
 										    <label class="info-title" for="exampleInputEmail1"><?php _el('name')?> <span>*</span></label>
-										    <input type="text" class="form-control unicase-form-control text-input" id="name" disabled="disabled"  value="<?= $users_data['firstname'].' '. $users_data['lastname'];?>">
+										    <input type="text" class="form-control unicase-form-control text-input" id="name" disabled="disabled"  value="<?= ucwords($users_data['firstname'].' '. $users_data['lastname']);?>">
 										</div>
 				      				</div>
 						      		<div class="col-md-6">
@@ -42,32 +43,56 @@
 						      		<div class="col-md-6">
 						      			<div class="form-group">
 										    <label class="info-title" for="exampleInputEmail1"><?php _el('house_village')?> <span>*</span></label>
-										    <input type="text" class="form-control unicase-form-control text-input" name="home_no" id="home_no" disabled="disabled"  value="<?= 
-										     $users_data['house_or_village']; ?>">
+										    <input type="text" class="form-control unicase-form-control text-input" name="home_no" id="home_no" disabled="disabled"  value="<?= ucwords($users_data['house_or_village']); ?>">
 										</div>
 						      		</div>
 						      		<div class="col-md-6">
 						      			<div class="form-group">
-										    <label class="info-title" for="exampleInputEmail1"><?php _el('street_society')?><span>*</span></label>
-										    <input type="text" class="form-control unicase-form-control text-input" name="society_name" id="society_name" disabled="disabled"  placeholder="" value="<?=  $users_data['street_or_society']; ?>">
+										    <label class="info-title" for="society_name"><?php _el('street_society')?><span>*</span></label>
+										    <input type="text" class="form-control unicase-form-control text-input" name="society_name" id="society_name" disabled="disabled"  placeholder="" value="<?=  ucwords($users_data['street_or_society']); ?>">
 										</div>
 									</div>
 						      	</div>
 						      	<div class="row">
 						      		<div class="col-md-6">
 						      			<div class="form-group">
-										    <label class="info-title" for="exampleInputEmail1"><?php _el('state')?><span>*</span></label>
-										    <input type="text" class="form-control unicase-form-control text-input" name="state" id="state" disabled="disabled"  value="<?= $users_data['state']; ?>">
+										    <label class="info-title" for="landmark"><?php _el('landmark')?><span>*</span></label>
+										    <input type="text" class="form-control unicase-form-control text-input" name="landmark" id="landmark" disabled="disabled"  placeholder="" value="<?=  ucwords($users_data['landmark']); ?>">
 										</div>
-						      		</div>
+									</div>
 						      		<div class="col-md-6">
 						      			<div class="form-group">
-										    <label class="info-title" for="exampleInputEmail1"><?php _el('city')?> <span>*</span></label>
-										    <input type="text" class="form-control unicase-form-control text-input" name="city" id="city" disabled="disabled"   value="<?=  $users_data['city'] ?>">
-										 </div>
-									</div>
+										    <label class="info-title" for="city1"><?php _el('city')?><span>*</span></label>
+										    <select class="form-control unicase-form-control text-input" name="city" id="city" disabled="disabled">
+										   	<option value="<?=  $users_data['city_id'] ?>"><?= get_city_name($users_data['city_id'],'name') ?></option>
+										   	<?php
+										   		foreach ($city_data as $key => $city) 
+										   		{
+										   			echo '<option value="'. $city['id'].'">'. $city['name'].'</option>';
+										   		}
+										   	?>
+										   </select>
+
+										</div>
+						      		</div>
+						      		
 						      	</div>
 						      	<div class="row">
+						      		<div class="col-md-6">
+						      			<div class="form-group">
+										    <label class="info-title" for="state1"><?php _el('state')?><span>*</span></label>
+										    <select class="form-control unicase-form-control text-input" name="state" id="state" disabled="disabled">
+										   	<option value="<?= $users_data['state_id']; ?>"><?= get_state_name($users_data['state_id'],'name'); ?></option>
+										   	<?php
+										   		foreach ($state as $key => $state_name) 
+										   		{
+										   			echo '<option value="'.$state_name['id'].'">'.$state_name['name'].'</option>';
+										   		}
+										   	?>
+
+										   </select>
+										</div>
+						      		</div>
 						      		<div class="col-md-6">
 						      			<div class="form-group">
 										    <label class="info-title" for="exampleInputEmail1"><?php _el('pincode')?><span>*</span></label>
@@ -113,7 +138,33 @@
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
 
 <script type="text/javascript">
-	 
+	$(document).ready(function(){
+
+		$('#state').change(function(){
+			var state_id = $('#state').val();
+			
+			$.ajax({
+				type:'POST',
+				url:SITE_URL+'User/get_state_by_city',
+				data:{state_id:state_id },
+				dataType:"JSON",
+				success:function(data){
+
+					var city = data.city_data;
+					var city_option=new Array();
+
+					city.forEach(data=>{
+
+						city_option.push('<option value="'+data.id+'">'+data.name+'</option>');
+
+					});
+
+					$('#city').html(city_option);
+				}
+			});
+		});
+	});
+
 	 /**
 	  * [edit USER shipping address description]
 	  *
@@ -126,6 +177,7 @@
 	 	
 	 	document.getElementById("btn-address").disabled = true;
 	 	document.getElementById("home_no").disabled = false;
+	 	document.getElementById("landmark").disabled = false;
 	 	document.getElementById("society_name").disabled = false;
 	 	document.getElementById("state").disabled = false;
 	 	document.getElementById("city").disabled = false;
@@ -133,6 +185,7 @@
 
 	 	
 	 }
+
 	 $.validator.addMethod("alphabetsnspace", function(value, element) {
 					return this.optional(element) || /^[a-zA-Z][\sa-zA-Z]*/.test(value);
 				});
@@ -151,11 +204,7 @@
 	 				required:true,
 	 				alphabetsnspace:true,
 	 			},
-	 			state:{
-	 				required:true,
-	 				alphabetsnspace:true,
-	 			},
-	 			city:{
+	 			landmark:{
 	 				required:true,
 	 				alphabetsnspace:true,
 	 			},
@@ -173,12 +222,8 @@
 	 				required:"<?php _el('please_enter_', _l('street_society'))?>",
 	 				alphabetsnspace:"<?php _el('only_letter_enter')?>",
 	 			},
-	 			state:{
-	 				required:"<?php _el('please_enter_', _l('state'))?>",
-	 				alphabetsnspace:"<?php _el('only_letter_enter')?>",
-	 			},
-	 			city:{
-	 				required:"<?php _el('please_enter_', _l('city'))?>",
+	 			landmark:{
+	 				required:"<?php _el('please_enter_', _l('landmark'))?>",
 	 				alphabetsnspace:"<?php _el('only_letter_enter')?>",
 	 			},
 	 			pincode:{

@@ -47,7 +47,6 @@ function get_user_info($id, $info = '')
 	}
 }
 
-
 /**
  * Gets the requested info of user.
  *
@@ -66,8 +65,8 @@ function get_user_address_info($user_id)
 	{
 		return $user_address;
 	}
-	
 }
+
 /**
  * Gets the address info of user.
  *
@@ -121,42 +120,50 @@ function has_permissions($feature, $capability)
 	}
 }
 
-//===============temp maitri===========
-
- function get_state_name($id)
+/**==========================code by vixuti patel=================================*/
+/**
+ * [get_city_name by it's id]
+ * @param  [int] $id [city id]
+ * @return [string] $city_name   [city name]
+ */
+function get_city_name($id, $info = '')
 {
 	$CI = &get_instance();
-	$CI->load->model('user_model', 'users');
+	$CI->load->model('City_model', 'city');
 
-	$state_name = $CI->users->get_state_name($id);
+	$city_name = $CI->city->get($id);
 
-	if ($state_name == '')
+	if ($info != '')
 	{
-		return false;
+		return $city_name[$info];
 	}
-
-	return $state_name;
+	else
+	{
+		return $city_name;
+	}
 }
 
-function get_city_name($id)
+/**
+ * [get_state_name by it's id]
+ * @param  [int] $id [state_id]
+ * @return [string] $state_name  [state_name]
+ */
+function get_state_name($id, $info = '')
 {
 	$CI = &get_instance();
-	$CI->load->model('user_model', 'users');
+	$CI->load->model('State_model', 'state');
 
-	$city_name = $CI->users->get_city_name($id);
+	$state_name = $CI->state->get($id);
 
-	if ($city_name == '')
+	if ($info != '')
 	{
-		return false;
+		return $state_name[$info];
 	}
-
-	return $city_name;
+	else
+	{
+		return $state_name;
+	}
 }
 
-
-
-
-
-
-//===============temp maitri===========
+/*==============================code end by vixuti patel======================================*/
 ?>

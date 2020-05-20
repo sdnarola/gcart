@@ -10,10 +10,11 @@ class Profile extends Frontend_Controller
 		{
 			redirect(site_url('authentication'));
 		}
-		//$this->load->model('activity_log_model', 'activity_log');
 	}
 /***==================================================code by vixuti patel=====================================================***/
-
+/**
+ * [index to display user details]
+ */
 	public function index()
 	{
 		$this->set_page_title(_l('profile'));
@@ -21,8 +22,8 @@ class Profile extends Frontend_Controller
 
 		if ($id)
 		{
-			$data['user']  = $this->users->get($id);
-			$data['user_address'] = $this->users->show($id);
+			$data['user']         = $this->users->get($id);
+			$data['user_address'] = $this->users->get_user_addresses($id);
 		}
 
 		$this->template->load('index', 'content', 'profile/index', $data);
@@ -39,8 +40,9 @@ class Profile extends Frontend_Controller
 
 		if ($id)
 		{
-			$data['user_address'] = $this->users->show($id);			
-			$data['user'] = $this->users->get($id);			
+			$data['user_address'] = $this->users->get_user_addresses($id);			
+			$data['user']         = $this->users->get($id);	
+			$data['states']	      = $this->users->get_states();
 
 			$this->template->load('index', 'content', 'profile/edit', $data);
 		}
@@ -57,26 +59,43 @@ class Profile extends Frontend_Controller
 
 			$data   = array_map('strip_tags', $data);
 			$update = $this->users->update($id, $data);
-			$address_1 = $this->input->post('address_1');
-			$address_2 = $this->input->post('address_2');
-			$city      = $this->input->post('city');
-			$state     = $this->input->post('state');
-			$pincode   = $this->input->post('pincode');
 
-			$user_address = $this->users->edit_user_address($id, $address_1, $address_2, $city, $state, $pincode);
+			 $data = array(
+				'house_or_village' => $this->input->post('address_1'),
+				'street_or_society'  => $this->input->post('address_2'),
+				'city'     => $this->input->post('city'),
+				'state'    => $this->input->post('state'),
+				'pincode' => $this->input->post('pincode')
+
+			);
+			
+			$user_address = $this->users->edit_user_address($id, $data);
 
 			if ($update == TRUE || $user_address == TRUE)
 			{
 				set_alert('success', _l('_updated_successfully', _l('profile')));
 				log_activity("User Updated Profile [ID:$id]");
-				redirect('profile/index');
+				redirect('profile/edit');
 			}
 		}
 	}
 
+	/**	
+	 * [get_cities by state_id]
+	 * @param  [int] $state_id [state_id]
+	 * @return [json]           [json data of cities]
+	 */
+	public function get_cities()
+	{
+	    $state_id = $this->input->post('state_id');
+	    
+		$cities = $this->users->get_cities_by_state($state_id);
+        echo json_encode($cities);
+
+    }
+
 	/**
 	 *Updates user's password
-	 * @return [type] [description]
 	 */
 	public function edit_password()
 	{
@@ -103,8 +122,7 @@ class Profile extends Frontend_Controller
 	}
 
 /**
- * [uploads file]
- * @return [type] [description]
+ * [uploads file][to upload user profile image]
  */
 	public function uploads()
 	{

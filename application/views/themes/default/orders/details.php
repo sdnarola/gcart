@@ -1,9 +1,8 @@
  <?php
   $user    = get_user_info($order['user_id']);                                      
-  $address    = $this->users->show($order['user_id']);                                          
+  $address = $this->users->get_user_addresses($order['user_id']);                                          
  ?>
  <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/order.css">
-
     <div class="breadcrumb">
     <div class="container">
         <div class="breadcrumb-inner">
@@ -59,7 +58,7 @@
                       <tr>
                         <td><?php _el('grand_total');?></td>
                         <td>:</td>
-                        <td><?php _el('rs');echo '.'.$order['grand_total']; ?></td>
+                        <td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.'.$order['grand_total']; ?></td>
 
                       </tr>
                       <tr>
@@ -135,13 +134,13 @@
                         <tr>
                         <td><?php _el('city');?></td>
                         <td>:</td>
-                        <td><?php echo ucwords($address['city']); ?></td>
+                        <td><?php echo ucwords(get_city_name($address['city'])); ?></td>
                       
                       </tr>
                         <tr>
                         <td><?php _el('state');?></td>
                         <td>:</td>
-                        <td><?php echo ucwords($address['state']); ?></td>
+                        <td><?php echo ucwords(get_state_name($address['state'])); ?></td>
                       
                       </tr>
                        </tr>
@@ -174,10 +173,17 @@
                                     <th width="20%"><?php _el('shop_name');?></th>
                                     <th width="15%"><?php _el('price');?></th>
                                     <th width="10%"><?php _el('quantity');?></th>
-                                    <th width="15%"//><?php _el('total_amount');?></th>
-                                    <th class="text-center"><?php _el('status');?></th>
-                                    
+                                    <th width="15%"><?php _el('total_amount');?></th>
+                                    <th class="text-center" ><?php _el('status');?></th>
+                                    <?php
+                                     if ($order['payment_status'] == 1){
+                                     ?>
                                     <th class="text-center" width="5%"><?php _el('action');?></th>
+                                  <?php }
+                                  else{
+                                    ?>
+                                   <th class="text-center" width="5%"><?php _el('total');?></th>
+                                  <?php } ?>
                                 </tr>
                               </thead>
                               <tbody>
@@ -188,9 +194,9 @@
                                 <tr>
                                     <td><?php echo ucwords($item['name']); ?></td>
                                     <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'shop_name')); ?></td>
-                                    <td><?php _el('rs');echo '.'.$item['price']; ?></td>
+                                    <td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.'.$item['price']; ?></td>
                                     <td><?php echo $item['item_quantity']; ?></td>
-                                    <td><?php _el('rs');echo '.'.$item['total_amount']; ?></td>
+                                    <td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.'.$item['total_amount']; ?></td>
                                     <td class="text-center">
                                         <?php
 
@@ -210,20 +216,18 @@
                                             ?>
                                     </td>
                                      <?php
-                                    // if ($item['vendor_status'] == 1)
-                                    // {
+                                     if ($order['payment_status'] == 1){
                                      ?>
                                       <td width="10%"><center><a title="<?php _el('invoice')?>" href="<?php  echo base_url('orders/invoice/').$order['id'].'/'.$item['vendor_id']; ?>"><i class='fa fa-file-text-o' style="font-size: 20px;color: orange"></i></a></center></td>
-                                    <?php }?>
+                                    <?php } }?>
+                                    
                                 </tr>
                                
-                               <?php 
-                                //}
-                                ?>
-
-                                <tr rowspan="2" style="border-top: 1px solid #ddd;"><td><b><?php _el('amount_in_Words');?><?php echo str_repeat("&nbsp;",1); ?>:<?php echo str_repeat("&nbsp;",1); ?></b><br></td><td colspan="2"><?php echo no_to_words($order['grand_total']);?></td><td colspan="3" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><?php _el('rs');echo '.'.$order['grand_total']; ?></td></tr>
+                                <tr rowspan="2" style="border-top: 1px solid #ddd;"><td><b><?php _el('amount_in_Words');?><?php echo str_repeat("&nbsp;",1); ?>:<?php echo str_repeat("&nbsp;",1); ?></b><br></td><td colspan="2"><?php echo no_to_words($order['grand_total']);?></td><td colspan="3" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.'.$order['grand_total']; ?></td></tr>
+                               
                               </tbody>
                             </table>
+                          
                               <br> 
                               <br>  
                               <hr>        
@@ -239,7 +243,5 @@
 </div>
 </div>
 </div>
-</div>
-</br>
 </br>
 <hr>

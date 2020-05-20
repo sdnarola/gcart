@@ -1,21 +1,18 @@
 <style type="text/css">
-
-<style type="text/css">
 tr{
   margin-top: 3px;
   padding-top: 3px;
   border-collapse: collapse; 
   line-height: 0px;
-   min-height: 25px;
-   height: 25px;
+  min-height: 25px;
+  height: 25px;
   border: none;
    }
 td{
     margin-top: 3px;
     padding-top: 3px;
-      padding: 20px;
+    padding: 20px;
     font-size: 15px;
-    color: #666;
     border-right: none;
     text-align:left;
     max-width: 150px;
@@ -25,7 +22,6 @@ table, td, th {
   text-align: left;
 
 }
-
 table {
   border-collapse: collapse;
   width: 100%;
@@ -71,8 +67,7 @@ th {
         <h4 class=""><?php _el('account_information');?></h4>       
         </center>
     <div>
-    </div>
-   
+    </div>  
 
                 <div class="col-md-6 col-sm-12">
                     <table  class="table table-responsive">
@@ -122,7 +117,7 @@ th {
 
                  <table  class="table table-responsive">
 
-                     <?php                     
+                <?php                     
                 if(!empty($user_address))
                   {
                   foreach ($user_address as $address)
@@ -150,13 +145,13 @@ th {
                         <tr>
                         <td><?php _el('city');?></td>
                         <td>:</td>
-                        <td><?php echo ucwords($address['city']); ?></td>
+                        <td><?php get_city_name($address['city']);?></td>
                       
                       </tr>
                         <tr>
                         <td><?php _el('state');?></td>
                         <td>:</td>
-                        <td><?php echo ucwords($address['state']); ?></td>
+                        <td><?php get_state_name($address['state']);?></td>
                       
                       </tr>
                        </tr>

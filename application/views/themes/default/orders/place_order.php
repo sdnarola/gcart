@@ -40,7 +40,7 @@ $Promotion=200;
 										</div> 
 										<div class="col-md-7 col-sm-12">
 											 	<div class="col-md-12 col-sm-12"><div class="name" style="font-size: 15px; font-weight: bold;"><?= ucwords($data['name'])?></div>	</div>
-											 	<div class="col-md-12 col-sm-12">&#36;<?= $data['total_amount']?></div>
+											 	<div class="col-md-12 col-sm-12"><?php _el('rupees');?><?= $data['total_amount']?></div>
 											 	<div class="col-md-12 col-sm-12"><?php _el('qty')?><?= $data['cart_qty']?></div>
 											 	<div class="col-md-12 col-sm-12"><?php _el('sold_by')?> <?= ucwords(get_vendor_info($data['vendor_id'], 'shop_name'))?></div>
 										</div>
@@ -68,16 +68,16 @@ $Promotion=200;
 	      					{	
 ?>
 									      		<div class="col-md-12 col-sm-12">
-									      			<?= strtoupper($address['house_or_village']) .' '.strtoupper($address['street_or_society'])?>
+									      			<?= ucwords($address['house_or_village']) .' '.ucwords($address['street_or_society']) .','?>
 												</div>
 												<div class="col-md-12 col-sm-12" >
-													<?=  strtoupper($address['city']) ?>
+													<?=  ucwords($address['landmark']); ?>
 												</div>
 												<div class="col-md-12 col-sm-12" >
-													<?= strtoupper($address['state']) .', '.$address['pincode'] ?>
+													<?= ucwords(get_city_name($address['city_id'],'name')).' '.ucwords(get_state_name($address['state_id'],'name')) .'  '.$address['pincode'] ?>
 												</div>
 												<div class="col-md-12 col-sm-12" >
-													<?= strtoupper('Mobile No : ') ?><?= get_user_info($this->session->userdata('user_id'), 'mobile') ?>
+													<?php _el('mobile_number'); ?><?= get_user_info($this->session->userdata('user_id'), 'mobile') ?>
 												</div>							
 <?php
 						}
@@ -110,11 +110,11 @@ $Promotion=200;
 											<div class="col-sm-12">
 												<div class="row">
 													<div class="col-sm-6"><?php _el('item_sub_total')?></div>
-													<div class="col-sm-6" style="text-align: right;">&#36;<?= $total_amount ?></div>
+													<div class="col-sm-6" style="text-align: right;"><?php _el('rupees');?><?= $total_amount ?></div>
 												</div>
 												<div class="row">
 													<div class="col-sm-6"><?php _el('shipping')?></div>
-													<div class="col-sm-6" style="text-align: right;">&#36;<?= (empty($Shipping))? 0.00 :	number_format($Shipping , 2, '.', '') ;?></div>
+													<div class="col-sm-6" style="text-align: right;"><?php _el('rupees');?><?= (empty($Shipping))? 0.00 :	number_format($Shipping , 2, '.', '') ;?></div>
 												</div>
 <?php
 					      			if(!empty($coupon_amount))
@@ -122,18 +122,18 @@ $Promotion=200;
 ?>					      		
 									      		<div class="row"  style="margin-top: 10px;">
 									      			<div class="col-sm-6"><?php _el('total')?></div>
-									      			<div class="col-sm-6" style="text-align: right;">&#36;<?= (empty($Shipping))? $total_amount : number_format($total_amount+$Shipping , 2, '.', '')?></div>
+									      			<div class="col-sm-6" style="text-align: right;"><?php _el('rupees');?><?= (empty($Shipping))? $total_amount : number_format($total_amount+$Shipping , 2, '.', '')?></div>
 									      		</div>
 									      		<div class="row">
 									      			<div class="col-sm-6"><?php _el('promotion_applied')?></div>
-									      			<div class="col-sm-6" style="text-align: right;">&#8722;&#36;<?= number_format($coupon_amount , 2, '.', '')  ?></div>
+									      			<div class="col-sm-6" style="text-align: right;">&#8722;<?php _el('rupees');?><?= number_format($coupon_amount , 2, '.', '')  ?></div>
 									      		</div>
 <?php
 					      			}
 ?>
 									      		<div class="row" style="margin-top: 10px; font-weight: bold;">
 									      			<div class="col-sm-6"><?php _el('grand_total')?></div>
-									      			<div class="col-sm-6" style="text-align: right;">&#36;<?= number_format($grand_total_amount, 2, '.', '') ;?></div>
+									      			<div class="col-sm-6" style="text-align: right;"><?php _el('rupees');?><?= number_format($grand_total_amount, 2, '.','') ;?></div>
 									      		</div>
 				      						</div> 
 				    					</div>

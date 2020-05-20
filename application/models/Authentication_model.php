@@ -26,9 +26,9 @@ class Authentication_model extends MY_Model
 	}
 
 	/**
-	 * Does login
+	 * Does login [user]
 	 *
-	 * @param  str    $email      Email address for login
+	 * @param  str    $email      Email address for user login
 	 * @param  str    $password   User Password
 	 * @param  bool   $remember   Set cookies for user if remember me is checked
 	 *
@@ -89,7 +89,7 @@ class Authentication_model extends MY_Model
 	/**
 	 * Does vendor login
 	 *
-	 * @param  str    $email      Email address for login
+	 * @param  str    $email      Email address for vendor login
 	 * @param  str    $password   vendor Password
 	 * @param  bool   $remember   Set cookies for vendor if remember me is checked
 	 *
@@ -247,7 +247,7 @@ class Authentication_model extends MY_Model
 
 	/**
 	 *
-	 * Generates new password key for the user to reset the password
+	 * Generates new password key for the user to reset the password [user]
 	 *
 	 * @param  str   $email  The email from the user
 	 *
@@ -317,7 +317,7 @@ class Authentication_model extends MY_Model
 				$message .= str_replace($find, $replace, $template['message']);
 
 				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
-
+     			
 				$sent = send_email($email, $subject, $message);
 
 				if ($sent)
@@ -333,10 +333,90 @@ class Authentication_model extends MY_Model
 
 		return ['invalid_user' => true];
 	}
-
 /**===================================code by vixuti patel=======================================*/
 /**
- * [verify_email  verify users email]
+	 *
+	 * Generates new password key for the user to reset the password
+	 *
+	 * @param  str   $email  The email from the user
+	 *
+	 * @return bool  True if user exists & link is sent to user email, False otherwise
+	 */
+	public function vendor_forgot_password($email)
+	{
+		$this->db->where('email', $email);
+		$vendor = $this->db->get('vendors')->row();
+ 		if ($vendor)
+		{
+			if ($vendor->is_active == 0)
+			{
+				return ['user_inactive' => true];
+			}
+
+			if ($vendor->is_email_verified == 0)
+			{
+				return ['email_unverified' => true];
+			}
+
+			$new_pass_key = app_generate_hash();
+			$this->db->where('id', $vendor->id);
+			$this->db->update('vendors', [
+				'new_pass_key'           => $new_pass_key,
+				'new_pass_key_requested' => date('Y-m-d H:i:s')
+			]);
+
+			if ($this->db->affected_rows() > 0)
+			{
+				$template = get_email_template('forgot-password');
+				$subject  = $template['subject'];
+
+				$message = get_settings('email_header');
+
+				$this->db->where('email', $email);
+				$vendor = $this->db->get('vendors')->row_array();
+				
+			    $reset_password_link = site_url('vendor/authentication/reset_password/').$vendor['id'].'/'.$vendor['new_pass_key'];
+				
+
+				$find = [
+					'{firstname}',
+					'{lastname}',
+					'{email}',
+					'{reset_password_link}',
+					'{email_signature}',
+					'{company_name}'
+				];
+
+				$replace = [
+					$vendor['firstname'],
+					$vendor['lastname'],
+					$email,
+					$reset_password_link,
+					get_settings('email_signature'),
+					get_settings('company_name')
+				];
+
+				$message .= str_replace($find, $replace, $template['message']);
+
+				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
+     			
+				$sent = send_email($email, $subject, $message);
+
+				if ($sent)
+				{
+					return true;
+				}
+
+				return false;
+			}
+
+			return false;
+		}
+
+		return ['invalid_user' => true];
+	}
+/**
+ * [verify_email  (verify users email)] (user)
  * @param  [type] $sign_up_key [description]
  * @return [type]              [description]
  */
@@ -356,9 +436,8 @@ class Authentication_model extends MY_Model
 
 		return null;
 	}
-
 	/**
-	 * [verify_vendor_email  (on registraion) ]
+	 * [verify_vendor_email  (on registraion) ] (vendor)
 	 * @param  [type] $sign_up_key [description]
 	 * @return [type]              [description]
 	 */
@@ -379,9 +458,72 @@ class Authentication_model extends MY_Model
 		return null;
 	}
 
-/*===========================code end by vixuti patel===========================================*/
 	/**
 	 * Resets user password after successful validation of the key
+	 *
+	 * @param  int   $user_id       The user identifier
+	 * @param  str   $new_pass_key  The new pass key
+	 * @param  str   $password      The password
+	 *
+	 * @return bool  True if the password is reset, Null otherwise
+	 */
+	public function vendor_reset_password($vendor_id, $new_pass_key, $password)
+	{
+		if (!$this->vendor_can_reset_password($vendor_id, $new_pass_key))
+		{
+			return ['expired' => true];
+		}
+
+		$this->db->where('id', $vendor_id);
+		$this->db->where('new_pass_key', $new_pass_key);
+		$this->db->update('vendors', ['password' => md5($password)]);
+
+		if ($this->db->affected_rows() > 0)
+		{
+			$this->db->set('new_pass_key', null);
+			$this->db->set('new_pass_key_requested', null);
+			$this->db->set('last_password_change', date('Y-m-d H:i:s'));
+			$this->db->where('id', $vendor_id);
+			$this->db->where('new_pass_key', $new_pass_key);
+			$this->db->update('vendors');
+
+			return true;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Determines if the key is not expired or doesn't exists in database
+	 *
+	 * @param  int  $user_id       The user identifier
+	 * @param  str  $new_pass_key  The new pass key
+	 *
+	 * @return bool True if key is active, False otherwise
+	 */
+	public function vendor_can_reset_password($vendor_id, $new_pass_key)
+	{
+		$this->db->where('id', $vendor_id);
+		$this->db->where('new_pass_key', $new_pass_key);
+		$vendor = $this->db->get('vendors')->row();
+
+		if ($vendor)
+		{
+			$timestamp_now_minus_1_hour = time() - (60 * 60);
+			$new_pass_key_requested     = strtotime($vendor->new_pass_key_requested);
+
+			if ($timestamp_now_minus_1_hour > $new_pass_key_requested)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+	/**
+	 * Resets user password after successful validation of the key [user]
 	 *
 	 * @param  int   $user_id       The user identifier
 	 * @param  str   $new_pass_key  The new pass key
@@ -455,3 +597,4 @@ class Authentication_model extends MY_Model
 		$this->session->sess_destroy();
 	}
 }
+	/*===========================code end by vixuti patel===========================================*/

@@ -59,7 +59,7 @@ class Comments extends Frontend_Controller
 
 		if ($result)
 		{
-			echo 'Review submit successfully';
+			echo 'comments submit successfully';
 		}
 	}
 

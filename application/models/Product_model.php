@@ -4,11 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product_model extends MY_Model
 {
 	/**
-	<<<<<<< HEAD
 	 * @var mixed
 	=======
 	 * @var boolean
-	>>>>>>> 7a0667f849e90ca2023a3e4e797402951a5a6d3e
 	 */
 	protected $soft_delete = TRUE;
 
@@ -63,11 +61,7 @@ class Product_model extends MY_Model
 	 */
 	public function get_products_tags($where = array(), $multiple_sub_category_id = '', $product_id = '')
 	{
-		if (empty($where))
-		{
-			return array();
-		}
-		elseif (empty($where) && !empty($product_id = ''))
+		if(!empty($product_id))
 		{
 			$this->db->distinct();
 			$this->db->order_by('tags', 'asc');
@@ -80,8 +74,6 @@ class Product_model extends MY_Model
 			{
 				return $query;
 			}
-
-			# code...
 		}
 		elseif (!empty($where) && !empty($multiple_sub_category_id))
 		{
@@ -111,25 +103,6 @@ class Product_model extends MY_Model
 			{
 				return $query;
 			}
-		}
-	}
-
-	/**
-	 * [get_hot_deals_data description]
-	 * @return hot deals data in array
-	 */
-	public function get_hot_deals_data()
-	{
-		$query  = $this->db->get_where('hot_deals', array('is_deleted' => 0, 'end_date >' => date('Y-m-d h:i:s'), 'start_date <' => date('Y-m-d h:i:s')));
-		$result = $query->result_array();
-
-		if (empty($result))
-		{
-			return 0;
-		}
-		else
-		{
-			return $result;
 		}
 	}
 
@@ -257,11 +230,16 @@ class Product_model extends MY_Model
 	 * @param  string $multiple_sub_category_id [multiple sub category id]
 	 * @return [array]                           [description]
 	 */
-	public function get_all_products_min_max($where = array(), $tags = '', $multiple_sub_category_id = '')
+	public function get_all_products_min_max($where = array(), $tags = '', $multiple_sub_category_id = '', $product_id = '')
 	{
-		if (empty($where))
+		if (!empty($product_id))
 		{
-			return array();
+			$this->db->select('min(price) as min,max(price) as max');
+			$this->db->where_in('products.id', $product_id);
+			$query  = $this->db->get('products');
+			$result = $query->row_array();
+
+			return $result;
 		}
 		elseif (!empty($where) && !empty($multiple_sub_category_id))
 		{
@@ -289,29 +267,6 @@ class Product_model extends MY_Model
 	}
 
 	/**
-	 * [get_hot_deals_products description]
-	 * @return return Hote Deals products data
-	 */
-	public function get_hot_deals_products()
-	{
-		$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.product_id,hot_deals.type,hot_deals.value');
-		$this->db->from('products');
-		$this->db->join('hot_deals', 'products.id=hot_deals.product_id and products.quantity > 0', 'inner');
-		$this->db->where(array('products.is_deleted' => 0, 'products.is_active' => 1, 'hot_deals.is_deleted' => 0, 'hot_deals.end_date >' => date('Y-m-d h:i:s'), 'hot_deals.start_date <' => date('Y-m-d h:i:s')));
-		$query  = $this->db->get();
-		$result = $query->result_array();
-
-		if (empty($result))
-		{
-			return false;
-		}
-		else
-		{
-			return $result;
-		}
-	}
-
-	/**
 	 * [add_product_by_tags description]
 	 * @param [int] $product_id [products primary key]
 	 * @param [array] $data
@@ -320,6 +275,22 @@ class Product_model extends MY_Model
 	{
 		$this->db->where('id', $product_id);
 		$this->db->update('products', $data);
+	}
+
+	/**
+	 * [get_upsell_products description]
+	 * @return [return upsell products
+	 */
+	public function get_upsell_products()
+	{
+		$query = $this->db->get_where('products', array('is_deleted' => 0, 'is_active' => 1, 'is_sale' => 1));
+
+		if ($query == TRUE)
+		{
+			return $query->result_array();
+		}
+
+		return false;
 	}
 
 // ===================================================== END WORK BY KOMAL ========================================================================================
@@ -357,25 +328,10 @@ class Product_model extends MY_Model
 // }
 	/**
 	 * 	===================================================vixuti patel's code================================================================
-	 * [get_hot_deals products]
-	 * @return [type] [description]
+	/**
+	 * [get_all_reviews of products]
+	 * @return [array] [array of all reviews details]
 	 */
-	public function get_hot_deals()
-	{
-		$this->db->select('p.id,p.name,p.thumb_image,p.old_price, p.price,h.start_date as start ,h.end_date as end', TRUE);
-		$this->db->from('products as p');
-		$this->db->join('hot_deals as h', 'p.id=h.product_id');
-		$this->db->where(array('p.is_hot' => 1, 'p.is_active' => 1));
-
-		$query = $this->db->get();
-
-		return $query->result_array();
-	}
-
-/**
- * [get_all_reviews description]
- * @return [type] [description]
- */
 	public function get_all_reviews()
 	{
 		$this->db->select('product_id,AVG(star_ratings) as star_ratings', TRUE);
@@ -386,14 +342,11 @@ class Product_model extends MY_Model
 		return $query->result_array();
 	}
 
-// /**
-
-//  * [get_new_products description]
-
-//  * @return [type] [description]
-
-//  */
-
+/**
+ * [get_new_products (get new arrival products)]
+ * @param  string $id [category id]
+ * @return [array]     [products details  array]
+ */
 	public function get_new_products($id = '')
 	{
 		if (empty($id))
@@ -424,9 +377,53 @@ class Product_model extends MY_Model
 		}
 	}
 
+// /**
+
+//  * [get_hot_deals_products description]
+
+//  * @return return Hote Deals products data
+
+//  */
+
+// public function get_hot_deals_products()
+
+// {
+
+// 	$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.off_percentage');
+
+//   //$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.product_id');
+
+// 	$this->db->from('products');
+
+// 	$this->db->join('hot_deals', 'products.id=hot_deals.product_id', 'inner');
+
+// 	$this->db->where(array('products.is_deleted' => 0, 'products.is_active' => 1, 'hot_deals.is_deleted' => 0, 'hot_deals.end_date >' => date('Y-m-d h:i:s'), 'hot_deals.start_date <' => date('Y-m-d h:i:s')));
+
+// 	$query  = $this->db->get();
+
+// 	$result = $query->result_array();
+
+// 	if (empty($result))
+
+// 	{
+
+// 		return false;
+
+// 	}
+
+// 	else
+
+// 	{
+
+// 		return $result;
+
+// 	}
+
+// }
+
 	/**
-	 * [get_special_offers description]
-	 * @return [type] [description]
+	 * [get_special_offers products(sales products)]
+	 * @return [array] [products details array]
 	 */
 	public function get_special_offers()
 	{
@@ -443,24 +440,8 @@ class Product_model extends MY_Model
 	}
 
 	/**
-	 * [get_upsell_products description]
-	 * @return [return upsell products
-	 */
-	public function get_upsell_products()
-	{
-		$query = $this->db->get_where('products', array('is_deleted' => 0, 'is_active' => 1, 'is_sale' => 1));
-
-		if ($query == TRUE)
-		{
-			return $query->result();
-		}
-
-		return false;
-	}
-
-	/**
-	 * [get_special_offers description]
-	 * @return [type] [description]
+	 * [get_special_deal products]
+	 * @return [array] [products array]
 	 */
 	public function get_special_deal()
 	{
@@ -479,8 +460,8 @@ class Product_model extends MY_Model
 	}
 
 /**
- * [get_best_sellers description]
- * @return [type] [description]
+ * [get_best_sellers products]
+ * @return [array] [products array]
  */
 	public function get_best_sellers()
 	{
@@ -496,12 +477,17 @@ class Product_model extends MY_Model
 		$this->db->limit(15);
 		$query = $this->db->get();
 
-		return $query->result_array();
+		if ($query)
+		{
+			return $query->result_array();
+		}
+
+		return false;
 	}
 
 /**
- * [get_featured_products description]
- * @return [type] [description]
+ * [get_featured_products]
+ * @return [array] [products array]
  */
 	public function get_featured_products()
 	{
@@ -520,6 +506,21 @@ class Product_model extends MY_Model
 		return false;
 	}
 
+	/**
+	 * [add_wishlist_products description]
+	 * @param [array] $data [data value]
+	 */
+	public function add_wishlist_products($data)
+	{
+		$query = $this->db->insert('wishlist', $data);
+
+		return $query;
+	}
+
+	/**
+	 * [get_tags id and name]
+	 * @return [array] [array of tags id and name]
+	 */
 /**
  * [get_tags description]
  * @return [type] [description]
@@ -556,15 +557,13 @@ class Product_model extends MY_Model
 		$this->db->order_by('name', 'DESC');
 
 		return $this->db->get();
-
-// $query=$this->db->get();
-		// return $query->result_array();
 	}
 
 	/**
 	 * [search category or product or brand]
-	 * @param  [type] $name [description]
-	 * @return [type]       [description]
+	 * @param  string $category_id [category id]
+	 * @param  string $name        [input field name]
+	 * @return [array]              [products array]
 	 */
 	public function search($category_id = '', $name = '')
 	{
@@ -613,7 +612,6 @@ class Product_model extends MY_Model
 				$result = $query->result_array();
 
 				return $result;
-				//var_dump($result);
 			}
 			else
 			{

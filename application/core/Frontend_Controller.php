@@ -19,10 +19,11 @@ class Frontend_Controller extends MY_Controller
 
 		$this->load->model('category_model', 'category');
 		$this->load->model('brand_model', 'brands');
+		$this->load->model('City_model', 'city');
+		$this->load->model('State_model', 'state');
 		$this->load->model('Banner_model', 'banners');
 		$this->load->model('comment_model', 'comments');
 		$this->load->model('wishlist_model', 'wishlist');
-		$this->load->model('slider_model', 'sliders');
 		$this->load->model('product_model', 'products');
 		$this->load->model('user_model', 'users');
 		$this->load->model('coupon_model', 'coupons');
@@ -32,12 +33,15 @@ class Frontend_Controller extends MY_Controller
 		$this->load->model('cart_model', 'cart');
 		$this->load->model('deal_model', 'deals');
 		$this->load->model('vendor_model', 'vendors');
-		$this->load->model('brand_model', 'brand');
 		$this->load->model('newsletter_model', 'news_letters');
 		$this->load->model('Review_model', 'review');
 		$this->update_cart_data();
 	}
 
+	/**
+	 * [update_cart_data description]
+	 * @return products already add to cart and this products in hot deals so change price
+	 */
 	public function update_cart_data()
 	{
 		$user_id               = $this->session->userdata('user_id');
@@ -67,14 +71,14 @@ class Frontend_Controller extends MY_Controller
 						{
 							if ($hot_deals_data['type'] == 0)
 							{
-								$price                       = get_product($cart_data['product_id'], 'price') - $hot_deals_data['value'];
+								$price                        = get_product($cart_data['product_id'], 'price') - $hot_deals_data['value'];
 								$update_where['total_amount'] = $price * $cart_data['quantity'];
 								$this->cart->update($cart_data['id'], $update_where, FALSE);
 							}
 							else
 							{
-								$save_amount                 = (get_product($cart_data['product_id'], 'price') * $hot_deals_data['value']) / 100;
-								$price                       = get_product($cart_data['product_id'], 'price') - $save_amount;
+								$save_amount                  = (get_product($cart_data['product_id'], 'price') * $hot_deals_data['value']) / 100;
+								$price                        = get_product($cart_data['product_id'], 'price') - $save_amount;
 								$update_where['total_amount'] = $price * $cart_data['quantity'];
 								$this->cart->update($cart_data['id'], $update_where, FALSE);
 							}

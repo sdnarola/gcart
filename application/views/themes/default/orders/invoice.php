@@ -1,25 +1,11 @@
 <?php
   $user    = get_user_info($order['user_id']);                                                                            
-  $address    = $this->users->show($order['user_id']);                                         
+  $address = $this->users->get_user_addresses($order['user_id']);                                         
  ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/order.css">
-  
-    <div class="breadcrumb">
-    <div class="container">
-        <div class="breadcrumb-inner col-md-12 col-sm-12">
-            <!-- <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo base_url(); ?>"><?php _el('home');?></a></li>
-                <li><a href="<?php echo base_url('orders'); ?>"><?php _el('orders');?></a></li>
-                <li> <a href="<?php echo site_url('orders/save_pdf/'.$order['id']); ?>" ><?php _el('details')?></a></li>
-                <li class='active'><?php _el('invoice');?></li>
-
-            </ul> -->
-        </div><!-- /.breadcrumb-inner -->
-    </div><!-- /.container -->
-    </div><!-- /.breadcrumb -->
-<?php foreach ($order_items as $key => $item){
+  <?php foreach ($order_items as $key => $item){
 ?>
-<a href="<?php echo base_url('orders/print_pdf/').$order['id'].'/'.$item['vendor_id'];?>" class="btn btn-info btn-sm" style="text-align: right;margin-left: 87%;"> <span class="glyphicon glyphicon-print"></span>&nbsp;<?php _el('print');?></a>
+<a href="<?php echo base_url('orders/print_pdf/').$order['id'].'/'.$item['vendor_id'];?>" target="_blank" class="btn btn-info btn-md" style="text-align: right;margin-left: 89%;margin-top:5px;"> <span class="glyphicon glyphicon-print"></span></a>
 <?php break; 
 } ?>
 <div class="body-content">
@@ -77,9 +63,8 @@
                                 ?>                        
                             
                         </h4>                   
-              </div>                                                   
-
-    </div><!--row-->
+              </div>                                                
+     </div><!--row-->
     
 
                 <!-- /Panel heading -->
@@ -133,7 +118,7 @@
                                         <td><?php _el('address_2');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td><?php _el('city');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['city']); ?></td>
+                                        <td><?php _el('city');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords(get_city_name($address['city'])); ?></td>
                                     </tr>
                                     <tr>
                                         <td><?php _el('pincode');?></td><td>&nbsp;:&nbsp;</td><td><?php echo $address['pincode']; ?></td>
@@ -172,18 +157,19 @@
                                         <td><?php echo ucwords($item['name']); ?></td>
                                         <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'shop_name')); ?></td>
                                         <td><?php echo $item['item_quantity']; ?></td>    
-                                        <td  class="text-center"><?php _el('rs');echo '.'.$item['price']; ?></td>
-                                        <td><?php _el('rs');echo '.'.$item['total_amount'];   $total[]=$item['total_amount']; ?></td>
+                                        <td  class="text-center"><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.'.$item['price']; ?></td>
+                                        <td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.'.$item['total_amount'];   $total[]=$item['total_amount']; $total_amount[] = get_grand_total($order['coupon_id'],$item['total_amount']);?></td>
                                     </tr>
                                     <?php
                                      }
+                                     $total=array_sum($total);
+                                     $grand_total = array_sum($total_amount);
                                     ?>
-
-                                    <tr rowspan="2" style="border-top: 1px solid #ddd;"><td colspan="1"><b><?php _el('amount_in_Words'); echo str_repeat("&nbsp;",1); ?>:</b><?php echo str_repeat("&nbsp;",1); ?></td><td colspan="2" ><?php echo no_to_words(array_sum($total));?></td><td colspan="1" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><?php  _el('rs');echo '. '.array_sum($total);?></td>
+                                    <tr><td colspan="3"></td><td colspan="1" class="text-right"><strong><?php _el('coupon_amount');?></strong></td><td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.';  $discount = $total - $grand_total; echo sprintf("%.2f",$discount);?></td></tr>
+                                    <tr rowspan="2" style="border-top: 1px solid #ddd;"><td colspan="1"><b><?php _el('amount_in_Words'); echo str_repeat("&nbsp;",1); ?>:</b><?php echo str_repeat("&nbsp;",1); ?></td><td colspan="2" ><?php echo no_to_words($grand_total);?></td><td colspan="1" class="text-right"><strong><?php _el('grand_total');?></strong></td><td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.'; echo sprintf("%.2f",$grand_total);?></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <br>
                         </div><!--col-md-12-->
                     </div><!--row-->
                             <p><b><?php _el('note');?><?php echo str_repeat("&nbsp;",1); ?>:<?php echo str_repeat("&nbsp;",1); ?></b><?php _el('computer_generated_invoice');?></p>

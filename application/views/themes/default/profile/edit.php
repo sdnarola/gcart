@@ -9,14 +9,14 @@
         </div><!-- /.breadcrumb-inner -->
     </div><!-- /.container -->
     </div><!-- /.breadcrumb -->
-<?php $user = get_user_info($this->session->userdata('user_id'));?>
+
 <div class="body-content">
     <div class="container">
         <div class="sign-in-page">
             <div class="row">
 	<div class="col-md-6 col-sm-6 sign-in">
 		<h4 class=""><?php _el('edit_profile');?></h4>
-    	<p class="">Hello, Welcome to your account.</p>
+    	<p class=""><?php _el('Hello_Welcome_to_your_account');?></p>
         <!--edit user data-->
 		<form action="<?php echo base_url('profile/edit') ?>" id="myprofileform" method="POST"  class="register-form outer-top-xs" role="form">
 
@@ -51,14 +51,51 @@
             <label class="info-title" for="address_2"><?php _el('address_2');?></label>
             <input type="text" class="form-control unicase-form-control text-input" id="address_2" name="address_2" value="<?php echo $user_address['street_or_society']; ?>">
         </div>
+        <div class="form-group">
+            <label class="info-title" for="state"><?php _el('state');?></label>
+             <select class="form-control unicase-form-control text-input" id='state' name='state'>
+            <?php
+
+            			if (!empty($user_address['state']))
+            			{
+            			?>
+           <option   value='<?php echo $user_address['state']; ?>'><?php get_state_name($user_address['state']);?></option>
+           <?php
+           	}
+           			else
+           			{
+           			?>
+                <option  selected="selected" value=''>--select state--</option>
+            <?php }
+
+            			if (!empty($states))
+            			{
+            				foreach ($states as $state)
+            				{
+            				?>
+
+             <option value='<?php echo $state['id'] ?>'><?php echo $state['name'] ?></option>
+           <?php }
+           			}
+           			else
+           			{
+           			?>
+             <option  value=''>State not avalilable</option>
+           <?php }
+
+           		?>
+            </select>
+           <!--  <input type="text" class="form-control unicase-form-control text-input" id="state"  name="state" value="<?php echo $user_address['state']; ?>"> -->
+        </div>
          <div class="form-group">
             <label class="info-title" for="city"><?php _el('city');?></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="city"  name="city" value="<?php echo $user_address['city']; ?>">
+
+            <select class="form-control unicase-form-control text-input" id='city' name='city'>
+            <option  value='<?php echo $user_address['city']; ?>' selected="selected"><?php get_city_name($user_address['city']);?></option>
+            </select>
+            <!-- <input type="text" class="form-control unicase-form-control text-input" id="city"  name="city" value="<?php echo $user_address['city']; ?>"> -->
         </div>
-		<div class="form-group">
-            <label class="info-title" for="state"><?php _el('state');?></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="state"  name="state" value="<?php echo $user_address['state']; ?>">
-        </div>
+
 		<div class="form-group">
             <label class="info-title" for="pin_code"><?php _el('pincode');?></label>
             <input type="text" class="form-control unicase-form-control text-input" id="pincode"  name="pincode" value="<?php echo $user_address['pincode']; ?>">
@@ -87,7 +124,7 @@
 		    </p>
 
             <!--change password-->
-			<form action="<?php echo base_url('profile/edit_password') ?>" id="mypasswordform" method="POST"  class="register-form outer-top-xs" role="form">
+			<form action="<?php echo base_url('profile/edit_password') ?>" id="edit_password_form" method="POST"  class="register-form outer-top-xs" role="form">
 
 			<div class="form-group">
             	<label class="info-title" for="old_password"><?php _el('old_password');?><span>*</span></label>
@@ -224,7 +261,6 @@ $("#myprofileform").validate({
             pincode:"Please Enter Digits",
             maxlength :'Please enter a valid length',
 
-
 		},
 
     }
@@ -241,7 +277,7 @@ $.validator.addMethod("matcholdpassword", function(value, element)
 }, "<?php _el('incorrect_password')?>");
 
 
-$("#mypasswordform").validate({
+$("#edit_password_form").validate({
 	rules: {
 		old_password: {
 			required: true,
@@ -289,5 +325,64 @@ $("#upload_image").validate({
 	}
 });
 
-</script>
+ $(document).ready(function(){
 
+    var state_id = $('#state').val();
+    if(state_id != null)
+    {
+        if(state_id){
+            $.ajax({
+                type:'POST',
+                url:'<?php echo base_url('profile/get_cities'); ?>',
+                data: { state_id: state_id },
+                 async: false,
+                success:function(data){
+                    var dataObj = jQuery.parseJSON(data);
+                    if(dataObj){
+                        $(dataObj).each(function(){
+                            var option = $('<option />');
+                            option.attr('value', this.id).text(this.name);
+                            $('#city').append(option);
+                        });
+                    }
+                    if(dataObj.length==0)
+                    {
+                        $('#city').html('<option value="0">city not available</option>');
+                    }
+                }
+            });
+        }else{
+            $('#city').html('<option value="">--Select state first--</option>');
+        }
+    }
+ /* Populate data to city dropdown */
+    $('#state').on('change',function(){
+        var state_id = $(this).val();
+        if(state_id){
+            $.ajax({
+                type:'POST',
+                url:'<?php echo base_url('profile/get_cities'); ?>',
+                data: { state_id: state_id },
+                 async: false,
+                success:function(data){
+                    $('#city').html('<option value="">--select city--</option>');
+                    var dataObj = jQuery.parseJSON(data);
+                    if(dataObj){
+                        $(dataObj).each(function(){
+                            var option = $('<option />');
+                            option.attr('value', this.id).text(this.name);
+                            $('#city').append(option);
+                        });
+                    }
+                    if(dataObj.length==0)
+                    {
+                        $('#city').html('<option value="0">city not available</option>');
+                    }
+                }
+            });
+        }else{
+            $('#city').html('<option value="">--Select state first--</option>');
+        }
+    });
+});
+</script>

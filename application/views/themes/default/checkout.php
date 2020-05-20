@@ -1,5 +1,3 @@
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
 
 <div class="breadcrumb">
 	<div class="container">
@@ -152,9 +150,9 @@
 					  	
 					</div><!-- /.checkout-steps -->
 				</div>
-				<div class="col-md-4">
+				<!-- <div class="col-md-4"> -->
 					<!-- checkout-progress-sidebar -->
-					<div class="checkout-progress-sidebar ">
+					<!-- <div class="checkout-progress-sidebar ">
 						<div class="panel-group">
 							<div class="panel panel-default">
 								<div class="panel-heading">
@@ -169,8 +167,8 @@
 									</ul>		
 								</div>
 							</div>
-						</div>
-					</div> 
+						</div> -->
+					<!-- </div>  -->
 <!-- checkout-progress-sidebar -->				
 				</div>
 			</div><!-- /.row -->

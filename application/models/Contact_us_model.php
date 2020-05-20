@@ -1,10 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Slider_model extends MY_Model
+class Contact_us_model extends MY_Model
 {
+		
 	/**
-	 * @var mixed
+	 * @var boolean
 	 */
 	protected $soft_delete = TRUE;
 
@@ -12,13 +13,12 @@ class Slider_model extends MY_Model
 	 * @var string
 	 */
 	protected $soft_delete_key = 'is_deleted';
-
 	/**
 	 * Constructor for the class
 	 */
 	public function __construct()
 	{
 		parent::__construct();
+
 	}
-	
 }

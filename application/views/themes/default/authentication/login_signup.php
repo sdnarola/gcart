@@ -1,14 +1,12 @@
-
-<div class="container" style="margin-top:30px;">
-    <?php $this->load->view('themes/default/includes/alerts');
+   <?php $this->load->view('themes/default/includes/alerts');
     ?>
 
     <div class="breadcrumb">
     <div class="container">
         <div class="breadcrumb-inner">
             <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li class='active'>Login</li>
+                <li><a href="<?php echo base_url(); ?>"><?php _el('home');?></a></li>
+                <li class='active'><?php _el('login');?></li>
             </ul>
         </div><!-- /.breadcrumb-inner -->
     </div><!-- /.container -->
@@ -20,8 +18,8 @@
             <div class="row">
                 <!-- Sign-in -->
 <div class="col-md-6 col-sm-6 sign-in">
-    <h4 class="">Sign in</h4>
-    <p class="">Hello, Welcome to your account.</p>
+    <h4 class=""><?php _el('sign_in');?></h4>
+    <p class=""><?php _el('Hello_Welcome_to_your_account');?></p>
 
     <form id="login_form" method="post" action="<?php echo site_url('authentication'); ?>" class="register-form outer-top-xs" role="form">
         <div class="form-group">
@@ -47,8 +45,8 @@
 
 <!-- create a new account -->
 <div class="col-md-6 col-sm-6 create-new-account">
-    <h4 class="checkout-subtitle">Create a new account</h4>
-    <p class="text title-tag-line">Create your new account.</p>
+    <h4 class="checkout-subtitle"><?php _el('create_a_new_account');?></h4>
+    <p class="text title-tag-line"><?php _el('create_your_new_account');?></p>
     <form id="signup_form" method="post" action="<?php echo site_url('authentication/signup') ?>" class="register-form outer-top-xs" role="form">
 
         <div class="form-group">

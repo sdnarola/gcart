@@ -31,29 +31,54 @@
 							foreach ($wishlist_data as $key => $wishlist) 
 							{
 ?>
-								<tr id="wishlistdata-<?= $wishlist['id']?>"  style="border-top: 1px solid #ddd" >
-									<td class="col-md-2"><img src="<?= base_url(); ?><?= $wishlist['thumb_image']; ?>" alt="imga"></td>
+								<tr id="wishlistdata-<?= $wishlist['product_id']?>"  style="border-top: 1px solid #ddd" >
+									<td class="col-md-2"><img src="<?= base_url(); ?><?php echo get_product($wishlist['product_id'], 'thumb_image'); ?>" alt="imga"></td>
 									<td class="col-md-7">
-										<div class="product-name"><a href="<?= site_url('Products/'.$wishlist['slug']); ?>"><?= $wishlist['name']; ?></a></div>
+										<div class="product-name"><a href="<?= site_url('Products/'.get_product($wishlist['product_id'], 'slug')); ?>"><?= get_product($wishlist['product_id'], 'name') ?></a></div>
 <?php 
-					                      if(!empty(get_star_rating( $wishlist['id']) ))
+					                      if(!empty(get_star_rating( $wishlist['product_id']) ))
 					                      {
-					                        $width =( get_star_rating( $wishlist['id']) *70 ) / 5;
+					                        $width =( get_star_rating( $wishlist['product_id']) *70 ) / 5;
 ?>
 										<div class="rating-star rateit-small">
 										<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button><div id="rateit-range-4" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-4" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4" aria-readonly="true" style="width: 70px; height: 14px;"><div class="rateit-selected" style="height: 14px; width:<?= $width?>px;"></div><div class="rateit-hover" style="height:0px"></div></div>
 										</div>
 <?php
                    			 				}
+
+                   			 				$hot_deals = get_hot_deals_data();
+						            		$price     = get_product($wishlist['product_id'], 'price');
+						            		$old_price = get_product($wishlist['product_id'], 'old_price');
+						            		
+						            		if(!empty($hot_deals))
+						            		{
+						            			foreach ($hot_deals as $key => $hot_deals_data) 
+						            			{
+						            				if($hot_deals_data['product_id'] == $wishlist['product_id'] && get_product($wishlist['product_id'], 'quantity') > 0 )
+						            				{
+						            					if ($hot_deals_data['type'] == 0)
+														{
+															$price = $price - $hot_deals_data['value'];
+															$old_price = get_product($wishlist['product_id'], 'price');
+														}
+														else
+														{	
+															$save_amount = ($price*$hot_deals_data['value'])/100;
+															$price       = $price-$save_amount;
+															$old_price = get_product($wishlist['product_id'], 'price');
+														}
+						            				}
+						            			}
+						            		}
 ?>
-										<div class="price"><?= $wishlist['price']; ?><span><?= $wishlist['old_price']; ?></span></div>
+										<div class="price"><?php _el('rupees');?><?php echo $price; ?><span><?php _el('rupees');?><?php echo $old_price; ?></span></div>
 									</td>
 									<td class="col-md-2">		
 <?php
-									if($wishlist['quantity'] != 0 )
+									if(get_product($wishlist['product_id'], 'quantity') != 0 )
 									{
 ?>
-										<a href="javascript:void(0);" class="btn-upper btn btn-primary" onclick="add_to_cart(<?= $wishlist['id']; ?>)"><?php _el('add_to_cart');?></a>
+										<a href="javascript:void(0);" class="btn-upper btn btn-primary" onclick="add_to_cart(<?= $wishlist['product_id']; ?>)"><?php _el('add_to_cart');?></a>
 <?php
 									}
 									else
@@ -65,7 +90,7 @@
 ?>
 									</td>
 									<td class="col-md-1 close-btn">
-										<a href="javascript:void(0);" onclick="delete_wishlist(<?= $wishlist['id']; ?>)"><i class="fa fa-times"></i></a>
+										<a href="javascript:void(0);" onclick="delete_wishlist(<?= $wishlist['product_id']; ?>)"><i class="fa fa-times"></i></a>
 									</td>
 								</tr>
 <?php

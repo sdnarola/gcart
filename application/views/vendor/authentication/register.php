@@ -1,9 +1,32 @@
 <?php
-    $main_categories   = $this->category->get_parent_category();
-    $sub_categories    = $this->category->get_sub_category();
-    $header_categories = $this->category->get_parent_category(1);
-  $brands            = $this->brand->get_all_brands();    
-    //echo sizeof($categories['categories']);
+	$main_categories   = $this->category->get_header_parent_category();
+	$sub_categories    = $this->category->get_sub_categories();
+	$header_categories = $this->category->get_header_parent_category(1);
+	$brands            = $this->brands->get_all_brands();
+
+	// =========================== cart display  Work by KOMAL===================================
+	$user_id          = $this->session->userdata('user_id');
+	$where['user_id'] = (empty($user_id)) ? 0 : $user_id;
+
+	if (empty($user_id))
+	{
+		$where['user_ip'] = $this->input->ip_address();
+	}
+
+	$total_row          = (empty($this->cart->count_cart_row($where))) ? 0 : $this->cart->count_cart_row($where);
+	$garnd_total_amount = (empty($this->cart->count_total_amount($where))) ? 0 : $this->cart->count_total_amount($where);
+	$cart_data          = $this->cart->get_cart_data($where);
+	$cart_products      = '';
+
+	if (!empty($cart_data))
+	{
+		$products_id   = get_products_id_foreach($cart_data);
+		$cart_products = $this->cart->get_cart_products_detail($where, $products_id);
+	}
+
+	$dropdown = (empty($cart_products)) ? '' : 'dropdown';
+
+	// =========================== END cart display Work by KOMAL===================================
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,24 +38,49 @@
 <meta name="author" content="">
 <meta name="keywords" content="MediaCenter, Template, eCommerce">
 <meta name="robots" content="all">
-<title>GCART</title>
+<title><?php echo $this->page_title; ?></title>
 
 <!-- Bootstrap Core CSS -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap.min.css">
-
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/components.css">
 <!-- Customizable CSS -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/main.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/blue.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/content.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/lightbox.css">
+
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/sweetalert2.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.carousel.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/owl.transitions.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/animate.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/rateit.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/bootstrap-select.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/jquery.countdownTimer.css">
+<link href="<?php echo base_url(); ?>assets/themes/default/css/pagination.css" rel="stylesheet" type="text/css">
 
+<!-------------js form validation -------------------------------------------------->
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
 
+<script type="text/javascript">
+  let SITE_URL            = "<?php echo site_url();?>";
+  let BASE_URL            = "<?php echo base_url();?>";
+  let title               = "<?php _el('single_deletion_alert');?>";
+  let text                = "<?php _el('single_recovery_alert');?>";
+  let cancelButtonText    = "<?php _el('no_cancel_it');?>";
+  let confirmButtonText   = "<?php _el('yes_i_am_sure');?>";
+  let add_to_cart_success = "<?php _el('add_to_cart_qty')?>";
+  let update_qty          = "<?php _el('update_qty')?>";
+  let qty_not_available   = "<?php _el('qty_not_available')?>";
+  let add_to_wishlist     = "<?php _el('add_to_wishlist')?>";
+  let remove_wishlist     = "<?php _el('remove_wishlist')?>";
+  let cart_empty_title    = "<?php _el('your_car_is_empty')?>";
+  let cart_empty_msg      = "<?php _el('cart_empty_msg')?>";
+  let url                 = "<?php echo site_url().'Home';?>";
+  let shop_now            = "<?php _el('shop_now')?>";
+
+
+
+</script>
 <!-- Icons/Glyphs -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/font-awesome.css">
 
@@ -41,8 +89,40 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
-<script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<script src="<?php echo base_url(); ?>assets/themes/default/js/timer-counter-hot-deals.js"></script>
+
+<script type="text/javascript">
+  <?php
+
+  	$alert_class = '';
+
+  	if ($this->session->flashdata('success'))
+  	{
+  		$alert_class = 'success';
+  	}
+  	elseif ($this->session->flashdata('warning'))
+  	{
+  		$alert_class = 'warning';
+  	}
+  	elseif ($this->session->flashdata('danger'))
+  	{
+  		$alert_class = 'danger';
+  	}
+  	elseif ($this->session->flashdata('info'))
+  	{
+  		$alert_class = 'info';
+  	}
+
+  	if ($this->session->flashdata($alert_class))
+  	{
+  	?>
+    jGrowlAlert("<?php echo $this->session->flashdata($alert_class) ?>",'<?php echo $alert_class; ?>');
+<?php
+	}
+
+?>
+</script>
 
 <!-- Fonts -->
 </head>
@@ -54,49 +134,53 @@
   <div class="top-bar animate-dropdown">
     <div class="container">
       <div class="header-top-inner">
-        <div class="cnt-account">
 
-            <ul class="list-unstyled">
             <?php
 
-                if (is_user_logged_in())
-                {
-                ?>
-                <li><a href="#">Welcome&nbsp<?php echo get_loggedin_info('username'); ?></a></li>
-                <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-heart"></i>Wishlist</a></li>
-                <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');?></a></li>
-                 <div class="dropdown" style="float: right;">
-                  <div class="btn-group btn-group-sm">
-                  <a class="btn btn-primary  dropdown-toggle" href="<?php echo base_url(); ?>#" id="dropdownMenuLink" data-toggle="dropdown"  >
+            	if (is_user_logged_in())
+            	{
+            	?>
+               <div class="cnt-block">
+                        <ul class="list-unstyled list-inline">
 
-                 <div class="icon fa fa-user"> My Account </div> </a>
-
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item" href="<?php echo site_url('profile') ?>">My profile</a></li>
-                    <li><a class="dropdown-item" href="<?php echo site_url('profile/edit') ?>"><?php _el('edit_profile');?></a></li>
-                     <li><a class="dropdown-item" href="#">My Orders</a></li>
-                  </div>
-
+                          <li  style= "float: right;" class="dropdown dropdown-small"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value"> <i class="icon fa fa-user"></i>&nbsp;<?php _el('my_account');?> </span><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                              <li><a href="<?php echo site_url('profile') ?>"><?php _el('my_profile');?></a></li>
+                              <li><a href="<?php echo site_url('profile/edit') ?>"><?php _el('edit_profile');?></a></li>
+                              <li><a href="<?php echo site_url('orders') ?>"><?php _el('my_orders');?></a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                        <!-- /.list-unstyled -->
                 </div>
+                <div class="cnt-account">
 
-                </div>
-            <?php }
-                else
-                {
-                ?>
-
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-shopping-cart"></i>My Cart</a></li>
-            <li><a href="<?php echo base_url(); ?>#"><i class="icon fa fa-check"></i>Checkout</a></li>
-            <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i>Login</a></li>
-            <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i>Sell</a></li>
-           <?php }
+                <ul class="list-unstyled">
+                <li><a href="#"><?php _el('welcome');?>&nbsp;<?php echo get_loggedin_info('username'); ?></a></li>
+                <li><a href="<?php echo site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i><?php _el('wishlist');?></a></li>
+                <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('logout');
+	echo '&nbsp';?></a></li>
+              </ul>
+            </div>
+                    <!-- /.cnt-account -->
+            <?php
+            	}
+            	else
+            	{
+            	?>
+               <div class="cnt-account">
+               <ul class="list-unstyled">
+                <li><a href="<?php echo base_url('cart'); ?>"><i class="icon fa fa-shopping-cart"></i><?php _el('my_cart');?></a></li>
+                <li><a href="<?php echo site_url('cart/');?>"><i class="icon fa fa-check"></i><?php _el('Checkout')?></a></li>
+                <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i><?php _el('Login');?></a></li>
+                <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i><?php _el('Sell');?></a></li>
+              </ul>
+             </div>
+           <?php
+           	}
 
            ?>
-          </ul>
-
         </div>
-        <!-- /.cnt-account -->
-
 
         <!-- /.cnt-cart -->
         <div class="clearfix"></div>
@@ -107,89 +191,128 @@
   </div>
   <!-- /.header-top -->
   <!-- ============================================== TOP MENU : END ============================================== -->
+ <!-- ============================================== TOP MENU : END ============================================== -->
   <div class="main-header">
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
           <!-- ============================================================= LOGO ============================================================= -->
-          <div class="logo"> <a href="<?php echo base_url(); ?>"> <img src="<?php echo base_url(); ?>assets/themes/default/images/logo.png" alt="logo"> </a> </div>
 
+          <div class="logo"> <a href="<?php echo base_url(); ?>"> <img src="<?php echo base_url(); ?>assets/themes/default/images/logo.png" width="139px" height="36px" alt="logo"> </a> </div>
           <!-- /.logo -->
-          <!-- ============================================================= LOGO : END ============================================================= --> </div>
+          <!-- ===================================================== LOGO : END ============================================================= --> </div>
         <!-- /.logo-holder -->
 
         <div class="col-xs-12 col-sm-12 col-md-7 top-search-holder">
           <!-- /.contact-row -->
-          <!-- ============================================================= SEARCH AREA ============================================================= -->
-
+          <!-- ==================================================== SEARCH AREA ============================================================= -->
+          <style>
+           .search-field:focus {
+                outline: none;
+                }
+           @media only screen and (max-width: 600px) {
+               .search-field {
+              width: 10%;
+            }
+          .select_category{
+            width: 10%;
+          }
+          }
+          </style>
             <div class="search-area">
-            <form action="<?php echo base_url('categories/search') ?>" name="search" method='post'>
-
+            <form action="<?php echo base_url('products/search') ?>" name="search" method='post'>
               <div class="control-group">
 
-                 <select id="Categories" name="category_id"  data-toggle="dropdown" ><b class="Caret"></b>
-                 <option value="*" class="dropdown">Categories</option>
-                     <?php
+                 <select id="Categories" name="category_id"  data-toggle="dropdown" class="select_category"><b class="Caret"></b>
+                 <option value="" class="dropdown"><?php _el('categories');?></option>
+                  <?php
 
-                        foreach ($main_categories as $key => $main_category)
-                        {
-                        ?>
-                <option class="dropdown"  value="<?php echo $main_category->id; ?>"><?php echo ucwords($main_category->name); ?></option>
+                  	if (!empty($main_categories))
+                  	{
+                  		foreach ($main_categories as $main_category)
+                  		{
+                  		?>
+                 <option class="dropdown"  value="<?php echo $main_category['id']; ?>"><?php echo ucwords($main_category['name']); ?></option>
 
-                      <?php }
+                 <?php
+                 	}
+                 	}
 
-                      ?>
+                 ?>
                 </select>
-                <input class="search-field" name="name"  placeholder="Search here..." />
+
+                <input class="search-field" name="name" id="name"  style="border-style: hidden;" autocomplete="off" placeholder="Search here..." />
                  <button type="submit" id='save' name="submit" class="search-button"></button>
                <!-- <a class="search-button"  href="#" ></a>-->
                 </div>
             </form>
           </div>
+
+          <div class="list-unstyle" id="search_result" style="position:absolute;background-color: white;margin-left: 130px;width:470px;">
+
+          </div>
+
           <!-- /.search-area -->
-          <!-- ============================================================= SEARCH AREA : END ============================================================= --> </div>
+          <!-- ======================================== SEARCH AREA : END ============================================================= -->
+        </div>
         <!-- /.top-search-holder -->
 
         <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
-          <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
-
-          <div class="dropdown dropdown-cart"> <a href="<?php echo base_url(); ?>#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
+          <!-- ================================ SHOPPING CART DROPDOWN ============================================================= -->
+ <!-- =========================== cart display  Work by KOMAL===================================================== -->
+         <div class="dropdown dropdown-cart"> <a href="javascript:void(0);" class="dropdown-toggle lnk-cart" id="cart-dropdown" data-toggle="<?php echo $dropdown?>">
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-              <div class="basket-item-count"><span class="count">2</span></div>
-              <div class="total-price-basket"> <span class="lbl">cart -</span> <span class="total-price"> <span class="sign">$</span><span class="value">600.00</span> </span> </div>
+              <div class="basket-item-count"><span class="count"><?php echo $total_row?></span></div>
+              <div class="total-price-basket"> <span class="lbl"><?php _el('cart')?></span> <span class="total-price"> <span class="sign">$</span><span class="value"><?php echo $garnd_total_amount?></span> </span> </div>
             </div>
             </a>
             <ul class="dropdown-menu">
               <li>
+
                 <div class="cart-item product-summary">
-                  <div class="row">
+                   <?php
+
+                   	if (!empty($cart_products))
+                   	{
+                   		foreach ($cart_products as $key => $cart)
+                   		{
+                   		?>
+                  <div id="cart-<?php echo $cart['cart_id'];?>" class="row">
                     <div class="col-xs-4">
-                      <div class="image"> <a href="<?php echo base_url(); ?>detail.html"><img src="assets/themes/default/images/cart.jpg" alt=""></a> </div>
+                      <div class="image"> <a href="<?php echo site_url('Products/'.$cart['slug']);?>"><img src="<?php echo base_url().$cart['thumb_image']; ?>" alt=""></a> </div>
                     </div>
                     <div class="col-xs-7">
-                      <h3 class="name"><a href="<?php echo base_url(); ?>index.php?page-detail">Simple Product</a></h3>
-                      <div class="price">$600.00</div>
+                      <h3 class="name"><a href="<?php echo site_url('Products/'.$cart['slug']);?>"><?php echo $cart['name'];?></a></h3>
+                      <div class="price"><?php echo $cart['total_amount']?></div>
                     </div>
-                    <div class="col-xs-1 action"> <a href="<?php echo base_url(); ?>#"><i class="fa fa-trash"></i></a> </div>
+                    <div class="col-xs-1 action"> <a href="javascript:void(0);"><i class="fa fa-trash" id="delete_cart_product" onclick="delete_to_Cart_product(<?php echo $cart['cart_id']?>);" ></i></a> </div>
                   </div>
+                  <?php
+                  	}
+                  	}
+
+                  ?>
                 </div>
+
                 <!-- /.cart-item -->
                 <div class="clearfix"></div>
                 <hr>
                 <div class="clearfix cart-total">
-                  <div class="pull-right"> <span class="text">Sub Total :</span><span class='price'>$600.00</span> </div>
+                  <div class="pull-right sub-total"> <span class="text"><?php _el('sub_total')?></span><span class='price'><?php echo $garnd_total_amount?></span> </div>
                   <div class="clearfix"></div>
-                  <a href="<?php echo base_url(); ?>checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a> </div>
+                  <a href="<?php echo site_url('cart/');?>" class="btn btn-upper btn-primary btn-block m-t-20"><?php _el('checkout')?></a> </div>
                 <!-- /.cart-total-->
-
+ <!-- ============================ END cart display  Work by KOMAL===================================================== -->
               </li>
             </ul>
             <!-- /.dropdown-menu-->
           </div>
           <!-- /.dropdown-cart -->
 
-          <!-- ============================================================= SHOPPING CART DROPDOWN : END============================================================= --> </div>
+
+          <!-- ===================================== SHOPPING CART DROPDOWN : END============================================================= -->
+        </div>
         <!-- /.top-cart-row -->
       </div>
       <!-- /.row -->
@@ -212,90 +335,87 @@
           <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
             <div class="nav-outer">
               <ul class="nav navbar-nav">
-                 <li class="active dropdown yamm-fw"> <a href="<?php echo base_url(); ?>#" data-hover="dropdown" class="dropdown-toggle" data-toggle="dropdown">Home</a> </li>
+
+                 <li class="active dropdown yamm-fw"> <a data-hover="dropdown" class="dropdown-toggle"  href="<?php echo base_url(); ?>" ><?php _el('home');?></a> </li>
                 <?php
 
-                    foreach ($header_categories as $key => $header_category)
-                    {
-                    ?>
+                	if (!empty($header_categories))
+                	{
+                		foreach ($header_categories as $header_category)
+                		{
+                		?>
 
-                <li class="dropdown yamm mega-menu"><a href="<?php echo base_url().'categories/get_parent_category_products/'.$header_category->id; ?>" data-hover="dropdown" class="dropdown-toggle"  data-toggle="dropdown"><?php echo ucwords($header_category->name); ?> </a>
+                <li class="dropdown yamm mega-menu"><a href="<?php echo base_url().'categories/get_parent_category_products/'.$header_category['id']; ?>" data-hover="dropdown" class="dropdown-toggle"  data-toggle="dropdown"><?php echo ucwords($header_category['name']); ?> </a>
                                         <!-- /.accordion-heading -->
-                  <ul class="dropdown-menu container"  id="<?php echo $header_category->id; ?>">
+                  <ul class="dropdown-menu container"  id="<?php echo $header_category['id']; ?>">
                     <li>
-                      
-                     <div class="yamm-content">
 
+                     <div class="yamm-content">
                         <div class="row customli">
 
-                          <div class="row-xs-12 row-sm-12 row-md-12 row-menu">
-                          <!--  <h2 class="title"><?php echo ucwords($sub_categories->name); ?></h2>-->
-                            <ul class="links">
                     <?php
-                        $counter = 0;
+                    	$counter = 0;
 
-                            foreach ($sub_categories as $key => $sub_category)
-                            {
-                                if ($sub_category->category_id == $header_category->id)
-                                {
-                                    if ($counter < 4)
-                                    {
-                                    ?>
+                    			if (!empty($sub_categories))
+                    			{
+                    				foreach ($sub_categories as $sub_category)
+                    				{
+                    					if ($sub_category['category_id'] == $header_category['id'])
+                    					{
+                    						if ($counter < 4)
+                    						{
+                    						?>
                          <div  class="col-xs-12 col-sm-6 col-md-3 col-menu " >
                             <ul class="links">
-
-                              <li><a href="<?php echo base_url().'categories/get_sub_category_products/'.$sub_category->id; ?>"><?php echo ucwords($sub_category->name);
-                $counter++; ?>
-                                  </a></li>
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+						$counter++; ?></a></li>
                                 </ul>
                          </div>
-                <?php
-                    }
-                                elseif ($counter >= 4)
-                                {
-                                ?>
+                          <?php
+                          	}
+                          						elseif ($counter >= 4)
+                          						{
+                          						?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu" >
                             <ul class="links">
-                              <li><a href="<?php echo base_url().'Categories/get_sub_category_products/'.$sub_category->id; ?>"><?php echo ucwords($sub_category->name);
-                $counter++; ?>
-                                  </a></li>
-                                  </ul>
-                                  </div>
-                                <?php
-                                    }
-                                                else
-                                                {
-                                                ?>
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+						$counter++; ?>  </a></li>
+                             </ul>
+                             </div>
+                            <?php
+                            	}
+                            						else
+                            						{
+                            						?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu">
                             <ul class="links">
-                              <li><a href="<?php echo base_url().'Categories/get_sub_category_products/'.$sub_categories->id; ?>"><?php echo ucwords($sub_category->name);
-                $counter++; ?>
-                                  </a></li>
-                                  </ul>
-                                  </div>
-                                <?php
-                                    }
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+						$counter++; ?></a></li>
+                             </ul>
+                            </div>
+                             <?php
+                             	}
 
-                                            ?>
+                             					?>
 <?php
-    }
-        }
+	}
+				}
+				//sub categories foreach end
+			}
 
-    ?>
-                            </ul>
-                          </div>
+		?>
+
                       <!-- /.yamm-content -->
                         </div>
                       </div>
                     </li>
                   </ul>
                 </li>
-
              <?php
-                }
+             	}
+             	}
 
              ?>
-
               </ul>
 
               <!-- /.navbar-nav -->
@@ -314,14 +434,12 @@
 
   </div>
   <!-- /.header-nav -->
-  <!-- ============================================== NAVBAR : END ============================================== -->
+    <!-- ============================================== NAVBAR : END ============================================== -->
 
 </header>
-
 <!-- main container -->
   <!-- ============================================== CONTAINER  : START ============================================== -->
 
-<div class="container" style="margin-top:30px;">
     <?php $this->load->view('themes/default/includes/alerts');
     ?>
 
@@ -329,8 +447,8 @@
     <div class="container">
         <div class="breadcrumb-inner">
             <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li class='active'>Register</li>
+                <li><a href="<?php echo base_url(); ?>"><?php _el('home');?></a></li>
+                <li class='active'><?php _el('register');?></li>
             </ul>
         </div><!-- /.breadcrumb-inner -->
     </div><!-- /.container -->
@@ -352,8 +470,8 @@
 <form id="signup_form" method="post" action="<?php echo site_url('vendor/authentication/signup') ?>" class="register-form outer-top-xs" role="form">
 
 <div class="col-md-6 col-sm-6 create-new-account">
-    
-    
+
+
         <div class="form-group">
             <label class="info-title" for="firstname"><?php _el('firstname');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="firstname" name="firstname" >
@@ -362,8 +480,12 @@
             <label class="info-title" for="lastname"><?php _el('lastname');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="lastname" name="lastname" >
         </div>
+         <div class="form-group">
+            <label class="info-title" for="owner_name"><?php _el('owner_name');?> <span>*</span></label>
+            <input type="text" class="form-control unicase-form-control text-input" id="owner_name" name="owner_name" >
+        </div>
         <div class="form-group">
-            <label class="info-title" for="mobile"><?php _el('mobile');?> <span>*</span></label>
+            <label class="info-title" for="mobile"><?php _el('mobile_no');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="mobile" name="mobile" >
         </div>
         <div class="form-group">
@@ -379,49 +501,77 @@
             <label class="info-title" for="confirm_password"><?php _el('confirm_password');?><span>*</span></label>
             <input type="password" class="form-control unicase-form-control text-input" id="confirm_password"  name="confirm_password">
         </div>
-       
+
 
 </div>
 <div class="col-md-6 col-sm-6 create-new-account">
-    <!--<h4 class="" ></h4>
-    <p class=""></p>
-
-    <form id="login_form" method="post" action="<?php echo site_url('vendor/authentication'); ?>" class="register-form outer-top-xs" role="form">
-    -->
-     <div class="form-group">
-            <label class="info-title" for="address"><?php _el('address');?> <span>*</span></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="address" name="address" >
+        <div class="form-group">
+            <label class="info-title" for="registration_number"><?php _el('registration_number');?> <span>*</span></label>
+            <input type="text" class="form-control unicase-form-control text-input" id="registration_number" name="registration_number" >
         </div>
-      <div class="form-group">
+        <div class="form-group">
             <label class="info-title" for="shop_name"><?php _el('shop_name');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="shop_name" name="shop_name" >
         </div>
          <div class="form-group">
             <label class="info-title" for="shop_number"><?php _el('shop_number');?> <span>*</span></label>
             <input type="text" class="form-control unicase-form-control text-input" id="shop_number" name="shop_number" >
-        </div>        
-        
-        <div class="form-group">
-            <label class="info-title" for="owner_name"><?php _el('owner_name');?> <span>*</span></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="owner_name" name="owner_name" >
         </div>
+
         <div class="form-group">
+            <label class="info-title" for="address"><?php _el('address');?> <span>*</span></label>
+            <input type="text" class="form-control unicase-form-control text-input" id="address" name="address" >
+      </div>
+       <div class="form-group">
+            <label class="info-title" for="state"><?php _el('state');?><span>*</span></label>
+             <select class="form-control unicase-form-control text-input" id='state' name='state'>
+            <?php
+
+            	if (!empty($user_address['state']))
+            	{
+            	?>
+           <option   value='<?php echo $user_address['state']; ?>'><?php get_state_name($user_address['state']);?></option>
+           <?php
+           	}
+           	else
+           	{
+           	?>
+                <option  selected="selected" value=''>--select state--</option>
+            <?php }
+
+            	if (!empty($states))
+            	{
+            		foreach ($states as $state)
+            		{
+            		?>
+
+             <option value='<?php echo $state['id'] ?>'><?php echo $state['name'] ?></option>
+           <?php }
+           	}
+           	else
+           	{
+           	?>
+             <option  value=''>State not avalilable</option>
+           <?php }
+
+           ?>
+            </select>
+
+        </div>
+         <div class="form-group">
+            <label class="info-title" for="city"><?php _el('city');?><span>*</span></label>
+
+            <select class="form-control unicase-form-control text-input" id='city' name='city'>
+            <option  value='<?php echo $user_address['city']; ?>' selected="selected"><?php get_city_name($user_address['city']);?></option>
+            </select>
+
+        </div>
+          <div class="form-group">
             <label class="info-title" for="shop_details"><?php _el('pincode');?> <span>*</span></label>
             <input type="number" class="form-control unicase-form-control text-input" id="pincode" name="pincode" >
         </div>
-        <div class="form-group">
-            <label class="info-title" for="registration_number"><?php _el('registration_number');?> <span>*</span></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="registration_number" name="registration_number" >
-        </div>
 
-       <!-- <div class="radio outer-xs">
-            
-            <a href="<?php echo site_url('authentication/forgot_password'); ?>" class="forgot-password pull-right"><?php _el('forgot_password')?></a>
-        </div>
-        -->
-   
-    
-</div>
+  </div>
 <button type="submit" class="btn-upper btn btn-primary btn-lg btn-block checkout-page-button"><?php _el('signup')?></button>
 
 </form>
@@ -430,23 +580,24 @@
             </div> <!--row-->
         </div><!--sign-in-page-->
     </div>
-
-    <!-- ============================================== CONTAINER  : END============================================== -->
-
- <!-- ============================================== BRANDS CAROUSEL ============================================== -->
-     <!--/.owl-carousel #logo-slider -->
+        <!-- ============================================== CONTAINER  : END============================================== -->
+  <!-- ============================================== BRANDS CAROUSEL ============================================== -->
+ <!--/.owl-carousel #logo-slider -->
 
     <div id="brands-carousel" class="logo-slider wow fadeInUp">
       <div class="logo-slider-inner">
         <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
            <?php
 
-            foreach ($brands as $brand)
-            {
-            ?>
+           	if (!empty($brands))
+           	{
+           		foreach ($brands as $brand)
+           		{
+           		?>
           <div class="item m-t-15"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url() ?><?php echo $brand['logo']; ?>" src="<?php echo base_url() ?><?php echo $brand['logo']; ?>" alt="brand" style="max-height:110px;max-width:166px;height:auto;width:auto;"> </a> </div>
           <?php
-            }
+          	}
+          	}
 
           ?>
         </div>
@@ -477,21 +628,25 @@
           <div class="module-body">
             <ul class="toggle-footer" style="">
               <li class="media">
-                <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </div>
+
+                <div class="pull-left">
+
+                <a href='<?php echo base_url('contact') ?>'  title="location" id="marker"><span class="icon fa-stack fa-lg"> <i id ="marker" class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </a></div>
                 <div class="media-body">
-                  <p>ThemesGround, 789 Main rd, Anytown, CA 12345 USA</p>
+                  <p>Recent Square, dmart,Adajan, 12345 INDIA</p>
                 </div>
               </li>
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span> </div>
                 <div class="media-body">
-                  <p>+(888) 123-4567<br>
-                    +(888) 456-7890</p>
+                  <p><a href="tel:+(888) 123-4567">+(888) 123-4567</a>
+                    <a href="tel:+(888) 456-7890"> +(888) 456-78907</a>
+                   </p>
                 </div>
               </li>
               <li class="media">
                 <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-envelope fa-stack-1x fa-inverse"></i> </span> </div>
-                <div class="media-body"> <span><a href="<?php echo base_url(); ?>#">flipmart@themesground.com</a></span> </div>
+                <div class="media-body"> <span><a href="mailto:gcart.team@gmail.com">gcart.team@gmail.com</a></span> </div>
               </li>
             </ul>
           </div>
@@ -526,7 +681,7 @@
 
           <div class="module-body">
             <ul class='list-unstyled'>
-              <li class="first"><a title="Your Account" href="<?php echo base_url(); ?>#">About us</a></li>
+              <li class="first"><a title="About us" href="<?php echo base_url('about_us'); ?>">About us</a></li>
               <li><a title="Information" href="<?php echo base_url(); ?>#">Customer Service</a></li>
               <li><a title="Addresses" href="<?php echo base_url(); ?>#">Company</a></li>
               <li><a title="Addresses" href="<?php echo base_url(); ?>#">Investor Relations</a></li>
@@ -549,7 +704,7 @@
               <li><a href="<?php echo base_url(); ?>#" title="Blog">Blog</a></li>
               <li><a href="<?php echo base_url(); ?>#" title="Company">Company</a></li>
               <li><a href="<?php echo base_url(); ?>#" title="Investor Relations">Investor Relations</a></li>
-              <li class=" last"><a href="<?php echo base_url(); ?>contact-us.html" title="Suppliers">Contact Us</a></li>
+              <li class=" last"><a href="<?php echo base_url('contact'); ?>" title="Suppliers">Contact Us</a></li>
             </ul>
           </div>
           <!-- /.module-body -->
@@ -592,7 +747,8 @@
 <!-- For demo purposes – can be removed on production : End -->
 
 <!-- JavaScripts placed at the end of the document so the pages load faster -->
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
+ -->
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-hover-dropdown.min.js"></script>
@@ -604,30 +760,55 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/themes/default/js/lightbox.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/bootstrap-select.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/themes/default/js/wow.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery.countdownTimer.js"></script>
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery.countdownTimer.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/themes/default/js/sweet_alert.min.js'); ?>"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/common.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/jgrowl.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/typeahead.bundle.js"></script>
 
+<!-- ---------------------------------time counter ---------------------------->
+
+<script src="<?php echo base_url(); ?>assets/themes/default/js/add-to-cart.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/delete-add-to-cart.js"></script>
+<script src="<?php echo base_url(); ?>assets/themes/default/js/add-wishlist.js"></script>
+<!-- ----------------------------------------------------------------------------------------------- -->
+<script src="<?php echo base_url(); ?>assets/themes/default/js/scripts.js"></script>
 <script>
-          var temp = document.querySelectorAll('.links');
+//=======================header  parent categories if empty then hide container==================
+          var temp = document.querySelectorAll('.customli');
           var t = document.querySelector('.yamm-content');
-         temp.forEach((e)=>{
-          if(e.children.length === 0)
+          if (temp != '')
           {
-          e.style.display='none';
-          e.parentNode.style.display='none'
-          var p = e.parentNode;
-          p.parentNode.style.display='none'
+             temp.forEach((e)=>{
+            if(e.children.length === 0)
+            {
+              e.style.display='none';
+              e.parentNode.style.display='none'
+              var p = e.parentNode;
+              p.parentNode.style.display='none'
+            }
+           })
           }
-         })
-        </script>
+//============================autosuggest for search ====================================
 
-
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/core/libraries/jquery.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
-<script type="text/javascript">
-
-var BASE_URL = "<?php echo base_url(); ?>";
-
+ $('#name').typeahead({
+  source: function(query, result)
+  {
+   $.ajax({
+    url:"<?php echo base_url(); ?>products/autocomplete_search",
+    method:"POST",
+    data:{query:query},
+    dataType:"json",
+    success:function(data)
+    {
+      console.log(data);
+     result($.map(data, function(item){
+      return item;
+     }));
+    }
+   })
+  }
+ });
+//============================sign up form  validation================================
 $.validator.addMethod("emailExists", function(value, element)
 {
     var mail_id = $(element).val();
@@ -671,6 +852,12 @@ $("#signup_form").validate({
          shop_number: {
             required: true,
         },
+        city: {
+        required: true,
+        },
+       state: {
+        required: true,
+       },
         pincode: {
             required: true,
             number: true,
@@ -723,6 +910,12 @@ $("#signup_form").validate({
         shop_number: {
             required:"<?php _el('please_enter_', _l('shop_number'))?>",
         },
+        city: {
+            required:"<?php _el('please_enter_', _l('city'))?>",
+        },
+        state: {
+                required:"<?php _el('please_enter_', _l('state'))?>",
+        },
         pincode: {
             required:"<?php _el('please_enter_', _l('pincode'))?>",
         },
@@ -733,7 +926,7 @@ $("#signup_form").validate({
             required:"<?php _el('please_enter_', _l('registration_number'))?>",
         },
         mobile: {
-            required:"<?php _el('please_enter_', _l('mobile'))?>",
+            required:"<?php _el('please_enter_', _l('mobile_no'))?>",
             minlength :'Please enter a valid 10 digit mobile number',
        },
         email: {
@@ -753,7 +946,69 @@ $("#signup_form").validate({
         },
     },
 });
+//=========================get state name==============================
+$(document).ready(function(){
 
+    var state_id = $('#state').val();
+    if(state_id != null)
+    {
+        if(state_id){
+            $.ajax({
+                type:'POST',
+                url:'<?php echo base_url('profile/get_cities'); ?>',
+                data: { state_id: state_id },
+                 async: false,
+                success:function(data){
+                    var dataObj = jQuery.parseJSON(data);
+                    if(dataObj){
+                        $(dataObj).each(function(){
+                            var option = $('<option />');
+                            option.attr('value', this.id).text(this.name);
+                            $('#city').append(option);
+                        });
+                    }
+                    if(dataObj.length==0)
+                    {
+                        $('#city').html('<option value="0">city not available</option>');
+                    }
+                }
+            });
+        }else{
+            $('#city').html('<option value="">--Select state first--</option>');
+        }
+    }
+
+ /* Populate data to city dropdown */
+    $('#state').on('change',function(){
+        var state_id = $(this).val();
+        if(state_id){
+            $.ajax({
+                type:'POST',
+                url:'<?php echo base_url('user/get_cities'); ?>',
+                data: { state_id: state_id },
+                 async: false,
+                success:function(data){
+
+                    $('#city').html('<option value="">--select city--</option>');
+                    var dataObj = jQuery.parseJSON(data);
+                    if(dataObj){
+                        $(dataObj).each(function(){
+                            var option = $('<option />');
+                            option.attr('value', this.id).text(this.name);
+                            $('#city').append(option);
+                        });
+                    }
+                    if(dataObj.length==0)
+                    {
+                        $('#city').html('<option value="0">city not available</option>');
+                    }
+                }
+            });
+        }else{
+            $('#city').html('<option value="">--Select state first--</option>');
+        }
+    });
+});
    </script>
 </body>
 </html>

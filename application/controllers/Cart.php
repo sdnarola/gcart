@@ -7,22 +7,32 @@ class Cart extends Frontend_Controller
 		parent::__construct();
 	}
 
+	/**
+	 * [index description]
+	 * @return [type] [description]
+	 */
 	public function index()
 	{
 		$this->get_cart();
 	}
 
+	/**
+	 * [get_cart description]
+	 * @return get cart data
+	 */
 	public function get_cart()
 	{
 		if (is_user_logged_in())
 		{
 			$this->set_page_title('Cart');
 
-			$user_ip            = $this->input->ip_address();
-			$user_id            = $this->session->userdata('user_id');
-			$data['cart_items'] = $this->cart->get_many_by(array('user_ip' => $user_ip, 'user_id' => $user_id));
+			$user_ip                   = $this->input->ip_address();
+			$user_id                   = $this->session->userdata('user_id');
+			$where['user_id']          = $user_id;
+			$this->data['cart_items']  = $this->cart->get_many_by(array('user_ip' => $user_ip, 'user_id' => $user_id));
+			$this->data['grand_total'] = $this->cart->count_cart_total_amount_for_confirm_order($where);
 
-			$this->template->load('index', 'content', 'cart', $data);
+			$this->template->load('index', 'content', 'cart', $this->data);
 			// }
 		}
 		else
@@ -144,109 +154,24 @@ class Cart extends Frontend_Controller
 
 		if ($cart_product_id == $this->data['product_id'] && $cart_user_id == $user_id && $user_id != 0)
 		{
-			$update_data['quantity']     = $cart_quantity + $this->data['quantity'];
-			$update_data['total_amount'] = $update_data['quantity'] * (get_product($this->data['product_id'], 'price'));
-
-			if (!empty($hot_deals))
-			{
-				foreach ($hot_deals as $key => $hot_deals_data)
-				{
-					if ($hot_deals_data['product_id'] == $this->data['product_id'])
-					{
-						if ($hot_deals_data['type'] == 0)
-						{
-							$price                       = get_product($this->data['product_id'], 'price') - $hot_deals_data['value'];
-							$update_data['total_amount'] = $price * $update_data['quantity'];
-						}
-						else
-						{
-							$save_amount                 = (get_product($this->data['product_id'], 'price') * $hot_deals_data['value']) / 100;
-							$price                       = get_product($this->data['product_id'], 'price') - $save_amount;
-							$update_data['total_amount'] = $price * $update_data['quantity'];
-						}
-					}
-				}
-			}
-
-			if ($update_data['quantity'] <= $products_quantity)
-			{
-				$update = $this->cart->update($cart_id, $update_data, FALSE);
-
-				if ($update)
-				{
-					$cart_record['msg']                 = 'updated success';
-					$cart_data                          = $this->cart->get_cart_data($cart_where);
-					$products_id                        = get_products_id_foreach($cart_data);
-					$cart_product_where['cart.user_id'] = $this->data['user_id'];
-					$cart_record['Product_data']        = $this->cart->get_cart_products_detail($cart_product_where, $products_id);
-					$cart_record['row']                 = $this->cart->count_cart_row($cart_where);
-					$cart_record['total_amount']        = $this->cart->count_total_amount($cart_where);
-				}
-			}
-			else
-			{
-				$cart_record['msg']                 = 'quantity not available';
-				$cart_data                          = $this->cart->get_cart_data($cart_where);
-				$products_id                        = get_products_id_foreach($cart_data);
-				$cart_product_where['cart.user_id'] = $this->data['user_id'];
-				$cart_record['Product_data']        = $this->cart->get_cart_products_detail($cart_product_where, $products_id);
-				$cart_record['row']                 = $this->cart->count_cart_row($cart_where);
-				$cart_record['total_amount']        = $this->cart->count_total_amount($cart_where);
-			}
+			$cart_record['msg']                 = 'updated success';
+			$cart_data                          = $this->cart->get_cart_data($cart_where);
+			$products_id                        = get_products_id_foreach($cart_data);
+			$cart_product_where['cart.user_id'] = $this->data['user_id'];
+			$cart_record['Product_data']        = $this->cart->get_cart_products_detail($cart_product_where, $products_id);
+			$cart_record['row']                 = $this->cart->count_cart_row($cart_where);
+			$cart_record['total_amount']        = $this->cart->count_total_amount($cart_where);
 		}
 		elseif ($cart_product_id == $this->data['product_id'] && $cart_ip_address == $this->data['user_ip'] && $user_id == 0)
 		{
-			$update_data['quantity']     = $cart_quantity + $this->data['quantity'];
-			$update_data['total_amount'] = $update_data['quantity'] * (get_product($this->data['product_id'], 'price'));
-
-			if (!empty($hot_deals))
-			{
-				foreach ($hot_deals as $key => $hot_deals_data)
-				{
-					if ($hot_deals_data['product_id'] == $this->data['product_id'])
-					{
-						if ($hot_deals_data['type'] == 0)
-						{
-							$price                       = get_product($this->data['product_id'], 'price') - $hot_deals_data['value'];
-							$update_data['total_amount'] = $price * $update_data['quantity'];
-						}
-						else
-						{
-							$save_amount                 = (get_product($this->data['product_id'], 'price') * $hot_deals_data['value']) / 100;
-							$price                       = get_product($this->data['product_id'], 'price') - $save_amount;
-							$update_data['total_amount'] = $price * $update_data['quantity'];
-						}
-					}
-				}
-			}
-
-			if ($update_data['quantity'] <= $products_quantity)
-			{
-				$update = $this->cart->update($cart_id, $update_data, FALSE);
-
-				if ($update)
-				{
-					$cart_record['msg']                 = 'updated success';
-					$cart_data                          = $this->cart->get_cart_data($ip_address_where);
-					$products_id                        = get_products_id_foreach($cart_data);
-					$cart_product_where['cart.user_id'] = $this->data['user_id'];
-					$cart_product_where['cart.user_ip'] = $this->data['user_ip'];
-					$cart_record['Product_data']        = $this->cart->get_cart_products_detail($cart_product_where, $products_id);
-					$cart_record['row']                 = $this->cart->count_cart_row($ip_address_where);
-					$cart_record['total_amount']        = $this->cart->count_total_amount($ip_address_where);
-				}
-			}
-			else
-			{
-				$cart_record['msg']                 = 'quantity not available';
-				$cart_data                          = $this->cart->get_cart_data($ip_address_where);
-				$products_id                        = get_products_id_foreach($cart_data);
-				$cart_product_where['cart.user_id'] = $this->data['user_id'];
-				$cart_product_where['cart.user_ip'] = $this->data['user_ip'];
-				$cart_record['Product_data']        = $this->cart->get_cart_products_detail($cart_product_where, $products_id);
-				$cart_record['row']                 = $this->cart->count_cart_row($ip_address_where);
-				$cart_record['total_amount']        = $this->cart->count_total_amount($ip_address_where);
-			}
+			$cart_record['msg']                 = 'updated success';
+			$cart_data                          = $this->cart->get_cart_data($ip_address_where);
+			$products_id                        = get_products_id_foreach($cart_data);
+			$cart_product_where['cart.user_id'] = $this->data['user_id'];
+			$cart_product_where['cart.user_ip'] = $this->data['user_ip'];
+			$cart_record['Product_data']        = $this->cart->get_cart_products_detail($cart_product_where, $products_id);
+			$cart_record['row']                 = $this->cart->count_cart_row($ip_address_where);
+			$cart_record['total_amount']        = $this->cart->count_total_amount($ip_address_where);
 		}
 		else
 		{
@@ -310,7 +235,7 @@ class Cart extends Frontend_Controller
 		if ($deleted == true)
 		{
 			$cart_record['row']          = $this->cart->count_cart_row($row_where);
-			$cart_record['total_amount'] = $this->cart->count_total_procucts_amount($row_count_amount_where);
+			$cart_record['total_amount'] = $this->cart->count_cart_total_amount_for_confirm_order($row_count_amount_where);
 		}
 
 		echo json_encode($cart_record);
@@ -322,17 +247,21 @@ class Cart extends Frontend_Controller
 	 */
 	public function edit()
 	{
-		$data   = $this->input->post();
-		$update = $this->cart->update($data['id'], $data);
+		$data                      = $this->input->post();
+		$update                    = $this->cart->update($data['id'], $data);
+		$where['user_id']          = $this->session->userdata('user_id');
+		$this->data['grand_total'] = $this->cart->count_cart_total_amount_for_confirm_order($where);
 
 		if ($update)
 		{
-			echo 'true';
+			$this->data['msg'] = 'true';
 		}
 		else
 		{
-			echo 'false';
+			$this->data['msg'] = 'false';
 		}
+
+		echo json_encode($this->data);
 	}
 
 	/**

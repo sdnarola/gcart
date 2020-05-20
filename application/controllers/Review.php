@@ -109,12 +109,14 @@ class Review extends Frontend_Controller
 
 				];
 
+				$products_img_url = base_url().get_products_info($product_id, 'thumb_image');
+
 				$message_replace = [
 					get_settings('company_name'),
 					get_user_info($user_id, 'firstname'),
 					get_user_info($user_id, 'lastname'),
 					site_url('Products/'.get_products_info($product_id, 'slug')),
-					base_url(get_products_info($products_detail['id'], 'thumb_image')),
+					$products_img_url,
 					date('d F ,Y'),
 					$this->data['star_ratings'],
 					$this->data['review'],
@@ -135,7 +137,55 @@ class Review extends Frontend_Controller
 		}
 	}
 
-	// ========================================================== END WORK BY KOMAl ============================================================================
+// ========================================================== END WORK BY KOMAl ============================================
+
+/*==================================== code by vixuti patel===========================================*/
+	/**
+	 * [add_review or if exist then update]
+	 */
+	public function add_review()
+	{
+		if (isset($_POST['review']))
+		{
+			$this->data['review'] = $this->input->post('review');
+		}
+
+		$this->data['user_id']    = $this->session->userdata('user_id');
+		$this->data['product_id'] = $this->input->post('products_id');
+		if (isset($_POST['star']))
+		{
+			$this->data['star_ratings'] = $this->input->post('star');
+		}
+
+		$this->data['add_date'] = date('Y-m-d h:i:s');
+		$ratings                = get_product_review_by_user($this->data['product_id'], $this->data['user_id']);
+		if ($ratings == false)
+		{
+			$result = $this->review->insert($this->data);
+			if ($result)
+			{
+				echo '<div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Thanks!</strong> Review submitted.</div>';
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			$result = $this->review->update($ratings[0]['id'], $this->data);
+			if ($result)
+			{
+				echo '<div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Thanks!</strong> Review updated.</div>';
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+
+	/*==================================== end code by vixuti patel===========================================*/
 }
 
 ?>

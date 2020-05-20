@@ -25,7 +25,8 @@ class Cart_model extends MY_Model
 	{
 		parent::__construct();
 	}
-// ========================================================== WORK BY KOAML ======================================================================================
+
+// ========================================================== WORK BY KOAML ============================================================
 
 	/**
 	 * [get_cart_products description]
@@ -65,6 +66,12 @@ class Cart_model extends MY_Model
 		}
 	}
 
+	/**
+	 * [get_cart_products_detail description]
+	 * @param  array  $where       [array where condition]
+	 * @param  [int] $products_id  [products primary key]
+	 * @return [type]              [description]
+	 */
 	public function get_cart_products_detail($where = array(), $products_id)
 	{
 		if (empty($where))
@@ -154,6 +161,11 @@ class Cart_model extends MY_Model
 		}
 	}
 
+	/**
+	 * [count_total_amount description]
+	 * @param  array  $where [array where condition]
+	 * @return [type]        [description]
+	 */
 	public function count_total_amount($where = array())
 	{
 		$this->db->select('sum(total_amount) AS total_amount');
@@ -163,17 +175,16 @@ class Cart_model extends MY_Model
 		if ($result)
 		{
 			return $result['total_amount'];
-	
 		}
 	}
 
 	/**
 	 * [count_total_procucts_amount description]
 	 * @param  array  $where [array where condition]
-	 * @return where condition wise get cart total Amount
+	 * @return where condition wise and available products qty wise get cart total Amount
 	 */
 
-	public function count_total_procucts_amount($where = array())
+	public function count_cart_total_amount_for_confirm_order($where = array())
 	{
 		$this->db->select('sum(cart.total_amount) AS total_amount');
 		$this->db->from('cart');
@@ -192,7 +203,8 @@ class Cart_model extends MY_Model
 			return $result['total_amount'];
 		}
 	}
-// ========================================================== END WORK BY KOAML ======================================================================================
+
+// ========================================================== END WORK BY KOAML ===========================================================
 	/**
 	 * [edit_cart description]
 	 * @param  [array] $where [array value for check condition]
@@ -206,5 +218,4 @@ class Cart_model extends MY_Model
 
 		return $query;
 	}
-
 }

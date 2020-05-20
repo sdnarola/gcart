@@ -50,11 +50,7 @@ class Brand_model extends MY_Model
 	 */
 	public function get_products_brands($where = array(), $tags = '', $multiple_sub_category_id = '',$search_id = '')
 	{
-		if (empty($where))
-		{
-			return array();
-		}
-		elseif(empty($where) && !empty($search_id))
+		if (empty($where) && !empty($search_id))
 		{
 			$this->db->distinct();
 			$this->db->order_by('name', 'asc');

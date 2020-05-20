@@ -9,8 +9,8 @@ a.active {
 		<div class="breadcrumb-inner">
 			<ul class="list-inline list-unstyled">
 				<li><a href="<?= site_url() ."Home"; ?>"><?php _el('home');?></a></li>
-				<li><a><?php _el('comments') ?></a></li>
 				<li class='active'><a href="<?= site_url('Products/'.$products_slug)?>"><?= ucwords($products_name);?></a></li>
+				<li><a><?php _el('comments') ?></a></li>
 			</ul>
 		</div><!-- /.breadcrumb-inner -->
 	</div><!-- /.container -->
@@ -184,7 +184,6 @@ a.active {
 <?php		
 							if($comments > $limit)
 							{
-
 ?>
 								<div class="filters-container row">
 						            <div class="col-sm-12 text-right">
@@ -257,13 +256,10 @@ a.active {
 ?>
 <?php 
                   for($i=$page_no;$i<= $page_item;$i++)
-                  {
-                   
+                  {             
 ?>
-                    							<li><a  class="<?php echo ($i==$page)? 'active' : 'pagination_link'; ?>" data-pageno="<?php echo $i; ?>"><?php echo $i; ?></a></li>
-                    
+                    							<li><a  class="<?php echo ($i==$page)? 'active' : 'pagination_link'; ?>" data-pageno="<?php echo $i; ?>"><?php echo $i; ?></a></li>                
 <?php 
-               
                    }
                    if($page !=  $totalpages)
                    {

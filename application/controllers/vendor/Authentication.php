@@ -9,7 +9,9 @@ class Authentication extends My_Controller
 		$this->load->model('brand_model', 'brands');
 		$this->load->model('vendor_model', 'vendors');
 		$this->load->model('category_model', 'category');
-
+		$this->load->model('cart_model', 'cart');
+		$this->load->model('Tmp_order_data_model', 'tmp_order');
+		$this->load->model('user_model', 'users');
 	}
 
 	/**
@@ -132,11 +134,8 @@ class Authentication extends My_Controller
 		}
 
 		$this->set_page_title('Sign Up');
-
-		// $data['content'] = $this->load->view('vendor/authentication/register', '', true);
-		$this->load->view('vendor/authentication/register');
-
-		//$this->template->load('index', 'content', 'authentication/login_signup',$data);
+		$data['states'] = $this->users->get_states();
+		$this->load->view('vendor/authentication/register', $data);
 	}
 
 /**
@@ -181,7 +180,7 @@ class Authentication extends My_Controller
 
 		if ($this->input->post())
 		{
-			$success = $this->Authentication_model->forgot_password($this->input->post('email'), true);
+			$success = $this->Authentication_model->vendor_forgot_password($this->input->post('email'), true);
 
 			if (is_array($success) && isset($success['vendor_inactive']))
 			{
@@ -222,7 +221,7 @@ class Authentication extends My_Controller
 
 		$this->set_page_title(_l('reset_password'));
 
-		if (!$this->Authentication_model->can_reset_password($vendor_id, $new_pass_key))
+		if (!$this->Authentication_model->vendor_can_reset_password($vendor_id, $new_pass_key))
 		{
 			set_alert('error', _l('password_reset_key_expired'));
 			redirect(vendor_url('authentication'));
@@ -230,7 +229,7 @@ class Authentication extends My_Controller
 
 		if ($this->input->post())
 		{
-			$success = $this->Authentication_model->reset_password($vendor_id, $new_pass_key, $this->input->post('password'));
+			$success = $this->Authentication_model->vendor_reset_password($vendor_id, $new_pass_key, $this->input->post('password'));
 
 			if (is_array($success) && $success['expired'] == true)
 			{

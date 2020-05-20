@@ -23,23 +23,22 @@ class Categories extends Frontend_Controller
 //check if category slug is there
 		//
 
-		$category       = array();
-		$sub_category   = array();
-		$products       = array();
-		$list_container = $this->input->get('list-container');
-		$list_container = (empty($list_container)) ? '' : $list_container;
-		$page           = $this->input->get('page');
-		$page           = (empty($page)) ? 1 : $page;
-		$limit          = 4;
-		$total          = 0;
-		$sort           = $this->input->get('sort');
-		$sort           = (empty($sort)) ? 'name' : $sort;
-		$order          = $this->input->get('order');
-		$order          = (empty($order)) ? 'asc' : $order;
-		$tags           = $this->input->get('tags');
-		$tags           = (empty($tags)) ? '' : $tags;
-		$manufacture_id = $this->input->get('manufacture');
-
+		$category                = array();
+		$sub_category            = array();
+		$products                = array();
+		$list_container          = $this->input->get('list-container');
+		$list_container          = (empty($list_container)) ? '' : $list_container;
+		$page                    = $this->input->get('page');
+		$page                    = (empty($page)) ? 1 : $page;
+		$limit                   = 4;
+		$total                   = 0;
+		$sort                    = $this->input->get('sort');
+		$sort                    = (empty($sort)) ? 'name' : $sort;
+		$order                   = $this->input->get('order');
+		$order                   = (empty($order)) ? 'asc' : $order;
+		$tags                    = $this->input->get('tags');
+		$tags                    = (empty($tags)) ? '' : $tags;
+		$manufacture_id          = $this->input->get('manufacture');
 		$manufacture             = (empty($manufacture_id)) ? '' : $manufacture_id;
 		$multiple_subcategory    = $this->input->get('subcategory');
 		$multiple_subcategory    = (empty($multiple_subcategory)) ? '' : $multiple_subcategory;
@@ -71,6 +70,7 @@ class Categories extends Frontend_Controller
 				$where['sub_category_id']         = $sub_category['id'];
 				$max_min_where['sub_category_id'] = $sub_category['id'];
 				$brands_where['sub_category_id']  = $sub_category['id'];
+				$this->data['subcategory_title']  = $sub_category['name'];
 			}
 
 			if (!empty($manufacture))
@@ -87,16 +87,16 @@ class Categories extends Frontend_Controller
 				$where['price <='] = $prices[1];
 			}
 
-			$this->data['category_title']    = $category['name'];
-			$this->data['subcategory_title'] = $sub_category['name'];
-			$this->data['category_slug']     = $category_slug;
+			$this->data['category_title'] = $category['name'];
+			$this->data['category_slug']  = $category_slug;
 			//get the brands
 			$this->data['brands'] = $this->brands->get_products_brands($brands_where, $tags, $multiple_subcategory_id);
 
 			if (empty($sub_category_slug))
 			{
-				$this->data['parent_categoriesfilter'] = $this->category->get_shop_by_parent_category($category['id']);
-				$this->data['categoriesfilters']       = $this->category->get_shop_by_sub_category($shop_sub_category_where, $tags);
+				$shop_by_parent_category_where['products.category_id'] = $category['id'];
+				$this->data['parent_categoriesfilter']                 = $this->category->get_shop_by_parent_category($shop_by_parent_category_where);
+				$this->data['categoriesfilters']                       = $this->category->get_shop_by_sub_category($shop_sub_category_where, $tags);
 			}
 
 			//tags
@@ -141,24 +141,11 @@ class Categories extends Frontend_Controller
 
 // ============================================ END  WORK BY KOMAl =================================================================================================
 
-	/***==================================================code end by vixuti patel=====================================================***/
-
 	public function get_parent_category_products($parent_id)
 	{
 		$parent_id = $this->uri->segment(3);
 		$this->category->get_parent_category_products($parent_id);
 
 		return true;
-	}
-
-	public function get_sub_category_products($parent_id)
-	{
-		$parent_id                     = $this->uri->segment(3);
-		$data['sub_category_products'] = $this->category->get_sub_category_products($parent_id);
-
-// var_dump($data);
-
-// //$this->data=$this->get_all();
-		// 		//$this->template->load('index', 'content', 'products/index', $data);
 	}
 }

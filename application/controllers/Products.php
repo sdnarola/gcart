@@ -7,17 +7,9 @@ class Products extends Frontend_Controller
 		parent::__construct();
 	}
 
-// ============================================ WORK BY KOMAl =================================================================================================
-	public function index($product_slug = '')
+// ============================================ WORK BY KOMAl ======================================================================
+	public function index()
 	{
-		if (!empty($product_slug))
-		{
-			$this->show_detail($product_slug);
-		}
-		else
-		{
-			$this->add_product_by_tags();
-		}
 	}
 
 	/**
@@ -68,7 +60,7 @@ class Products extends Frontend_Controller
 					$orders_products_id[] = $order['product_id'];
 				}
 			}
-			
+
 			$this->data['vendors_data']            = $this->vendors->get_many_by(array('is_active' => 1, 'is_deleted' => 0));
 			$this->data['orders_products_id']      = $orders_products_id;
 			$this->data['product_slug']            = $product_slug;
@@ -81,17 +73,21 @@ class Products extends Frontend_Controller
 			$this->data['category_banner']         = $category_banner;
 			$this->data['category_name']           = $category_name;
 			$this->data['category_slug']           = $category_slug;
-			$this->data['comments']                = $this->comments->count_products_comments($product_id);
-			$this->data['reviews']                 = $this->review->count_products_review($product_id);
+			$this->data['total_comments']          = $this->comments->count_products_comments($product_id);
+			$this->data['total_reviews']           = $this->review->count_products_review($product_id);
 			$this->data['products_name']           = $products_data['name'];
 			$this->data['upsell_products']         = $this->products->get_upsell_products();
-			$this->data['hot_deals_products']      = $this->products->get_hot_deals_products();
-			$this->data['products_detail']         = $products_data;
+
+			$this->data['hot_deals_products'] = $this->deals->get_hot_deals_products();
+			$this->data['products_detail']    = $products_data;
 
 			$this->template->load('index', 'content', 'products/details', $this->data);
 		}
 	}
 
+	/**
+	 * [add_product_by_tags description]
+	 */
 	public function add_product_by_tags()
 	{
 		$tags          = $this->input->post('tags');
@@ -132,7 +128,7 @@ class Products extends Frontend_Controller
 // ============================================ END  WORK BY KOMAl =================================================================================================
 	/***==========================================================code by vixuti patel===========================================================***
 		/**
-		 * [get_new_arrivals description]
+		 * [get_new_arrivals products]
 		 * @return [json] [new_poducts and riviews of all new products]
 	*/
 	public function get_new_arrivals()
@@ -145,7 +141,7 @@ class Products extends Frontend_Controller
 	}
 
 	/**
-	 * [autocomplete_search description]
+	 * [autocomplete_search by product's name or tags]
 	 * @return [type] [description]
 	 */
 	public function autocomplete_search()
@@ -193,7 +189,7 @@ class Products extends Frontend_Controller
 	}
 
 	/**
-	 * [search description]
+	 * [search products by name/tags/brands/subcategory/category]
 	 * @return [type] [description]
 	 */
 	public function search($tags = '')
@@ -291,7 +287,7 @@ class Products extends Frontend_Controller
 					$manufacture = 0;
 				}
 
-				$products = $this->category->get_all_products($where, $page, $limit, $sort, $order, $tags, null, $manufacture);
+				$products = $this->products->get_all_products($where, $page, $limit, $sort, $order, $tags, null, $manufacture);
 			}
 
 			if (!empty($tags) || !empty($manufacture))
@@ -303,12 +299,12 @@ class Products extends Frontend_Controller
 					$manufacture = 0;
 				}
 
-				$products = $this->category->get_all_products($where, $page, $limit, $sort, $order, $tags, null, $manufacture);
+				$products = $this->products->get_all_products($where, $page, $limit, $sort, $order, $tags, null, $manufacture);
 			}
 
 			$where['is_deleted']     = 0;
-			$total                   = $this->product->get_all_products_count($where, $tags, $product_id);
-			$data['brands']          = $this->brands->get_brands(null, null, null, null, $product_id);
+			$total                   = $this->products->get_all_products_count($where, $tags, $product_id);
+			$data['brands']          = $this->brands->get_products_brands(null, null, null, $product_id);
 			$data['main_category']   = $this->category->get_parent_categories();
 			$data['sub_category']    = $this->category->get_sub_categories();
 			$data['products']        = $products;

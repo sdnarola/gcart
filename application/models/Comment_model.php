@@ -41,7 +41,7 @@ class Comment_model extends MY_Model
 		return $result;
 	}
 
-// ===================================================== WORK BY KOMAL ============================================================================================================
+// ===================================================== WORK BY KOMAL =====================================================================================
 	/**
 	 * [get_products_by_comment description]
 	 * @param  array   $where [where conf=dition]
@@ -49,9 +49,8 @@ class Comment_model extends MY_Model
 	 * @param  integer $start [start with data]
 	 * @return products comments
 	 */
-	public function get_products_by_comment($where=array(),$limit=1,$start=0)
+	public function get_products_by_comment($where = array(), $limit = 1, $start = 0)
 	{
-
 		if (empty($where))
 		{
 			return array();
@@ -60,7 +59,7 @@ class Comment_model extends MY_Model
 		{
 			$this->db->where($where);
 			$this->db->limit($limit, $start);
-			$this->db->order_by('add_date','desc');
+			$this->db->order_by('add_date', 'desc');
 			$query  = $this->db->get_where('comments', array('is_deleted' => 0));
 			$result = $query->result_array();
 
@@ -91,5 +90,6 @@ class Comment_model extends MY_Model
 
 		return false;
 	}
-	// ===================================================== END WORK BY KOMAL ========================================================================================
+
+	// ===================================================== END WORK BY KOMAL ===================================================================
 }

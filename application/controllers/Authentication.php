@@ -9,6 +9,12 @@ class Authentication extends My_Controller
 		$this->load->model('User_model', 'users');
 		$this->load->model('category_model', 'category');
 		$this->load->model('cart_model', 'cart');
+
+		if (get_settings('maintenance') == 1)
+		{
+			redirect(site_url());
+		}
+
 		$this->load->model('brand_model', 'brands');
 	}
 
@@ -93,37 +99,27 @@ class Authentication extends My_Controller
 			$cart_data      = $this->cart->get_many_by(array('user_ip' => $user_ip, 'user_id' => $user_id));
 			$user_cart_data = $this->cart->get_many_by(array('user_id' => $user_data['id']));
 
+			$user_cart_products_id = array();
+
+			foreach ($user_cart_data as $key => $cart)
+			{
+				$user_cart_products_id[] = $cart['product_id'];
+			}
+
 			$cart_user_ip = array();
 
 			if (!empty($cart_data))
 			{
 				foreach ($cart_data as $key => $data)
 				{
-					foreach ($user_cart_data as $key => $value)
+					if (in_array($data['product_id'], $user_cart_products_id))
 					{
-						if ($value['product_id'] == $data['product_id'])
-						{
-							$products_where['product_id']    = $data['product_id'];
-							$update_products['quantity']     = $data['quantity'] + $value['quantity'];
-							$update_products['total_amount'] = $data['total_amount'] + $value['total_amount'];
-							$update                          = $this->cart->edit_cart($products_where, $update_products);
-
-							if ($update)
-							{
-								$this->cart->delete($data['id']);
-							}
-						}
+						$this->cart->delete($data['id']);
 					}
-
-					$cart_user_ip[] = $data['user_ip'];
-
-					$update_where['user_ip'] = $user_ip;
-					$update_where['user_id'] = 0;
-
-					$update_data['user_id'] = $user_data['id'];
-
-					if (in_array($user_ip, $cart_user_ip))
+					else
 					{
+						$update_where['id']     = $data['id'];
+						$update_data['user_id'] = (empty($user_data['id'])) ? 0 : $user_data['id'];
 						$this->cart->edit_cart($update_where, $update_data);
 					}
 				}
@@ -199,37 +195,27 @@ class Authentication extends My_Controller
 			$cart_data      = $this->cart->get_many_by(array('user_ip' => $user_ip, 'user_id' => $user_id));
 			$user_cart_data = $this->cart->get_many_by(array('user_id' => $user_data['id']));
 
+			$user_cart_products_id = array();
+
+			foreach ($user_cart_data as $key => $cart)
+			{
+				$user_cart_products_id[] = $cart['product_id'];
+			}
+
 			$cart_user_ip = array();
 
 			if (!empty($cart_data))
 			{
 				foreach ($cart_data as $key => $data)
 				{
-					foreach ($user_cart_data as $key => $user_cart)
+					if (in_array($data['product_id'], $user_cart_products_id))
 					{
-						if ($user_cart['product_id'] == $cart['product_id'])
-						{
-							$products_where['product_id']    = $cart['product_id'];
-							$update_products['quantity']     = $cart['quantity'] + $user_cart['quantity'];
-							$update_products['total_amount'] = $cart['total_amount'] + $user_cart['total_amount'];
-							$update                          = $this->cart->edit_cart($products_where, $update_products);
-
-							if ($update)
-							{
-								$this->cart->delete($cart['id']);
-							}
-						}
+						$this->cart->delete($data['id']);
 					}
-
-					$cart_user_ip[] = $data['user_ip'];
-
-					$update_where['user_ip'] = $user_ip;
-					
-
-					$update_data['user_id'] = (empty($user_data['id']))? 0 : $user_data['id'];
-
-					if (in_array($user_ip, $cart_user_ip))
+					else
 					{
+						$update_where['id']     = $data['id'];
+						$update_data['user_id'] = (empty($user_data['id'])) ? 0 : $user_data['id'];
 						$this->cart->edit_cart($update_where, $update_data);
 					}
 				}
@@ -267,14 +253,29 @@ class Authentication extends My_Controller
 				redirect(site_url('authentication/login_signup'));
 			}
 
-			$data['password'] = md5($data['password']);
+			$data['password']      = md5($data['password']);
+			$data['profile_image'] = 'assets/uploads/users/default_user.png';
 			unset($data['confirm_password']);
-			//$data['profile_image']='./assets/uploads/users/user1.png';
-
 			$data['sign_up_key'] = app_generate_hash();
 
 			if ($this->users->insert($data))
 			{
+				$user_data = $this->db->get_where('users', $data)->result_array();
+
+				foreach ($user_data as $user)
+				{
+					$user_id = $user['id'];
+				}
+
+				$user_address = array(
+					'users_id'          => $user_id,
+					'house_or_village'  => '',
+					'street_or_society' => '',
+					'city'              => '',
+					'state'             => '',
+					'pincode'           => ''
+				);
+				$this->users->insert_user_address($user_address);
 				$template = get_email_template('new-user-signup');
 				$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
 
@@ -297,11 +298,8 @@ class Authentication extends My_Controller
 				];
 
 				$message .= str_replace($find, $replace, $template['message']);
-
 				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
-
 				$sent = send_email($data['email'], $subject, $message);
-				echo $send;
 
 				if ($sent)
 				{
@@ -317,7 +315,7 @@ class Authentication extends My_Controller
 	}
 
 /**
- * [verify_email description]
+ * [verify_email description] [user]
  * @param  string $sign_up_key [description]
  * @return [type]              [description]
  */
@@ -343,7 +341,7 @@ class Authentication extends My_Controller
 	}
 
 	/**
-	 * Loads forgot password form & performs forgot password
+	 * Loads forgot password form & performs forgot password [user]
 	 * @return [type] [description]
 	 */
 	public function forgot_password()
@@ -387,7 +385,7 @@ class Authentication extends My_Controller
 	}
 
 	/**
-	 * Loads reset password form & resets the password
+	 * Loads reset password form & resets the password [user]
 	 *
 	 * @param int  $user_id       The user identifier
 	 * @param str  $new_pass_key  The new pass key
@@ -433,7 +431,7 @@ class Authentication extends My_Controller
 	}
 
 	/**
-	 * Checks if user with provided email id exists or not
+	 * Checks if user with provided email id exists or not [user]
 	 * @return [type] [description]
 	 */
 	public function email_exists()

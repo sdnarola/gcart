@@ -58,7 +58,7 @@
 									<div class="form-group col-md-6">
 		                                <small class="req text-danger">* </small>
 		                                <label><?php _el('city');?>:</label>
-                                		<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo $vendor['city']; ?>">
+                                		<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo $vendor['city_id']; ?>">
 		                            </div>
 		                            <div class="form-group col-md-6">
 		                                <small class="req text-danger">* </small>

@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Category_model extends MY_Model
 {
-//=========================================================== WORK BY KOMAL================================================================================================//
-	/**
+//=========================================================== WORK BY KOMAL====================================================================//
+		/**
 	 * @var mixed
 	 */
 	protected $soft_delete = TRUE;
@@ -81,7 +81,7 @@ class Category_model extends MY_Model
 		{
 			$this->db->order_by('name', 'asc');
 			$this->db->where($where);
-			$this->db->where(array('is_deleted' => 0,'is_active'=>1));
+			$this->db->where(array('is_deleted' => 0, 'is_active' => 1));
 			$query  = $this->db->get('sub_categories');
 			$result = $query->result_array();
 
@@ -97,7 +97,7 @@ class Category_model extends MY_Model
 		else
 		{
 			$this->db->order_by('name', 'asc');
-			$query  = $this->db->get_where('sub_categories', array('is_deleted' => 0,'is_active'=>1));
+			$query  = $this->db->get_where('sub_categories', array('is_deleted' => 0, 'is_active' => 1));
 			$result = $query->result_array();
 
 			if (empty($result))
@@ -116,23 +116,29 @@ class Category_model extends MY_Model
 	 *
 	 * @return [boolean] Query true return main catgories this have to sub categories and products or return false
 	 */
-	public function get_shop_by_parent_category($category_id)
+	public function get_shop_by_parent_category($where = array())
 	{
-		$this->db->distinct();
-		$this->db->order_by('name', 'asc');
-		$this->db->select('categories.*');
-		$this->db->from('categories');
-		$this->db->join('sub_categories', 'sub_categories.category_id=categories.id', 'inner');
-		$this->db->join('products', 'products.category_id=categories.id', 'inner');
-		$this->db->where(array('categories.is_active' => 1, 'categories.is_deleted' => 0, 'products.is_deleted' => 0, 'products.is_active' => 1, 'products.category_id' => $category_id));
-		$query = $this->db->get();
-
-		if ($query == TRUE)
+		if (empty($where))
 		{
-			return $query->result_array();
+			return array();
 		}
+		else
+		{
+			$this->db->distinct();
+			$this->db->order_by('name', 'asc');
+			$this->db->select('categories.*');
+			$this->db->from('categories');
+			$this->db->join('sub_categories', 'sub_categories.category_id=categories.id', 'inner');
+			$this->db->join('products', 'products.category_id=categories.id', 'inner');
+			$this->db->where($where);
+			$this->db->where(array('categories.is_active' => 1, 'categories.is_deleted' => 0, 'products.is_deleted' => 0, 'products.is_active' => 1));
+			$query = $this->db->get();
 
-		return false;
+			if ($query == TRUE)
+			{
+				return $query->result_array();
+			}
+		}
 	}
 
 	/**
@@ -143,9 +149,8 @@ class Category_model extends MY_Model
 	 *
 	 * @return [array]
 	 */
-	public function get_shop_by_sub_category($where=array(), $tags = '')
+	public function get_shop_by_sub_category($where = array(), $tags = '')
 	{
-
 		if (empty($where))
 		{
 			return array();
@@ -169,7 +174,7 @@ class Category_model extends MY_Model
 			}
 		}
 	}
-	
+
 	/**
 	 * [get_sub_category_by_slug description]
 	 * @param  integer $category_id [category id]
@@ -177,35 +182,36 @@ class Category_model extends MY_Model
 	 *
 	 * @return [array]
 	 */
-		public function get_sub_category_by_slug($category_id = 0, $slug = '')
+	public function get_sub_category_by_slug($category_id = 0, $slug = '')
+	{
+		if (empty($slug) || empty($category_id))
 		{
-			if (empty($slug) || empty($category_id))
+			return false;
+		}
+		else
+		{
+			$this->db->where('slug', $slug);
+			$this->db->where('category_id', $category_id);
+			$query  = $this->db->get('sub_categories');
+			$result = $query->row_array();
+
+			if (empty($result))
 			{
-				return false;
+				return 0;
 			}
 			else
 			{
-				$this->db->where('slug', $slug);
-				$this->db->where('category_id', $category_id);
-				$query  = $this->db->get('sub_categories');
-				$result = $query->row_array();
-
-				if (empty($result))
-				{
-					return 0;
-				}
-				else
-				{
-					return $result;
-				}
+				return $result;
 			}
 		}
+	}
 
-//=========================================================== END WORK BY KOMAL ===========================================================================================//
+//=========================================================== END WORK BY KOMAL =======================================================================//
 
-	// =========================== Bhavik ==================================//
-	// 
-	
+// =========================== Bhavik ==================================//
+
+//
+
 /**
  * get sub categories of parent category
  *
@@ -246,26 +252,26 @@ class Category_model extends MY_Model
 	 *
 	 * @return mixed 	sub category
 	 */
-		function get_sub_category_info($id)
+	function get_sub_category_info($id)
+	{
+		$this->db->where('id', $id);
+		$result = $this->db->get('sub_categories')->row_array();
+
+		if (!$result)
 		{
-			$this->db->where('id', $id);
-			$result = $this->db->get('sub_categories')->row_array();
-
-			if (!$result)
-			{
-				return false;
-			}
-
-			return $result;
+			return false;
 		}
 
+		return $result;
+	}
 
 // =========================== Bhavik ==================================//
 
 /***======================================================code by vixuti patel===========================================================***
 /**
- * [get_parent_category description]k
- * @return [boolean] Query true return sub catgories or return false
+ * [get_header_parent_category description]
+ * @param  [int] $is_header [if is_header=1 return header category]
+ * @return [array]    $result        [category array]
  */
 	public function get_header_parent_category($is_header = '')
 	{
@@ -295,11 +301,13 @@ class Category_model extends MY_Model
 		}
 	}
 
-	/**
-	 * [get_parent_category_products description]
-	 * @param  [type] $id [description]
-	 * @return [type]     [description]
-	 */
+	/***======================================================code end  by vixuti patel===========================================================***
+
+		/**
+		 * [get_parent_category_products description]
+		 * @param  [type] $id [description]
+		 * @return [type]     [description]
+	*/
 	public function get_parent_category_products($id)
 	{
 		$query = $this->db->get_where('products', array('category_id' => $id));
@@ -312,7 +320,6 @@ class Category_model extends MY_Model
 		return false;
 	}
 
-
 	/**
 	 * [get_all_products description]
 	 * @param  array   $where                    [where cluse value in array]
@@ -324,17 +331,17 @@ class Category_model extends MY_Model
 	 * @param  string  $multiple_sub_category_id [multiple sub category id]
 	 * @return [array]                            [description]
 	 */
-	public function get_all_products($where = array(), $page = 1, $limit = 4, $sort = 'name', $order = 'asc', $tags = '', $multiple_sub_category_id = '',$manufacture='')
+	public function get_all_products($where = array(), $page = 1, $limit = 4, $sort = 'name', $order = 'asc', $tags = '', $multiple_sub_category_id = '', $manufacture = '')
 	{
-		if(empty($tags) && !empty($manufacture))
+		if (empty($tags) && !empty($manufacture))
 		{
 			$this->db->where($where);
 			$start = ($page - 1) * 4;
 			$this->db->limit($limit, $start);
 			$sort = ($sort == 'name') ? $sort : 'price';
 			$this->db->order_by($sort, $order);
-			 $tags = (empty($tags)) ? '' : $tags;
-			 $this->db->like('tags', $tags, 'both');
+			$tags = (empty($tags)) ? '' : $tags;
+			$this->db->like('tags', $tags, 'both');
 			$query  = $this->db->get('products');
 			$result = $query->result_array();
 
@@ -347,19 +354,22 @@ class Category_model extends MY_Model
 				return $result;
 			}
 		}
-		if(!empty($tags) && !empty($manufacture))
+
+		if (!empty($tags) && !empty($manufacture))
 		{
 			$this->db->where($where);
 			$start = ($page - 1) * 4;
 			$this->db->limit($limit, $start);
 			$this->db->order_by($sort, $order);
-			 $tags = (empty($tags)) ? '' : $tags;
+			$tags = (empty($tags)) ? '' : $tags;
 
-			 $this->db->like('tags', $tags, 'both');
-			if($manufacture!=0)
+			$this->db->like('tags', $tags, 'both');
+
+			if ($manufacture != 0)
 			{
-			$this->db->where('brand_id',$manufacture);
+				$this->db->where('brand_id', $manufacture);
 			}
+
 			$query  = $this->db->get('products');
 			$result = $query->result_array();
 
@@ -372,7 +382,6 @@ class Category_model extends MY_Model
 				return $result;
 			}
 		}
-		
 	}
 
 // public function get_data_to_cart_products($product_id)
@@ -407,48 +416,4 @@ class Category_model extends MY_Model
 
 		return false;
 	}
-
-	/**
-	 * [search category or product or brand]
-	 * @param  [type] $name [description]
-	 * @return [type]       [description]
-	 */
-	public function search($category_id, $name = '')
-	{
-		$this->db->select('c.name as category,p.name as product ,p.tags ,s.name as subcategory,c.id as c_id,p.id as p_id,s.id as s_id', TRUE);
-		$this->db->from('categories as c');
-		$this->db->join('sub_categories as s', ' s.category_id=c.id');
-		$this->db->join('products as p', ' c.id=p.category_id');
-		$this->db->join('brands as b', ' p.brand_id=b.id ');
-
-		if ($category_id == '*' && empty($name))
-		{
-			$this->db->where(array('c.is_header' => 1));
-		}
-		elseif (!empty($name))
-		{
-			if ($category_id == '*' || isset($name))
-			{
-				$this->db->where(array('c.is_header' => 1));
-				$this->db->where(array('c.is_header' => 1, 'c.id' => $category_id));
-			}
-			else
-			{
-			}
-
-			$this->db->like('s.name', $name, 'match');
-			$this->db->or_like('p.name', $name, 'match');
-			$this->db->or_like('p.tags', $name, 'match');
-		}
-		else
-		{
-			$this->db->where(array('c.is_header' => 1, 'c.id' => $category_id));
-		}
-
-		$query = $this->db->get();
-
-		return $query->result_array();
-	}
-
-	/***==================================================code end by vixuti patel=====================================================***/
 }

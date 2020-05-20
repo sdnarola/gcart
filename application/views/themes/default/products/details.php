@@ -1,13 +1,4 @@
-<script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
-<?php
-	// print_r($orders_products_id);
-	// if(in_array($products_id, $orders_products_id))
-	// {
-	// 	echo 'match';
-	// }
-	// 
-	// print_r($cart);
-?>
+
 <div class="breadcrumb">
 	<div class="container">
 		<div class="breadcrumb-inner">
@@ -93,8 +84,8 @@
 							 }
 ?>
 										<div class="product-price">
-											<span class="price" >&#36;<?= sprintf('%0.2f',$price);?></span>
-										    <span class="price-before-discount">&#36;<?= $hot_deals['price'] ;?></span>
+											<span class="price" ><?php _el('rupees');?><?= sprintf('%0.2f',$price);?></span>
+										    <span class="price-before-discount"><?php _el('rupees');?><?= $hot_deals['price'] ;?></span>
 										</div><!-- /.product-price -->
 									</div><!-- /.product-info -->
 									<div class="cart clearfix animate-effect">
@@ -175,26 +166,22 @@
 						            </div>
 						           
 <?php
+										
+
 										$whishlist_data = get_wishlist_data($products_detail['id']);
-										$product_id     = '';
-										$wishlist_class = '';
+					                    $product_id='';
+					                    
+					                    $wishlist_li_class='btn btn-primary';
+					                    if(!empty($whishlist_data))
+					                    {
+					                      foreach ($whishlist_data as $key => $value) 
+					                      {
+					                        $product_id=$value['product_id'];
+					                      }
 
-										if(!empty($whishlist_data))
-										{
-											foreach ($whishlist_data as $key => $value) 
-											{
-												$product_id = $value['product_id'];
-											}
-
-											if($product_id == $products_detail['id'] )
-											{
-												$wishlist_class = 'background-color: #f80a6c; border-color: #f80a6c;';
-											}
-											else
-											{
-												$wishlist_class = '';
-											}
-										}
+					                      $wishlist_li_class= ($product_id == $products_detail['id'] )? 'btn btn-primary inwishlist' : 'btn btn-primary';
+					                      
+					                    }
 ?>
 <?php
 										$products_images =unserialize($products_detail['images']);
@@ -271,12 +258,12 @@
 ?>
 										</div>
 <?php
-									if($reviews > 0)
+									if($total_reviews > 0)
 									{
 ?>
 										<div class="col-sm-8">
 											<div class="reviews">
-												<a  class="lnk"><?= "(".$reviews ?> <?php _el('review') ?><?= ")" ?></a>
+												<a  class="lnk"><?= "(".$total_reviews ?> <?php _el('review') ?><?= ")" ?></a>
 											</div>
 										</div>
 <?php
@@ -322,7 +309,7 @@
 						            		{
 						            			foreach ($hot_deals as $key => $hot_deals_data) 
 						            			{
-						            				if($hot_deals_data['product_id'] == $products_detail['id'])
+						            				if($hot_deals_data['product_id'] == $products_detail['id'] && $products_detail['quantity'] > 0 )
 						            				{
 						            					if ($hot_deals_data['type'] == 0)
 														{
@@ -347,8 +334,8 @@
 									<div class="row">
 										<div class="col-sm-6">
 											<div class="price-box">
-												<span class="price">&#36;<?= $price;?></span>
-												<span class="price-strike">&#36;<?= $old_price;?></span>
+												<span class="price"><?php _el('rupees');?><?= $price;?></span>
+												<span class="price-strike"><?php _el('rupees');?><?= $old_price;?></span>
 											</div>
 										</div>
 										<div class="col-sm-6">
@@ -357,7 +344,7 @@
 												if(is_user_logged_in() == TRUE)
 												{
 ?>
-												<a class="btn btn-primary" style="<?= $wishlist_class ?>" id="lnk-wishlist-<?= $products_detail['id'] ?>"data-toggle="tooltip" data-placement="right" title="Wishlist" onclick="add_wishlist_products(<?= $products_detail['id']; ?>)" href="javascript:void(0);">
+												<a class="<?= $wishlist_li_class ?>"  id="lnk-wishlist-<?= $products_detail['id'] ?>"data-toggle="tooltip" data-placement="right" title="Wishlist" onclick="add_wishlist_products(<?= $products_detail['id']; ?>)" href="javascript:void(0);">
 												    <i class="fa fa-heart"></i>
 												</a>
 <?php
@@ -386,7 +373,7 @@
 														<div class="arrow plus gradient" ><span class="ir" ><i class="icon fa fa-sort-asc" onclick="increment_quntity('<?php  echo $products_detail['quantity']; ?>')"></i></span></div>
 														<div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc" onclick="decrement_quntity()"></i></span></div> 
 									                </div>
-									                <input type="text" id="procuct-quantity" value="1">
+									                <input type="text" id="procuct-quantity" value="1" onchange="products_update_qty(this);">
 <?php
 								                }
 								                else
@@ -429,9 +416,23 @@
 						<div class="col-sm-3">
 							<ul id="product-tabs" class="nav nav-tabs nav-tab-cell">
 								<li class="active"><a data-toggle="tab" href="#description"><?php _el('description'); ?></a></li>
+<?php
+							 if($total_reviews > 0 || in_array($products_id, $orders_products_id))
+							{
+?>
 								<li><a data-toggle="tab" href="#review"><?php _el('review'); ?></a></li>
+<?php 
+							} 
+?>
 					<?php if(in_array($products_id, $orders_products_id))	{?><li><a data-toggle="tab" href="#tags"><?php _el('tags'); ?></a></li><?php } ?>
+<?php
+							 if($total_comments > 0 || in_array($products_id, $orders_products_id))
+							{
+?>					
 								<li><a data-toggle="tab" href="#comments"><?php _el('comments'); ?></a></li>
+<?php 
+							} 
+?>								
 							</ul><!-- /.nav-tabs #product-tabs -->
 						</div>
 						<div class="col-sm-9">
@@ -489,8 +490,10 @@
 											}
 ?>
 <?php
-													if($reviews > 3)
+													if($total_reviews > 3)
 													{
+														
+
 ?>
 													<div style="margin-bottom: 15px; text-align: right;"><a href="<?= site_url('Review/'.$product_slug);?>"><?php _el('see_more')?></a></div>
 <?php
@@ -610,7 +613,7 @@
 
 												<div class="review">
 													<div class="review-title">
-														<div class="text summary">"<?= $comments['comment'];?>"
+														<div class="text"><span class="summary">"<?= $comments['comment'];?>"</span>
 <?php
 													if($days >0)
 													{
@@ -627,8 +630,9 @@
 												}
 											}
 														
-											if($comments > 3)
+											if($total_comments > 3)
 											{
+
 ?>
 													<div style="margin-bottom: 15px; text-align: right;"><a href="<?= site_url('Comments/'.$product_slug);?>"><?php _el('see_more')?></a></div>
 <?php
@@ -715,42 +719,38 @@
 <?php
 					foreach ($upsell_products as $key => $upsell)
 					{	
-						$whishlist_data = get_wishlist_data($upsell->id);
-
-						$product_id='';
-						$wishlist_class='';
-						if(!empty($whishlist_data))
+						if($products_id != $upsell['id'])
 						{
-							foreach ($whishlist_data as $key => $value) 
-							{
-								$product_id=$value['product_id'];
-							}
+							$whishlist_data = get_wishlist_data($upsell['id']);
+		                    $product_id='';
+		                    
+		                    $wishlist_li_class='lnk wishlist';
+		                    if(!empty($whishlist_data))
+		                    {
+		                      foreach ($whishlist_data as $key => $value) 
+		                      {
+		                        $product_id=$value['product_id'];
+		                      }
 
-							if($product_id == $upsell->id )
-							{
-								$wishlist_class='background-color: #f80a6c; border-color: #f80a6c;';
-							}
-							else
-							{
-								$wishlist_class='';
-							}
-						}					
+		                      $wishlist_li_class= ($product_id == $upsell['id'] )? 'lnk wishlist inwishlist' : 'lnk wishlist';
+		                      
+		                    }					
 ?>
 						<div class="item item-carousel">
 							<div class="products">
 								<div class="product">
 									<div class="product-image">
 										<div class="image">
-												<a href="<?= site_url('Products/'. $upsell->slug); ?>"><img  src="<?php echo base_url(). $upsell->thumb_image; ?> " alt=""></a>
+												<a href="<?= site_url('Products/'. $upsell['slug']); ?>"><img  src="<?php echo base_url(). $upsell['thumb_image']; ?> " alt=""></a>
 						    			</div><!-- /.image -->
 										<div class="tag sale"><span>sale</span></div>
 									</div><!-- /.product-image -->
 									<div class="product-info text-left">
-										<h3 class="name"><a href="<?= site_url('Products/'. $upsell->slug); ?>"><?= ucwords($upsell->name); ?></a></h3>
+										<h3 class="name"><a href="<?= site_url('Products/'. $upsell['slug']); ?>"><?= ucwords($upsell['name']); ?></a></h3>
 <?php 
-											if(!empty(get_star_rating( $upsell->id) ))
+											if(!empty(get_star_rating( $upsell['id']) ))
 											{
-												$width =(get_star_rating( $upsell->id) *70 ) / 5;
+												$width =(get_star_rating( $upsell['id']) *70 ) / 5;
 ?>
 											<div class="rating-star rateit-small">
 												<button id="rateit-reset-4" data-role="none" class="rateit-reset" aria-label="reset rating" aria-controls="rateit-range-4" style="display: none;"></button>
@@ -762,10 +762,36 @@
 <?php
 											}
 ?>
+<?php
+											$hot_deals = get_hot_deals_data();
+						            		$price     = $upsell['price'];
+						            		$old_price = $upsell['old_price'];
+						            		if(!empty($hot_deals))
+						            		{
+						            			foreach ($hot_deals as $key => $hot_deals_data) 
+						            			{
+						            				if($hot_deals_data['product_id'] == $upsell['id'] && $upsell['quantity'] > 0 )
+						            				{
+						            					if ($hot_deals_data['type'] == 0)
+														{
+															$price = $upsell['price'] - $hot_deals_data['value'];
+															$old_price = $upsell['price'];
+														}
+														else
+														{	
+															$save_amount = ($upsell['price']*$hot_deals_data['value'])/100;
+															$price       = $upsell['price']-$save_amount;
+															$old_price = $upsell['price'];
+														}
+						            				}
+						            			}
+						            		}
+
+?>
 										<div class="description"></div>
 										<div class="product-price">
-											<span class="price">&#36;<?= $upsell->price; ?></span>
-											<span class="price-before-discount">&#36;<?= $upsell->old_price; ?></span>
+											<span class="price"><?php _el('rupees');?><?= $price; ?></span>
+											<span class="price-before-discount"><?php _el('rupees');?><?= $old_price; ?></span>
 										</div><!-- /.product-price -->
 									</div><!-- /.product-info -->
 									<div class="cart clearfix animate-effect">
@@ -773,16 +799,16 @@
 											<ul class="list-unstyled">
 												<li class="add-cart-button btn-group">
 													<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-														<i class="fa fa-shopping-cart" onclick="add_to_cart(<?= $upsell->id ?>);"></i>
+														<i class="fa fa-shopping-cart" onclick="add_to_cart(<?= $upsell['id'] ?>);"></i>
 													</button>
-													<button class="btn btn-primary cart-btn" type="button" onclick="add_to_cart(<?= $upsell->id ?>)"><?php _el('add_to_cart'); ?></button>
+													<button class="btn btn-primary cart-btn" type="button" onclick="add_to_cart(<?= $upsell['id'] ?>)"><?php _el('add_to_cart'); ?></button>
 								        		</li>
 <?php
 						        			if(is_user_logged_in())
 						        			{
 ?>
-				                				<li class="lnk wishlist" id="lnk-wishlist-<?= $upsell->id ?>" style="<?= $wishlist_class ?>">
-													<a class="add-to-cart" href="javascript:void(0);"  onclick="add_wishlist_products(<?= $upsell->id; ?>);" title="Wishlist">
+				                				<li class="<?= $wishlist_li_class ?>" id="lnk-wishlist-<?= $upsell['id'] ?>" >
+													<a class="add-to-cart" href="javascript:void(0);"  onclick="add_wishlist_products(<?= $upsell['id']; ?>);" title="Wishlist">
 														 <i class="icon fa fa-heart"></i>
 													</a>
 												</li>
@@ -796,6 +822,7 @@
 							</div><!-- /.products -->
 						</div><!-- /.item -->
 <?php
+						}
 					}
 ?>
 					</div><!-- /.home-owl-carousel -->
@@ -1011,6 +1038,7 @@
 				{
 					$("#name").val("");
 					$("#email").val("");
+					$("#comment_name").val("");
 					$("#idcomments").val("");
 					var msg="<?php _el('comments_success_msg')?>";
 					var div="<div class='alert alert-success alert-block fade in'><button data-dismiss='alert' class='close close-sm' type='button' style='line-height: 0.5;'><i class='fa fa-times' style='font-size:12px'></i></button>"+msg+"</div>"
@@ -1047,14 +1075,17 @@
 // ================================= tags submit ===============================================
     $("#frm_tags").on('submit',function(e){
     	e.preventDefault();
+
+
     	var tags=$("#exampleInputTag").val();
     	var spaceCount = (tags.split(" ").length - 1);
     	var len= tags.length;
+
     	if(len >= 3 && spaceCount == 0)
     	{
     		$.ajax({
 				type:'POST',
-				url: SITE_URL+'Products/',
+				url: SITE_URL+'Products/products-tags',
 				data:{ tags:tags,products_id:products_id },
 				success:function(msg)
 				{
@@ -1084,6 +1115,27 @@
 
    
 });
+	
+	/**
+	 * [products_update_qty description]
+	 *
+	 */
+	function products_update_qty(obj)
+	{
+		var qty = parseInt($('#procuct-quantity').val());
+		var limit = "<?php echo  get_product($products_id, 'quantity'); ?>";
+
+		if(limit < qty)
+		{
+			swal({
+                    title: '<?php _el('max_quantity_is')?>  '+limit + ' <?php _el('unit')?>',
+                    type: "warning",
+                });
+			document.getElementById('procuct-quantity').value = limit;
+       		document.getElementById("procuct-quantity").setAttribute("value", limit);
+		}
+	}
+
 	var i = 1;
 
 	/**
@@ -1100,6 +1152,13 @@
        		document.getElementById("procuct-quantity").setAttribute("value", i);
 
     	}
+    	else if (i == limit)
+        {
+            swal({
+                    title: '<?php _el('max_quantity_is')?>  '+limit + ' <?php _el('unit')?>',
+                    type: "warning",
+                });
+        }
       
     }
 
@@ -1108,6 +1167,7 @@
      */
     function decrement_quntity()
     {
+    	i= $('#procuct-quantity').val();
     	if(i > 1 )
     	{
     		i--;

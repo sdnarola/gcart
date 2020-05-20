@@ -5,18 +5,33 @@ class Home extends Frontend_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		// $this->load->model('vendor_model', 'vendors');
-		// $this->load->model('product_model', 'products');
-		// $this->load->model('deal_model', 'deals');
-		// $this->load->model('brand_model', 'brand');
 
+		$this->load->model('vendor_model', 'vendors');
+		$this->load->model('deal_model', 'deals');
+		$this->load->model('Slider_setting_model', 'sliders');
+		$this->load->model('banner_model', 'banners');
 	}
+
+/**
+ * [index to display products,sliders,tags,banners etc.]
+ */
 
 	public function index()
-	{		
-		$this->template->load('index', 'content', 'home');
-	}
+	{
+		$data['sliders']           = $this->sliders->get_all();
+		$data['banners']           = $this->banners->get_all();
+		$data['deals']             = $this->deals->get_all();
+		$data['main_categories']   = $this->category->get_header_parent_category();
+		$data['sub_categories']    = $this->category->get_sub_categories();
+		$data['all_new_products']  = $this->products->get_new_products(); //all new arrival products
+		$data['offer_products']    = $this->products->get_special_offers(); //special offer  products
+		$data['tags']              = $this->products->get_tags(); //to get all tags
+		$data['sellers_products']  = $this->products->get_best_sellers();
+		$data['featured_products'] = $this->products->get_featured_products();
+		$data['special_deal']      = $this->products->get_special_deal();
 
+		$this->template->load('index', 'content', 'home', $data);
+	}
 
 	/**
 	 * Loads the vendor store

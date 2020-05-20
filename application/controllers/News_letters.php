@@ -11,6 +11,7 @@ class News_letters extends Frontend_Controller
 		parent::__construct();
 	}
 
+	/**======================================================work by vixuti patel============================================**/
 	/**
 	 * [index description]
 	 * @return [type] [description]
@@ -18,38 +19,36 @@ class News_letters extends Frontend_Controller
 	public function index()
 	{
 		$email = $this->input->post('email');
-
-		$data = array(
-			'email' => $this->input->post('email')
-		);
-
-		if (!empty($email))
+		
+		if(!empty($email))
 		{
+			$data = array(
+			'email' => $email
+			);
 			$inserts = $this->news_letters->insert($data);
+			if ($inserts)
+			{
+				set_alert('success', 'Your subscription successfully. ');
+				
+			}
+			else
+			{
+				log_activity("User trying to subscribe  In [Email: $email]");
+			}
 		}
-
-		if ($inserts)
-		{
-			set_alert('success', 'Your are subscription successfully. ');
-		}
-		else
-		{
-			log_activity("User trying to subscribe  In [Email: $email]");
-		}
-
-		//echo json_encode($email);
 		redirect();
 	}
 
 	/*
-		 * Checks if user with provided email id exists or not
-		 * @return [type] [description]
+	* Checks if user with provided email id exists or not
+	* @return [type] [description]
 	*/
 	public function email_exists()
 	{
 		$exists = $this->news_letters->count_by('email', $this->input->post('email'));
 		echo $exists;
 	}
+	/**===================================work end by vixuti patel=========================================**/
 // ============================================ WORK BY KOMAl =================================================================================================
 	/**
 	 * [news_letters_subscribe description]

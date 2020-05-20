@@ -36,18 +36,8 @@ class Wishlist extends Frontend_Controller
 		if (!empty($user_id))
 		{
 			$where['user_id'] = $user_id;
-			$whishlist_data   = $this->wishlist->get_many_by($where);
-			$products_id      = array();
 
-			foreach ($whishlist_data as $key => $data)
-			{
-				$products_id[] = $data['product_id'];
-			}
-
-			if (!empty($products_id))
-			{
-				$this->data['wishlist_data'] = $this->wishlist->get_whislist_products($products_id);
-			}
+			$this->data['wishlist_data'] = $this->wishlist->get_wishlist_data($where);
 
 			$this->template->load('index', 'content', 'wishlist', $this->data);
 		}
