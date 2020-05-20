@@ -108,6 +108,7 @@ $lang['address_1']        = 'Address_1';
 $lang['address_2']        = 'Address_2';
 $lang['contact_no']       = 'Contact No';
 $lang['mobile']           = 'Mobile No';
+$lang['landmark']           = 'Landmark';
 
 #vendors
 #-------
@@ -520,6 +521,7 @@ $lang['only_letter_enter'] = 'Please Enter Only Letters and spaces but must not 
 $lang['not_start_space'] = 'Please not start with wide space and digits';
 $lang['no_space_allowed'] = 'Please Enter Letters wide space is not allowed';
 $lang['only_10_digits'] = 'Only 10 Digits Are Allowed.';
+$lang['only_6_digits']  = 'Only 6 Digits Are Allowed.';
 
 #Login/Logout/Sign Up/Forgot Password/Change Password/Profile
 #----------------------------------------------------

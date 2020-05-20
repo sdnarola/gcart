@@ -157,15 +157,19 @@
                                     <td width="40%" class="text-semibold"><?php _el('pincode');?></td><td width="10%">:</td>
                                             <td><?php echo ucfirst($vendor['pincode']) ?></td>
                                 </tr>
+<?php
+                                    $city = get_city_name($vendor['city_id'],'name');
+                                    $state = get_state_name($vendor['state_id'],'name'); 
+?>
                                 <tr>
                                     <td width="40%" class="text-semibold"><?php _el('city');?></td>
                                     <td width="10%">:</td>
-                                    <td><?php echo ucfirst(get_city_name($vendor['city_id'])) ?></td>
+                                    <td><?php echo ucfirst($city) ?></td>
                                 </tr>
                                 <tr>
                                     <td width="40%" class="text-semibold"><?php _el('state');?></td>
                                     <td width="10%">:</td>
-                                    <td><?php echo ucfirst(get_state_name($vendor['state_id'])) ?></td>
+                                    <td><?php echo ucfirst($state) ?></td>
                                 </tr>
                                 <tr> <td width="40%" class="text-semibold"><?php _el('total');?>&nbsp<?php _el('products');?>
                                 </td><td width="10%">:</td>

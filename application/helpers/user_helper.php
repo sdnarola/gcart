@@ -77,9 +77,9 @@ function get_user_address_info($user_id)
 function get_user_address($id)
 {
 	$CI = &get_instance();
-	$CI->load->model('user_model', 'users');
+	$CI->load->model('users_address_model', 'users_addresses');
 
-	$address = $CI->users->get_user_address($id);
+	$address = $CI->users_addresses->get_user_address($id);
 
 	if ($address == '')
 	{

@@ -116,15 +116,14 @@ function ask_subscriptions()
             },
             success: function(msg)
             {
-                alert(msg);
-                // if (msg == 'true')
-                // {
-                //     jGrowlAlert("<?php _el('send_successfully');?>", 'success');
-                // }
-                // else
-                // {
-                //      jGrowlAlert("<?php _el('denied')?>", 'danger');
-                // }
+                if (msg == 'true')
+                {
+                    jGrowlAlert("<?php _el('send_successfully');?>", 'success');
+                }
+                else
+                {
+                     jGrowlAlert("<?php _el('denied')?>", 'danger');
+                }
             }
         });
     }
