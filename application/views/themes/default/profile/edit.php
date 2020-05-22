@@ -64,7 +64,7 @@
             			if (!empty($user_address['state_id']))
             			{
             			?>
-           <option   value='<?php echo $user_address['state_id']; ?>'><?php echo get_state_name($user_address['state_id'], 'name'); ?></option>
+           <option   value='<?php echo $user_address['state_id']; ?>'><?php echo get_state_name($user_address['state_id'], 'name');?></option>
            <?php
            	}
            			else
@@ -96,18 +96,18 @@
             <label class="info-title" for="city"><?php _el('city');?></label>
 
             <select class="form-control unicase-form-control text-input" id='city' name='city'>
-            <option  value='<?php echo $user_address['city_id']; ?>' selected="selected"><?php echo get_city_name($user_address['city_id'], 'name'); ?></option>
+            <option  value='<?php echo $user_address['city_id']; ?>' selected="selected"><?php echo get_city_name($user_address['city_id'], 'name');?></option>
             </select>
 
         </div>
 
 		<div class="form-group">
-            <label class="info-title" for="pincode"><?php _el('pincode');?></label>
+            <label class="info-title" for="pin_code"><?php _el('pincode');?></label>
             <input type="text" class="form-control unicase-form-control text-input" id="pincode"  name="pincode" value="<?php echo $user_address['pincode']; ?>">
         </div>
         <?php
         	}
-        	}
+        }
 
         ?>
         <button type="submit" id='save' name="submit" value="Upload Image" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>
@@ -158,22 +158,20 @@
 
 				<div class="form-group">
                      <?php
-
-                     	if (empty($user['profile_image']))
-                     	{
-                     	?>
+                     if (empty($user['profile_image']))
+                     {
+                     ?>                                      
                         <a data-lightbox="image-1" data-title="Profile" href="<?php echo base_url() ?>assets/uploads/users/default_user.png"><img class="img-responsive"  style="width:100px; height: 100px;" alt="Image" src="<?php echo base_url() ?>assets/uploads/users/1-user.png" data-echo="<?php echo base_url() ?>assets/uploads/users/default_user.png" /></a>
                        <?php
-                       	}
-                       	else
-                       	{
-                       	?>
+                        }
+                        else
+                        {
+                        ?> 
                         <a data-lightbox="image-1" data-title="Profile" href="<?php echo base_url().$user['profile_image']; ?>">
-                                <img class="img-responsive"  style="width:100px; height: 100px;" alt="Image" src="<?php echo base_url().$user['profile_image']; ?>" data-echo="<?php echo base_url().$user['profile_image']; ?>" /></a>
+                                <img class="img-responsive"  style="width:100px; height: 100px;" alt="Image" src="<?php echo base_url().$user['profile_image']; ?>" data-echo="<?php echo base_url().$user['profile_image']; ?>" /></a>    
                         <?php
-                        	}
-
-                        ?>
+                        }
+                        ?> 
 	            <input type="file" class="form-control unicase-form-control text-input" id="profile_image" name="profile_image" size="33" />
 	        	</div>
 	            <button type="submit" value="Upload Image" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>
@@ -268,7 +266,7 @@ $("#myprofileform").validate({
             required:"<?php _el('please_enter_', _l('state'))?>",
 		},
 		pincode: {
-            required:"<?php _el('please_enter_', _l('pincode'))?>",
+            required:"<?php _el('please_enter_', _l('pin_code'))?>",
             pincode:"Please Enter Digits",
             maxlength :'Please enter a valid length',
 

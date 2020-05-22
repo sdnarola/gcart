@@ -33,6 +33,7 @@ class Cart extends Frontend_Controller
 			$this->data['grand_total'] = $this->cart->count_cart_total_amount_for_confirm_order($where);
 
 			$this->template->load('index', 'content', 'cart', $this->data);
+			// }
 		}
 		else
 		{

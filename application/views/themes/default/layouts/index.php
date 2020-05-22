@@ -1,32 +1,32 @@
-<?php
-	$main_categories   = $this->category->get_header_parent_category();
-	$sub_categories    = $this->category->get_sub_categories();
-	$header_categories = $this->category->get_header_parent_category(1);
-	$brands            = $this->brands->get_all_brands();
+  <?php
+  $main_categories   = $this->category->get_header_parent_category();
+  $sub_categories    = $this->category->get_sub_categories();
+  $header_categories = $this->category->get_header_parent_category(1);
+  $brands            = $this->brands->get_all_brands(); 
 
-	// =========================== cart display  Work by KOMAL===================================
-	$user_id          = $this->session->userdata('user_id');
-	$where['user_id'] = (empty($user_id)) ? 0 : $user_id;
+  // =========================== cart display  Work by KOMAL===================================
+  $user_id          = $this->session->userdata('user_id');
+  $where['user_id'] = (empty($user_id))? 0 : $user_id;
 
-	if (empty($user_id))
-	{
-		$where['user_ip'] = $this->input->ip_address();
-	}
+  if(empty($user_id))
+  {
+    $where['user_ip']=$this->input->ip_address();
+  }
 
-	$total_row          = (empty($this->cart->count_cart_row($where))) ? 0 : $this->cart->count_cart_row($where);
-	$garnd_total_amount = (empty($this->cart->count_total_amount($where))) ? 0 : $this->cart->count_total_amount($where);
-	$cart_data          = $this->cart->get_cart_data($where);
-	$cart_products      = '';
+  $total_row          = (empty($this->cart->count_cart_row($where))) ? 0 : $this->cart->count_cart_row($where);
+  $garnd_total_amount = (empty($this->cart->count_total_amount($where))) ? 0 :  $this->cart->count_total_amount($where);
+  $cart_data          = $this->cart->get_cart_data($where);
+  $cart_products      = '';
 
-	if (!empty($cart_data))
-	{
-		$products_id   = get_products_id_foreach($cart_data);
-		$cart_products = $this->cart->get_cart_products_detail($where, $products_id);
-	}
+  if(!empty($cart_data))
+  {
+    $products_id   = get_products_id_foreach($cart_data);
+    $cart_products = $this->cart->get_cart_products_detail($where, $products_id);
+  }
 
-	$dropdown = (empty($cart_products)) ? '' : 'dropdown';
+  $dropdown = (empty($cart_products)) ? "" : "dropdown";
 
-	// =========================== END cart display Work by KOMAL===================================
+ // =========================== END cart display Work by KOMAL===================================
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,9 +61,9 @@
 <script src="<?php echo base_url(); ?>assets/themes/default/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
 
-<script type="text/javascript">
-  let SITE_URL            = "<?php echo site_url();?>";
-  let BASE_URL            = "<?php echo base_url();?>";
+<script type="text/javascript"> 
+  let SITE_URL            = "<?= site_url(); ?>";
+  let BASE_URL            = "<?= base_url(); ?>";
   let title               = "<?php _el('single_deletion_alert');?>";
   let text                = "<?php _el('single_recovery_alert');?>";
   let cancelButtonText    = "<?php _el('no_cancel_it');?>";
@@ -75,7 +75,7 @@
   let remove_wishlist     = "<?php _el('remove_wishlist')?>";
   let cart_empty_title    = "<?php _el('your_car_is_empty')?>";
   let cart_empty_msg      = "<?php _el('cart_empty_msg')?>";
-  let url                 = "<?php echo site_url().'Home';?>";
+  let url                 = "<?= site_url() ."Home"; ?>";
   let shop_now            = "<?php _el('shop_now')?>";
   let rupees              = "<?php _el('rupees');?>";
 
@@ -95,31 +95,31 @@
 <script type="text/javascript">
   <?php
 
-  	$alert_class = '';
+  $alert_class = '';
 
-  	if ($this->session->flashdata('success'))
-  	{
-  		$alert_class = 'success';
-  	}
-  	elseif ($this->session->flashdata('warning'))
-  	{
-  		$alert_class = 'warning';
-  	}
-  	elseif ($this->session->flashdata('danger'))
-  	{
-  		$alert_class = 'danger';
-  	}
-  	elseif ($this->session->flashdata('info'))
-  	{
-  		$alert_class = 'info';
-  	}
+  if ($this->session->flashdata('success'))
+  {
+    $alert_class = 'success';
+  }
+  elseif ($this->session->flashdata('warning'))
+  {
+    $alert_class = 'warning';
+  }
+  elseif ($this->session->flashdata('danger'))
+  {
+    $alert_class = 'danger';
+  }
+  elseif ($this->session->flashdata('info'))
+  {
+    $alert_class = 'info';
+  }
 
-  	if ($this->session->flashdata($alert_class))
-  	{
-  	?>
+  if ($this->session->flashdata($alert_class))
+  {
+  ?>
     jGrowlAlert("<?php echo $this->session->flashdata($alert_class) ?>",'<?php echo $alert_class; ?>');
 <?php
-	}
+  }
 
 ?>
 </script>
@@ -136,13 +136,12 @@
       <div class="header-top-inner">
 
             <?php
-
-            	if (is_user_logged_in())
-            	{
-            	?>
+              if (is_user_logged_in())
+              {
+              ?>      
                <div class="cnt-block">
                         <ul class="list-unstyled list-inline">
-
+                         
                           <li  style= "float: right;" class="dropdown dropdown-small"> <a href="#" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown"><span class="value"> <i class="icon fa fa-user"></i>&nbsp;<?php _el('my_account');?> </span><b class="caret"></b></a>
                             <ul class="dropdown-menu">
                               <li><a href="<?php echo site_url('profile') ?>"><?php _el('my_profile');?></a></li>
@@ -151,37 +150,35 @@
                             </ul>
                           </li>
                         </ul>
-                        <!-- /.list-unstyled -->
+                        <!-- /.list-unstyled --> 
                 </div>
                 <div class="cnt-account">
 
                 <ul class="list-unstyled">
                 <li><a href="#"><?php _el('welcome');?>&nbsp;<?php echo get_loggedin_info('username'); ?></a></li>
                 <li><a href="<?php echo site_url('Wishlist/'); ?>"><i class="icon fa fa-heart"></i><?php _el('wishlist');?></a></li>
-                <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('Logout');
-	echo '&nbsp';?></a></li>
+                <li><a href="<?php echo site_url('authentication/logout'); ?>"><?php _el('Logout');echo '&nbsp';?></a></li>
               </ul>
-            </div>
-                    <!-- /.cnt-account -->
+            </div>            
+                    <!-- /.cnt-account -->     
             <?php
-            	}
-            	else
-            	{
-            	?>
+              }
+              else
+              {
+              ?>       
                <div class="cnt-account">
                <ul class="list-unstyled">
                 <li><a href="<?php echo base_url('cart'); ?>"><i class="icon fa fa-shopping-cart"></i><?php _el('my_cart');?></a></li>
-                <li><a href="<?php echo site_url('cart/');?>"><i class="icon fa fa-check"></i><?php _el('Checkout')?></a></li>
+                <li><a href="<?= site_url('cart/');?>"><i class="icon fa fa-check"></i><?php _el('Checkout')?></a></li>
                 <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i><?php _el('Login');?></a></li>
                 <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i><?php _el('Sell');?></a></li>
               </ul>
              </div>
            <?php
-           	}
-
+            }
            ?>
         </div>
-
+    
         <!-- /.cnt-cart -->
         <div class="clearfix"></div>
       </div>
@@ -206,7 +203,7 @@
         <div class="col-xs-12 col-sm-12 col-md-7 top-search-holder">
           <!-- /.contact-row -->
           <!-- ==================================================== SEARCH AREA ============================================================= -->
-          <style>
+          <style>    
            .search-field:focus {
                 outline: none;
                 }
@@ -226,19 +223,15 @@
                  <select id="Categories" name="category_id"  data-toggle="dropdown" class="select_category"><b class="Caret"></b>
                  <option value="" class="dropdown"><?php _el('categories');?></option>
                   <?php
-
-                  	if (!empty($main_categories))
-                  	{
-                  		foreach ($main_categories as $main_category)
-                  		{
-                  		?>
+                  if(!empty($main_categories)){
+                  foreach ($main_categories as  $main_category)
+                  {
+                  ?>
                  <option class="dropdown"  value="<?php echo $main_category['id']; ?>"><?php echo ucwords($main_category['name']); ?></option>
 
-                 <?php
-                 	}
-                 	}
-
-                 ?>
+                 <?php 
+                  } }
+                  ?>
                 </select>
 
                 <input class="search-field" name="name" id="name"  style="border-style: hidden;" autocomplete="off" placeholder="Search here..." />
@@ -249,59 +242,58 @@
           </div>
 
           <div class="list-unstyle" id="search_result" style="position:absolute;background-color: white;margin-left: 130px;width:470px;">
-
+        
           </div>
 
-          <!-- /.search-area -->
-          <!-- ======================================== SEARCH AREA : END ============================================================= -->
+          <!-- /.search-area --> 
+          <!-- ======================================== SEARCH AREA : END ============================================================= --> 
         </div>
         <!-- /.top-search-holder -->
 
         <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
           <!-- ================================ SHOPPING CART DROPDOWN ============================================================= -->
  <!-- =========================== cart display  Work by KOMAL===================================================== -->
-         <div class="dropdown dropdown-cart"> <a href="javascript:void(0);" class="dropdown-toggle lnk-cart" id="cart-dropdown" data-toggle="<?php echo $dropdown?>">
+         <div class="dropdown dropdown-cart"> <a href="javascript:void(0);" class="dropdown-toggle lnk-cart" id="cart-dropdown" data-toggle="<?=  $dropdown ?>">
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-              <div class="basket-item-count"><span class="count"><?php echo $total_row?></span></div>
-              <div class="total-price-basket"> <span class="lbl"><?php _el('cart')?></span> <span class="total-price"> <span class="sign"><?php _el('rupees');?></span><span class="value"><?php echo $garnd_total_amount?></span> </span> </div>
+              <div class="basket-item-count"><span class="count"><?= $total_row ?></span></div>
+              <div class="total-price-basket"> <span class="lbl"><?php _el('cart') ?></span> <span class="total-price"> <span class="sign"><?php _el('rupees');?></span><span class="value"><?= $garnd_total_amount ?></span> </span> </div>
             </div>
             </a>
             <ul class="dropdown-menu">
               <li>
-
+               
                 <div class="cart-item product-summary">
                    <?php
 
-                   	if (!empty($cart_products))
-                   	{
-                   		foreach ($cart_products as $key => $cart)
-                   		{
-                   		?>
-                  <div id="cart-<?php echo $cart['cart_id'];?>" class="row">
+                  if(!empty($cart_products))
+                  {
+                  foreach ($cart_products as $key => $cart) {
+                   
+                
+                ?>
+                  <div id="cart-<?=  $cart['cart_id']; ?>" class="row">
                     <div class="col-xs-4">
-                      <div class="image"> <a href="<?php echo site_url('Products/'.$cart['slug']);?>"><img src="<?php echo base_url().$cart['thumb_image']; ?>" alt=""></a> </div>
+                      <div class="image"> <a href="<?= site_url('Products/'.$cart['slug']); ?>"><img src="<?php echo base_url().$cart['thumb_image']; ?>" alt=""></a> </div>
                     </div>
                     <div class="col-xs-7">
-                      <h3 class="name"><a href="<?php echo site_url('Products/'.$cart['slug']);?>"><?php echo $cart['name'];?></a></h3>
-                      <div class="price"><?php _el('rupees');?><?php echo $cart['total_amount']?></div>
+                      <h3 class="name"><a href="<?= site_url('Products/'.$cart['slug']); ?>"><?= $cart['name']; ?></a></h3>
+                      <div class="price"><?php _el('rupees');?><?= $cart['total_amount']?></div>
                     </div>
-                    <div class="col-xs-1 action"> <a href="javascript:void(0);"><i class="fa fa-trash" id="delete_cart_product" onclick="delete_to_Cart_product(<?php echo $cart['cart_id']?>);" ></i></a> </div>
+                    <div class="col-xs-1 action"> <a href="javascript:void(0);"><i class="fa fa-trash" id="delete_cart_product" onclick="delete_to_Cart_product(<?= $cart['cart_id'] ?>);" ></i></a> </div>
                   </div>
                   <?php
-                  	}
-                  	}
-
-                  ?>
+                  }}
+                ?>
                 </div>
-
+                
                 <!-- /.cart-item -->
                 <div class="clearfix"></div>
                 <hr>
                 <div class="clearfix cart-total">
-                  <div class="pull-right sub-total"> <span class="text"><?php _el('sub_total')?></span><span class='price'><?php _el('rupees');?><?php echo $garnd_total_amount?></span> </div>
+                  <div class="pull-right sub-total"> <span class="text"><?php _el('sub_total') ?></span><span class='price'><?php _el('rupees');?><?= $garnd_total_amount ?></span> </div>
                   <div class="clearfix"></div>
-                  <a href="<?php echo site_url('cart/');?>" class="btn btn-upper btn-primary btn-block m-t-20"><?php _el('checkout')?></a> </div>
+                  <a href="<?= site_url('cart/');?>" class="btn btn-upper btn-primary btn-block m-t-20"><?php _el('checkout') ?></a> </div>
                 <!-- /.cart-total-->
  <!-- ============================ END cart display  Work by KOMAL===================================================== -->
               </li>
@@ -311,7 +303,7 @@
           <!-- /.dropdown-cart -->
 
 
-          <!-- ===================================== SHOPPING CART DROPDOWN : END============================================================= -->
+          <!-- ===================================== SHOPPING CART DROPDOWN : END============================================================= --> 
         </div>
         <!-- /.top-cart-row -->
       </div>
@@ -338,73 +330,63 @@
 
                  <li class="active dropdown yamm-fw"> <a data-hover="dropdown" class="dropdown-toggle"  href="<?php echo base_url(); ?>" ><?php _el('home');?></a> </li>
                 <?php
-
-                	if (!empty($header_categories))
-                	{
-                		foreach ($header_categories as $header_category)
-                		{
-                		?>
+                  if(!empty($header_categories)){
+                  foreach ($header_categories as  $header_category)
+                  {
+                  ?>
 
                 <li class="dropdown yamm mega-menu"><a href="<?php echo base_url().'categories/get_parent_category_products/'.$header_category['id']; ?>" data-hover="dropdown" class="dropdown-toggle"  data-toggle="dropdown"><?php echo ucwords($header_category['name']); ?> </a>
                                         <!-- /.accordion-heading -->
                   <ul class="dropdown-menu container"  id="<?php echo $header_category['id']; ?>">
                     <li>
-
+                      
                      <div class="yamm-content">
                         <div class="row customli">
-
+                       
                     <?php
-                    	$counter = 0;
-
-                    			if (!empty($sub_categories))
-                    			{
-                    				foreach ($sub_categories as $sub_category)
-                    				{
-                    					if ($sub_category['category_id'] == $header_category['id'])
-                    					{
-                    						if ($counter < 4)
-                    						{
-                    						?>
+                      $counter = 0;
+                        if(!empty($sub_categories)){
+                        foreach ($sub_categories as $sub_category)
+                        {
+                          if ($sub_category['category_id'] == $header_category['id'])
+                          {
+                            if ($counter < 4)
+                            {
+                            ?>
                          <div  class="col-xs-12 col-sm-6 col-md-3 col-menu " >
                             <ul class="links">
-                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
-						$counter++; ?></a></li>
+                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);  $counter++; ?></a></li>   
                                 </ul>
                          </div>
                           <?php
-                          	}
-                          						elseif ($counter >= 4)
-                          						{
-                          						?>
+                            }
+                            elseif ($counter >= 4)
+                            {
+                            ?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu" >
                             <ul class="links">
-                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
-						$counter++; ?>  </a></li>
+                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);$counter++; ?>  </a></li>                                   
                              </ul>
                              </div>
                             <?php
-                            	}
-                            						else
-                            						{
-                            						?>
+                              }
+                              else
+                              {
+                            ?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu">
                             <ul class="links">
-                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
-						$counter++; ?></a></li>
+                              <li><a href="<?= site_url('categories/'.$header_category['slug']."/".$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);$counter++; ?></a></li>                                  
                              </ul>
                             </div>
                              <?php
-                             	}
-
-                             					?>
-<?php
-	}
-				}
-				//sub categories foreach end
-			}
-
-		?>
-
+                                }
+                              ?>
+                        <?php
+                            }
+                          } //sub categories foreach end
+                        }
+                          ?>
+                            
                       <!-- /.yamm-content -->
                         </div>
                       </div>
@@ -412,9 +394,7 @@
                   </ul>
                 </li>
              <?php
-             	}
-             	}
-
+              } }
              ?>
               </ul>
 
@@ -438,7 +418,7 @@
 
 </header><!-- main container -->
   <!-- ============================================== CONTAINER  : START ============================================== -->
-  <?php echo $content; ?>
+  <?php echo $content;?>
 
     <!-- ============================================== CONTAINER  : END============================================== -->
 
@@ -449,16 +429,14 @@
       <div class="logo-slider-inner">
         <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
            <?php
-
-           	if (!empty($brands))
-           	{
-           		foreach ($brands as $brand)
-           		{
-           		?>
+           if(!empty($brands)){
+            foreach ($brands as $brand)
+            {
+            ?>
           <div class="item m-t-15"> <a href="<?php echo base_url(); ?>#" class="image"> <img data-echo="<?php echo base_url() ?><?php echo $brand['logo']; ?>" src="<?php echo base_url() ?><?php echo $brand['logo']; ?>" alt="brand" style="max-height:110px;max-width:166px;height:auto;width:auto;"> </a> </div>
           <?php
-          	}
-          	}
+            }
+          }
 
           ?>
         </div>
@@ -490,9 +468,9 @@
             <ul class="toggle-footer" style="">
               <li class="media">
 
-                <div class="pull-left">
+                <div class="pull-left"> 
 
-                <a href='<?php echo base_url('contact') ?>'  title="location" id="marker"><span class="icon fa-stack fa-lg"> <i id ="marker" class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </a></div>
+                <a href='<?php echo base_url('contact')?>'  title="location" id="marker"><span class="icon fa-stack fa-lg"> <i id ="marker" class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </a></div>
                 <div class="media-body">
                   <p>Recent Square, dmart,Adajan, 12345 INDIA</p>
                 </div>
@@ -649,7 +627,7 @@
             }
            })
           }
-//============================autosuggest for search ====================================
+//============================autosuggest for search ==================================== 
 
  $('#name').typeahead({
   source: function(query, result)
