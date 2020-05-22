@@ -44,22 +44,27 @@
         		{
         		?>
          <div class="form-group">
-            <label class="info-title" for="address_1"><?php _el('address_1');?></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="address_1" name="address_1" value="<?php echo $user_address['house_or_village']; ?>">
+            <label class="info-title" for="house_or_village"><?php _el('house_village');?></label>
+            <input type="text" class="form-control unicase-form-control text-input" id="house_or_village" name="house_or_village" value="<?php echo $user_address['house_or_village']; ?>">
         </div>
         <div class="form-group">
-            <label class="info-title" for="address_2"><?php _el('address_2');?></label>
-            <input type="text" class="form-control unicase-form-control text-input" id="address_2" name="address_2" value="<?php echo $user_address['street_or_society']; ?>">
+            <label class="info-title" for="street_or_society"><?php _el('street_society');?></label>
+            <input type="text" class="form-control unicase-form-control text-input" id="street_or_society" name="street_or_society" value="<?php echo $user_address['street_or_society']; ?>">
         </div>
+         <div class="form-group">
+            <label class="info-title" for="landmark"><?php _el('landmark');?></label>
+            <input type="text" class="form-control unicase-form-control text-input" id="landmark" name="landmark" value="<?php echo $user_address['landmark']; ?>">
+        </div>
+
         <div class="form-group">
             <label class="info-title" for="state"><?php _el('state');?></label>
              <select class="form-control unicase-form-control text-input" id='state' name='state'>
             <?php
 
-            			if (!empty($user_address['state']))
+            			if (!empty($user_address['state_id']))
             			{
             			?>
-           <option   value='<?php echo $user_address['state']; ?>'><?php get_state_name($user_address['state']);?></option>
+           <option   value='<?php echo $user_address['state_id']; ?>'><?php echo get_state_name($user_address['state_id'], 'name');?></option>
            <?php
            	}
            			else
@@ -85,15 +90,15 @@
 
            		?>
             </select>
-           <!--  <input type="text" class="form-control unicase-form-control text-input" id="state"  name="state" value="<?php echo $user_address['state']; ?>"> -->
+
         </div>
          <div class="form-group">
             <label class="info-title" for="city"><?php _el('city');?></label>
 
             <select class="form-control unicase-form-control text-input" id='city' name='city'>
-            <option  value='<?php echo $user_address['city']; ?>' selected="selected"><?php get_city_name($user_address['city']);?></option>
+            <option  value='<?php echo $user_address['city_id']; ?>' selected="selected"><?php echo get_city_name($user_address['city_id'], 'name');?></option>
             </select>
-            <!-- <input type="text" class="form-control unicase-form-control text-input" id="city"  name="city" value="<?php echo $user_address['city']; ?>"> -->
+
         </div>
 
 		<div class="form-group">
@@ -102,7 +107,7 @@
         </div>
         <?php
         	}
-        	}
+        }
 
         ?>
         <button type="submit" id='save' name="submit" value="Upload Image" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>
@@ -152,23 +157,21 @@
 			<form method="post" id="upload_image" class="register-form outer-top-xs"  action="<?php echo base_url('profile/uploads') ?>" enctype="multipart/form-data" role="form" enctype="multipart/form-data">
 
 				<div class="form-group">
-				<!--<label class="info-title" for="profile_image"><?php _el('profile_image');?> </label>-->
-                <?php
-
-                	if (empty($user['profile_image']))
-                	{
-                	?>
-                 <img class="img-circle" id="blah" src="<?php echo base_url() ?>assets/uploads/users/1-user.png" alt="<?php _el('profile_image');?>" height=64 width=100 />
-                <?php
-                	}
-                	else
-                	{
-                	?>
-			    <img class="img-circle" id="blah" src="<?php echo base_url() ?><?php echo $user['profile_image']; ?>" alt="<?php _el('profile_image');?>" height=64 width=100 />
-                <?php
-                	}
-
-                ?>
+                     <?php
+                     if (empty($user['profile_image']))
+                     {
+                     ?>                                      
+                        <a data-lightbox="image-1" data-title="Profile" href="<?php echo base_url() ?>assets/uploads/users/default_user.png"><img class="img-responsive"  style="width:100px; height: 100px;" alt="Image" src="<?php echo base_url() ?>assets/uploads/users/1-user.png" data-echo="<?php echo base_url() ?>assets/uploads/users/default_user.png" /></a>
+                       <?php
+                        }
+                        else
+                        {
+                        ?> 
+                        <a data-lightbox="image-1" data-title="Profile" href="<?php echo base_url().$user['profile_image']; ?>">
+                                <img class="img-responsive"  style="width:100px; height: 100px;" alt="Image" src="<?php echo base_url().$user['profile_image']; ?>" data-echo="<?php echo base_url().$user['profile_image']; ?>" /></a>    
+                        <?php
+                        }
+                        ?> 
 	            <input type="file" class="form-control unicase-form-control text-input" id="profile_image" name="profile_image" size="33" />
 	        	</div>
 	            <button type="submit" value="Upload Image" class="btn-upper btn btn-success checkout-page-button"><?php _el('update')?></button>
@@ -207,10 +210,13 @@ $("#myprofileform").validate({
             required: true,
             email: true
         },
-        address_1:{
+        house_or_village:{
             required: true,
         },
-        address_2:{
+        street_or_society:{
+            required: true,
+        },
+        landmark:{
             required: true,
         },
         city: {
@@ -244,12 +250,15 @@ $("#myprofileform").validate({
          	required:"<?php _el('please_enter_', _l('email'))?>",
             email:"<?php _el('please_enter_valid_', _l('email'))?>"
         },
-        address_1: {
-            required:"<?php _el('please_enter_', _l('address_1'))?>",
+        house_or_village: {
+            required:"<?php _el('please_enter_', _l('house_village'))?>",
 		},
-		address_2: {
-            required:"<?php _el('please_enter_', _l('address_2'))?>",
+		street_or_society: {
+            required:"<?php _el('please_enter_', _l('street_society'))?>",
 		},
+        landmark: {
+            required:"<?php _el('please_enter_', _l('landmark'))?>",
+        },
 		city: {
             required:"<?php _el('please_enter_', _l('city'))?>",
 		},

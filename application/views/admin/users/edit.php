@@ -39,10 +39,10 @@
 							<!-- /Panel heading -->
 							<!-- Panel body -->
 							<div class="panel-body">
-								<form action="<?php echo base_url('admin/users/edit/') . $user['id']; ?>" id="profileform" name="profileform" method="POST">
+								<form action="<?php echo base_url('admin/users/edit/').$user['id']; ?>" id="profileform" name="profileform" method="POST">
 									<div>
 										<div class="form-group">
-											 <p align="center"><img src="<?php echo base_url() .$user['profile_image'] ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
+											 <p align="center"><img src="<?php echo base_url().$user['profile_image'] ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
 										</div>
 									</div>
 									<div class="row">
@@ -74,7 +74,7 @@
 											<small class="req text-danger">* </small>
 											<label><?php _el('house_village');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('house_village');?>" id="house_village" name="house_village" value="<?php echo $address['house_or_village']; ?>">
-										</div>							
+										</div>
 										<div class="col-md-6 form-group">
 											<small class="req text-danger">* </small>
 											<label><?php _el('street_society');?>:</label>
@@ -91,27 +91,33 @@
 											<small class="req text-danger">* </small>
 											<label><?php _el('pincode');?>:</label>
 											<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $address['pincode']; ?>" >
-										</div>								
+										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-6 form-group">		
+										<div class="col-md-6 form-group">
 			                              <small class="req text-danger">* </small>
-			                              <label><?php _el('state') ?></label>
+			                              <label><?php _el('state')?></label>
 			                              <select class="select-search" name="state" id="state" onchange="get_cities();">
 			                                <option value="0" selected readonly disabled>----- Select State -----</option>
 <?php
-				foreach ($states as $state)
-				{
-?>
+
+	foreach ($states as $state)
+	{
+	?>
 			                                    <option id="<?php echo $state['id'] ?>" name="state['name']" value="<?php echo $state['id']; ?>"
 			                                    <?php
+
 			                                    		if ($state['id'] == $address['state_id'])
-			                                    		{ echo ' selected';}?>>
+			                                    		{
+			                                    			echo ' selected';}
+
+			                                    	?>>
 			                                    <?php echo ucfirst($state['name']) ?>
 			                                    </option>
 <?php
-				}
-				$city = get_city_name($address['city_id'],'name');
+	}
+
+	$city = get_city_name($address['city_id'], 'name');
 ?>
 			                               </select>
                             			</div>
@@ -119,18 +125,24 @@
 		                                <small class="req text-danger">* </small>
 		                                <label><?php _el('city');?>:</label>
 		                                <select class="form-control select-search" name="city" id="city" >
-		                                    <option  value='<?php echo $address['city_id'];?>' selected="selected" readonly><?php echo $city?></option>
+		                                    <option  value='<?php echo $address['city_id']; ?>' selected="selected" readonly><?php echo $city ?></option>
 		                                </select>
-                            			</div>	
+                            			</div>
                             		</div>
-                            		<div class="row">									
+                            		<div class="row">
 <?php
-		$readonly = '';
+	$readonly = '';
 ?>
 										<div class="col-md-6 form-group">
 											<label><?php _el('status');?>:</label>
-											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['id']; ?>" <?php if ($user['is_active'] == 1) {echo "checked";}?>  <?php echo $readonly; ?>>
-										</div>	
+											<input type="checkbox" class="switchery" name="is_active" id="<?php echo $user['id']; ?>"<?php
+
+	if ($user['is_active'] == 1)
+	{
+		echo 'checked';}
+
+?><?php echo $readonly; ?>>
+										</div>
 									</div>
 									<div class="row">
 			                            <div class="form-group col-md-12">
@@ -198,7 +210,7 @@ $("#profileform").validate({
 		},
 		mobile: {
 			required:"<?php _el('please_enter_', _l('mobile_no'))?>",
-			number: "<?php _el('only_digits')?>",				
+			number: "<?php _el('only_digits')?>",
 			rangelength:"<?php _el('only_10_digits')?>",
 		},
 		house_village: {

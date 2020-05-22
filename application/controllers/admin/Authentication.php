@@ -193,9 +193,9 @@ class Authentication extends My_Controller
 	public function login_as_vendor()
 	{
 		$data   = $this->session->userdata();
-		$vendor = get_vendor_by(array('email' => $data['email'], 'is_admin' => $data['is_admin']));
+		$vendor = get_vendor_by(array('email' => $data['email']));
 
-		if ($vendor['is_admin'] == 1)
+		if ($vendor)
 		{
 			$this->session->unset_userdata(array('email', 'user_id', 'username', 'is_admin', 'user_logged_in'));
 

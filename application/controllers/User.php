@@ -57,16 +57,14 @@ class User extends Frontend_Controller
 				$this->data['state'] = $this->state->get_many_by(array('country_id' => 105));
 				$user_data           = $this->users->show($data['users_id']);
 
-				$state = $this->state->get_many_by(array('id' => $user_data['state_id']));
-
-				foreach ($state as $key => $state_data)
+				foreach ($this->data['state'] as $key => $state_data)
 				{
 					$state_id = $state_data['id'];
 				}
 
-				$this->data['city_data']  = $this->city->get_many_by(array('state_id' => $state_id));
-				$this->data['users_data'] = $user_data;
+				$this->data['city_data'] = $this->city->get_many_by(array('state_id' => $state_id));
 
+				$this->data['users_data'] = $user_data;
 				$this->template->load('index', 'content', 'checkout_address', $this->data);
 			}
 		}
@@ -85,23 +83,23 @@ class User extends Frontend_Controller
 		echo json_encode($this->data);
 	}
 
+// ============================================ END WORK BY KOMAl =========================================================================================
 
-	// ============================================ END WORK BY KOMAl =========================================================================================
-	// /** ===================================code by vixuti patel========================================== */
-	/**	
+// /** ===================================code by vixuti patel========================================== */
+	/**
 	 * [get_cities by state_id]
 	 * @param  [int] $state_id [state_id]
 	 * @return [json]           [json data of cities]
 	 */
 	public function get_cities()
 	{
-	    $state_id = $this->input->post('state_id');
-	    
-		$cities = $this->users->get_cities_by_state($state_id);
-        echo json_encode($cities);
+		$state_id = $this->input->post('state_id');
 
-    }
-    /** ===================================code end  by vixuti patel========================================== */
+		$cities = $this->users->get_cities_by_state($state_id);
+		echo json_encode($cities);
+	}
+
+	/** ===================================code end  by vixuti patel========================================== */
 }
 
 ?>

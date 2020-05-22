@@ -85,7 +85,6 @@ class User_model extends MY_Model
 		return $result;
 	}
 
-
 /**
  * [get_state all states details]
  * @return [array] $response [all states details ]
@@ -170,6 +169,22 @@ class User_model extends MY_Model
 		}
 	}
 
+// =========================== Bhavik ==================================//
+	/**
+	 * Get user's address
+	 * @param  int  	$id    		The id of the user.
+	 *
+	 * @return mixed 	$address 	The Address Information.
+	 */
+	public function get_user_address($id)
+	{
+		$this->_table = 'users_addresses';
+		$address      = $this->get($id);
+
+		return $address;
+	}
+
+// =========================== Bhavik ==================================//
 
 /***==================================================code by vixuti patel=====================================================***/
 /**
@@ -180,43 +195,16 @@ class User_model extends MY_Model
  */
 	public function edit_user_address($id, $data)
 	{
-		$flag = 0;
-		
-		$this->db->select("*"); 
- 	 	$this->db->from('users_addresses');
-  		$query = $this->db->get();
-  		$records = $query->result_array();
-		
-		foreach ($records as $record) 
-		{
-			if($record['users_id'] == $id)
-			{
-				$flag=1;
-				break;
-			}
-
-		}
-
-		if($flag == 1)
-		{
-			$this->db->where('users_id', $id);
-			$edit = $this->db->update('users_addresses', $data);
-
-		}
-		else
-		{
-			$edit = $this->db->insert('users_addresses',$data);
-		}
-		
+		$this->db->where('users_id', $id);
+		$edit = $this->db->update('users_addresses', $data);
 		if ($edit)
 		{
 			return $edit;
 		}
 		else
 		{
-			return false;	
-		}	
-	
+			return false;
+		}
 	}
 
 /**

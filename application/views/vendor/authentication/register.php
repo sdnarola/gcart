@@ -62,8 +62,8 @@
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/plugins/forms/validation/validate.min.js'); ?>"></script>
 
 <script type="text/javascript">
-  let SITE_URL            = "<?php echo site_url();?>";
-  let BASE_URL            = "<?php echo base_url();?>";
+  let SITE_URL            = "<?php echo site_url(); ?>";
+  let BASE_URL            = "<?php echo base_url(); ?>";
   let title               = "<?php _el('single_deletion_alert');?>";
   let text                = "<?php _el('single_recovery_alert');?>";
   let cancelButtonText    = "<?php _el('no_cancel_it');?>";
@@ -75,7 +75,7 @@
   let remove_wishlist     = "<?php _el('remove_wishlist')?>";
   let cart_empty_title    = "<?php _el('your_car_is_empty')?>";
   let cart_empty_msg      = "<?php _el('cart_empty_msg')?>";
-  let url                 = "<?php echo site_url().'Home';?>";
+  let url                 = "<?php echo site_url().'Home'; ?>";
   let shop_now            = "<?php _el('shop_now')?>";
 
 
@@ -171,7 +171,7 @@
                <div class="cnt-account">
                <ul class="list-unstyled">
                 <li><a href="<?php echo base_url('cart'); ?>"><i class="icon fa fa-shopping-cart"></i><?php _el('my_cart');?></a></li>
-                <li><a href="<?php echo site_url('cart/');?>"><i class="icon fa fa-check"></i><?php _el('Checkout')?></a></li>
+                <li><a href="<?php echo site_url('cart/'); ?>"><i class="icon fa fa-check"></i><?php _el('Checkout')?></a></li>
                 <li><a href="<?php echo site_url('authentication'); ?>"><i class="icon fa fa-lock"></i><?php _el('Login');?></a></li>
                 <li><a href="<?php echo site_url('vendor'); ?>"><i class="icon fa fa-user"></i><?php _el('Sell');?></a></li>
               </ul>
@@ -260,11 +260,11 @@
         <div class="col-xs-12 col-sm-12 col-md-2 animate-dropdown top-cart-row">
           <!-- ================================ SHOPPING CART DROPDOWN ============================================================= -->
  <!-- =========================== cart display  Work by KOMAL===================================================== -->
-         <div class="dropdown dropdown-cart"> <a href="javascript:void(0);" class="dropdown-toggle lnk-cart" id="cart-dropdown" data-toggle="<?php echo $dropdown?>">
+         <div class="dropdown dropdown-cart"> <a href="javascript:void(0);" class="dropdown-toggle lnk-cart" id="cart-dropdown" data-toggle="<?php echo $dropdown ?>">
             <div class="items-cart-inner">
               <div class="basket"> <i class="glyphicon glyphicon-shopping-cart"></i> </div>
-              <div class="basket-item-count"><span class="count"><?php echo $total_row?></span></div>
-              <div class="total-price-basket"> <span class="lbl"><?php _el('cart')?></span> <span class="total-price"> <span class="sign">$</span><span class="value"><?php echo $garnd_total_amount?></span> </span> </div>
+              <div class="basket-item-count"><span class="count"><?php echo $total_row ?></span></div>
+              <div class="total-price-basket"> <span class="lbl"><?php _el('cart')?></span> <span class="total-price"> <span class="sign">$</span><span class="value"><?php echo $garnd_total_amount ?></span> </span> </div>
             </div>
             </a>
             <ul class="dropdown-menu">
@@ -278,15 +278,15 @@
                    		foreach ($cart_products as $key => $cart)
                    		{
                    		?>
-                  <div id="cart-<?php echo $cart['cart_id'];?>" class="row">
+                  <div id="cart-<?php echo $cart['cart_id']; ?>" class="row">
                     <div class="col-xs-4">
-                      <div class="image"> <a href="<?php echo site_url('Products/'.$cart['slug']);?>"><img src="<?php echo base_url().$cart['thumb_image']; ?>" alt=""></a> </div>
+                      <div class="image"> <a href="<?php echo site_url('Products/'.$cart['slug']); ?>"><img src="<?php echo base_url().$cart['thumb_image']; ?>" alt=""></a> </div>
                     </div>
                     <div class="col-xs-7">
-                      <h3 class="name"><a href="<?php echo site_url('Products/'.$cart['slug']);?>"><?php echo $cart['name'];?></a></h3>
-                      <div class="price"><?php echo $cart['total_amount']?></div>
+                      <h3 class="name"><a href="<?php echo site_url('Products/'.$cart['slug']); ?>"><?php echo $cart['name']; ?></a></h3>
+                      <div class="price"><?php echo $cart['total_amount'] ?></div>
                     </div>
-                    <div class="col-xs-1 action"> <a href="javascript:void(0);"><i class="fa fa-trash" id="delete_cart_product" onclick="delete_to_Cart_product(<?php echo $cart['cart_id']?>);" ></i></a> </div>
+                    <div class="col-xs-1 action"> <a href="javascript:void(0);"><i class="fa fa-trash" id="delete_cart_product" onclick="delete_to_Cart_product(<?php echo $cart['cart_id'] ?>);" ></i></a> </div>
                   </div>
                   <?php
                   	}
@@ -299,9 +299,9 @@
                 <div class="clearfix"></div>
                 <hr>
                 <div class="clearfix cart-total">
-                  <div class="pull-right sub-total"> <span class="text"><?php _el('sub_total')?></span><span class='price'><?php echo $garnd_total_amount?></span> </div>
+                  <div class="pull-right sub-total"> <span class="text"><?php _el('sub_total')?></span><span class='price'><?php echo $garnd_total_amount ?></span> </div>
                   <div class="clearfix"></div>
-                  <a href="<?php echo site_url('cart/');?>" class="btn btn-upper btn-primary btn-block m-t-20"><?php _el('checkout')?></a> </div>
+                  <a href="<?php echo site_url('cart/'); ?>" class="btn btn-upper btn-primary btn-block m-t-20"><?php _el('checkout')?></a> </div>
                 <!-- /.cart-total-->
  <!-- ============================ END cart display  Work by KOMAL===================================================== -->
               </li>
@@ -367,7 +367,7 @@
                     						?>
                          <div  class="col-xs-12 col-sm-6 col-md-3 col-menu " >
                             <ul class="links">
-                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
 						$counter++; ?></a></li>
                                 </ul>
                          </div>
@@ -378,7 +378,7 @@
                           						?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu" >
                             <ul class="links">
-                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
 						$counter++; ?>  </a></li>
                              </ul>
                              </div>
@@ -389,7 +389,7 @@
                             						?>
                            <div class="col-xs-12 col-sm-6 col-md-3 col-menu">
                             <ul class="links">
-                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']);?>"><?php echo ucwords($sub_category['name']);
+                              <li><a href="<?php echo site_url('categories/'.$header_category['slug'].'/'.$sub_category['slug']); ?>"><?php echo ucwords($sub_category['name']);
 						$counter++; ?></a></li>
                              </ul>
                             </div>
@@ -400,6 +400,7 @@
 <?php
 	}
 				}
+
 				//sub categories foreach end
 			}
 
@@ -524,7 +525,7 @@
       </div>
        <div class="form-group">
             <label class="info-title" for="state"><?php _el('state');?><span>*</span></label>
-             <select class="form-control unicase-form-control text-input" id='state' name='state'>
+             <select class="form-control unicase-form-control text-input" id='state' name='state_id'>
             <?php
 
             	if (!empty($user_address['state']))
@@ -561,7 +562,7 @@
          <div class="form-group">
             <label class="info-title" for="city"><?php _el('city');?><span>*</span></label>
 
-            <select class="form-control unicase-form-control text-input" id='city' name='city'>
+            <select class="form-control unicase-form-control text-input" id='city' name='city_id'>
             <option  value='<?php echo $user_address['city']; ?>' selected="selected"><?php get_city_name($user_address['city']);?></option>
             </select>
 

@@ -89,7 +89,6 @@ class Orders extends Frontend_Controller
 		$this->pdf->render();
 		$output = $this->pdf->output();
 
-		file_put_contents('invoice.pdf', $output);
 		$this->pdf->stream("'invoice'.pdf", array('Attachment' => 0));
 	}
 

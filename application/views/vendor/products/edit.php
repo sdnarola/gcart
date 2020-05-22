@@ -134,6 +134,14 @@
                         <div class="row">
                             <div class="form-group col-md-12 ">
                                 <small class="req text-danger">* </small>
+                                <label><?php _el('slug');?>:</label>
+                                <input type="text" class="form-control" placeholder="<?php _el('slug');?>" id="slug" value="<?php echo $product['slug']; ?>" name="slug" readonly>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-12 ">
+                                <small class="req text-danger">* </small>
                                 <label><?php _el('thumb_image');?>:</label><br>
                                 <div class="col-md-3">
                                 <div class="thumbnail">
@@ -339,7 +347,7 @@ function get_sub_categories()
             }
             else
             {
-                $("#sub_category_id").append("<option value='0' selected>No Sub Category</option>");
+                $("#sub_category_id").append("<option value='0' class='sub_category' selected>No Sub Category</option>");
             }
 
         }

@@ -145,6 +145,12 @@ body > .jGrowl {
     border-color: #F44336;
     color: #fff;
 }
+.bg-info {
+    background-color: #00BCD4;
+    border-color: #00BCD4;
+    color: #fff;
+}
+
 /* ------------------------------------------------------------------------------
  *
  *  # Sweet alerts

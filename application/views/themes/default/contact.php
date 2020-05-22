@@ -1,3 +1,4 @@
+<?php $this->load->view('themes/default/includes/alerts');?>
 <style type="text/css">
 	 #email-error,#title-error,#name-error,#comments-error{
 		color: red;

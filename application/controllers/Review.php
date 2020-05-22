@@ -164,7 +164,7 @@ class Review extends Frontend_Controller
 			$result = $this->review->insert($this->data);
 			if ($result)
 			{
-				echo '<div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Thanks!</strong> Review submitted.</div>';
+				echo '<strong>Thanks!</strong> Review submitted.';
 			}
 			else
 			{
@@ -176,7 +176,7 @@ class Review extends Frontend_Controller
 			$result = $this->review->update($ratings[0]['id'], $this->data);
 			if ($result)
 			{
-				echo '<div class="alert alert-success alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Thanks!</strong> Review updated.</div>';
+				echo '<strong>Thanks!</strong> Review updated.';
 			}
 			else
 			{

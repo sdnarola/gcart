@@ -144,7 +144,8 @@ th {
                     <a href="javascript:void(0)" title="review" onclick="return openForm(<?php echo $order_info['product_id']; ?>)">  <?php _el('write_review');?></a>
                       <div class="form-popup" id="review_form_<?php echo $order_info['product_id']; ?>" method="post">
                         
-                           <textarea name="comment" id="comment_<?php echo $order_info['product_id']; ?>" placeholder="Enter your review here.."></textarea> 
+                           <textarea name="comment" id="comment_<?php echo $order_info['product_id']; ?>" placeholder="Enter your review here.." required></textarea>
+
                           <br>
                           <button type="submit"  onclick="submit_review(<?php echo $order_info['product_id']; ?>)" class="btn btn-primary"><?php _el('send');?></button>
                           <button type="button" class="btn btn-danger cancel" onclick="closeForm(<?php echo $order_info['product_id']; ?>)"><?php _el('close');?></button>
@@ -152,7 +153,6 @@ th {
                       </div>
                       </ul>
                        <div id="star-rating-count-<?php echo $order_info['product_id']; ?>" class="star-rating-count">
-                       <!-- <?php echo $rating_val.'/'.'5';?> -->
                         </div>
                        </div>                   
                      </td>                  
@@ -214,12 +214,17 @@ th {
         async: false,
         success: function(msg)
         {
-          if(!msg)
+          if(msg)
           {
-              msg='<div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>OOPS! </strong>Not submitted review</div>';
-          }
+              jGrowlAlert(msg, 'success');
 
-         $("#star-rating-count-" + id).html(msg);
+          }
+          else
+          {
+             msg = 'Not submitted review.';
+             jGrowlAlert(msg, 'danger');
+
+          }
 
         }
     });
@@ -246,7 +251,8 @@ function closeForm(id) {
 }
 function submit_review(id){
       var review = $('#comment_'+id+'').val();
-
+      
+  if(review){
     $.ajax({
           url:BASE_URL+'review/add_review',
             type: 'POST',
@@ -254,14 +260,20 @@ function submit_review(id){
         async: false,
         success: function(msg)
         {
-          if(!msg)
+          if(msg)
           {
-              msg='<div class="alert alert-warning alert-dismissible"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>OOPS! </strong>Not submitted review</div>';
-          }
+                jGrowlAlert(msg, 'success');
 
-         $("#star-rating-count-" + id).html(msg);
+          }
+          else
+          {
+             msg = 'Not submitted review.';
+             jGrowlAlert(msg, 'danger');
+
+          }
 
         }
     });
+  }
   }
 </script>

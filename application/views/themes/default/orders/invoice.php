@@ -3,11 +3,13 @@
   $address = $this->users->get_user_addresses($order['user_id']);                                         
  ?>
   <link rel="stylesheet" href="<?php echo base_url(); ?>assets/themes/default/css/order.css">
-  <?php foreach ($order_items as $key => $item){
+  <?php if($order_items){ 
+    foreach ($order_items as $key => $item){
 ?>
 <a href="<?php echo base_url('orders/print_pdf/').$order['id'].'/'.$item['vendor_id'];?>" target="_blank" class="btn btn-info btn-md" style="text-align: right;margin-left: 89%;margin-top:5px;"> <span class="glyphicon glyphicon-print"></span></a>
 <?php break; 
-} ?>
+                    } 
+                } ?>
 <div class="body-content">
     <div class="container">
         <div class="sign-in-page">
@@ -28,6 +30,7 @@
                                 <i class="icon-store2 text-info position-left"></i>
                                 <strong><?php echo get_settings('company_name'); ?></strong><br>
                                 <?php
+                                if($order_items){ 
                                 foreach ($order_items as $key => $item)
                                 {
                                 ?>
@@ -47,7 +50,7 @@
                                       <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'address')); ?></td>
                                     </tr>
                                     <tr>
-                                       <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'city')); ?></td>
+                                       <td><?php echo get_city_name(get_vendor_info($item['vendor_id'], 'city_id'),'name'); echo ','; echo get_state_name(get_vendor_info($item['vendor_id'], 'state_id'),'name'); ?></td>
                                    </tr>
                                    <tr>
                                        <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'pincode')); ?></td>
@@ -60,6 +63,7 @@
                              </div> 
                                 <?php
                                 break; }
+                                          }
                                 ?>                        
                             
                         </h4>                   
@@ -108,23 +112,25 @@
                                         <td><?php _el('customer_name');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($user['firstname'].' '.$user['lastname']); ?></td>
                                     </tr>
                                     <?php
-                                    foreach ($address as  $address) 
-                                    {
-                                    ?>
+                                    if($address){
+                                        foreach ($address as  $address) 
+                                        {
+                                        ?>
                                     <tr>
-                                        <td><?php _el('address_1');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['house_or_village']); ?></td>
+                                        <td><?php _el('house_village');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['house_or_village']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td><?php _el('address_2');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['street_or_society']); ?></td>
+                                        <td><?php _el('street_society');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td><?php _el('city');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords(get_city_name($address['city'])); ?></td>
+                                        <td><?php _el('city');?></td><td>&nbsp;:&nbsp;</td><td><?php if(!empty($address['city_id'])) { echo ucwords(get_city_name($address['city_id'],'name')); }  if(!empty($address['state_id'])) {  echo ','. ucwords(get_state_name($address['state_id'],'name')); } ?></td>
                                     </tr>
                                     <tr>
                                         <td><?php _el('pincode');?></td><td>&nbsp;:&nbsp;</td><td><?php echo $address['pincode']; ?></td>
                                     </tr>
                                     <?php
-                                    }?>
+                                          }
+                                        } ?>
 
                                 </tbody>
                             </table>
@@ -149,7 +155,8 @@
                                 </thead>
                                 <tbody>
                                 <?php
-
+                                  if($order_items)
+                                  { 
                                     foreach ($order_items as $key => $item)
                                     {
                                     ?>
@@ -162,7 +169,8 @@
                                     </tr>
                                     <?php
                                      }
-                                     $total=array_sum($total);
+                                  }
+                                     $total       = array_sum($total);
                                      $grand_total = array_sum($total_amount);
                                     ?>
                                     <tr><td colspan="3"></td><td colspan="1" class="text-right"><strong><?php _el('coupon_amount');?></strong></td><td><span style="font-family: DejaVu Sans; sans-serif;">&#8377;</span><?php echo '.';  $discount = $total - $grand_total; echo sprintf("%.2f",$discount);?></td></tr>

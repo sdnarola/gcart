@@ -102,7 +102,7 @@
                                         <td class="text-semibold"><?php _el('address');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords($address['house_or_village'].', '.$address['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td class="text-bold"><?php _el('city');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords(get_city_name($address['city_id'])); ?></td>
+                                        <td class="text-bold"><?php _el('city');?></td><td>&nbsp;:&nbsp;</td><td><?php echo ucwords(get_city_name($address['city_id'], 'name')); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-bold"><?php _el('pincode');?></td><td>&nbsp;:&nbsp;</td><td><?php echo $address['pincode']; ?></td>
@@ -131,9 +131,9 @@
 	?>
     <tr>
         <td><?php echo ucwords($item['name']); ?></td>
-        <td><?php echo _l("currency_symbol").'. '.$item['price']; ?></td>
+        <td><?php echo _l('currency_symbol').'. '.$item['price']; ?></td>
         <td><?php echo $item['item_quantity']; ?></td>
-        <td><?php echo _l("currency_symbol").'. '.$item['total_amount']; ?></td>
+        <td><?php echo _l('currency_symbol').'. '.$item['total_amount']; ?></td>
     </tr>
 <?php
 	}
@@ -164,7 +164,7 @@
                                 	?>
                                      <tr>
                                         <td colspan="3" class="text-right"><strong><?php _el('grand_total');?></strong></td>
-                                        <td><?php echo _l("currency_symbol").'. '.$order['grand_total']; ?></td>
+                                        <td><?php echo _l('currency_symbol').'. '.$order['grand_total']; ?></td>
                                     </tr>
 
                             <?php
