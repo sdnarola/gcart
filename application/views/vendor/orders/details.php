@@ -103,11 +103,11 @@
                                     <tr>
                                         <td width="40%"class="text-semibold" ><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['house_or_village'].', '.$address['street_or_society']); ?></td>
                                     </tr>
-                                    <tr>
-                                        <td width="40%"class="text-semibold" ><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_city_name($address['city_id'])); ?></td>
+                                     <tr>
+                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_city_name($address['city_id'], 'name')); ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%"class="text-semibold" ><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_state_name($address['state_id'])); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_state_name($address['state_id'], 'name')); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%"class="text-semibold" ><?php _el('pincode');?></td><td width="10%">:</td><td width="40%"><?php echo $address['pincode']; ?></td>

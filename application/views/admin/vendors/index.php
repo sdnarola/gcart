@@ -23,7 +23,7 @@
     <div class="panel panel-flat ">
         <!-- Panel heading -->
          <div class="panel-heading ">
-                <label ><?php echo _el('vendor') ?><?php echo _el('registration') ?>
+                <label ><?php echo _el('vendor') ?>&nbsp;<?php echo _el('registration') ?>
                     <input  type="checkbox" class="switch" data-on-text="On" data-off-text="Off" data-size="mini"  onchange="register_status(this);"<?php
 
 	if ($registration['value'] == 1)
@@ -32,7 +32,7 @@
 
 ?>></input> </label>
                 <div class="heading-elements">
-                <a href="<?php echo base_url('admin/vendors/pending_list');?>" class="btn btn-info btn-sm" id="pending_list"><?php echo _l('pending').' '._l('subscriptions');?></a>
+                <a href="<?php echo base_url('admin/vendors/pending_list'); ?>" class="btn btn-info btn-sm" id="pending_list"><?php echo _l('pending').' '._l('subscriptions'); ?></a>
 
                 <a href="javascript:delete_selected();" class="btn btn-danger btn-sm" id="delete_selected"><?php _el('delete_selected');?><i class=" icon-trash position-right"></i></a>
                 </div>
@@ -46,13 +46,13 @@
                         <th width="2%" class="text-center">
                             <input type="checkbox" name="select_all" id="select_all" class="styled" onclick="select_all(this);" >
                         </th>
-                        <th width="20%" ><?php _el('store');?>&nbsp;<?php _el('name');?></th>
-                        <th width="15%" ><?php _el('vendor');?>&nbsp;<?php _el('name');?></th>
-                        <th width="15%" ><?php _el('vendor');?>&nbsp;<?php _el('email');?></th>
+                        <th width="15%" ><?php _el('store');?>&nbsp;<?php _el('name');?></th>
+                        <th width="15%" ><?php _el('vendor');?></th>
+                        <th width="15%" ><?php _el('email');?></th>
                         <th width="15%" ><?php _el('shop');?>&nbsp;<?php _el('number');?></th>
-                        <th width="15%" ><?php _el('total');?>&nbsp;<?php _el('products');?></th>
+                        <th width="18%" ><?php _el('total_products');?></th>
                         <th width="8%" class="text-center"><?php _el('status');?></th>
-                        <th width="10%" class="text-center"><?php _el('actions');?></th>
+                        <th width="12%" class="text-center"><?php _el('actions');?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,9 +64,8 @@
 		{
 		?>
                     <tr>
-
                         <td class="text-center">
-                            <input type="checkbox" class="checkbox styled"  name="delete"  id="<?php echo $vendor['id']; ?>" >
+                            <input type="checkbox" class="checkbox styled" name="delete" id="<?php echo $vendor['id']; ?>" >
                         </td>
                         <td>
                             <?php echo ucfirst($vendor['shop_name']); ?>

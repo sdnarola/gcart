@@ -12,6 +12,7 @@ class Dashboard extends Vendor_Controller
 		$this->load->model('vendor_model', 'vendors');
 		$this->load->model('order_model', 'orders');
 		$this->load->model('product_model', 'products');
+		$this->load->model('user_model', 'users');
 	}
 
 	/**
@@ -43,6 +44,7 @@ class Dashboard extends Vendor_Controller
 		if ($id)
 		{
 			$data['vendor']  = $this->vendors->get($id);
+			$data['states']  = $this->users->get_states();
 			$data['content'] = $this->load->view('vendor/dashboard/edit_store', $data, TRUE);
 			$this->load->view('vendor/layouts/index', $data);
 		}
@@ -50,6 +52,7 @@ class Dashboard extends Vendor_Controller
 		if ($this->input->post())
 		{
 			$data = $this->input->post();
+			unset($data['country']);
 
 			if ($_FILES['logo']['name'] != null)
 			{

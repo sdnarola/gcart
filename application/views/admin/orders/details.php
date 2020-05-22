@@ -49,7 +49,7 @@
                                     <td width="40%" class="text-semibold"><?php _el('total_products');?></td><td width="10%">:</td><td width="40%"><?php echo $order['total_products']; ?></td>
                                 </tr>
                                 <tr>
-                                    <td width="40%" class="text-semibold"><?php _el('grand_total');?></td><td width="10%">:</td><td width="40%"><?php echo _l("currency_symbol").'. '.$order['grand_total']; ?></td>
+                                    <td width="40%" class="text-semibold"><?php _el('grand_total');?></td><td width="10%">:</td><td width="40%"><?php echo _l('currency_symbol').'. '.$order['grand_total']; ?></td>
                                 </tr>
                                 <?php
 
@@ -129,10 +129,10 @@
                                         <td width="40%" class="text-semibold"><?php _el('address');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords($address['house_or_village'].', '.$address['street_or_society']); ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_city_name($address['city_id'])); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('city');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_city_name($address['city_id'], 'name')); ?></td>
                                     </tr>
                                     <tr>
-                                        <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_state_name($address['state_id'])); ?></td>
+                                        <td width="40%" class="text-semibold"><?php _el('state');?></td><td width="10%">:</td><td width="40%"><?php echo ucwords(get_state_name($address['state_id'], 'name')); ?></td>
                                     </tr>
                                     <tr>
                                         <td width="40%" class="text-semibold"><?php _el('pincode');?></td><td width="10%">:</td><td width="40%"><?php echo $address['pincode']; ?></td>
@@ -167,9 +167,9 @@
     <tr>
         <td><?php echo ucwords($item['name']); ?></td>
         <td><?php echo ucwords(get_vendor_info($item['vendor_id'], 'shop_name')); ?></td>
-        <td><?php echo _l("currency_symbol").'. '.$item['price']; ?></td>
+        <td><?php echo _l('currency_symbol').'. '.$item['price']; ?></td>
         <td><?php echo $item['item_quantity']; ?></td>
-        <td><?php echo _l("currency_symbol").'. '.$item['total_amount']; ?></td>
+        <td><?php echo _l('currency_symbol').'. '.$item['total_amount']; ?></td>
         <td class="text-center">
             <?php
 

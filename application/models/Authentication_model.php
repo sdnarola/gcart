@@ -350,7 +350,7 @@ class Authentication_model extends MY_Model
 		{
 			if ($vendor->is_active == 0)
 			{
-				return ['user_inactive' => true];
+				return ['vendor_inactive' => true];
 			}
 
 			if ($vendor->is_email_verified == 0)
@@ -413,7 +413,7 @@ class Authentication_model extends MY_Model
 			return false;
 		}
 
-		return ['invalid_user' => true];
+		return ['invalid_vendor' => true];
 	}
 /**
  * [verify_email  (verify users email)] (user)

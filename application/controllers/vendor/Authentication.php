@@ -83,59 +83,67 @@ class Authentication extends My_Controller
  */
 	public function signup()
 	{
-		if ($this->input->post())
+		if (get_settings('vendors_registration') == 0)
 		{
-			$data = $this->input->post();
-			if (empty($data['firstname']))
+			set_alert('success', 'closed');
+			redirect(site_url());
+		}
+		else
+		{
+			if ($this->input->post())
 			{
-				redirect(site_url('vendor/authentication/signup'));
-			}
-
-			$data['password'] = md5($data['password']);
-			unset($data['confirm_password']);
-
-			$data['sign_up_key'] = app_generate_hash();
-
-			if ($this->vendors->insert($data))
-			{
-				$template = get_email_template('new-user-signup');
-				$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
-
-				$message = get_settings('email_header');
-
-				$find = [
-					'{firstname}',
-					'{lastname}',
-					'{email_verification_url}',
-					'{email_signature}',
-					'{company_name}'
-				];
-
-				$replace = [
-					$data['firstname'],
-					$data['lastname'],
-					site_url('vendor/authentication/verify_email/').$data['sign_up_key'],
-					get_settings('email_signature'),
-					get_settings('company_name')
-				];
-
-				$message .= str_replace($find, $replace, $template['message']);
-
-				$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
-
-				$sent = send_email($data['email'], $subject, $message);
-
-				if ($sent)
+				$data = $this->input->post();
+				if (empty($data['firstname']))
 				{
-					set_alert('success', 'Your are registered successfully. Please check your email for account verification instructions.');
 					redirect(site_url('vendor/authentication/signup'));
 				}
-			}
-		}
 
-		$this->set_page_title('Sign Up');
-		$data['states'] = $this->users->get_states();
-		$this->load->view('vendor/authentication/register', $data);
+				$data['password'] = md5($data['password']);
+				unset($data['confirm_password']);
+
+				$data['sign_up_key'] = app_generate_hash();
+
+				if ($this->vendors->insert($data))
+				{
+					$template = get_email_template('new-user-signup');
+					$subject  = str_replace('{company_name}', get_settings('company_name'), $template['subject']);
+
+					$message = get_settings('email_header');
+
+					$find = [
+						'{firstname}',
+						'{lastname}',
+						'{email_verification_url}',
+						'{email_signature}',
+						'{company_name}'
+					];
+
+					$replace = [
+						$data['firstname'],
+						$data['lastname'],
+						site_url('vendor/authentication/verify_email/').$data['sign_up_key'],
+						get_settings('email_signature'),
+						get_settings('company_name')
+					];
+
+					$message .= str_replace($find, $replace, $template['message']);
+
+					$message .= str_replace('{company_name}', get_settings('company_name'), get_settings('email_footer'));
+
+					$sent = send_email($data['email'], $subject, $message);
+
+					if ($sent)
+					{
+						set_alert('success', 'Your are registered successfully. Please check your email for account verification instructions.');
+						redirect(site_url('vendor/authentication/signup'));
+					}
+				}
+			}
+
+			$this->set_page_title('Sign Up');
+			$data['states'] = $this->users->get_states();
+			$this->load->view('vendor/authentication/register', $data);
+		}
 	}
 
 /**

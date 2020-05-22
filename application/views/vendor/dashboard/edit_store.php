@@ -57,13 +57,51 @@
 		                        <div class="row">
 									<div class="form-group col-md-6">
 		                                <small class="req text-danger">* </small>
-		                                <label><?php _el('city');?>:</label>
-                                		<input type="text" class="form-control" placeholder="<?php _el('city');?>" id="city" name="city" value="<?php echo $vendor['city_id']; ?>">
+		                                <label><?php _el('state');?>:</label>
+		                                <select class="form-control select-search" name="state_id" id="state_id" onchange="get_cities()" >
+		                                    <option value="0"readonly disabled >----- Select state -----</option>
+		<?php
+
+			foreach ($states as $state)
+			{
+			?>
+		    								<option value="<?php echo $state['id']; ?>"
+<?php
+
+		if ($vendor['state_id'] == $state['id'])
+		{
+			echo ' selected';}
+
+	?>
+
+	 name="state">
+	<?php echo ucwords($state['name']); ?>
+
+										</option>
+		<?php
+			}
+
+		?>
+		                                </select>
 		                            </div>
+
 		                            <div class="form-group col-md-6">
+		                                <small class="req text-danger">* </small>
+		                                <label><?php _el('city');?>:</label>
+		                                <select class="form-control select-search" id='city_id' name='city_id'>
+								        </select>
+		                            </div>
+		                        </div>
+		                        <div class="row">
+		                        	<div class="form-group col-md-6">
 		                                <small class="req text-danger">* </small>
 		                                <label><?php _el('pincode');?>:</label>
                                 		<input type="text" class="form-control" placeholder="<?php _el('pincode');?>" id="pincode" name="pincode" value="<?php echo $vendor['pincode']; ?>">
+		                            </div>
+		                            <div class="form-group col-md-6">
+		                                <small class="req text-danger">* </small>
+		                                <label><?php _el('country');?>:</label>
+                                		<input type="text" class="form-control" placeholder="<?php _el('country');?>" id="country" name="country" value="India" readonly>
 		                            </div>
 		                        </div>
 		                        <div class="row">
@@ -191,4 +229,46 @@ $("#mystoreform").validate(
     	}
     }
 });
+
+
+function get_cities()
+{
+    var state_id = $('#state_id').val();
+    var city_id = "<?php echo $vendor['city_id']; ?>";
+    if(state_id){
+        $.ajax({
+            type:'POST',
+            url:'<?php echo base_url('user/get_cities'); ?>',
+            data: { state_id: state_id },
+             async: false,
+            success:function(data){
+            	$('#city_id').empty();
+                var dataObj = jQuery.parseJSON(data);
+                if(dataObj){
+                    $(dataObj).each(function(){
+                        var option = $('<option />');
+                        if(city_id == this.id)
+                        {
+                        	option.attr('value', this.id).attr('selected','selected').text(this.name);
+                        	$('#city_id').append(option);
+                        }
+                        else
+                        {
+                        	option.attr('value', this.id).text(this.name);
+                        	$('#city_id').append(option);
+                        }
+                    });
+                }
+                if(dataObj.length==0)
+                {
+                    $('#city_id').html('<option value="0">city not available</option>');
+                }
+            }
+        });
+    }else{
+        $('#city_id').html('<option value="">--Select state first--</option>');
+    }
+}
+get_cities();
+
 </script>

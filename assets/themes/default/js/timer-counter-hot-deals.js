@@ -21,28 +21,31 @@ function time_counter(end_date,id)
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    
+
 
     // If the count down is over, write some text
     if (distance > 0)
     {
-      
-    result += '<div class="box-wrapper">';
-    result += '<div class="date box"> <span class="key" id="days">'+days+'</span> <span class="value">DAYS</span> </div>';
-    result += '</div>';
-    result += '<div class="box-wrapper">';
-    result += '<div class="hour box"> <span class="key" id="hours">'+hours+'</span> <span class="value">HRS</span> </div>';
-    result += '</div>';
-    result += '<div class="box-wrapper">';
-    result += '<div class="minutes box"> <span class="key" id="minutes">'+minutes+'</span> <span class="value">MINS</span> </div>';
-    result += '</div>';
-    result += '<div class="box-wrapper hidden-md">';
-    result += '<div class="seconds box"> <span class="key" id="seconds">'+seconds+'</span> <span class="value">SEC</span> </div>';
-    result += '</div>';
-    }
+        if(days > 0)
+        {
+            result += '<div class="box-wrapper">';
+            result += '<div class="date box"> <span class="key" id="days">'+days+'</span> <span class="value">DAYS</span> </div>';
+            result += '</div>';
+        }
 
-    $('#time_counter_'+id).html(result);
-    result='';
+        result += '<div class="box-wrapper">';
+        result += '<div class="hour box"> <span class="key" id="hours">'+hours+'</span> <span class="value">HRS</span> </div>';
+        result += '</div>';
+        result += '<div class="box-wrapper">';
+        result += '<div class="minutes box"> <span class="key" id="minutes">'+minutes+'</span> <span class="value">MINS</span> </div>';
+        result += '</div>';
+        result += '<div class="box-wrapper hidden-md">';
+        result += '<div class="seconds box"> <span class="key" id="seconds">'+seconds+'</span> <span class="value">SEC</span> </div>';
+        result += '</div>';
+        }
+
+        $('#time_counter_'+id).html(result);
+        result='';
   }, 1000);
 }
 

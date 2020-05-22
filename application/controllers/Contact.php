@@ -21,19 +21,14 @@ class Contact extends Frontend_Controller
 	{
 		if($this->input->post())
 		{
-			$contact_data= array(
-				'name'    => $this->input->post('name'),
-				'email'   =>  $this->input->post('email'),
-				'title'   =>  $this->input->post('title'),
-				'comments' =>  $this->input->post('comments'),
-				);
-			$insert = $this->contact->insert($contact_data);
+			$data   = $this->input->post();
+			$insert = $this->contact->insert($data);
 			if($insert)
 			{
 				set_alert('success', 'Thanks! Details submitted. ');
 			}
 		}
 	
-	redirect('contact');
+	 redirect('contact');
 	}
 }

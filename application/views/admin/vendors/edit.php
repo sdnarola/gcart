@@ -150,7 +150,7 @@
 														<small class="req text-danger">* </small>
 						                                <label><?php _el('city');?>:</label>
 						                                <select class="form-control select-search" name="city_id" id="city_id" >
-						                                    <option  value='<?php echo $vendor['city_id'];?>' selected="selected"readonly disabled><?php get_city_name($vendor['city_id']);?></option>
+						                                    <option  value='<?php echo $vendor['city_id'];?>' selected="selected"readonly disabled><?php echo  get_city_name($vendor['city_id'],'name');?></option>
 						                                </select>
 													</div>
 													<div class="form-group">

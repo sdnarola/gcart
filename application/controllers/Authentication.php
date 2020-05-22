@@ -9,13 +9,12 @@ class Authentication extends My_Controller
 		$this->load->model('User_model', 'users');
 		$this->load->model('category_model', 'category');
 		$this->load->model('cart_model', 'cart');
+		$this->load->model('brand_model', 'brands');
 
 		if (get_settings('maintenance') == 1)
 		{
 			redirect(site_url());
 		}
-
-		$this->load->model('brand_model', 'brands');
 	}
 
 	/**
@@ -269,11 +268,12 @@ class Authentication extends My_Controller
 
 				$user_address = array(
 					'users_id'          => $user_id,
-					'house_or_village'  => '',
-					'street_or_society' => '',
-					'city'              => '',
-					'state'             => '',
-					'pincode'           => ''
+					'house_or_village'  => null,
+					'street_or_society' => null,
+					'landmark'          => null,
+					'city_id'           => null,
+					'state_id'          => null,
+					'pincode'           => null
 				);
 				$this->users->insert_user_address($user_address);
 				$template = get_email_template('new-user-signup');

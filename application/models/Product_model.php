@@ -175,12 +175,36 @@ class Product_model extends MY_Model
 	 * @param  string $multiple_sub_category_id [multiple sub category id]
 	 * @return [array]
 	 */
-	public function get_all_products_count($where = array(), $tags = '', $multiple_sub_category_id = '')
+	public function get_all_products_count($where = array(), $tags = '', $multiple_sub_category_id = '',$product_id = '')
 	{
+		if(!empty($product_id))
+		{
+		    $this->db->select('count(*) as total');
+			$tags = (empty($tags)) ? '' : $tags;
+			if(!empty($where))
+			{
+				$this->db->where($where);
+			}
+			$this->db->like('tags', $tags, 'both');
+			$this->db->where_in('id', $product_id);
+			$query = $this->db->get('products');
+
+			$result = $query->row_array();
+
+			if (empty($result))
+			{
+				return 0;
+			}
+			else
+			{
+				return $result['total'];
+			}
+		}
 		if (empty($where))
 		{
 			return array();
 		}
+
 		elseif (!empty($where) && !empty($multiple_sub_category_id))
 		{
 			$this->db->select('count(*) as total');
@@ -338,8 +362,12 @@ class Product_model extends MY_Model
 		$this->db->from('reviews as r');
 		$this->db->group_by('product_id');
 		$query = $this->db->get();
-
+		if ($query)
+		{
 		return $query->result_array();
+		}
+
+		return false;
 	}
 
 /**
@@ -353,7 +381,7 @@ class Product_model extends MY_Model
 		{
 			$this->db->order_by('add_date', 'des');
 
-			$query = $this->db->get_where('products', array('is_active' => 1));
+			$query = $this->db->get_where('products', array('is_active' => 1,'is_deleted' => 0));
 
 			if ($query)
 			{
@@ -366,7 +394,7 @@ class Product_model extends MY_Model
 		{
 			$this->db->order_by('add_date', 'des');
 
-			$query = $this->db->get_where('products', array('is_active' => 1, 'category_id' => $id));
+			$query = $this->db->get_where('products', array('is_active' => 1,'is_deleted' => 0,'category_id' => $id));
 
 			if ($query)
 			{
@@ -377,50 +405,6 @@ class Product_model extends MY_Model
 		}
 	}
 
-// /**
-
-//  * [get_hot_deals_products description]
-
-//  * @return return Hote Deals products data
-
-//  */
-
-// public function get_hot_deals_products()
-
-// {
-
-// 	$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.off_percentage');
-
-//   //$this->db->select('products.*,hot_deals.id as hot_id,hot_deals.start_date,hot_deals.end_date,hot_deals.product_id');
-
-// 	$this->db->from('products');
-
-// 	$this->db->join('hot_deals', 'products.id=hot_deals.product_id', 'inner');
-
-// 	$this->db->where(array('products.is_deleted' => 0, 'products.is_active' => 1, 'hot_deals.is_deleted' => 0, 'hot_deals.end_date >' => date('Y-m-d h:i:s'), 'hot_deals.start_date <' => date('Y-m-d h:i:s')));
-
-// 	$query  = $this->db->get();
-
-// 	$result = $query->result_array();
-
-// 	if (empty($result))
-
-// 	{
-
-// 		return false;
-
-// 	}
-
-// 	else
-
-// 	{
-
-// 		return $result;
-
-// 	}
-
-// }
-
 	/**
 	 * [get_special_offers products(sales products)]
 	 * @return [array] [products details array]
@@ -429,7 +413,7 @@ class Product_model extends MY_Model
 	{
 		$this->db->order_by('add_date', 'des');
 
-		$query = $this->db->get_where('products', array('is_active' => 1, 'is_sale' => 1));
+		$query = $this->db->get_where('products', array('is_active' => 1,'is_deleted' => 0,'is_sale' => 1));
 
 		if ($query)
 		{
@@ -446,9 +430,10 @@ class Product_model extends MY_Model
 	public function get_special_deal()
 	{
 		$this->db->order_by('add_date', 'des');
-		$this->db->select('p.*', TRUE);
-		$this->db->from('products as p');
-		$this->db->where('p.old_price>', 'p.price');
+		$this->db->select('*', TRUE);
+		$this->db->from('products');
+		$this->db->where(array('is_active' => 1,'is_deleted' => 0,'old_price>' => 'price'));
+
 		$query = $this->db->get();
 
 		if ($query)
@@ -467,10 +452,10 @@ class Product_model extends MY_Model
 	{
 		$this->db->select('p.*,SUM(i.quantity) AS total_quantity', TRUE);
 		$this->db->from('products as p');
-		$this->db->join('order_items as i', 'i.product_id=p.id');
-		$this->db->join('orders as o', 'i.order_id=o.id');
+		$this->db->join('order_items as i', 'i.product_id = p.id');
+		$this->db->join('orders as o', 'i.order_id = o.id');
 
-		$this->db->where('o.payment_status', 1);
+		$this->db->where(array('p.is_active' => 1,'p.is_deleted' => 0,'o.payment_status' => 1));
 		$this->db->group_by('p.id');
 
 		$this->db->order_by('total_quantity ', 'desc');
@@ -492,9 +477,9 @@ class Product_model extends MY_Model
 	public function get_featured_products()
 	{
 		$this->db->distinct();
-		$this->db->select('p.*');
-		$this->db->from('products as p');
-		$this->db->where(array('is_active' => 1, 'short_description !=' => ''));
+		$this->db->select('*');
+		$this->db->from('products');
+		$this->db->where(array('is_active' => 1,'is_deleted' => 0,'short_description !=' => ''));
 		//$this->db->where('long_description !=', '');
 		$query = $this->db->get();
 
@@ -530,10 +515,16 @@ class Product_model extends MY_Model
 		$this->db->distinct();
 		$this->db->order_by('tags', 'asc');
 		$this->db->select('id,tags');
-		$this->db->limit(6);
-		$result = $this->db->get('products')->result_array();
+		$this->db->limit(10);
+		$this->db->where(array('is_active' => 1, 'is_deleted' => 0));
+		$query = $this->db->get('products');
+		if ($query)
+		{
+			return $query->result_array();
+		}
 
-		return $result;
+		return false;
+		
 	}
 
 	/**
@@ -546,6 +537,7 @@ class Product_model extends MY_Model
 		$this->db->distinct();
 		$this->db->select('name,tags,slug');
 		$this->db->from('products');
+		$this->db->where(array('is_active' => 1, 'is_deleted' => 0));
 
 		if ($query != '')
 		{
@@ -572,7 +564,7 @@ class Product_model extends MY_Model
 		{
 			$this->db->select('c.slug as cat_slug', TRUE);
 			$this->db->from('products as p');
-			$this->db->join('categories as c', ' c.id=p.category_id');
+			$this->db->join('categories as c', ' c.id = p.category_id');
 			$this->db->where(array('c.is_active' => 1, 'c.is_deleted' => 0, 'p.category_id' => $category_id));
 			$query  = $this->db->get();
 			$result = $query->result_array();

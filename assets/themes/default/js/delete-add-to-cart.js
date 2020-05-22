@@ -28,12 +28,16 @@ function delete_to_Cart_product(cart_id)
 					}
 
 					var total_amount=data.total_amount;
-				
+					
 					if(total_amount != null)
 					{
-						var span="<span class='sign'>$</span><span class='value'>"+total_amount+"</span> </span>";
+						var span="<span class='sign'>"+rupees+"</span><span class='value'>"+total_amount+"</span> </span>";
 						$(".total-price").html(span);
-						$(".sub-total .price").text(total_amount);
+
+						var sub_total_html='<span class="sign">'+rupees+'</span>'+total_amount+'';
+						$(".sub-total .price").html(sub_total_html);
+						// total_amount = formatNumber(total_amount);
+						$("#grand_total").html(total_amount);
 					}
 					else
 					{

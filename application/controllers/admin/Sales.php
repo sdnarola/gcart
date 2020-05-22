@@ -23,7 +23,7 @@ class Sales extends Admin_Controller
 	}
 
 	/**
-	 * Add new Product
+	 * Add sale
 	 */
 	public function add()
 	{
@@ -70,7 +70,7 @@ class Sales extends Admin_Controller
 	}
 
 	/**
-	 * Delete the single deal record
+	 * Delete the single sale record
 	 */
 	public function delete()
 	{

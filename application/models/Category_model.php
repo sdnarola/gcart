@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Category_model extends MY_Model
 {
 //=========================================================== WORK BY KOMAL====================================================================//
-		/**
+	/**
 	 * @var mixed
 	 */
 	protected $soft_delete = TRUE;
@@ -277,7 +277,7 @@ class Category_model extends MY_Model
 	{
 		if (empty($is_header))
 		{
-			$query  = $this->db->get_where('categories', array('is_active' => 1));
+			$query  = $this->db->get_where('categories', array('is_active' => 1, 'is_deleted' => 0));
 			$result = $query->result_array();
 
 			if (!empty($result))
@@ -289,7 +289,7 @@ class Category_model extends MY_Model
 		}
 		else
 		{
-			$query  = $this->db->get_where('categories', array('is_active' => 1, 'is_header' => $is_header));
+			$query  = $this->db->get_where('categories', array('is_active' => 1, 'is_deleted' => 0, 'is_header' => $is_header));
 			$result = $query->result_array();
 
 			if (!empty($result))
@@ -320,85 +320,6 @@ class Category_model extends MY_Model
 		return false;
 	}
 
-	/**
-	 * [get_all_products description]
-	 * @param  array   $where                    [where cluse value in array]
-	 * @param  integer $page                     [page number]
-	 * @param  integer $limit                    [limit]
-	 * @param  string  $sort                     [sorted value]
-	 * @param  string  $order                    [ordered value]
-	 * @param  string  $tags                     [products tags]
-	 * @param  string  $multiple_sub_category_id [multiple sub category id]
-	 * @return [array]                            [description]
-	 */
-	public function get_all_products($where = array(), $page = 1, $limit = 4, $sort = 'name', $order = 'asc', $tags = '', $multiple_sub_category_id = '', $manufacture = '')
-	{
-		if (empty($tags) && !empty($manufacture))
-		{
-			$this->db->where($where);
-			$start = ($page - 1) * 4;
-			$this->db->limit($limit, $start);
-			$sort = ($sort == 'name') ? $sort : 'price';
-			$this->db->order_by($sort, $order);
-			$tags = (empty($tags)) ? '' : $tags;
-			$this->db->like('tags', $tags, 'both');
-			$query  = $this->db->get('products');
-			$result = $query->result_array();
-
-			if (empty($result))
-			{
-				return 0;
-			}
-			else
-			{
-				return $result;
-			}
-		}
-
-		if (!empty($tags) && !empty($manufacture))
-		{
-			$this->db->where($where);
-			$start = ($page - 1) * 4;
-			$this->db->limit($limit, $start);
-			$this->db->order_by($sort, $order);
-			$tags = (empty($tags)) ? '' : $tags;
-
-			$this->db->like('tags', $tags, 'both');
-
-			if ($manufacture != 0)
-			{
-				$this->db->where('brand_id', $manufacture);
-			}
-
-			$query  = $this->db->get('products');
-			$result = $query->result_array();
-
-			if (empty($result))
-			{
-				return 0;
-			}
-			else
-			{
-				return $result;
-			}
-		}
-	}
-
-// public function get_data_to_cart_products($product_id)
-
-// {
-
-// 	$query = $this->db->get_where('products', array('id' => $products_id));
-
-// 	if ($query == TRUE)
-
-// 	{
-
-// 		return $query->result();
-
-// 	}
-
-// }
 	/**
 	 * [get_sub_category_products description]
 	 * @param  [int] $id  Sub categories Primary Key

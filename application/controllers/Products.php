@@ -8,8 +8,16 @@ class Products extends Frontend_Controller
 	}
 
 // ============================================ WORK BY KOMAl ======================================================================
-	public function index()
+	public function index($product_slug = '')
 	{
+		if (!empty($product_slug))
+		{
+			$this->show_detail($product_slug);
+		}
+		else
+		{
+			$this->add_product_by_tags();
+		}
 	}
 
 	/**
@@ -133,9 +141,20 @@ class Products extends Frontend_Controller
 	*/
 	public function get_new_arrivals()
 	{
-		$category_id          = $this->input->post('category_id');
-		$data['reviews']      = $this->products->get_all_reviews();
-		$data['new_products'] = $this->products->get_new_products($category_id);
+		$category_id  = $this->input->post('category_id');
+		$new_products = $this->products->get_new_products($category_id);
+		$reviews      = array();
+
+		if ($new_products)
+		{
+			foreach ($new_products as $products)
+			{
+				$reviews[] = get_star_rating($products['id']);
+			}
+		}
+
+		$data['reviews']      = $reviews;
+		$data['new_products'] = $new_products;
 
 		echo json_encode($data);
 	}
@@ -230,6 +249,7 @@ class Products extends Frontend_Controller
 			$manufacture     = $this->input->get('manufacture');
 			$manufacture     = (empty($manufacture)) ? '' : $manufacture;
 			$default_min_max = array('min' => 100, 'max' => 50000);
+			$page_size       = 4;
 
 			foreach ($data as $product)
 			{
@@ -280,30 +300,15 @@ class Products extends Frontend_Controller
 			$default_min_max = $this->products->get_all_products_min_max(null, null, null, $product_id);
 			$pricerange      = (empty($pricerange)) ? $default_min_max['min'].','.$default_min_max['max'] : $pricerange;
 
-			if (!empty($where) || !empty($manufacture))
-			{
-				if (empty($manufacture))
-				{
-					$manufacture = 0;
-				}
-
-				$products = $this->products->get_all_products($where, $page, $limit, $sort, $order, $tags, null, $manufacture);
-			}
-
-			if (!empty($tags) || !empty($manufacture))
+			if (!empty($tags) || !empty($where))
 			{
 				$where['is_deleted'] = 0;
 
-				if (empty($manufacture))
-				{
-					$manufacture = 0;
-				}
-
-				$products = $this->products->get_all_products($where, $page, $limit, $sort, $order, $tags, null, $manufacture);
+				$products = $this->products->get_all_products($where, $page, $limit, $sort, $order, $tags, null);
 			}
 
 			$where['is_deleted']     = 0;
-			$total                   = $this->products->get_all_products_count($where, $tags, $product_id);
+			$total                   = $this->products->get_all_products_count($where, $tags, null, $product_id);
 			$data['brands']          = $this->brands->get_products_brands(null, null, null, $product_id);
 			$data['main_category']   = $this->category->get_parent_categories();
 			$data['sub_category']    = $this->category->get_sub_categories();
@@ -317,11 +322,12 @@ class Products extends Frontend_Controller
 			$data['tags_data']       = $tags;
 			$data['manufacture']     = '';
 			$data['subcategory']     = '';
-			$data['total']           = '';
+			$data['total']           = $total;
 			$data['default_min_max'] = $default_min_max;
 			$data['pricerange']      = '';
 			$data['pricerange']      = $pricerange;
 			$data['products_tags']   = $products_tags;
+			$data['page_size']       = $page_size;
 
 			$this->set_page_title('Products');
 			$this->template->load('index', 'content', 'products/index', $data);

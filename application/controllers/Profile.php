@@ -6,11 +6,13 @@ class Profile extends Frontend_Controller
 	{
 		parent::__construct();
 		$this->load->model('user_model', 'users');
+
 		if (!is_user_logged_in())
 		{
 			redirect(site_url('authentication'));
 		}
 	}
+
 /***==================================================code by vixuti patel=====================================================***/
 /**
  * [index to display user details]
@@ -40,9 +42,9 @@ class Profile extends Frontend_Controller
 
 		if ($id)
 		{
-			$data['user_address'] = $this->users->get_user_addresses($id);			
-			$data['user']         = $this->users->get($id);	
-			$data['states']	      = $this->users->get_states();
+			$data['user_address'] = $this->users->get_user_addresses($id);
+			$data['user']         = $this->users->get($id);
+			$data['states']       = $this->users->get_states();
 
 			$this->template->load('index', 'content', 'profile/edit', $data);
 		}
@@ -60,15 +62,16 @@ class Profile extends Frontend_Controller
 			$data   = array_map('strip_tags', $data);
 			$update = $this->users->update($id, $data);
 
-			 $data = array(
-				'house_or_village' => $this->input->post('address_1'),
-				'street_or_society'  => $this->input->post('address_2'),
-				'city'     => $this->input->post('city'),
-				'state'    => $this->input->post('state'),
-				'pincode' => $this->input->post('pincode')
+			$data = array(
+				'house_or_village'  => $this->input->post('house_or_village'),
+				'street_or_society' => $this->input->post('street_or_society'),
+				'landmark'          => $this->input->post('landmark'),
+				'city_id'           => $this->input->post('city'),
+				'state_id'          => $this->input->post('state'),
+				'pincode'           => $this->input->post('pincode')
 
 			);
-			
+
 			$user_address = $this->users->edit_user_address($id, $data);
 
 			if ($update == TRUE || $user_address == TRUE)
@@ -80,19 +83,18 @@ class Profile extends Frontend_Controller
 		}
 	}
 
-	/**	
+	/**
 	 * [get_cities by state_id]
 	 * @param  [int] $state_id [state_id]
 	 * @return [json]           [json data of cities]
 	 */
 	public function get_cities()
 	{
-	    $state_id = $this->input->post('state_id');
-	    
-		$cities = $this->users->get_cities_by_state($state_id);
-        echo json_encode($cities);
+		$state_id = $this->input->post('state_id');
 
-    }
+		$cities = $this->users->get_cities_by_state($state_id);
+		echo json_encode($cities);
+	}
 
 	/**
 	 *Updates user's password
@@ -126,7 +128,7 @@ class Profile extends Frontend_Controller
  */
 	public function uploads()
 	{
-		$id = get_loggedin_user_id();
+		$id   = get_loggedin_user_id();
 		$data = $this->input->post();
 
 		if ($_FILES['profile_image']['name'] != NULL)
@@ -136,7 +138,7 @@ class Profile extends Frontend_Controller
 			if (!$result)
 			{
 				set_alert('warning', _l('_updation_fail_please_try_again', _l('profile')));
-				redirect('profile/edit');	
+				redirect('profile/edit');
 			}
 			else
 			{
@@ -149,9 +151,8 @@ class Profile extends Frontend_Controller
 					redirect('profile/edit');
 				}
 			}
-	    }			
-	
+		}
 	}
-/***==================================================code end by vixuti patel=====================================================***/
 
+/***==================================================code end by vixuti patel=====================================================***/
 }
