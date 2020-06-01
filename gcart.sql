@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 22, 2020 at 07:07 AM
+-- Generation Time: Jun 01, 2020 at 04:26 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `banners` (
   `banner` text NOT NULL,
   `is_deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `banners`
@@ -45,8 +45,9 @@ CREATE TABLE IF NOT EXISTS `banners` (
 
 INSERT INTO `banners` (`id`, `title`, `sub_title`, `description`, `banner`, `is_deleted`) VALUES
 (1, 'crazy', 'sales', 'new men\'s fashion', 'assets/uploads/banners/banner.jpg', 0),
-(2, 'flash sale', 'up to 50% off', '', 'assets/uploads/banners/home.png', 0),
-(3, 'New fashion', 'save up to 50% OFF', 'new collections', 'assets/uploads/banners/home-banner.jpg', 0);
+(2, 'flash sale', 'up to 50% off', '', 'assets/uploads/banners/home.png', 1),
+(3, 'New fashion', 'save up to 50% OFF', 'new collections', 'assets/uploads/banners/home-banner.jpg', 1),
+(4, 'store front', 'store', 'store logo', 'assets/uploads/banners/1590570883-logo_3.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -61,14 +62,17 @@ CREATE TABLE IF NOT EXISTS `brands` (
   `logo` mediumtext NOT NULL,
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `brands`
 --
 
 INSERT INTO `brands` (`id`, `name`, `logo`, `is_deleted`) VALUES
-(1, 'nike', 'assets/uploads/brands/1590043123-nike_logo.png', 0);
+(1, 'nike', 'assets/uploads/brands/1590043123-nike_logo.png', 0),
+(2, 'puma', 'assets/uploads/brands/1590569823-puma.png', 0),
+(3, 'apple', 'assets/uploads/brands/1590569844-apple-logo.png', 0),
+(4, 'wilson', 'assets/uploads/brands/1590570256-pngkit_nfl-logo-png_208627.png', 0);
 
 -- --------------------------------------------------------
 
@@ -89,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `cart` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cart`
@@ -101,7 +105,11 @@ INSERT INTO `cart` (`id`, `user_id`, `user_ip`, `product_id`, `quantity`, `total
 (3, 1, '::1', 2, 1, '1200.00', '2020-05-21 02:57:41', 1),
 (4, 1, '::1', 1, 1, '2500.00', '2020-05-21 02:57:43', 1),
 (5, 0, '::1', 1, 1, '1500.00', '2020-05-22 11:30:11', 1),
-(6, 3, '::1', 2, 1, '1200.00', '2020-05-22 11:53:50', 1);
+(6, 3, '::1', 2, 1, '1200.00', '2020-05-22 11:53:50', 1),
+(7, 1, '::1', 1, 1, '1500.00', '2020-05-22 01:02:03', 0),
+(8, 2, '::1', 3, 1, '150.00', '2020-05-27 03:26:55', 1),
+(9, 2, '::1', 4, 1, '25000.00', '2020-05-27 03:26:58', 1),
+(10, 2, '::1', 4, 19, '99999.99', '2020-05-27 05:08:57', 1);
 
 -- --------------------------------------------------------
 
@@ -784,9 +792,9 @@ CREATE TABLE IF NOT EXISTS `comments` (
 
 INSERT INTO `comments` (`id`, `product_id`, `user_name`, `user_email`, `comment`, `add_date`, `is_deleted`) VALUES
 (1, 2, 'patel', 'patel@mail.com', 'nice product', '2020-05-07 19:12:24', 0),
-(2, 3, 'patel2', 'patel7@mail.com', 'product', '2020-05-07 19:12:24', 0),
+(2, 3, 'patel2', 'patel7@mail.com', 'product', '2020-05-07 19:12:24', 1),
 (3, 1, 'patel', 'patel7@mail.com', 'product', '2020-05-07 19:12:24', 0),
-(4, 3, 'patel', 'patel44@mail.com', 'product', '2020-05-07 19:12:24', 0);
+(4, 3, 'patel', 'patel44@mail.com', 'product', '2020-05-07 19:12:24', 1);
 
 -- --------------------------------------------------------
 
@@ -1110,14 +1118,15 @@ CREATE TABLE IF NOT EXISTS `coupons` (
   `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `coupons`
 --
 
 INSERT INTO `coupons` (`id`, `code`, `type`, `amount`, `quantity`, `used`, `start_date`, `end_date`, `is_active`, `is_deleted`) VALUES
-(1, 'shop30', 1, 30, 0, 0, '2020-05-22 00:00:00', '2020-05-30 00:00:00', 1, 0);
+(1, 'shop30', 1, 30, 0, 0, '2020-05-22 00:00:00', '2020-05-30 00:00:00', 1, 0),
+(2, 'pro300', 0, 300, 0, 0, '2020-05-27 00:00:00', '2020-05-31 00:00:00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1144,7 +1153,6 @@ CREATE TABLE IF NOT EXISTS `email_templates` (
 INSERT INTO `email_templates` (`id`, `slug`, `name`, `subject`, `message`, `placeholders`) VALUES
 (2, 'new-user-signup', 'New User Sign Up', 'Welcome {company_name}', '<p></p><p></p><p></p><h1><b>Dear {firstname} {lastname}</b></h1><br>Thank you for registering on {company_name}.<br><br>We just wanted to say welcome.<br><br>Please contact us if you need any help.<br><br>Click the link below to verify your email<p></p><p><a href=\"{email_verification_url}\" target=\"_blank\">Verify Your Email</a><br><br>Kind Regards, <br>{email_signature}<br><br>(This is an automated email, so please don\\\'t reply to this email address)<br></p><p></p><p></p><p></p>', 'a:5:{s:11:\"{firstname}\";s:14:\"User Firstname\";s:10:\"{lastname}\";s:13:\"User Lastname\";s:24:\"{email_verification_url}\";s:22:\"Email Verification URL\";s:17:\"{email_signature}\";s:15:\"Email Signature\";s:14:\"{company_name}\";s:12:\"Company Name\";}'),
 (1, 'forgot-password', 'Forgot Password', 'Reset Password Instructions', '<h2></h2><h3 style=\"text-align: justify; \"><span style=\"font-size: 14pt;\">Hello {firstname} {lastname},</span></h3><p style=\"text-align: justify; \"><span style=\"font-size: 13px; letter-spacing: normal;\">Someone, hopefully, you, has requested to reset the password for your&nbsp;</span>{company_name} account with email <b>{email}</b>.</p><span style=\"font-size: 13px; letter-spacing: normal; color: inherit; font-family: inherit;\"><p style=\"text-align: justify;\"><span style=\"color: inherit; font-family: inherit;\">If you did not perform this request, you can safely ignore this email&nbsp;</span>and your password will remain the same.&nbsp;<span style=\"color: inherit; font-family: inherit;\">Otherwise, click the link below to complete the process.</span></p><p style=\"text-align: justify;\"><a href=\"{reset_password_link}\" target=\"_blank\" style=\"font-family: inherit; background-color: rgb(255, 255, 255);\">Reset Password</a></p><p style=\"text-align: justify;\">Please note that this link is valid for next 1 hour only. You won\'t be able to change the password after the link gets expired.</p></span><p></p><p style=\"text-align: justify; \"><span style=\"font-size: 13px; letter-spacing: normal; color: inherit; font-family: inherit;\">Regards,</span></p><p style=\"text-align: justify; \"><span style=\"color: inherit; font-family: inherit; font-size: 13px; letter-spacing: normal;\">{company_name}</span></p>', 'a:6:{s:11:\"{firstname}\";s:14:\"User Firstname\";s:10:\"{lastname}\";s:13:\"User Lastname\";s:7:\"{email}\";s:10:\"User Email\";s:20:\"{reset_password_url}\";s:18:\"Reset Password URL\";s:17:\"{email_signature}\";s:15:\"Email Signature\";s:14:\"{company_name}\";s:12:\"Company Name\";}'),
-(4, 'loader', 'loader', '', '', 'a:5:{s:5:\"{img}\";s:4:\"logo\";s:17:\"{www/google.com/}\";s:23:\"email_verification_url	\";s:17:\"{email_signature}\";s:15:\"Email Signature\";s:14:\"{company_name}\";s:12:\"Company Name\";s:6:\"{logo}\";s:3:\"img\";}'),
 (3, 'logo', 'logo', 'trial', '<p>{www/google.com/}</p><p>ijvjfvfv<br></p>', 'a:5:{s:5:\"{img}\";s:4:\"logo\";s:17:\"{www/google.com/}\";s:23:\"email_verification_url	\";s:17:\"{email_signature}\";s:15:\"Email Signature\";s:14:\"{company_name}\";s:12:\"Company Name\";s:6:\"{logo}\";s:3:\"img\";}'),
 (5, 'order-placed', 'Your Order Placed Successfully', 'Your Order Placed Successfully', '<p><span style=\"color: rgb(34, 34, 34); font-family: \"Open Sans\", sans-serif; font-size: 14px;\">Hello {customer_name},</span><br style=\"color: rgb(34, 34, 34); font-family: \"Open Sans\", sans-serif; font-size: 14px;\"><span style=\"color: rgb(34, 34, 34); font-family: \"Open Sans\", sans-serif; font-size: 14px;\">Your Order Number is </span>{order_amount}<br style=\"color: rgb(34, 34, 34); font-family: \"Open Sans\", sans-serif; font-size: 14px;\"><span style=\"color: rgb(34, 34, 34); font-family: \"Open Sans\", sans-serif; font-size: 14px;\">Your order has been placed successfully</span><br></p>', 'a:4:{s:15:\"{customer_name}\";s:13:\"Customer Name\";s:14:\"{order_amount}\";s:12:\"Order Amount\";s:12:\"{admin_name}\";s:10:\"Admin Name\";s:13:\"{admin_email}\";s:11:\"Admin Email\";}'),
 (6, 'thanks-for-product-review', 'Thanks For Product Review', 'Thank you for reviewing {product_name}... on {company_name}', '<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\"  style=\"border-spacing:0;margin-right:50px; margin-left: 0px; auto;width:640px\"><tr><td>\r\n<hr border=\"4\" style=\"margin-right:420px;margin-left:420px;backgroung-color:33ADFF\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\"  style=\"border-spacing:0;margin-right:150px; margin-left: 700px; auto;width:640px\"><tr><td style=\"margin-left: 400px;text-align: center;font-size: 35px;\"><b>{company_name}</b></td></tr></table><hr border=\"40\" style=\"margin-right:420px;margin-left:420px;backgroung-color:33ADFF\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" align=\"center\" style=\"border-spacing:0;margin:0 auto;width:640px\"><tbody><tr><td align=\"left\"><span style=\"color:#000000;font-size:24px;line-height:26px\">Thanks {firstname},</span><br><br><span>Your latest customer review is live on {company_name}. We and millions of shoppers on {company_name} appreciate the time you took to share your experience with this item.</span></td></tr></tbody></table><br><br><br><table width=\"640\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#FFFFFF\" align=\"center\"><tbody><tr><td valign=\"top\" align=\"left\" width=\"110\"><a href=\"{products_detail_url}\"><img width=\"90\" src=\"{image_url}\" ></a></td><td valign=\"top\" align=\"left\" style=\"font-size:16px;line-height:18px;border:1px black\"><span><img style=\"display:inline\" src=\"\" class=\"CToWUd\"><br> <span style=\"font-size:14px;line-height:18px;color:#888888\">   from <a href=\"\">{firstname} {lastname}</a>   on {review_date}</span></span><br><span style=\"font-size:14px;line-height:18px;color:#363636;\"><strong>Star rating :</strong><span > {star_rating} <img src=\"http://localhost/gcart/assets/themes/default/images/str.jpg\" height=\"15px\" width=\"15px\"> <span style=\"font-size:14px;line-height:18px;color:#363636\"><strong><br>{review_msg}</strong></span><br> <span style=\"font-size:4px;line-height:4px;color:#ffffff\"></span></td></tr></tbody></table ><hr border=\"40\" style=\"margin-right:420px;margin-left:420px;backgroung-color:33ADFF\"><table width=\"640\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" bgcolor=\"#FFFFFF\" align=\"center\"><tr><td>Kind Regards, <br>{email_signature}<br><br>(This is an automated email, so please don\\\'t reply to this email address)<br></td></tr></table></td></tr></table>', 'a:20:{i:0;s:11:\"{fristname}\";i:1;s:14:\"User Firstname\";i:2;s:10:\"{lastname}\";i:3;s:13:\"User Lastname\";i:4;s:14:\"{company_name}\";i:5;s:12:\"Company Name\";i:6;s:17:\"{email_signature}\";i:7;s:15:\"Email Signature\";i:8;s:21:\"{products_detail_url}\";i:9;s:20:\"Products detail page\";i:10;s:11:\"{image_url}\";i:11;s:17:\"Product image url\";i:12;s:13:\"{review_date}\";i:13;s:20:\"Products review date\";i:14;s:13:\"{star_rating}\";i:15;s:11:\"Star rating\";i:16;s:12:\"{review_msg}\";i:17;s:19:\"Products review msg\";i:18;s:14:\"{product_name}\";i:19;s:13:\"Products Name\";}'),
@@ -1247,7 +1255,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   UNIQUE KEY `order_number` (`order_number`),
   KEY `coupon_id` (`coupon_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
@@ -1256,8 +1264,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
 INSERT INTO `orders` (`id`, `user_id`, `coupon_id`, `order_number`, `invoice_number`, `total_products`, `grand_total`, `order_date`, `order_status`, `invoice_date`, `payment_method`, `payment_status`, `is_deleted`) VALUES
 (1, 1, NULL, '60509970', 96195708, 1, '5000.00', '2020-05-21', 2, NULL, 'cash on delivery', 1, 0),
 (2, 1, NULL, '22474988', 82908904, 2, '3700.00', '2020-05-21', 0, NULL, 'cash on delivery', 1, 0),
-(3, 2, NULL, '22895246', 96815176, 1, '3000.00', '2020-05-22', 0, NULL, 'cash on delivery', 0, 0),
-(4, 3, NULL, '17206213', 14795728, 1, '1200.00', '2020-05-22', 2, NULL, 'cash on delivery', 1, 0);
+(3, 2, NULL, '22895246', 96815176, 1, '3000.00', '2020-05-22', 0, NULL, 'cash on delivery', 1, 0),
+(4, 3, NULL, '17206213', 14795728, 1, '1200.00', '2020-05-22', 2, NULL, 'cash on delivery', 1, 0),
+(5, 2, NULL, '40714705', 70118752, 2, '25150.00', '2020-05-27', 0, NULL, 'cash on delivery', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1277,7 +1286,7 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   PRIMARY KEY (`id`),
   KEY `order_id` (`order_id`),
   KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_items`
@@ -1288,7 +1297,9 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `vendor_status`, `qua
 (2, 2, 2, 0, 1, '1200.00', 0),
 (3, 2, 1, 0, 1, '2500.00', 0),
 (4, 3, 1, 2, 2, '3000.00', 0),
-(5, 4, 2, 2, 1, '1200.00', 0);
+(5, 4, 2, 2, 1, '1200.00', 0),
+(6, 5, 3, 0, 1, '150.00', 0),
+(7, 5, 4, 0, 1, '25000.00', 0);
 
 -- --------------------------------------------------------
 
@@ -1325,7 +1336,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   KEY `brand_id` (`brand_id`),
   KEY `category_id` (`category_id`),
   KEY `sub_category_id` (`sub_category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `products`
@@ -1333,7 +1344,9 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`id`, `vendor_id`, `brand_id`, `category_id`, `sub_category_id`, `name`, `slug`, `sku`, `short_description`, `long_description`, `thumb_image`, `images`, `quantity`, `price`, `old_price`, `related_products`, `tags`, `add_date`, `is_sale`, `is_hot`, `is_active`, `is_deleted`) VALUES
 (1, 1, 1, 1, 1, 'nike rn6', 'nike-rn6', '9132-d9b4', 'nike sports shoes', 'running shoes', 'assets/uploads/products/1590043584-1584331676-nike1.jpg', 'a:3:{i:0;s:57:\"assets/uploads/products/1590043584--1584168342--nike3.jpg\";i:1;s:57:\"assets/uploads/products/1590043584--1584168342--nike2.jpg\";i:2;s:57:\"assets/uploads/products/1590043584--1584168342--nike4.jpg\";}', 5, '2000.00', '2500.00', 'N;', 'nike, sports, shoes', '2020-05-21 12:16:24', 0, 1, 1, 0),
-(2, 1, 1, 1, 1, 'adidas', 'adidas', '4757-f49c', 'puma', 'shoes', 'assets/uploads/products/1590053240-1584331763-puma.png', 'a:4:{i:0;s:55:\"assets/uploads/products/1590053240--1584331763-puma.png\";i:1;s:57:\"assets/uploads/products/1590053240--1584332286--puma1.jpg\";i:2;s:57:\"assets/uploads/products/1590053240--1584332286--puma4.png\";i:3;s:57:\"assets/uploads/products/1590053240--1584332286--puma2.png\";}', 8, '1200.00', '0.00', 'a:1:{i:0;s:1:\"1\";}', 'puma, shoes', '2020-05-21 02:57:20', 0, 0, 1, 0);
+(2, 1, 1, 1, 1, 'adidas', 'adidas', '4757-f49c', 'puma', 'shoes', 'assets/uploads/products/1590053240-1584331763-puma.png', 'a:4:{i:0;s:55:\"assets/uploads/products/1590053240--1584331763-puma.png\";i:1;s:57:\"assets/uploads/products/1590053240--1584332286--puma1.jpg\";i:2;s:57:\"assets/uploads/products/1590053240--1584332286--puma4.png\";i:3;s:57:\"assets/uploads/products/1590053240--1584332286--puma2.png\";}', 8, '1200.00', '0.00', 'a:1:{i:0;s:1:\"1\";}', 'puma, shoes', '2020-05-21 02:57:20', 0, 0, 1, 0),
+(3, 2, 4, 1, 2, 'cricket ball', 'cricket-ball', '1488-6d6a', 'leather ball', '<p>leather cricket ball</p><p>carpet supported&nbsp; &nbsp;</p>', 'assets/uploads/products/1590570564-1585635921-istockphoto-95616764-1024x1024.jpg', 'a:3:{i:0;s:83:\"assets/uploads/products/1590570564--1585635921--istockphoto-157181750-1024x1024.jpg\";i:1;s:83:\"assets/uploads/products/1590570564--1585635921--istockphoto-493759086-1024x1024.jpg\";i:2;s:83:\"assets/uploads/products/1590570564--1585635921--istockphoto-182729028-1024x1024.jpg\";}', 22, '150.00', '0.00', 'N;', 'ball, cricket, sports', '2020-05-27 02:39:24', 0, 0, 1, 0),
+(4, 2, 3, 2, 4, 'smart tv', 'smart-tv', '4180-0a33', 'smart tv', '<p>android technology,</p><p>remote transfer available.</p>', 'assets/uploads/products/1590570745-1584163197-tv1.jpg', 'a:4:{i:0;s:55:\"assets/uploads/products/1590570745--1584163197--tv3.jpg\";i:1;s:55:\"assets/uploads/products/1590570745--1584163197--tv2.jpg\";i:2;s:55:\"assets/uploads/products/1590570745--1584163197--tv6.jpg\";i:3;s:55:\"assets/uploads/products/1590570745--1584163197--tv4.jpg\";}', 19, '25000.00', '0.00', 'N;', 'tv, smart tv', '2020-05-27 02:42:25', 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1353,7 +1366,14 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   PRIMARY KEY (`id`),
   KEY `product_id` (`product_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `star_ratings`, `review`, `add_date`, `is_deleted`) VALUES
+(1, 1, 1, 2, '', '2020-05-22 01:07:05', 0);
 
 -- --------------------------------------------------------
 
@@ -1549,14 +1569,19 @@ CREATE TABLE IF NOT EXISTS `sub_categories` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `sub_categories`
 --
 
 INSERT INTO `sub_categories` (`id`, `category_id`, `name`, `slug`, `is_active`, `is_deleted`) VALUES
-(1, 1, 'track', 'track', 1, 0);
+(1, 1, 'track', 'track', 1, 0),
+(2, 1, 'ball', 'ball', 1, 0),
+(3, 1, 'bat', 'bat', 1, 0),
+(4, 2, 'tv', 'tv', 1, 0),
+(5, 2, 'gyser', 'gyser', 1, 0),
+(6, 2, 'mobile', 'mobile', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1608,9 +1633,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `last_login`, `last_ip`, `signup_date`, `last_password_change`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
-(1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '939c0c999030aaf9dc160e089d23567e', 'assets/uploads/users/1590040964-apple-logo.png', '2020-05-22 12:34:21', '::1', '2020-05-21 11:31:16', NULL, '', '0000-00-00 00:00:00', '0eed72f533f41c072430ad9409222fb3', 1, 1, 1, 0),
-(2, 0, 'akash', 'patel', 'patelakash164@gmail.com', 9574612134, 'e29d88c21bb07d8877785fcfe6ce88a5', 'assets/uploads/users/default_user.png', '2020-05-22 11:31:02', '::1', '2020-05-21 14:28:39', NULL, '', '0000-00-00 00:00:00', '17fdfb507268e98cd4c3ae8a867dcfd6', 1, 1, 0, 0),
-(3, 0, 'parth', 'patel', 'parth8406.10@gmail.com', 6353810699, '8936d2bd29809a951964f08ca07453ef', 'assets/uploads/users/default_user.png', '2020-05-22 12:04:47', '::1', '2020-05-22 11:51:49', NULL, '', '0000-00-00 00:00:00', '00388580e8b19341e7c7b81de7d966a7', 1, 1, 0, 0);
+(1, 1, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '939c0c999030aaf9dc160e089d23567e', 'assets/uploads/users/1-user.png', '2020-06-01 09:47:51', '::1', '2020-05-21 11:31:16', NULL, '', '0000-00-00 00:00:00', '0eed72f533f41c072430ad9409222fb3', 1, 1, 1, 0),
+(2, 0, 'akash', 'patel', 'patelakash164@gmail.com', 9574612134, 'e29d88c21bb07d8877785fcfe6ce88a5', 'assets/uploads/users/1-user.png', '2020-05-27 16:01:51', '::1', '2020-05-21 14:28:39', NULL, '', '0000-00-00 00:00:00', '17fdfb507268e98cd4c3ae8a867dcfd6', 1, 1, 0, 0),
+(3, 0, 'parth', 'patel', 'parth8406.10@gmail.com', 6353810699, '8936d2bd29809a951964f08ca07453ef', 'assets/uploads/users/1-user.png', '2020-05-22 12:04:47', '::1', '2020-05-22 11:51:49', NULL, '', '0000-00-00 00:00:00', '00388580e8b19341e7c7b81de7d966a7', 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1699,15 +1724,16 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `is_deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `subscription_id` (`subscription_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `vendors`
 --
 
 INSERT INTO `vendors` (`id`, `subscription_id`, `firstname`, `lastname`, `email`, `mobile`, `password`, `profile_image`, `owner_name`, `shop_name`, `address`, `city_id`, `state_id`, `pincode`, `logo`, `shop_number`, `registration_number`, `subscribe_date`, `shop_details`, `total_products`, `last_login`, `last_ip`, `new_pass_key`, `new_pass_key_requested`, `sign_up_key`, `last_password_change`, `is_email_verified`, `is_active`, `is_admin`, `is_deleted`) VALUES
-(1, 2, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '939c0c999030aaf9dc160e089d23567e', '', 'BHAVIK', 'B-7', 'Ashirwad society', '140', 5, 396436, 'assets/uploads/vendors/logo/1590121281-logo_3.jpg', 77, 7, '2020-05-22 10:05:56', 'all items available', 2, '0000-00-00 00:00:00', '', '', '0000-00-00 00:00:00', '20edcd26d621224a551fb1d5dfb761d1', NULL, 1, 1, 0, 0),
-(2, 1, 'akash', 'patel', 'patelakash164@gmail.com', 9574612134, 'e29d88c21bb07d8877785fcfe6ce88a5', '', 'AKASH', 'AK-8', 'asw', '147', 5, 396558, '', 8, 789, '0000-00-00 00:00:00', '', 0, '0000-00-00 00:00:00', '', '', '0000-00-00 00:00:00', '3fcc18d5de8d2617781d10bc6b0c7bac', NULL, 1, 1, 0, 0);
+(1, 2, 'bhavik', 'patel', 'bdp@narola.email', 9978554691, '939c0c999030aaf9dc160e089d23567e', 'assets/uploads/vendors/profile/1590587657-9-user.png', 'BHAVIK', 'B-7', 'Ashirwad society', '140', 5, 396436, 'assets/uploads/vendors/logo/1590121281-logo_3.jpg', 77, 7, '2020-05-22 10:05:56', 'all items available', 2, '0000-00-00 00:00:00', '', '', '0000-00-00 00:00:00', '20edcd26d621224a551fb1d5dfb761d1', NULL, 1, 1, 0, 0),
+(2, 3, 'akash', 'patel', 'patelakash164@gmail.com', 9574612134, 'e29d88c21bb07d8877785fcfe6ce88a5', 'assets/uploads/vendors/profile/1590404118-gcart.png', 'AKASH', 'AK-8', 'asw', '147', 5, 396558, '', 8, 789, '2020-05-25 16:24:48', '', 0, '0000-00-00 00:00:00', '', '', '0000-00-00 00:00:00', '3fcc18d5de8d2617781d10bc6b0c7bac', NULL, 1, 1, 0, 0),
+(3, 1, 'bhavik', 'patel', 'bhavik@mail.com', 9978554691, 'bc56091c341734d8c173a6b6928dc4d5', '', 'bhavik', 'AAA7', 'Ashirwad society', '140', 5, 396436, '', 77, 789, '0000-00-00 00:00:00', '', 0, '0000-00-00 00:00:00', '', '', '0000-00-00 00:00:00', '50041c6a1415b97c252436813f326197', NULL, 0, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1731,7 +1757,7 @@ CREATE TABLE IF NOT EXISTS `wishlist` (
 --
 
 INSERT INTO `wishlist` (`id`, `user_id`, `product_id`, `is_deleted`) VALUES
-(1, 2, 1, 0);
+(1, 2, 1, 1);
 
 --
 -- Constraints for dumped tables

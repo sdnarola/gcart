@@ -13,7 +13,7 @@
 <!-- Global stylesheets -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/icons/icomoon/styles.css'); ?>" rel="stylesheet" type="text/css">
-<link href="<?php echo base_url('assets/admin/css/icons/fontawesome/styles.min.css');?>" rel="stylesheet" type="text/css">
+<link href="<?php echo base_url('assets/admin/css/icons/fontawesome/styles.min.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/bootstrap.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/core.css'); ?>" rel="stylesheet" type="text/css">
 <link href="<?php echo base_url('assets/admin/css/components.css'); ?>" rel="stylesheet" type="text/css">
@@ -327,6 +327,38 @@ switches.forEach(function(html) {
 									>
 									<a href="<?php echo base_url('admin/dashboard'); ?>"><i class="icon-home4"></i> <span><?php _el('dashboard')?></span></a>
 								</li>
+								<!-- categories -->
+								<li>
+									<a href="#"><i class="icon-tree7"></i><span><?php _el('manage_categories')?></span></a>
+									<ul>
+										<li
+										<?php
+
+											if (is_active_controller('categories'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('admin/categories'); ?>">
+												<span><?php _el('main_category')?></span>
+											</a>
+										</li>
+										<li
+										<?php
+
+											if (is_active_controller('sub_categories'))
+											{
+												echo 'class="active"';}
+
+										?>
+										 >
+											<a href="<?php echo base_url('admin/sub_categories'); ?>">
+												<span><?php _el('sub_category')?></span>
+											</a>
+										</li>
+									</ul>
+								</li>
 								<!-- product -->
 								<li
 									<?php
@@ -454,38 +486,6 @@ switches.forEach(function(html) {
 										 >
 											<a href="<?php echo base_url('admin/comments'); ?>">
 												<span><?php _el('comments')?></span>
-											</a>
-										</li>
-									</ul>
-								</li>
-								<!-- categories -->
-								<li>
-									<a href="#"><i class="icon-tree7"></i><span><?php _el('manage_categories')?></span></a>
-									<ul>
-										<li
-										<?php
-
-											if (is_active_controller('categories'))
-											{
-												echo 'class="active"';}
-
-										?>
-										 >
-											<a href="<?php echo base_url('admin/categories'); ?>">
-												<span><?php _el('main_category')?></span>
-											</a>
-										</li>
-										<li
-										<?php
-
-											if (is_active_controller('sub_categories'))
-											{
-												echo 'class="active"';}
-
-										?>
-										 >
-											<a href="<?php echo base_url('admin/sub_categories'); ?>">
-												<span><?php _el('sub_category')?></span>
 											</a>
 										</li>
 									</ul>
