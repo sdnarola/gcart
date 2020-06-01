@@ -143,7 +143,7 @@
                                 <label><?php _el('image');?>(s):</label>
                                 <div class="row add_image">
                                     <div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div>
-                                    <div class="col-md-1 text-right"><a href="javascript:void(0);" class="add_button" title="Add Image"><i class="icon-file-plus2 mt-10"></i></a></div>
+                                    <div class="col-md-1 text-right"><a href="javascript:void(0);" class="add_button" title="Add Image"><i class="icon-plus-circle2 text-success mt-10"></i></a></div>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,8 @@
                             <div class="form-group col-md-12">
                                 <small class="req text-danger">* </small>
                                 <label><?php _el('long_description');?></label>
-                                <textarea name="long_description" id="long_description" class="form-control" rows="5"></textarea>
+                                <textarea name="long_description" id="long_description" class="form-control summernote" rows="10"></textarea>
+                                <label id="description-error" class="validation-error-label" for="long_description"></label>
                             </div>
                         </div>
 
@@ -293,7 +294,7 @@ $("#product_form").validate({
 var maxField = 4; //Input fields increment limitation
 var addButton = $('.add_button'); //Add button selector
 var wrapper = $('.field_wrapper'); //Input field wrapper
-var fieldHTML = '<div><div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div><div class="col-md-1 text-right"><a href="javascript:void(0);" title="Remove Image" class="remove_button"><i class="icon-file-minus2 mt-10"></i></a></div></div>'; //New input field html
+var fieldHTML = '<div><div class="col-md-11"><input type="file" name="image[]" class="form-control" ></div><div class="col-md-1 text-right"><a href="javascript:void(0);" title="Remove Image" class="remove_button"><i class="icon-minus-circle2 text-danger mt-10"></i></a></div></div>'; //New input field html
 var x = 1; //Initial field counter is 1
 
 //Once add button is clicked
@@ -368,4 +369,24 @@ function generate_slug()
     var slug = slug.toLowerCase();
     document.getElementById("slug").value = slug;
 }
+
+//for summer note editer
+$('.summernote').summernote({
+        height: 150
+});
+
+$('.copy').on('click', function(e){
+    e.preventDefault(); 
+    $('.summernote').summernote('editor.insertText', $(this).text());
+
+});
+
+$('#templateform').on('submit', function() {
+    if($('.summernote').summernote('isEmpty'))
+    {
+        $("#validation_msg").html("<p style='color:red'>Please Enter Template Message.</p>");
+        return false;
+    }
+    return true;
+});
 </script>

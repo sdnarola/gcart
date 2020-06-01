@@ -19,8 +19,6 @@
 <!-- /Page header -->
 <!-- Content area -->
 <div class="content">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
     <!-- Panel -->
     <div class="panel panel-flat">
         <!-- Listing table -->
@@ -60,8 +58,6 @@
         <!-- /Listing table -->
     </div>
     <!-- /Panel -->
-</div>
-</div>
 </div>
 <!-- /Content area -->
 

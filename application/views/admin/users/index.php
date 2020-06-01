@@ -82,7 +82,7 @@
 		?>>
                         </td>
                         <td class="text-center">
-                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/').$user->id; ?> " class="text-slate" id="<?php echo $user->id; ?>" ><i class="icon-info3"></i></a>
+                            <a data-popup="tooltip"  data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/').$user->id; ?> " class="text-slate" id="<?php echo $user->id; ?>" ><i class="icon-eye"></i></a>
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/users/edit/').$user->id; ?>" id="<?php echo $user->id; ?>" class="text-info"><i class="icon-pencil7"></i></a>
                             <a data-popup="tooltip" data-placement="top"  title="<?php _el('delete')?>" href="javascript:delete_record(<?php echo $user->id; ?>);" class="text-danger" id="<?php echo $user->id; ?>"><i class=" icon-trash"></i></a>
                         </td>

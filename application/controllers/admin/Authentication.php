@@ -42,7 +42,7 @@ class Authentication extends My_Controller
 				set_alert('error', _l('your_account_is_not_active'));
 				redirect(admin_url('authentication'));
 			}
-			elseif (is_array($user) && isset($user['email_unverified']))
+			elseif (is_array($user) && isset($user['invalid_email']))
 			{
 				set_alert('error', _l('incorrect_email'));
 				redirect(admin_url('authentication'));
