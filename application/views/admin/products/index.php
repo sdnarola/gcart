@@ -75,7 +75,7 @@
 		?>>
                 </td>
                 <td class="text-center">
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-slate"><i class="icon-info3"></i></a>
+                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-slate"><i class="icon-eye"></i></a>
 
                     <a data-popup="tooltip" data-placement="top"  title="<?php _el('edit')?>" href="<?php echo site_url('admin/products/edit/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-info"><i class="icon-pencil7"></i></a>
 

@@ -93,7 +93,7 @@
 								<td><?php echo $order['order_number']; ?></td>
 								<td><?php echo date('jS F Y  h:i:s A', strtotime($order['order_date'])); ?></td>
 								<td class="text-center">
-                    				<a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/'.$order['id']); ?>" id="<?php echo $order['id']; ?>" class="text-slate"><i class="icon-info3"></i></a>
+                    				<a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/'.$order['id']); ?>" id="<?php echo $order['id']; ?>" class="text-slate"><i class="icon-eye"></i></a>
                     			</td>
 							</tr>
 <?php }
@@ -135,7 +135,7 @@
 								<td><a href="mailto:<?php echo $customer['email']; ?>"><?php echo $customer['email']; ?></a></td>
 								<td><?php echo $customer['signup_date']; ?></td>
 								<td class="text-center">
-                    				<a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/'.$customer['id']); ?>" id="<?php echo $customer['id']; ?>" class="text-slate"><i class="icon-info3"></i></a>
+                    				<a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/users/details/'.$customer['id']); ?>" id="<?php echo $customer['id']; ?>" class="text-slate"><i class="icon-eye"></i></a>
                     			</td>
 							</tr>
 <?php }
@@ -198,7 +198,7 @@
 								<td><?php echo ucwords(get_brand($product['brand_id'], 'name')) ?></td>
 								<td><?php echo _l('currency_symbol').'. '.$product['price']; ?></td>
 								<td class="text-center">
-                    				<a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-slate"><i class="icon-info3"></i></a>
+                    				<a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/products/details/'.$product['id']); ?>" id="<?php echo $product['id']; ?>" class="text-slate"><i class="icon-eye"></i></a>
                     			</td>
 							</tr>
 						<?php }

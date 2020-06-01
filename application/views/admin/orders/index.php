@@ -28,10 +28,10 @@
           <tr>
             <th width="20%"><?php _el('customer_email');?></th>
             <th width="18%"><?php _el('order_number');?></th>
-            <th width="16%"><?php _el('products');?></th>
+            <th width="14%"><?php _el('products');?></th>
             <th width="18%"><?php _el('grand_total');?></th>
             <th width="8%" class="text-center"><?php _el('status');?></th>
-            <th width="18%" class="text-center"><?php _el('payment_status');?></th>
+            <th width="20%" class="text-center"><?php _el('payment_status');?></th>
             <th width="2%" class="text-center"><?php _el('actions');?></th>
           </tr>
         </thead>
@@ -89,7 +89,7 @@
                     </select>
                 </td>
                 <td class="text-center">
-                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/'.$order['id']); ?>" id="<?php echo $order['id']; ?>" class="text-slate"><i class="icon-info3"></i></a>
+                    <a data-popup="tooltip" data-placement="top"  title="<?php _el('details')?>" href="<?php echo site_url('admin/orders/details/'.$order['id']); ?>" id="<?php echo $order['id']; ?>" class="text-slate"><i class="icon-file-eye"></i></a>
                 </td>
             </tr>
 <?php

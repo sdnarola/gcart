@@ -42,7 +42,7 @@
 								<form action="<?php echo base_url('admin/users/edit/').$user['id']; ?>" id="profileform" name="profileform" method="POST">
 									<div>
 										<div class="form-group">
-											 <p align="center"><img src="<?php echo base_url().$user['profile_image'] ?>" alt="<?php _el('img_alt_msg')?>" height="208" width="226" border="10"></img></p>
+											 <p align="center"><img src="<?php echo base_url().$user['profile_image'] ?>" alt="<?php _el('img_alt_msg')?>" height="226" width="226" border="10"></img></p>
 										</div>
 									</div>
 									<div class="row">
