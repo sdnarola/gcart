@@ -345,7 +345,6 @@ function get_sub_categories()
                 for( var i = 0; i<len; i++){
                     var id = response[i]['id'];
                     var name = response[i]['name'];
-                    console.log(response[i]);
                     $("#sub_category_id").append("<option value='"+id+"' class='sub_category'>"+name.charAt(0).toUpperCase() + name.substr(1).toLowerCase()+"</option>");
                 }
             }
